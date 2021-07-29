@@ -1,0 +1,21 @@
+<div class="dialog-header">
+  <span>{{ organization ? organization.name : 'add_organization' | t }}</span>
+  <i class="fa fa-times" mat-dialog-close></i>
+</div>
+<form (ngSubmit)="submit(form)" class="d-flex flex-column" #form="ngForm">
+  <div class="form-group mb-3">
+    <label>{{ 'organization_name' | t }}</label>
+    <input type="text" class="form-control" name="name" [ngModel]="organization.name">
+  </div>
+  <div class="form-check form-switch flex-grow-1 mb-3">
+    <input class="form-check-input" type="checkbox" id="activeCheckbox" name="isActive" [ngModel]="organization.isActive">
+    <label class="form-check-label" for="activeCheckbox">{{ 'active' | t }}</label>
+  </div>
+  <div>
+    <button mat-flat-button class="btn grey-btn ml-3" type="button" mat-dialog-close>{{ 'cancel' | t }}</button>
+    <button mat-flat-button class="btn blue-btn" type="submit">{{ 'confirm' | t }}</button>
+  </div>
+</form>
+<div class="mr-5">
+  <app-file-input (fileUploaded)="file = $event" (fileCleared)="file = null" [inputFile]="organization.logo"></app-file-input>
+</div>

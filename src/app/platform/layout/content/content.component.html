@@ -1,0 +1,15 @@
+<header [ngClass]="{ 'flex-between': isAdminViewing, 'flex-end': !isAdminViewing }">
+  <div *ngIf="isAdminViewing">
+    <a [routerLink]="['/', 'admin', 'organizations']">{{ 'back_to_organizations' | t }}</a>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="ms-3">
+      <span>{{ 'hello' | t }}, </span>
+      <span>{{ user.firstName }}</span>
+    </div>
+    <app-lang-select></app-lang-select>
+  </div>
+</header>
+<div id="content" [ngClass]="{ 'no-padding': pageData.noPadding }">
+  <router-outlet></router-outlet>
+</div>

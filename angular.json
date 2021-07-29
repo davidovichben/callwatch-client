@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "13b370c2-b628-4ed0-9d0a-015fac037581"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -25,15 +28,21 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "less",
+            "inlineStyleLanguage": "css",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
+              "node_modules/line-awesome/dist/line-awesome/css/line-awesome.css",
+              "src/styles.styl"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/sweetalert2/dist/sweetalert2.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -99,9 +108,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
+              "node_modules/line-awesome/dist/line-awesome/css/line-awesome.css",
+              "src/styles.styl"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/sweetalert2/dist/sweetalert2.min.js"
+            ]
           }
         }
       }

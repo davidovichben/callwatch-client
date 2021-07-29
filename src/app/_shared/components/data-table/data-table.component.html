@@ -1,0 +1,39 @@
+<div id="tableHeader">
+  <div>
+    <div id="searchContainer">
+      <input placeholder="חפש" [(ngModel)]="criteria.keyword" (keyup)="search($event)">
+      <mat-icon>search</mat-icon>
+    </div>
+    <div id="toggleFilters" (click)="showFilters = !showFilters" [ngClass]="{ active: showFilters }" *ngIf="hasExtendedSearch">
+      <mat-icon>import_export</mat-icon>
+      <span>סנן</span>
+    </div>
+    <div *ngIf="activeSwitch">
+      <mat-slide-toggle (change)="toggleActiveStatus($event.checked)" [checked]="isActive">{{ activeSwitch }}</mat-slide-toggle>
+    </div>
+  </div>
+  <ng-content select=".data-table-menus"></ng-content>
+</div>
+<div [@slideToggle]="showFilters ? 'active' : 'inactive'">
+  <app-side-filters [columns]="columns" (searchSubmitted)="extendedSearch($event)"></app-side-filters>
+</div>
+<p class="alert alert-success mb-3" *ngIf="savedItem">{{ savedItem }} נשמר בהצלחה.</p>
+<table class="table table-bordered" [ngClass]="{ 'table-hover': isSelectable }">
+	<thead>
+	<tr>
+		<th *ngIf="hasCheckColumn" class="pointer table-header">
+			<mat-checkbox (change)="checkAll($event.checked)" [ngModel]="criteria.isCheckAll" *ngIf="items.length > 0 && !disableCheckAll"></mat-checkbox>
+		</th>
+		<th *ngFor="let column of columns" (click)="sort(column)" class="pointer table-header">
+			<span [matTooltip]="'מיין לפי ' + column.label">{{ column.label }}</span>
+			<i class="fa fa-chevron-down mr-1" [@rotate]="rotateSortingIcon()" [@fade]="criteria.sort.column === column.name ? 'active' : 'inactive'"></i>
+		</th>
+		<th class="table-header" *ngIf="hasActionsHeader">פעולות</th>
+	</tr>
+	</thead>
+  <tbody>
+    <ng-content></ng-content>
+  </tbody>
+</table>
+<p *ngIf="items.length === 0" class="text-center bold">{{ isLoading ? 'בטעינה...' : 'אין פריטים לתצוגה.' }}</p>
+<app-pagination [data]="paginationData" *ngIf="items.length > 0"></app-pagination>

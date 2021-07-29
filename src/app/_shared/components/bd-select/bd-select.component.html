@@ -1,0 +1,20 @@
+<div id="selectLabel" [ngClass]="{ 'active' : value }" (click)="openDropdown()">
+	<span id="placeholder" [@placeholder]="value && (!multiple || value.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
+	<div id="multipleSelectedItems" *ngIf="value && multiple">
+		<span *ngFor="let item of label; let last = last">{{ last ? item : item + ',' }}</span>
+	</div>
+	<span id="selectedValue" *ngIf="value && !multiple">{{ label }}</span>
+  <div id="buttons">
+    <mat-icon id="resetIcon" (click)="resetValue($event)" *ngIf="value">close</mat-icon>
+    <mat-icon>expand_more</mat-icon>
+  </div>
+</div>
+<div id="dropdown" #dropdown [@slideToggle]="isSelectOpened ? 'active' : 'inactive'">
+	<div id="filterInput">
+		<input (keyup)="filter()" [placeholder]="searchPlaceholder" [(ngModel)]="filterValue" class="w-100" #filterValueEle>
+	</div>
+	<div id="options" [ngStyle]="{ 'maxHeight': optionsHeight }">
+    <ng-content></ng-content>
+  </div>
+</div>
+

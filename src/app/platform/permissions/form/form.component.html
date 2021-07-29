@@ -1,0 +1,38 @@
+<form #form="ngForm" (ngSubmit)="submit(form)">
+  <mat-form-field>
+    <input matInput type="text" [ngModel]="permission" [placeholder]="'permission_name' | t" name="name" required>
+    <mat-error>{{ errorMessages.required | t }}</mat-error>
+  </mat-form-field>
+  <div>
+    <button class="ms-3 btn btn-primary" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
+    <span class="btn grey-btn" (click)="checkAll(false)">{{ 'clear' | t }}</span>
+  </div>
+  <div>
+    <table class="table table-striped my-3">
+      <thead>
+      <tr>
+        <th>{{ 'modules' | t }}</th>
+        <th>{{ 'check_all' | t }}</th>
+        <th>{{ 'view' | t }}</th>
+        <th>{{ 'create' | t }}</th>
+        <th>{{ 'edit' | t }}</th>
+        <th>{{ 'delete' | t }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let module of modules; let index = index">
+        <td>{{ module.name | t }}</td>
+        <td>
+          <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)"></mat-checkbox>
+        </td>
+        <td *ngFor="let scope of scopes">
+          <mat-checkbox [name]="'scope-' + index" [(ngModel)]="module[scope]" (change)="!module[scope] ? module.checked = false : null"></mat-checkbox>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+      <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
+    </div>
+  </div>
+</form>

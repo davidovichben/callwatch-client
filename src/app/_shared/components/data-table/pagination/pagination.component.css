@@ -1,0 +1,23 @@
+span {
+	margin: 8px 0 0 4px;
+	font-size: 14px;
+}
+
+.pagination {
+	padding: 0;
+}
+
+.page-link {
+	margin-left: 0;
+	border-radius: 0 !important;
+	border-color: #3eaf61;
+	color: #3eaf61;
+}
+
+.page-item.active .page-link {
+	color: #fff;
+}
+
+.page-item.active .page-link {
+	background-color: #3eaf61;
+}

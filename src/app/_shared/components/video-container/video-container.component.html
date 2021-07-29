@@ -1,0 +1,4 @@
+<video [src]="video" #videoElement></video>
+<div id="overlay" [ngClass]="{ hide: isPlaying && !isHovering }" (click)="isPlaying ? pause() : play()">
+  <i class="fa" [ngClass]="isPlaying ? 'fa-pause-circle' : 'fa-play-circle'"></i>
+</div>

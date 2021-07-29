@@ -1,0 +1,15 @@
+<div id="fileContainer">
+  <div id="fileNameContainer" class="d-flex align-items-center">
+    <span class="flex-grow-1" *ngIf="file">{{ file.name | truncate: 50 }}</span>
+    <i class="fa fa-times f-12 grey-text pointer" *ngIf="file" (click)="resetFile(fileInput)"></i>
+  </div>
+  <button mat-button class="pink-btn" type="button" (click)="fileInput.click()">העלה</button>
+  <input type="file" (change)="fileChange(fileInput.files[0])" #fileInput>
+</div>
+<p class="f-12" *ngIf="sizeLimit || types">
+  <span *ngIf="types"> סוגי קובץ - {{ types.join(', ') }}. </span>
+  <span *ngIf="sizeLimit">גודל מירבי - {{ sizeLimit }} MB.</span>
+</p>
+<p class="alert alert-danger" [@fade]="required && !file ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
+<p class="alert alert-danger" [@fade]="hasSizeError ? 'active' : 'inactive'">הקובץ חורג מגודל מקסימלי.</p>
+<p class="alert alert-danger" [@fade]="hasTypeError ? 'active' : 'inactive'">סוג הקובץ לא תקין.</p>

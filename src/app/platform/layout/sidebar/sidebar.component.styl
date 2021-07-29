@@ -1,0 +1,50 @@
+:host
+  display: flex
+  flex-direction: column
+  background-color: #333
+  color: #fff
+
+#logo
+  height: 80px
+  background-color: #00a0d1
+
+#menu
+  height: 80vh
+  transition: 0.3s
+
+  .sidebar-item:hover, .sidebar-item.active
+    color: #00a0d1
+
+  .sub-modules
+    transition: 0.5s
+    overflow: hidden
+
+#menu.opened
+  width: 260px
+
+  img
+    margin: 0 10px
+
+#menu.closed
+    span
+      display: none
+
+.sidebar-item
+  display: flex
+  align-items: center
+  height: 60px
+  color: #fff
+  cursor: pointer
+  transition: 0.3s
+
+  img
+    height: 30px
+    width: 30px
+
+#toggleSidebar
+  background-color: #00a0d1
+
+  img
+    height: 20px
+    width: 20px
+    margin-left: 0

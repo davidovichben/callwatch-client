@@ -1,0 +1,87 @@
+:host {
+	display: block;
+	position: relative;
+	min-width: 180px;
+  border-radius: 11px;
+}
+
+#selectLabel {
+	color: rgba(0, 0, 0, .42);
+	position: relative;
+	width: 100%;
+  padding: 3.4px;
+  border-bottom: 1px solid;
+}
+
+#selectLabel.active > #placeholder {
+  position: absolute;
+}
+
+#selectedValue {
+  color: #000;
+}
+
+#multipleSelectedItems {
+	height: 30px;
+	overflow: hidden;
+}
+
+#multipleSelectedItems > span {
+	display: inline-flex;
+	align-items: center;
+	height: 100%;
+	margin-left: 3px;
+}
+
+#selectLabel, #filterInput {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+}
+
+#buttons {
+  display: flex;
+}
+
+#resetIcon {
+  margin: 0 3px;
+}
+
+#dropdown {
+	position: absolute;
+	top: 37px;
+	width: 100%;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-top: none;
+	background-color: #fff;
+	z-index: 999999999;
+}
+
+#filterInput {
+  padding: 4px 2px;
+}
+
+#filterInput > input {
+	padding: 6px 2px;
+	flex-grow: 1;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  outline: none;
+	font-size: 18px;
+}
+
+#filterInput > i {
+	margin-left: 6px;
+}
+
+#options {
+	overflow: auto;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+:host.unfiltered ::ng-deep bd-option {
+  display: block !important;
+}

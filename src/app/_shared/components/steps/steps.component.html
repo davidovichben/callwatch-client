@@ -1,0 +1,11 @@
+<ng-container *ngFor="let step of steps; let index = index; let last = last">
+  <div class="step">
+    <div class="d-flex">
+      <div class="step-separator"></div>
+      <div class="step-number">{{ index + 1 }}</div>
+      <div class="step-separator"></div>
+    </div>
+    <p class="grey-text">{{ keys ? keys[step] : step }}</p>
+  </div>
+<!--  <div class="step-separator" *ngIf="!last"></div>-->
+</ng-container>

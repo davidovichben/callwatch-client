@@ -1,0 +1,29 @@
+@import '~src/assets/variables';
+@import '~src/assets/extendables';
+
+:host
+  display: flex
+  flex-wrap: wrap
+  text-align: center
+
+.step
+  margin-bottom: 15px
+
+.step-number
+  @extend .flex-center
+  height: 30px
+  width: 30px
+  border-radius: 50%
+  background-color: pinkColor
+  color: #fff
+  text-align: center
+
+.step-separator
+  height: 2px
+  width: 100px
+  margin-top: 12px
+  background-color: greyColor
+  border-radius: 5px
+
+.step:last-child .step-separator:last-child
+  background-color: transparent

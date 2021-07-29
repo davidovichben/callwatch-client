@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="megaphone" width="28.089" height="31.836" viewBox="0 0 28.089 31.836">
+    <defs>
+        <style>
+            .cls-1{fill:#fff}
+        </style>
+    </defs>
+    <g id="Group_132" transform="translate(.373 .255)">
+        <g id="Group_131">
+            <path id="Path_12136" d="M216.71 17.063l12.417-12.418a1.866 1.866 0 1 1 2.64 2.639L219.348 19.7a1.865 1.865 0 1 1-2.638-2.638z" class="cls-1" transform="translate(-216.163 -4.1)"/>
+        </g>
+    </g>
+    <g id="Group_134" transform="translate(5.274 5.155)">
+        <g id="Group_133">
+            <path id="Path_12137" d="M149.117 82.9l.093.468a20.051 20.051 0 0 0 4.422 8.957l-6.756 6.756a19.984 19.984 0 0 0-8.914-4.465l-.469-.093z" class="cls-1" transform="translate(-137.494 -82.905)"/>
+        </g>
+    </g>
+    <g id="Group_136" transform="translate(16.057 15.98)">
+        <g id="Group_135">
+            <path id="Path_12138" d="M36.731 256.989l4.617 4.616a2.8 2.8 0 0 1 0 3.958L38.71 268.2a2.8 2.8 0 0 1-3.958 0l-4.617-4.617zm-.659 7.255a.933.933 0 0 0 1.319-1.319l-1.319-1.319a.933.933 0 0 0-1.319 1.319z" class="cls-1" transform="translate(-30.136 -256.989)"/>
+        </g>
+    </g>
+    <g id="Group_138" transform="translate(10.073 21.519)">
+        <g id="Group_137">
+            <path id="Path_12139" d="M193.9 352.244l-1.269-1.269a2.8 2.8 0 0 1 0-3.957l.942-.943a17.679 17.679 0 0 1 1.5 1.136l-1.125 1.127a.93.93 0 0 0 0 1.318l1.29 1.29 1.9-1.836 2.638 2.638-4.232 4.1a1.866 1.866 0 0 1-2.637-2.64z" class="cls-1" transform="translate(-191.813 -346.075)"/>
+        </g>
+    </g>
+    <g id="Group_140" transform="translate(7.462)">
+        <g id="Group_139">
+            <path id="Path_12140" d="M332.8 0a.932.932 0 0 1 .933.933V2.8a.933.933 0 0 1-1.865 0V.933A.932.932 0 0 1 332.8 0z" class="cls-1" transform="translate(-331.864)"/>
+        </g>
+    </g>
+    <g id="Group_142" transform="translate(0 7.462)">
+        <g id="Group_141">
+            <path id="Path_12141" d="M422.8 120h1.865a.933.933 0 1 1 0 1.865H422.8a.933.933 0 0 1 0-1.865z" class="cls-1" transform="translate(-421.864 -120)"/>
+        </g>
+    </g>
+    <g id="Group_144" transform="translate(1.865 1.865)">
+        <g id="Group_143">
+            <path id="Path_12142" d="M392.137 30.273a.932.932 0 0 1 1.319 0l1.865 1.865A.933.933 0 0 1 394 33.457l-1.865-1.865a.933.933 0 0 1 .002-1.319z" class="cls-1" transform="translate(-391.864 -30)"/>
+        </g>
+    </g>
+</svg>

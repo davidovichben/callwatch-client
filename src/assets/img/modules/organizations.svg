@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="group" width="30.854" height="26.173" viewBox="0 0 30.854 26.173">
+    <defs>
+        <style>
+            .cls-1{fill:#fff}
+        </style>
+    </defs>
+    <g id="Group_146" transform="translate(24.014 14.13)">
+        <g id="Group_145">
+            <path id="Path_12143" d="M400.88 273.32h-2.386a6.206 6.206 0 0 1 .376 2.134v9.018a2.659 2.659 0 0 1-.153.891h3.945a2.675 2.675 0 0 0 2.672-2.672v-4.916a4.459 4.459 0 0 0-4.454-4.455z" class="cls-1" transform="translate(-398.494 -273.32)"/>
+        </g>
+    </g>
+    <g id="Group_148" transform="translate(0 14.13)">
+        <g id="Group_147">
+            <path id="Path_12144" d="M6.464 275.455a6.207 6.207 0 0 1 .376-2.134H4.454A4.459 4.459 0 0 0 0 277.775v4.916a2.675 2.675 0 0 0 2.672 2.672h3.945a2.661 2.661 0 0 1-.153-.891z" class="cls-1" transform="translate(0 -273.321)"/>
+        </g>
+    </g>
+    <g id="Group_150" transform="translate(8.246 11.81)">
+        <g id="Group_149">
+            <path id="Path_12145" d="M146.738 234.815h-5.455a4.459 4.459 0 0 0-4.454 4.454v9.018a.891.891 0 0 0 .891.891h12.58a.891.891 0 0 0 .891-.891v-9.018a4.459 4.459 0 0 0-4.453-4.454z" class="cls-1" transform="translate(-136.829 -234.815)"/>
+        </g>
+    </g>
+    <g id="Group_152" transform="translate(10.071)">
+        <g id="Group_151">
+            <path id="Path_12146" d="M172.47 38.84a5.356 5.356 0 1 0 5.356 5.357 5.362 5.362 0 0 0-5.356-5.357z" class="cls-1" transform="translate(-167.114 -38.84)"/>
+        </g>
+    </g>
+    <g id="Group_154" transform="translate(2.015 4.993)">
+        <g id="Group_153">
+            <path id="Path_12147" d="M37.449 121.689a4 4 0 1 0 4.006 4.006 4.01 4.01 0 0 0-4.006-4.006z" class="cls-1" transform="translate(-33.443 -121.689)"/>
+        </g>
+    </g>
+    <g id="Group_156" transform="translate(20.827 4.993)">
+        <g id="Group_155">
+            <path id="Path_12148" d="M349.613 121.689a4.006 4.006 0 1 0 4.006 4.006 4.01 4.01 0 0 0-4.006-4.006z" class="cls-1" transform="translate(-345.607 -121.689)"/>
+        </g>
+    </g>
+</svg>

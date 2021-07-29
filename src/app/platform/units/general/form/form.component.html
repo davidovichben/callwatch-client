@@ -1,0 +1,19 @@
+<div class="dialog-header">
+  <span>{{ data.user ? data.user.name : 'add_user' | t }}</span>
+  <i class="fa fa-times" mat-dialog-close></i>
+</div>
+<form (ngSubmit)="submit(form)" #form="ngForm">
+  <mat-form-field class="mb-3">
+    <mat-select name="userId" [ngModel]="data.userId" [placeholder]="'employee_name' | t" required>
+      <mat-option *ngFor="let user of data.users" [value]="user.id">{{ user.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="mb-3">
+    <mat-select name="permissionId" [ngModel]="data.permissionId" [placeholder]="'permission' | t" required>
+      <mat-option *ngFor="let permission of data.permissions" [value]="permission.id">{{ permission.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="text-center">
+    <button class="btn blue-btn" type="submit">{{ 'confirm' | t }}</button>
+  </div>
+</form>
