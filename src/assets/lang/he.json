@@ -114,6 +114,8 @@
   { "key": "wednesday", "value": "יום רביעי" },
   { "key": "sign_out", "value": "התנתק" },
   { "key": "user_deleted", "value": "המשתמש נמחק בהצלחה" },
-  { "key": "define_password", "value": "הגדר סיסמה" }
+  { "key": "define_password", "value": "הגדר סיסמה" },
+  { "key": "schedule_deleted", "value": "לוח הזמנים נמחק בהצלחה" },
+  { "key": "schedule_name", "value": "שם לוח זמנים" }
 ]
 

@@ -31,6 +31,10 @@ const routes: Routes = [
         loadChildren: () => import('./permissions/permissions.module').then(m => m.PermissionsModule)
       },
       {
+        path: 'schedules',
+        loadChildren: () => import('./schedules/schedules.module').then(m => m.SchedulesModule)
+      },
+      {
         path: '**',
         redirectTo: ''
       }

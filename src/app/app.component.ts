@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NavigationStart, NavigationEnd, Router } from '@angular/router';
 
 import { fade } from 'src/app/_shared/constants/animations';
@@ -18,7 +18,8 @@ export class AppComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(private router: Router, private helpers: HelpersService,
+  constructor(private router: Router, private renderer: Renderer2,
+              private helpers: HelpersService,
               private appHttp: AppHttpService,
               public locale: LocaleService) {}
 
@@ -31,6 +32,9 @@ export class AppComponent implements OnInit {
   private setLocale(): void {
     this.lang = this.locale.getLang();
     if (this.lang) {
+      this.renderer.addClass(document.body, this.locale.dir);
+      this.renderer.setAttribute(document.body, 'dir', 'rtl');
+
       this.appHttp.getTranslations(this.lang).then(response => {
         this.locale.setTranslations(response);
       })
@@ -42,6 +46,8 @@ export class AppComponent implements OnInit {
   private setSubscriptions(): void {
     this.locale.langChanged.subscribe(lang => {
       this.lang = lang;
+      this.renderer.addClass(document.body, this.locale.dir);
+      this.renderer.setAttribute(document.body, 'dir', 'rtl');
 
       this.appHttp.getTranslations(this.lang).then(response => {
         this.locale.setTranslations(response);

@@ -12,5 +12,7 @@
   <div class="mb-5 pt-2 tabs">
     <a class="tab" [routerLink]="module.name ? ['/platform', 'units', activeUnitId, module.name] : ['/platform', 'units']" *ngFor="let module of modules">{{ module.label | t }}</a>
   </div>
-  <router-outlet></router-outlet>
+  <div class="px-3">
+    <router-outlet></router-outlet>
+  </div>
 </div>

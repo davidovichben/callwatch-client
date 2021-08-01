@@ -20,7 +20,7 @@ const routes: Routes = [
     component: UnitsComponent,
     resolve: { units: UnitsResolve },
     children: [
-      { path: '', loadChildren: () => import('./general/general.component') }
+      { path: '', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) }
     ]
   }
 ];

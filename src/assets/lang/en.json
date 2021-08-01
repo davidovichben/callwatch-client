@@ -114,5 +114,6 @@
   { "key": "wednesday", "value": "Wednesday" },
   { "key": "sign_out", "value": "Sign Out" },
   { "key": "user_deleted", "value": "User deleted successfully" },
-  { "key": "define_password", "value": "Define Password" }
+  { "key": "define_password", "value": "Define Password" },
+  { "key": "schedule_deleted", "value": "Schedule deleted successfully" }
 ]

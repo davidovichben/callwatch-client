@@ -1,0 +1,16 @@
+<div class="dialog-header">
+  <span>{{ schedule.id ? schedule.name : 'create_schedule' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<form (ngSubmit)="submit(form)" #form="ngForm">
+  <mat-form-field class="w-100">
+    <input matInput [ngModel]="schedule.name" [placeholder]="'schedule_name' | t" name="name" required>
+    <mat-error>{{ errorMessages.required }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <textarea matInput [ngModel]="schedule.description" [placeholder]="'description' | t" name="description" rows="6"></textarea>
+  </mat-form-field>
+  <div class="text-center">
+    <button class="btn blue-btn" type="submit">{{ 'confirm' | t }}</button>
+  </div>
+</form>
