@@ -22,7 +22,7 @@ export class UnitService extends BaseHttpService {
       .catch(() => []);
   }
 
-  getUnit(unitId: number): Promise<UnitModel> {
+  getUnit(unitId: number | 'root'): Promise<UnitModel> {
     return this.http.get(this.endPoint + '/' + unitId, this.getTokenRequest())
       .toPromise()
       .then(response => response as UnitModel)

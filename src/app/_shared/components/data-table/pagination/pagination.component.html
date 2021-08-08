@@ -11,12 +11,12 @@
   <ul class="justify-content-center pagination">
     <li class="page-item" *ngIf="data.currentPage > 1">
       <a class="page-link" routerLink="./" [queryParams]="{ page: 1 }">
-        <i class="fa fa-angle-double-right"></i>
+        <i class="la la-angle-double-right"></i>
       </a>
     </li>
 	  <li class="page-item" *ngIf="data.currentPage > 1">
 		  <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage - 1 }">
-			  <i class="fa fa-angle-right"></i>
+			  <i class="la la-angle-right"></i>
 		  </a>
 	  </li>
     <li class="page-item" *ngIf="data.currentPage - 2 >= 1">
@@ -36,12 +36,12 @@
     </li>
 	  <li class="page-item" *ngIf="data.currentPage < data.totalPages">
 		  <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage + 1 }">
-			  <i class="fa fa-angle-left"></i>
+			  <i class="la la-angle-left"></i>
 		  </a>
 	  </li>
     <li class="page-item" *ngIf="data.currentPage < data.totalPages">
       <a class="page-link" routerLink="./" [queryParams]="{ page: data.totalPages }">
-        <i class="fa fa-angle-double-left"></i>
+        <i class="la la-angle-double-left"></i>
       </a>
     </li>
   </ul>

@@ -16,12 +16,17 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: UnitsComponent,
     resolve: { units: UnitsResolve },
+    pathMatch: '',
     children: [
       { path: '', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) }
     ]
+  },
+  {
+    path: '',
+    redirectTo: 'root'
   }
 ];
 

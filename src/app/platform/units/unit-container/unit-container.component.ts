@@ -17,6 +17,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 export class UnitContainerComponent implements OnInit, OnDestroy {
 
   @Input() unit: UnitModel;
+  @Input() parentId: number;
 
   @Output() loadedUnits = new EventEmitter();
 

@@ -5,7 +5,6 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 
 import { AdminModules, PlatformModules } from 'src/app/_shared/constants/general';
-import { ModuleModel } from 'src/app/_shared/models/module.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,7 +16,7 @@ export class SidebarComponent implements OnInit {
   isOpened = true;
   menuType = 'platform';
 
-  modules: ModuleModel[] = [];
+  modules = [];
   activeModule = null;
 
   constructor(private router: Router,

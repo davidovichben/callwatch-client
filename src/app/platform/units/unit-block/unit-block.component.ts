@@ -5,7 +5,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 @Component({
   selector: 'app-unit-block',
   templateUrl: './unit-block.component.html',
-  styleUrls: ['./unit-block.component.styl']
+  styles: [`:host { display: flex }`]
 })
 export class UnitBlockComponent {
   @Input() units: UnitModel[] = [];

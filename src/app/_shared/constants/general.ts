@@ -1,9 +1,22 @@
 export const PlatformModules = [
   { name: 'dashboard', isGuarded: false },
   { name: 'campaigns', isGuarded: true },
-  { name: 'reports', isGuarded: true },
   { name: 'units', isGuarded: true },
-  { name: 'users', isGuarded: true },
+  {
+    name: 'reports',
+    isGuarded: true,
+    subModules: [
+      { name: 'sets', isGuarded: true, hasParentPrefix: true }
+    ]
+  },
+  {
+    name: 'users',
+    isGuarded: true,
+    subModules: [
+      { name: 'users', isGuarded: true },
+      { name: 'groups', isGuarded: true, hasParentPrefix: true }
+    ]
+  },
   {
     name: 'settings',
     isGuarded: false,

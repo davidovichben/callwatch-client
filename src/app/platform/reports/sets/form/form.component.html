@@ -1,0 +1,19 @@
+<div class="dialog-header">
+  <span>{{ data.reportSet.id ? ('edit_set' | t) : ('add_set' | t) }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<form (ngSubmit)="submit(form)" #form="ngForm">
+  <mat-form-field class="mb-3 w-100">
+    <input matInput [placeholder]="'report_set_name' | t" [ngModel]="data.reportSet.name" name="name" required>
+    <mat-error>{{ errorMessages.required }}</mat-error>
+  </mat-form-field>
+  <mat-form-field class="mb-3 w-100">
+    <mat-select [placeholder]="'report_types' | t" [ngModel]="data.reportSet.reportTypes" name="reportTypes" multiple required>
+      <mat-option *ngFor="let type of data.reportTypes" [value]="type.id">{{ type.name }}</mat-option>
+    </mat-select>
+    <mat-error>{{ errorMessages.required }}</mat-error>
+  </mat-form-field>
+  <div class="text-center">
+    <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+  </div>
+</form>

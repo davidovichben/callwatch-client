@@ -36,6 +36,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
               private unitService: UnitService) {}
 
   ngOnInit(): void {
+    this.unit = this.route.snapshot.data.unit;
     this.organizationUsers = this.route.snapshot.data.users;
     this.permissions = this.route.snapshot.data.permissions;
   }
@@ -46,7 +47,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   openUserDialog(userId?: number): void {
     const dialog = this.dialog.open(FormComponent, {
-      width: '600px',
+      width: '400px',
       data: { userId, unitId: this.unit.id }
     })
 

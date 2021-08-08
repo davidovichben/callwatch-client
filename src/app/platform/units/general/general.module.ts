@@ -17,12 +17,17 @@ import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service
 
 import { UserSelectResolve } from 'src/app/_shared/resolves/user-select.resolve';
 import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-select.resolve';
+import { UnitResolve } from 'src/app/_shared/resolves/unit.resolve';
 
 const routes: Routes = [
   {
     path: '',
     component: GeneralComponent,
-    resolve: { users: UserSelectResolve, permissions: PermissionSelectResolve }
+    resolve: {
+      users: UserSelectResolve,
+      permissions: PermissionSelectResolve,
+      unit: UnitResolve
+    }
   }
 ];
 
@@ -42,6 +47,7 @@ const routes: Routes = [
     PermissionService,
     UserService,
     UnitUserService,
+    UnitResolve,
     UserSelectResolve,
     PermissionSelectResolve
   ]

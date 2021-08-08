@@ -1,29 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 
-import { FileInputModule } from 'src/app/_shared/components/file-input/file-input.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
 import { FormComponent } from './form.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
+import { GroupService } from 'src/app/_shared/services/http/group.service';
 
 @NgModule({
   declarations: [FormComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    TranslateModule,
-    FileInputModule,
     MatSelectModule,
-    MatCheckboxModule
+    TranslateModule
   ],
-  exports: [FormComponent]
+  providers: [GroupService]
 })
 export class FormModule {}

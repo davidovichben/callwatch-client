@@ -23,8 +23,12 @@ const routes: Routes = [
         loadChildren: () => import('./campaigns/campaigns.module').then(m => m.CampaignsModule)
       },
       {
+        path: 'reports',
+        loadChildren: () => import('./reports/reports-routing.module').then(m => m.ReportsRoutingModule)
+      },
+      {
         path: 'users',
-        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+        loadChildren: () => import('src/app/platform/users/users-routing.module').then(m => m.UsersRoutingModule)
       },
       {
         path: 'permissions',

@@ -1,7 +1,7 @@
 <div id="fileContainer">
   <div id="fileNameContainer" class="d-flex align-items-center">
     <span class="flex-grow-1" *ngIf="file">{{ file.name | truncate: 50 }}</span>
-    <i class="fa fa-times f-12 grey-text pointer" *ngIf="file" (click)="resetFile(fileInput)"></i>
+    <i class="la la-times f-12 grey-text pointer" *ngIf="file" (click)="resetFile(fileInput)"></i>
   </div>
   <button mat-button class="pink-btn" type="button" (click)="fileInput.click()">העלה</button>
   <input type="file" (change)="fileChange(fileInput.files[0])" #fileInput>

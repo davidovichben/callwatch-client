@@ -1,6 +1,6 @@
 <form #form="ngForm" (ngSubmit)="submit(form)">
   <mat-form-field>
-    <input matInput type="text" [ngModel]="permission" [placeholder]="'permission_name' | t" name="name" required>
+    <input matInput type="text" [ngModel]="permission.name" [placeholder]="'permission_name' | t" name="name" required>
     <mat-error>{{ errorMessages.required | t }}</mat-error>
   </mat-form-field>
   <div>
