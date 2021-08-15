@@ -6,11 +6,11 @@ import { PermissionService } from 'src/app/_shared/services/http/permission.serv
 import { PermissionModel } from 'src/app/_shared/models/permission.model';
 
 @Injectable()
-export class PermissionResolve implements Resolve<PermissionModel[]> {
+export class PermissionResolve implements Resolve<PermissionModel> {
 
   constructor(private permissionService: PermissionService) {}
 
-  resolve() {
-    return this.permissionService.selectPermissions().then(response => response as PermissionModel[]);
+  resolve(snapshot: ActivatedRouteSnapshot) {
+    return this.permissionService.getPermission(+snapshot.params.id).then(response => response as PermissionModel);
   }
 }

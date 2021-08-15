@@ -31,6 +31,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
   ];
 
   users: SelectItemModel[] = [];
+  permissions: SelectItemModel[] = [];
+  units: SelectItemModel[] = [];
 
   constructor(private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -40,6 +42,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.users = this.route.snapshot.data.users;
+    this.permissions = this.route.snapshot.data.permissions;
+    this.units = this.route.snapshot.data.units;
   }
 
   fetchItems(): void {
@@ -62,7 +66,9 @@ export class GroupsComponent implements OnInit, OnDestroy {
     const dialog = this.dialog.open(FormComponent, {
       data: {
         group,
-        users: this.users
+        users: this.users,
+        permissions: this.permissions,
+        units: this.units
       },
       width: '400px'
     })

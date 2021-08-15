@@ -4,7 +4,7 @@
     <mat-error>{{ errorMessages.required | t }}</mat-error>
   </mat-form-field>
   <div>
-    <button class="ms-3 btn btn-primary" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
+    <button class="ms-3 btn blue-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
     <span class="btn grey-btn" (click)="checkAll(false)">{{ 'clear' | t }}</span>
   </div>
   <div>
@@ -23,10 +23,10 @@
       <tr *ngFor="let module of modules; let index = index">
         <td>{{ module.name | t }}</td>
         <td>
-          <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)"></mat-checkbox>
+          <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)" color="primary"></mat-checkbox>
         </td>
         <td *ngFor="let scope of scopes">
-          <mat-checkbox [name]="'scope-' + index" [(ngModel)]="module[scope]" (change)="!module[scope] ? module.checked = false : null"></mat-checkbox>
+          <mat-checkbox [name]="'scope-' + index" [(ngModel)]="module[scope]" (change)="!module[scope] ? module.checked = false : null" color="primary"></mat-checkbox>
         </td>
       </tr>
       </tbody>

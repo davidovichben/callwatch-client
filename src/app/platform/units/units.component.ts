@@ -13,7 +13,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 })
 export class UnitsComponent implements OnInit {
 
-  readonly rootUnit: UnitModel = {
+  readonly rootUnit = {
     id: 'root',
     name: 'ROOT',
     units: []

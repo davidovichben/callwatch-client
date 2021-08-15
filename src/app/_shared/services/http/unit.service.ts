@@ -44,7 +44,7 @@ export class UnitService extends BaseHttpService {
   }
 
   transferUnit(unitId: number, parentId: number): Promise<boolean> {
-    return this.http.put(this.endPoint + '/' + unitId, { unitId, parentId }, this.getTokenRequest())
+    return this.http.put(this.endPoint + '/transfer', { unitId, parentId }, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);

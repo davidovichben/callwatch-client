@@ -13,6 +13,16 @@
     </mat-select>
     <mat-error>{{ errorMessages.required }}</mat-error>
   </mat-form-field>
+  <mat-form-field class="mb-3 w-100">
+    <mat-select [placeholder]="'organization_units' | t " [ngModel]="data.group.units" name="units" multiple>
+      <mat-option *ngFor="let unit of data.units" [value]="unit.id">{{ unit.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="mb-3 w-100">
+    <mat-select [placeholder]="'permission' | t " [ngModel]="data.group.permission" name="permission">
+      <mat-option *ngFor="let permission of data.permissions" [value]="permission.id">{{ permission.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <div class="text-center">
     <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
   </div>

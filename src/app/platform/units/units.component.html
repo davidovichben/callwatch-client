@@ -1,6 +1,6 @@
 <div id="units">
   <h1>{{ 'organization_structure' | t }}</h1>
-  <app-unit-container [unit]="rootUnit"></app-unit-container>
+  <app-unit-tree [rootUnit]="rootUnit"></app-unit-tree>
   <div class="mt-5 flex-center" *ngIf="userSession.hasPermission(5, 'units', 'create')">
     <button class="btn grey-btn">
       <i class="la la-plus ms-1"></i>

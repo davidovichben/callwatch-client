@@ -32,6 +32,8 @@ export class FormComponent implements OnInit {
     this.permission = this.route.snapshot.data.permission;
     if (this.permission) {
       this.permission.modules.forEach(module => this.loadModule(module));
+    } else {
+      this.permission = new PermissionModel();
     }
   }
 
@@ -61,8 +63,6 @@ export class FormComponent implements OnInit {
   }
 
   checkRow(module: ModuleModel): void {
-    console.log(module)
-
     this.scopes.forEach(scope => module[scope] = module.checked);
   }
 
@@ -84,7 +84,7 @@ export class FormComponent implements OnInit {
 
       const values = { name: form.value.name, modules };
 
-      if (this.permission) {
+      if (this.permission.id) {
         this.permissionService.updatePermission(this.permission.id, values).then(response => {
           this.handleSubmitResponse(response);
         })

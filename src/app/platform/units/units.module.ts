@@ -5,8 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
 import { UnitsComponent } from './units.component';
-import { UnitContainerComponent } from './unit-container/unit-container.component';
-import { UnitBlockComponent } from './unit-block/unit-block.component';
+import { UnitTreeComponent } from './unit-tree/unit-tree.component';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
@@ -31,11 +30,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    UnitsComponent,
-    UnitContainerComponent,
-    UnitBlockComponent
-  ],
+  declarations: [UnitsComponent, UnitTreeComponent],
 	imports: [
 		CommonModule,
 		RouterModule.forChild(routes),

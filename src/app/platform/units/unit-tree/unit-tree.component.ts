@@ -10,21 +10,19 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Component({
-  selector: 'app-unit-container',
-  templateUrl: './unit-container.component.html',
-  styleUrls: ['./unit-container.component.styl']
+  selector: 'app-unit-tree',
+  templateUrl: './unit-tree.component.html',
+  styleUrls: ['./unit-tree.component.styl']
 })
-export class UnitContainerComponent implements OnInit, OnDestroy {
+export class UnitTreeComponent implements OnInit, OnDestroy {
 
-  @Input() unit: UnitModel;
-  @Input() parentId: number;
+  @Input() rootUnit: UnitModel;
 
   @Output() loadedUnits = new EventEmitter();
 
   readonly sub = new Subscription();
 
-  isActive = false;
-  isToggled = true;
+  activeUnitId: number | string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -33,49 +31,47 @@ export class UnitContainerComponent implements OnInit, OnDestroy {
               private t: TranslatePipe) {}
 
   ngOnInit(): void {
-    this.isActive = +this.route.snapshot.params.id === this.unit.id;
+    this.activeUnitId = this.route.snapshot.params.id;
 
     this.sub.add(this.route.params.subscribe(params => {
-      this.isActive = +params.id === this.unit.id;
+      this.activeUnitId = this.route.snapshot.params.id;
     }));
   }
 
-  unitClicked(): void {
-    if (this.unit.disabled) {
+  unitClicked(unit: UnitModel): void {
+    if (unit.disabled) {
       return;
     }
 
-    this.router.navigate(['/platform', 'units', this.unit.id]);
+    this.router.navigate(['/platform', 'units', unit.id]);
   }
 
-  dragStart(event) {
-    event.dataTransfer.setData('transferredUnit', JSON.stringify(this.unit));
+  dragStart(event: DragEvent, unit: UnitModel): void {
+    event.dataTransfer.setData('transferredUnit', JSON.stringify(unit));
   }
 
-  drop(event): void {
-    console.log(event)
-
+  drop(event: DragEvent, destinationUnit: UnitModel): void {
     event.stopPropagation();
     event.preventDefault();
 
     const transferredUnit = JSON.parse(event.dataTransfer.getData('transferredUnit'));
-    if (transferredUnit.id === this.unit.id) {
+    if (transferredUnit.id === destinationUnit.id) {
       return;
     }
 
-    const existingUnit = this.unit.units && this.unit.units.find(unit => unit.id === transferredUnit.id);
+    const existingUnit = destinationUnit.units && destinationUnit.units.find(unit => unit.id === transferredUnit.id);
     if (existingUnit) {
       return;
     }
 
-    const msg = this.t.transform('transfer_v') + ' ' + transferredUnit.name + ' ' + this.t.transform('to') + ' ' + this.unit.name + '?';
+    const msg = this.t.transform('transfer_v') + ' ' + transferredUnit.name + ' ' + this.t.transform('to') + ' ' + destinationUnit.name + '?';
 
     this.notifications.warning(msg).then(confirmation => {
       if (confirmation.value) {
-        this.unitService.transferUnit(transferredUnit.id, this.unit.id).then(response => {
+        this.unitService.transferUnit(transferredUnit.id, destinationUnit.id).then(response => {
           if (response) {
             this.unitService.getUnits().then(units => {
-              this.loadedUnits.emit(units);
+              this.rootUnit.units = units;
             });
           }
         });
@@ -83,7 +79,7 @@ export class UnitContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  allowDrop(event) {
+  allowDrop(event: DragEvent): void {
     event.preventDefault();
   }
 

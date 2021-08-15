@@ -1,8 +1,0 @@
-<div class="unit-container" [ngClass]="{ active: isActive }" (drop)="drop($event)" (dragover)="allowDrop($event)">
-  <div class="unit-border" *ngIf="unit.id !== 'root'"></div>
-  <div class="unit" [ngClass]="{ disabled: unit.disabled }" [draggable]="!unit.disabled && unit.id !== 'root'" (click)="unitClicked()"  (dragStart)="dragStart($event)">
-    <span class="ms-2" [ngClass]="{ 'triangle-left': !isToggled, 'triangle-down': isToggled }" (click)="isToggled = !isToggled" *ngIf="unit.units"></span>
-    <span class="flex-grow-1">{{ unit.name }}</span>
-  </div>
-</div>
-<app-unit-block class="me-3" [units]="unit.units" [parentId]="unit.id" *ngIf="unit.units && isToggled"></app-unit-block>

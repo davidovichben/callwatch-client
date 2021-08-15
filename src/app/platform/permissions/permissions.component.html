@@ -1,6 +1,6 @@
 <div class="mb-5 flex-between">
   <h1>{{ 'permission_management' | t }}</h1>
-  <div *ngIf="userSession.hasPermission(5, 'permissions', 'create')">
+  <div>
     <button class="btn blue-btn" routerLink="form">
       <i class="la la-plus ms-1"></i>
       <span>{{ 'add_permission' | t }}</span>
@@ -11,8 +11,8 @@
   <tr *ngFor="let item of dataTable.items">
     <td>{{ item.name }}</td>
     <td class="row-icons">
-      <i class="la la-edit" [routerLink]="['form', item.id]" *ngIf="userSession.hasPermission(5, 'permissions', 'update')"></i>
-      <i class="la la-trash" (click)="deletePermission(item.id)" *ngIf="userSession.hasPermission(5, 'permissions', 'delete')"></i>
+      <i class="la la-edit" [routerLink]="['form', item.id]"></i>
+      <i class="la la-trash" (click)="deletePermission(item.id)"></i>
     </td>
   </tr>
 </app-data-table>

@@ -9,6 +9,8 @@ export class UserModel {
   token: string;
   permission: any;
   isAdmin: boolean;
+  isRoot: boolean;
+  logo: File;
   unit: UnitModel;
 }
 
