@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -12,11 +12,11 @@ import { UserModel } from 'src/app/_shared/models/user.model';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.styl']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, OnDestroy {
 
   readonly sub = new Subscription();
 
-  pageData: any = {};
+  noPadding = false;
 
   user: UserModel;
   isAdminViewing = false;
@@ -30,21 +30,24 @@ export class ContentComponent implements OnInit {
     this.user = this.userSession.getUser();
 
     this.checkAdminViewing();
-    this.setPageData();
+    this.setPadding();
 
     this.helpers.urlChanged.subscribe(() => {
       this.checkAdminViewing();
-      this.setPageData();
+      this.setPadding();
     })
   }
 
-  private setPageData(): void {
+  private setPadding(): void {
+    this.noPadding = false;
+
     let component = this.route.firstChild;
     while (component.firstChild) {
       component = component.firstChild;
+      if (component.snapshot.data.noPadding) {
+        this.noPadding = true;
+      }
     }
-
-    this.pageData = component.snapshot.data;
   }
 
   checkAdminViewing(): void {

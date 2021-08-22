@@ -19,6 +19,7 @@ const routes: Routes = [
     component: UnitsComponent,
     resolve: { units: UnitsResolve },
     pathMatch: '',
+    data: { noPadding: true },
     children: [
       { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
       { path: '', redirectTo: 'general' }
