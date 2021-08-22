@@ -54,7 +54,6 @@ export class FormComponent {
     this.group = routeData.group;
     if (this.group) {
       this.groupForm.patchValue(this.group);
-      this.groupForm.get('password').clearValidators();
 
       if (this.group.units === 'root') {
         this.groupForm.get('units').patchValue([]);
