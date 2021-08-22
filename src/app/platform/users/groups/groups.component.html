@@ -1,6 +1,6 @@
 <div class="mb-5 flex-between">
   <h1>{{ 'user_groups' | t }}</h1>
-  <button class="btn blue-btn" (click)="openFormDialog()">
+  <button class="btn blue-btn" routerLink="./form">
     <i class="la la-plus ms-1"></i>
     <span>{{ 'add_group' | t }}</span>
   </button>
@@ -10,7 +10,7 @@
     <td>{{ item.name }}</td>
     <td>{{ item.totalMembers }}</td>
     <td class="row-icons">
-      <i class="la la-edit" (click)="editGroup(item.id)"></i>
+      <i class="la la-edit" [routerLink]="['./form', item.id]"></i>
       <i class="la la-trash" (click)="deleteGroup(item.id)"></i>
     </td>
   </tr>

@@ -1,25 +1,19 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
-import { FormComponent } from './form/form.component';
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { GroupService } from 'src/app/_shared/services/http/group.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
-import { GroupModel } from 'src/app/_shared/models/group.model';
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-import { ReportSetModel } from 'src/app/_shared/models/report-set.model';
-
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html'
 })
-export class GroupsComponent implements OnInit, OnDestroy {
+export class GroupsComponent implements OnDestroy {
 
   readonly sub = new Subscription();
 
@@ -30,54 +24,15 @@ export class GroupsComponent implements OnInit, OnDestroy {
     { label: 'total_users', name: 'totalMembers' }
   ];
 
-  users: SelectItemModel[] = [];
-  permissions: SelectItemModel[] = [];
-  units: SelectItemModel[] = [];
-
   constructor(private route: ActivatedRoute,
-              private dialog: MatDialog,
               private groupService: GroupService,
               private notificationService: NotificationService,
               private t: TranslatePipe) {}
-
-  ngOnInit() {
-    this.users = this.route.snapshot.data.users;
-    this.permissions = this.route.snapshot.data.permissions;
-    this.units = this.route.snapshot.data.units;
-  }
 
   fetchItems(): void {
     this.groupService.getGroups(this.dataTable.criteria).then(response => {
       this.dataTable.setItems(response);
     })
-  }
-
-  editGroup(groupId: number): void {
-    this.groupService.getGroup(groupId).then(response => {
-      this.openFormDialog(response);
-    });
-  }
-
-  openFormDialog(group?: GroupModel): void {
-    if (!group) {
-      group = new GroupModel();
-    }
-
-    const dialog = this.dialog.open(FormComponent, {
-      data: {
-        group,
-        users: this.users,
-        permissions: this.permissions,
-        units: this.units
-      },
-      width: '400px'
-    })
-
-    this.sub.add(dialog.afterClosed().subscribe(saved => {
-      if (saved) {
-        this.fetchItems();
-      }
-    }));
   }
 
   deleteGroup(groupId: number): void {

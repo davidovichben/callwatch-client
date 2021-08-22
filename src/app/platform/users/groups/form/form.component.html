@@ -1,29 +1,50 @@
-<div class="dialog-header">
-  <span>{{ data.group.id ? ('edit_group' | t) : ('add_group' | t) }}</span>
-  <i class="la la-times" mat-dialog-close></i>
-</div>
-<form (ngSubmit)="submit(form)" #form="ngForm">
-  <mat-form-field class="mb-3 w-100">
-    <input matInput [placeholder]="'group_name' | t" [ngModel]="data.group.name" name="name" required>
-    <mat-error>{{ errorMessages.required }}</mat-error>
-  </mat-form-field>
-  <mat-form-field class="mb-3 w-100">
-    <mat-select [placeholder]="'users' | t" [ngModel]="data.group.users" name="users" multiple>
-      <mat-option *ngFor="let user of data.users" [value]="user.id">{{ user.name }}</mat-option>
-    </mat-select>
-    <mat-error>{{ errorMessages.required }}</mat-error>
-  </mat-form-field>
-  <mat-form-field class="mb-3 w-100">
-    <mat-select [placeholder]="'organization_units' | t " [ngModel]="data.group.units" name="units" multiple>
-      <mat-option *ngFor="let unit of data.units" [value]="unit.id">{{ unit.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="mb-3 w-100">
-    <mat-select [placeholder]="'permission' | t " [ngModel]="data.group.permission" name="permission">
-      <mat-option *ngFor="let permission of data.permissions" [value]="permission.id">{{ permission.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <div class="text-center">
-    <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+<form (ngSubmit)="submit()" [formGroup]="groupForm">
+  <div class="flex-between">
+    <h1>{{ group ? ('edit_group' | t) : ('add_group' | t) }}</h1>
+    <div>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
   </div>
+  <h4 class="mb-3">{{ 'general' | t }}</h4>
+  <div class="row">
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="w-100">
+        <input matInput type="text" formControlName="name" [placeholder]="'group_name' | t" required>
+        <mat-error>{{ errorMessages.required }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="mb-3 w-100">
+        <mat-select formControlName="users" [placeholder]="'users' | t" multiple>
+          <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <h4 class="mb-3">{{ 'organization_units' | t }}</h4>
+  <div class="row mb-3">
+    <div class="col-12 col-lg-3">
+      <mat-form-field class="w-100">
+        <mat-select formControlName="permission" [placeholder]="'permission' | t">
+          <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <ul id="tree" class="mb-3">
+    <li>
+      <mat-checkbox color="primary" [checked]="unitChecked('root')" (change)="setUnit($event.checked, rootUnit)">ROOT</mat-checkbox>
+      <ul>
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
+      </ul>
+    </li>
+  </ul>
+  <ng-template #recursiveListTmpl let-list="list">
+    <li *ngFor="let unit of list">
+      <mat-checkbox color="primary" [checked]="unitChecked(unit.id)" (change)="setUnit($event.checked, unit)">{{ unit.name }}</mat-checkbox>
+      <ul *ngIf="unit.units">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+      </ul>
+    </li>
+  </ng-template>
 </form>

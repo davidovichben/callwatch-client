@@ -1,6 +1,6 @@
 <form (ngSubmit)="submit()" [formGroup]="userForm">
   <div class="flex-between">
-    <h1>{{ user ? 'edit_user' : 'new_user' | t }}</h1>
+    <h1>{{ user ? ('edit_user' | t) : ('new_user' | t) }}</h1>
     <div>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
