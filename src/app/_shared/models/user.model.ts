@@ -11,7 +11,8 @@ export class UserModel {
   isAdmin: boolean;
   isRoot: boolean;
   logo: File;
-  unit: UnitModel;
+  authType: string;
+  units: UnitModel[] | 'root';
 }
 
-export const AuthTypes = ['Ldap', 'Cerberus'];
+export const AuthTypes = ['ldap', 'cerberus'];

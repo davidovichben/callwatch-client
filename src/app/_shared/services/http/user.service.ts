@@ -7,6 +7,7 @@ import { UserSessionService } from '../state/user-session.service';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { UserModel } from 'src/app/_shared/models/user.model';
 
 @Injectable()
 export class UserService extends BaseHttpService {
@@ -26,8 +27,16 @@ export class UserService extends BaseHttpService {
       .catch(() => null);
   }
 
-  newUser(values: object, companyId: number): Promise<boolean> {
-    return this.http.post(this.endPoint, { ...values, companyId }, this.getTokenRequest())
+
+  getUser(userId: number): Promise<UserModel> {
+    return this.http.get(this.endPoint + '/' + userId, this.getTokenRequest())
+      .toPromise()
+      .then(response => response as UserModel)
+      .catch(() => null);
+  }
+
+  newUser(values: object): Promise<boolean> {
+    return this.http.post(this.endPoint, values, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);

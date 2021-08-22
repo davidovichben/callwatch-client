@@ -2,7 +2,7 @@ import { PermissionEntityModel } from 'src/app/_shared/models/permission-entity.
 
 export class UnitModel {
   id: any;
-  name: string;
+  name?: string;
   adminId?: number;
   externalID?: string;
   disabled?: boolean;

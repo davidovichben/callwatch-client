@@ -7,37 +7,37 @@
   </div>
   <h4 class="mb-3">{{ 'personal_details' | t }}</h4>
   <div class="row">
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <input matInput type="text" formControlName="firstName" [placeholder]="'first_name' | t" required>
         <mat-error>{{ errorMessages.required }}</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <input matInput type="text" formControlName="lastName" [placeholder]="'last_name' | t" required>
         <mat-error>{{ errorMessages.required }}</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <input matInput type="text" formControlName="workNumber" [placeholder]="'employee_number' | t">
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <input matInput type="email" formControlName="email" [placeholder]="'email' | t" required>
         <mat-error *ngIf="userForm.get('email').errors && userForm.get('email').errors.required">{{ errorMessages.required }}</mat-error>
         <mat-error *ngIf="userForm.get('email').errors && userForm.get('email').errors.pattern">{{ errorMessages.email }}</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <input matInput type="text" formControlName="mobile" [placeholder]="'mobile' | t">
         <mat-error>{{ errorMessages.phone }}</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-3">
       <mat-form-field class="w-100 ">
         <input matInput type="text" formControlName="phone" [placeholder]="'phone' | t">
         <mat-error>{{ errorMessages.phone }}</mat-error>
@@ -46,27 +46,27 @@
   </div>
   <h4 class="mb-3">{{ 'user_settings' | t }}</h4>
   <div class="row align-items-center">
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <mat-select formControlName="authType" [placeholder]="'verification_type' | t">
           <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <input matInput type="text" formControlName="username" [placeholder]="'username' | t" required>
         <mat-error>{{ errorMessages.required }}</mat-error>
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-4 mb-3">
-      <mat-form-field class="   disabled">
-        <input matInput type="password" formControlName="password" [placeholder]="'password' | t" required>
-        <mat-error>{{ errorMessages.required }}</mat-error>
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="w-100">
+        <input matInput type="password" formControlName="password" [placeholder]="'password' | t" [required]="!user">
+        <span matSuffix class="enabled link pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
+        <mat-error *ngIf="!user">{{ errorMessages.required }}</mat-error>
       </mat-form-field>
-      <span matSuffix class="enabled link pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
     </div>
-    <div class="col-12 col-lg-4 mb-3">
+    <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <mat-select formControlName="lang" [placeholder]="'system_lang_default' | t">
           <mat-option *ngFor="let lang of langs" [value]="lang.code">{{ lang.key | t }}</mat-option>
@@ -74,34 +74,30 @@
       </mat-form-field>
     </div>
   </div>
-  <div>
-    <mat-checkbox formControlName="isRoot">{{ 'main_user' | t }}</mat-checkbox>
-  </div>
   <h4 class="mb-3">{{ 'organization_units' | t }}</h4>
-  <p class="ms-4" *ngIf="userForm.get('isRoot').value">{{ 'has_root_permissions' | t }}</p>
-<!--  <ng-container *ngIf="!user.isRoot">-->
-<!--    <div class="row mb-4 align-middle" *ngFor="let unit of units; let index = index">-->
-<!--      <div class="col-12 col-lg-4">-->
-<!--        <div class="form-group d-flex">-->
-<!--          <label class="required">{{ 'unit' | t }}</label>-->
-<!--&lt;!&ndash;          <NestedOptions (selected)="addUnit" [selectedUnits]="selectedUnits" [unit]="unit" [units]="units" [isDisabled]="form.units.length - 1 > index"></NestedOptions>&ndash;&gt;-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-4">-->
-<!--        <div class="form-group d-flex">-->
-<!--          <mat-select formControlName="form.units[key].permissionId" [placeholder]="'permission' | t" required>-->
-<!--            <mat-option [value]="permission.id" *ngFor="let permission of permissions">{{ permission.name }}</mat-option>-->
-<!--          </mat-select>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <span class="col-12 col-lg-4" *ngIf="isUnitLast(key)" (click)="removeUnit()"></span>-->
-<!--    </div>-->
-<!--  </ng-container>-->
-<!--  <div *ngIf="!user.isRoot" class="ms-4 pointer" [ngClass]="{ 'add-unit-disabled': addUnitDisabled }" (click)="addUnit()">-->
-<!--    <i class="la la-plus ms-1"></i>-->
-<!--    <span class="mr-1 f-12">{{ 'add_unit' | t }}</span>-->
-<!--  </div>-->
-<!--  <div>-->
-<!--    <app-file-input (fileUploaded)="file = $event" (fileCleared)="file = null" [inputFile]="user ? user.logo : null"></app-file-input>-->
-<!--  </div>-->
+  <div class="row mb-3">
+    <div class="col-12 col-lg-3">
+      <mat-form-field class="w-100">
+        <mat-select formControlName="permission" [placeholder]="'permission' | t">
+          <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <ul id="tree" class="mb-3">
+    <li>
+      <mat-checkbox color="primary" [checked]="unitChecked('root')" (change)="setUnit($event.checked, rootUnit)">ROOT</mat-checkbox>
+      <ul>
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
+      </ul>
+    </li>
+  </ul>
+  <ng-template #recursiveListTmpl let-list="list">
+    <li *ngFor="let unit of list">
+      <mat-checkbox color="primary" [checked]="unitChecked(unit.id)" (change)="setUnit($event.checked, unit)">{{ unit.name }}</mat-checkbox>
+      <ul *ngIf="unit.units">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+      </ul>
+    </li>
+  </ng-template>
 </form>

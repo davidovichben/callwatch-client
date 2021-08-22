@@ -21,11 +21,22 @@ import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
+import { UserResolve } from 'src/app/_shared/resolves/user.resolve';
+
 const routes: Routes = [
   {
     path: '',
     component: FormComponent,
     resolve: {
+      permissions: PermissionSelectResolve,
+      units: UnitsResolve
+    }
+  },
+  {
+    path: ':id',
+    component: FormComponent,
+    resolve: {
+      user: UserResolve,
       permissions: PermissionSelectResolve,
       units: UnitsResolve
     }
@@ -51,7 +62,8 @@ const routes: Routes = [
     PermissionService,
     UnitService,
     PermissionSelectResolve,
-    UnitsResolve
+    UnitsResolve,
+    UserResolve
   ]
 })
 export class FormModule {}
