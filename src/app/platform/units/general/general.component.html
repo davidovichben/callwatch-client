@@ -13,12 +13,37 @@
         <mat-option *ngFor="let user of unit.users" [value]="user.id">{{ user.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <input matInput name="externalID" [placeholder]="'external_identification' | t" [ngModel]="unit.externalID" [disabled]="isRoot || !hasPermission('units', 'update')">
+    <mat-form-field  *ngIf="!isRoot">
+      <input matInput name="externalID" [placeholder]="'external_identification' | t" [ngModel]="unit.externalID" [disabled]="!hasPermission('units', 'update')">
     </mat-form-field>
   </div>
   <button class="btn blue-btn" type="submit" *ngIf="hasPermission('units', 'update') && !isRoot">{{ 'save' | t }}</button>
 </form>
+<div class="mt-5">
+  <p class="mb-3 f-18 grey-text">{{ 'groups' | t }}</p>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>{{ 'group' | t }}</th>
+      <th *ngIf="unit.id !== 'root'">{{ 'permission' | t }}</th>
+      <th>{{ 'actions' | t }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let group of unit.groups; let index = index">
+      <td>{{ group.name }}</td>
+      <td *ngIf="unit.id !== 'root'">{{ group.permission }}</td>
+      <td class="row-icons">
+        <i class="la la-trash" *ngIf="hasPermission('groups', 'delete')" (click)="deletePermissionEntity(group.id, index)"></i>
+      </td>
+    </tr>
+    <tr *ngIf="unit.groups && unit.groups.length === 0">
+      <td colspan="4">{{ 'no_groups_in_unit' | t }}.</td>
+    </tr>
+    </tbody>
+  </table>
+  <button class="btn blue-btn" (click)="openPermissionEntityDialog('group')" *ngIf="hasPermission('groups', 'create')">{{ 'add_group' | t }}</button>
+</div>
 <div class="mt-5">
   <p class="mb-3 f-18 grey-text">{{ 'users' | t }}</p>
   <table class="table table-striped">
@@ -34,8 +59,7 @@
       <td>{{ user.name }}</td>
       <td *ngIf="unit.id !== 'root'">{{ user.permission }}</td>
       <td class="row-icons">
-        <i class="la la-edit" *ngIf="hasPermission('users', 'update')" (click)="openUserDialog(user.id)"></i>
-        <i class="la la-trash" *ngIf="hasPermission('users', 'delete')" (click)="deleteUser(user.id, index)"></i>
+        <i class="la la-trash" *ngIf="hasPermission('users', 'delete')" (click)="deletePermissionEntity(user.id, index)"></i>
       </td>
     </tr>
     <tr *ngIf="unit.users && unit.users.length === 0">
@@ -43,7 +67,7 @@
     </tr>
     </tbody>
   </table>
-  <button class="btn blue-btn" (click)="openUserDialog()" *ngIf="hasPermission('users', 'create')">{{ 'add_user' | t }}</button>
+  <button class="btn blue-btn" (click)="openPermissionEntityDialog('user')" *ngIf="hasPermission('users', 'create')">{{ 'add_user' | t }}</button>
 </div>
 <div class="mt-5" *ngIf="unit.parent">
   <p class="mb-3 f-18 grey-text">{{ 'parent_users' | t }}</p>

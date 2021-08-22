@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
+import { UnitPermissionEntityService } from 'src/app/_shared/services/http/unit-permission-entity.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
@@ -15,21 +15,27 @@ export class FormComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private dialogRef: MatDialogRef<FormComponent>,
-              private userUnitService: UnitUserService,
+              private unitPermissionEntityService: UnitPermissionEntityService,
               private notification: NotificationService,
               private t: TranslatePipe) {}
 
   submit(form: NgForm): void {
     if (form.valid) {
-      this.userUnitService.newUnitUser(this.data.unitId, form.value.userId, form.value.permissionId).then(response => {
-        if (response) {
-          if (response.error && response.errorCode) {
-            this.notification.error(this.t.transform('values_exist'));
-          } else {
-            this.dialogRef.close(true);
-          }
-        }
+      const permissionEntityId = form.value.permissionEntityId;
+
+      this.unitPermissionEntityService.newPermissionEntity(this.data.unitId, permissionEntityId).then(response => {
+        this.handleServerResponse(response);
       });
+    }
+  }
+
+  private handleServerResponse(response: any): void {
+    if (response.error) {
+      if (response.errorCode) {
+        this.notification.error(this.t.transform('values_exist'));
+      }
+    } else {
+      this.dialogRef.close(true);
     }
   }
 }

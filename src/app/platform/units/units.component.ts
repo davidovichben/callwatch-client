@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { UnitModules } from 'src/app/_shared/constants/general';
-import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Component({
   selector: 'app-units',
   templateUrl: './units.component.html',
   styleUrls: ['./units.component.styl']
 })
-export class UnitsComponent implements OnInit {
+export class UnitsComponent implements OnInit, OnDestroy {
 
   readonly rootUnit = {
     id: 'root',
@@ -19,16 +19,21 @@ export class UnitsComponent implements OnInit {
     units: []
   }
 
+  readonly sub = new Subscription();
+
   modules = UnitModules;
 
-  activeUnitId: number;
+  activeUnitId: any;
 
   constructor(private route: ActivatedRoute,
               public userSession: UserSessionService) {}
 
   ngOnInit(): void {
-    this.activeUnitId = +this.route.snapshot.params.id;
     this.rootUnit.units = this.route.snapshot.data.units;
+
+    this.sub.add(this.route.params.subscribe(params => {
+      this.activeUnitId = params.id;
+    }));
 
     this.setModules();
   }
@@ -56,5 +61,9 @@ export class UnitsComponent implements OnInit {
     }
 
     return unitPermissions && unitPermissions[module.name] && unitPermissions[module.name].read;
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

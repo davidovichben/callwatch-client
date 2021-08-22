@@ -20,7 +20,8 @@ const routes: Routes = [
     resolve: { units: UnitsResolve },
     pathMatch: '',
     children: [
-      { path: '', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) }
+      { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
+      { path: '', redirectTo: 'general' }
     ]
   },
   {

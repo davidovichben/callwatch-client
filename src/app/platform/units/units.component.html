@@ -1,7 +1,7 @@
 <div id="units">
   <h1>{{ 'organization_structure' | t }}</h1>
   <app-unit-tree [rootUnit]="rootUnit"></app-unit-tree>
-  <div class="mt-5 flex-center" *ngIf="userSession.hasPermission(5, 'units', 'create')">
+  <div class="mt-5 flex-center">
     <button class="btn grey-btn">
       <i class="la la-plus ms-1"></i>
       <span>{{ 'add_unit' | t }}</span>
@@ -10,7 +10,7 @@
 </div>
 <div id="main">
   <div class="mb-5 pt-2 tabs">
-    <a class="tab" [routerLink]="module.name ? ['/platform', 'units', activeUnitId, module.name] : ['/platform', 'units']" *ngFor="let module of modules">{{ module.label | t }}</a>
+    <a class="tab" [routerLink]="['/platform', 'units', activeUnitId, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>
   </div>
   <div class="px-3">
     <router-outlet></router-outlet>

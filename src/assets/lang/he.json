@@ -141,6 +141,8 @@
   { "key": "report_set_name", "value": "שם סט דוחות" },
   { "key": "report_types", "value": "סוגי דוחות" },
   { "key": "sets", "value": "סטים" },
-  { "key": "set_password", "value": "הגדר סיסמה" }
+  { "key": "set_password", "value": "הגדר סיסמה" },
+  { "key": "group", "value": "קבוצה" },
+  { "key": "no_groups_in_unit", "value": "אין קבוצות משויכות ליחידה" }
 ]
 

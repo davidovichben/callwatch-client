@@ -1,4 +1,4 @@
-import { UserModel } from 'src/app/_shared/models/user.model';
+import { PermissionEntityModel } from 'src/app/_shared/models/permission-entity.model';
 
 export class UnitModel {
   id: any;
@@ -7,6 +7,7 @@ export class UnitModel {
   externalID?: string;
   disabled?: boolean;
   units: UnitModel[];
-  users?: UserModel[];
+  users?: PermissionEntityModel[];
+  groups?: PermissionEntityModel[];
   parent?: UnitModel;
 }

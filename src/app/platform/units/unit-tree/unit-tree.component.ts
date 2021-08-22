@@ -31,10 +31,8 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
               private t: TranslatePipe) {}
 
   ngOnInit(): void {
-    this.activeUnitId = this.route.snapshot.params.id;
-
     this.sub.add(this.route.params.subscribe(params => {
-      this.activeUnitId = this.route.snapshot.params.id;
+      this.activeUnitId = params.id;
     }));
   }
 

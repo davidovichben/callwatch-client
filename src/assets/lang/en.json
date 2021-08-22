@@ -139,5 +139,7 @@
   { "key": "report_set_name", "value": "Report set name" },
   { "key": "report_types", "value": "Report types" },
   { "key": "sets", "value": "Sets" },
-  { "key": "set_password", "value": "Set Password" }
+  { "key": "set_password", "value": "Set Password" },
+  { "key": "group", "value": "Group" },
+  { "key": "no_groups_in_unit", "value": "No groups in unit" }
 ]

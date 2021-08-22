@@ -32,7 +32,7 @@ export const AdminModules = [
 ];
 
 export const UnitModules = [
-  { name: '', label: 'general' },
+  { name: 'general', label: 'general' },
   { name: 'campaigns', label: 'campaigns' },
   { name: 'calls', label: 'incoming_calls' },
 ];
