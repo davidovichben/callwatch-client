@@ -6,11 +6,11 @@ import { ReportService } from 'src/app/_shared/services/http/report.service';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
-export class ReportTypesSelectResolve implements Resolve<SelectItemModel[]> {
+export class ReportSelectResolve implements Resolve<SelectItemModel[]> {
 
   constructor(private reportService: ReportService) {}
 
   resolve() {
-    return this.reportService.getTypes().then(response => response as SelectItemModel[]);
+    return this.reportService.selectReports().then(response => response as SelectItemModel[]);
   }
 }

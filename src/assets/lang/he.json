@@ -132,17 +132,20 @@
   { "key": "no_items_to_display", "value": "אין פריטים לתצוגה" },
   { "key": "loading", "value": "בטעינה" },
   { "key": "report_sets", "value": "סטים" },
-  { "key": "add_report_set", "value": "הוסף סט דוחות" },
   { "key": "set_name", "value": "שם סט" },
-  { "key": "total_report_types", "value": "סהכ סוגי דוחות" },
+  { "key": "total_reports", "value": "סהכ סוגי דוחות" },
   { "key": "report_set_deleted", "value": "סט הדוחות נמחק" },
-  { "key": "add_set", "value": "הוסף סט" },
-  { "key": "edit_set", "value": "ערוך סט" },
+  { "key": "add_report_set", "value": "הוסף סט" },
+  { "key": "edit_report_set", "value": "ערוך סט" },
   { "key": "report_set_name", "value": "שם סט דוחות" },
   { "key": "report_types", "value": "סוגי דוחות" },
   { "key": "sets", "value": "סטים" },
   { "key": "set_password", "value": "הגדר סיסמה" },
   { "key": "group", "value": "קבוצה" },
-  { "key": "no_groups_in_unit", "value": "אין קבוצות משויכות ליחידה" }
+  { "key": "no_groups_in_unit", "value": "אין קבוצות משויכות ליחידה" },
+  { "key": "report_name", "value": "שם הדוח" },
+  { "key": "add_report", "value": "הוסף דוח" },
+  { "key": "edit_report", "value": "ערוך דוח" },
+  { "key": "remove_selected", "value": "הסר פריטים שנבחרו" }
 ]
 

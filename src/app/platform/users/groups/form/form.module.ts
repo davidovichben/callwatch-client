@@ -11,14 +11,15 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 
 import { FormComponent } from './form.component';
 
+import { UserService } from 'src/app/_shared/services/http/user.service';
+import { PermissionService } from 'src/app/_shared/services/http/permission.service';
+import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { GroupService } from 'src/app/_shared/services/http/group.service';
+
 import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-select.resolve';
 import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
 import { UserSelectResolve } from 'src/app/_shared/resolves/user-select.resolve';
 import { GroupResolve } from 'src/app/_shared/resolves/group.resolve';
-import { UserService } from 'src/app/_shared/services/http/user.service';
-import { PermissionService } from 'src/app/_shared/services/http/permission.service';
-import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 const routes: Routes = [
   {

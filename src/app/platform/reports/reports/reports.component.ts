@@ -1,47 +1,42 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
-import { ReportSetService } from 'src/app/_shared/services/http/report-set.service';
+import { ReportService } from 'src/app/_shared/services/http/report.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-
 @Component({
-  selector: 'app-sets',
-  templateUrl: './sets.component.html'
+  selector: 'app-reports',
+  templateUrl: './reports.component.html'
 })
-export class SetsComponent {
+export class ReportsComponent {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
   readonly columns = [
-    { label: 'set_name', name: 'name' },
-    { label: 'total_reports', name: 'totalReports' }
+    { label: 'report_name', name: 'name' }
   ];
 
-  constructor(private dialog: MatDialog,
-              private route: ActivatedRoute,
-              private reportSetService: ReportSetService,
+  constructor(private route: ActivatedRoute,
+              private reportService: ReportService,
               private notificationService: NotificationService,
               private t: TranslatePipe) {}
 
   fetchItems(): void {
-    this.reportSetService.getReportSets(this.dataTable.criteria).then(response => {
+    this.reportService.getReports(this.dataTable.criteria).then(response => {
       this.dataTable.setItems(response);
     })
   }
 
-  deleteReportSet(reportSetId: number): void {
+  deleteReport(reportId: number): void {
     this.notificationService.warning().then(confirmation => {
       if (confirmation.value) {
-        this.reportSetService.deleteReportSet(reportSetId).then(response => {
+        this.reportService.deleteReport(reportId).then(response => {
           if (response) {
-            const msg = this.t.transform('report_set_deleted');
+            const msg = this.t.transform('report_deleted');
             this.notificationService.success(msg);
 
             this.fetchItems();

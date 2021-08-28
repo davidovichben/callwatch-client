@@ -189,6 +189,7 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
     if (value) {
       this.initialValue = value;
 	}
+
 	}
 
 	registerOnChange(fn: any) {

@@ -1,19 +1,31 @@
-<div class="dialog-header">
-  <span>{{ data.reportSet.id ? ('edit_set' | t) : ('add_set' | t) }}</span>
-  <i class="la la-times" mat-dialog-close></i>
-</div>
 <form (ngSubmit)="submit(form)" #form="ngForm">
-  <mat-form-field class="mb-3 w-100">
-    <input matInput [placeholder]="'report_set_name' | t" [ngModel]="data.reportSet.name" name="name" required>
-    <mat-error>{{ errorMessages.required }}</mat-error>
-  </mat-form-field>
-  <mat-form-field class="mb-3 w-100">
-    <mat-select [placeholder]="'report_types' | t" [ngModel]="data.reportSet.reportTypes" name="reportTypes" multiple required>
-      <mat-option *ngFor="let type of data.reportTypes" [value]="type.id">{{ type.name }}</mat-option>
-    </mat-select>
-    <mat-error>{{ errorMessages.required }}</mat-error>
-  </mat-form-field>
-  <div class="text-center">
-    <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+  <div class="flex-between">
+    <h1>{{ reportSet.id ? ('edit_report_set' | t) : ('add_report_set' | t) }}</h1>
+    <div>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="w-100">
+        <input matInput type="text" name="name" [ngModel]="reportSet.name" [placeholder]="'report_set_name' | t" required>
+        <mat-error>{{ errorMessages.required }}</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-6">
+      <h4>{{ 'reports' | t }}</h4>
+      <app-select-groups name="reports" [ngModel]="reportSet.reports" [items]="reports"></app-select-groups>
+    </div>
+    <div class="col-12 col-sm-6">
+      <h4>{{ 'users' | t }}</h4>
+      <app-select-groups name="users" [ngModel]="reportSet.users" [items]="users"></app-select-groups>
+    </div>
+    <div class="col-12 col-sm-6">
+      <h4>{{ 'groups' | t }}</h4>
+      <app-select-groups name="groups" [ngModel]="reportSet.groups" [items]="groups"></app-select-groups>
+    </div>
   </div>
 </form>
+
