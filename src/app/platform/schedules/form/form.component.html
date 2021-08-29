@@ -1,5 +1,5 @@
 <div class="dialog-header">
-  <span>{{ schedule.id ? schedule.name : 'create_schedule' | t }}</span>
+  <span>{{ schedule.id ? ('edit_schedule' | t) : ('add_schedule' | t) }}</span>
   <i class="la la-times" mat-dialog-close></i>
 </div>
 <form (ngSubmit)="submit(form)" #form="ngForm">

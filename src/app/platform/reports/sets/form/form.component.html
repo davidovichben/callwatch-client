@@ -19,14 +19,6 @@
       <app-select-groups name="reports" [ngModel]="reportSet.reports" [items]="reports" #reportSelect="ngModel" required></app-select-groups>
       <p class="alert alert-danger" [@fade]="form.submitted && reportSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
     </div>
-    <div class="col-12 col-sm-6">
-      <h4>{{ 'users' | t }}</h4>
-      <app-select-groups name="users" [ngModel]="reportSet.users" [items]="users"></app-select-groups>
-    </div>
-    <div class="col-12 col-sm-6">
-      <h4>{{ 'groups' | t }}</h4>
-      <app-select-groups name="groups" [ngModel]="reportSet.groups" [items]="groups"></app-select-groups>
-    </div>
   </div>
 </form>
 

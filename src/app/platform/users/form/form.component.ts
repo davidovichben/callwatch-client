@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { PasswordComponent } from './password/password.component';
+import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 
@@ -18,7 +18,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['../../../units/unit-tree/unit-tree.component.styl']
+  styleUrls: ['../../units/unit-tree/unit-tree.component.styl']
 })
 export class FormComponent implements OnInit, OnDestroy {
 

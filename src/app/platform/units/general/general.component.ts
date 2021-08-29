@@ -8,11 +8,10 @@ import { FormComponent } from 'src/app/platform/units/general/form/form.componen
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
-import { UnitPermissionEntityService } from 'src/app/_shared/services/http/unit-permission-entity.service';
+import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { UnitModel } from 'src/app/_shared/models/unit.model';
-import { PermissionEntityModel } from 'src/app/_shared/models/permission-entity.model';
 
 @Component({
   selector: 'app-general',
@@ -26,7 +25,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
   unit = new UnitModel();
   permissions = [];
   users = [];
-  groups = [];
 
   isRoot = false;
 
@@ -34,12 +32,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               private userSession: UserSessionService,
               private notification: NotificationService,
-              private unitPermissionEntityService: UnitPermissionEntityService,
+              private unitUserService: UnitUserService,
               private unitService: UnitService) {}
 
   ngOnInit(): void {
     this.users = this.route.snapshot.data.users;
-    this.groups = this.route.snapshot.data.groups;
 
     this.sub.add(this.route.data.subscribe(data => {
       this.unit = data.unit;
@@ -51,32 +48,28 @@ export class GeneralComponent implements OnInit, OnDestroy {
     return this.userSession.hasPermission(this.unit.id, module, action);
   }
 
-  openPermissionEntityDialog(type: string): void {
-    const permissionEntities = type === 'group' ? this.groups : this.users;
-
+  openUserDialog(): void {
     const dialog = this.dialog.open(FormComponent, {
       width: '400px',
       data: {
         unitId: this.unit.id,
-        permissionEntities,
-        type
+        users: this.users
       }
     })
 
     this.sub.add(dialog.afterClosed().subscribe(saved => {
       if (saved) {
-        this.unitPermissionEntityService.getPermissionEntities(this.unit.id, type).then(response => {
-          const attr = type === 'user' ? 'users' : 'groups';
-          this.unit[attr] = response;
+        this.unitUserService.getUsers(this.unit.id).then(response => {
+          this.unit.users = response;
         });
       }
     }));
   }
 
-  deletePermissionEntity(permissionEntityId: number, index: number): void {
+  deleteUser(userId: number, index: number): void {
     this.notification.warning().then(confirmation => {
       if (confirmation.value) {
-        this.unitPermissionEntityService.deletePermissionEntity(this.unit.id, permissionEntityId).then(response => {
+        this.unitUserService.deleteUser(this.unit.id, userId).then(response => {
           if (response) {
             this.unit.users.splice(index, 1);
           }

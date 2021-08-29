@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { UsersComponent } from './users.component';
+import { UsersComponent } from 'src/app/platform/users/users.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 
@@ -12,7 +12,7 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 const routes: Routes = [
   { path: '', component: UsersComponent },
-  { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
+  { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) }
 ];
 
 @NgModule({

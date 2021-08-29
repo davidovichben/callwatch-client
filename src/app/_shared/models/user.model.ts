@@ -12,6 +12,7 @@ export class UserModel {
   isRoot: boolean;
   logo: File;
   authType: string;
+  unit: string;
   units: UnitModel[] | 'root';
 }
 

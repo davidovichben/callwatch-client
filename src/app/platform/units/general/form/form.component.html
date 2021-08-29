@@ -1,11 +1,11 @@
 <div class="dialog-header">
-  <span>{{ data.type === 'group' ? ('add_group' | t) : ('add_user' | t) }}</span>
+  <span>{{ 'add_user' | t }}</span>
   <i class="la la-times" mat-dialog-close></i>
 </div>
 <form (ngSubmit)="submit(form)" #form="ngForm">
   <mat-form-field class="d-block mb-3">
-    <mat-select name="permissionEntityId" ngModel [placeholder]="'name' | t" required>
-      <mat-option *ngFor="let entity of data.permissionEntities" [value]="entity.id">{{ entity.name }}</mat-option>
+    <mat-select name="userId" ngModel [placeholder]="'name' | t" required>
+      <mat-option *ngFor="let user of data.users" [value]="user.id">{{ user.name }}</mat-option>
     </mat-select>
   </mat-form-field>
   <div class="text-center">

@@ -5,5 +5,4 @@ export class ReportSetModel {
   name: string;
   reports: SelectItemModel[];
   users: SelectItemModel[];
-  groups: SelectItemModel[];
 }

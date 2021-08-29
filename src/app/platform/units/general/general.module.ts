@@ -11,11 +11,9 @@ import { FormModule } from './form/form.module';
 
 import { GeneralComponent } from './general.component';
 
-import { GroupService } from 'src/app/_shared/services/http/group.service';
 import { UserService } from 'src/app/_shared/services/http/user.service';
-import { UnitPermissionEntityService } from 'src/app/_shared/services/http/unit-permission-entity.service';
+import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
 
-import { GroupSelectResolve } from 'src/app/_shared/resolves/group-select.resolve';
 import { UserSelectResolve } from 'src/app/_shared/resolves/user-select.resolve';
 import { UnitResolve } from 'src/app/_shared/resolves/unit.resolve';
 
@@ -24,7 +22,6 @@ const routes: Routes = [
     path: '',
     component: GeneralComponent,
     resolve: {
-      groups: GroupSelectResolve,
       users: UserSelectResolve,
       unit: UnitResolve
     }
@@ -45,10 +42,8 @@ const routes: Routes = [
   ],
   providers: [
     UserService,
-    GroupService,
-    UnitPermissionEntityService,
+    UnitUserService,
     UnitResolve,
-    GroupSelectResolve,
     UserSelectResolve
   ]
 })

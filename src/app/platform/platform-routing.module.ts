@@ -28,7 +28,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        loadChildren: () => import('src/app/platform/users/users-routing.module').then(m => m.UsersRoutingModule)
+        loadChildren: () => import('src/app/platform/users/users.module').then(m => m.UsersModule)
       },
       {
         path: 'permissions',

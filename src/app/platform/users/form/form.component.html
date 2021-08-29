@@ -1,6 +1,6 @@
 <form (ngSubmit)="submit()" [formGroup]="userForm">
   <div class="flex-between">
-    <h1>{{ user ? ('edit_user' | t) : ('new_user' | t) }}</h1>
+    <h1>{{ user ? ('edit_user' | t) : ('add_user' | t) }}</h1>
     <div>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
@@ -74,30 +74,31 @@
       </mat-form-field>
     </div>
   </div>
-  <h4 class="mb-3">{{ 'organization_units' | t }}</h4>
   <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-select formControlName="permission" [placeholder]="'permission' | t">
-          <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="col-12 col-lg-6">
+      <h4>{{ 'permissions' | t }}</h4>
+      <mat-select formControlName="permission">
+        <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
+      </mat-select>
     </div>
   </div>
-  <ul id="tree" class="mb-3">
-    <li>
-      <mat-checkbox color="primary" [checked]="unitChecked('root')" (change)="setUnit($event.checked, rootUnit)">ROOT</mat-checkbox>
-      <ul>
-        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
-      </ul>
-    </li>
-  </ul>
-  <ng-template #recursiveListTmpl let-list="list">
-    <li *ngFor="let unit of list">
-      <mat-checkbox color="primary" [checked]="unitChecked(unit.id)" (change)="setUnit($event.checked, unit)">{{ unit.name }}</mat-checkbox>
-      <ul *ngIf="unit.units">
-        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
-      </ul>
-    </li>
-  </ng-template>
+  <div>
+    <h4 class="mb-3">{{ 'organization_units' | t }}</h4>
+    <ul id="tree" class="mb-3">
+      <li>
+        <mat-checkbox color="primary" [checked]="unitChecked('root')" (change)="setUnit($event.checked, rootUnit)">ROOT</mat-checkbox>
+        <ul>
+          <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
+        </ul>
+      </li>
+    </ul>
+    <ng-template #recursiveListTmpl let-list="list">
+      <li *ngFor="let unit of list">
+        <mat-checkbox color="primary" [checked]="unitChecked(unit.id)" (change)="setUnit($event.checked, unit)">{{ unit.name }}</mat-checkbox>
+        <ul *ngIf="unit.units">
+          <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+        </ul>
+      </li>
+    </ng-template>
+  </div>
 </form>

@@ -6,21 +6,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 
+import { FileInputModule } from 'src/app/_shared/components/file-input/file-input.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { SelectGroupsModule } from 'src/app/_shared/components/select-groups/select-groups.module';
 
-import { FormComponent } from './form.component';
+import { FormComponent } from 'src/app/platform/users/form/form.component';
+import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
-import { GroupService } from 'src/app/_shared/services/http/group.service';
 
 import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-select.resolve';
 import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
-import { UserSelectResolve } from 'src/app/_shared/resolves/user-select.resolve';
-import { GroupResolve } from 'src/app/_shared/resolves/group.resolve';
+import { UserResolve } from 'src/app/_shared/resolves/user.resolve';
 
 const routes: Routes = [
   {
@@ -28,24 +28,22 @@ const routes: Routes = [
     component: FormComponent,
     resolve: {
       permissions: PermissionSelectResolve,
-      units: UnitsResolve,
-      users: UserSelectResolve
+      units: UnitsResolve
     }
   },
   {
     path: ':id',
     component: FormComponent,
     resolve: {
-      group: GroupResolve,
+      user: UserResolve,
       permissions: PermissionSelectResolve,
-      units: UnitsResolve,
-      users: UserSelectResolve
+      units: UnitsResolve
     }
   }
 ];
 
 @NgModule({
-  declarations: [FormComponent],
+  declarations: [FormComponent, PasswordComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -54,18 +52,17 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatDialogModule,
     TranslateModule,
-    SelectGroupsModule
+    FileInputModule
   ],
   providers: [
-    GroupService,
     UserService,
     PermissionService,
     UnitService,
-    UserSelectResolve,
     PermissionSelectResolve,
     UnitsResolve,
-    GroupResolve
+    UserResolve
   ]
 })
 export class FormModule {}
