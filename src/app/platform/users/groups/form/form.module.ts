@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { SelectGroupsModule } from 'src/app/_shared/components/select-groups/select-groups.module';
 
 import { FormComponent } from './form.component';
 
@@ -53,7 +54,8 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
-    TranslateModule
+    TranslateModule,
+    SelectGroupsModule
   ],
   providers: [
     GroupService,

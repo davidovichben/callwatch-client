@@ -40,7 +40,7 @@ export class FormComponent {
   ngOnInit() {
     this.groupForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
-      permission: this.fb.control(null),
+      permissions: this.fb.control(null),
       users: this.fb.control([]),
       units: this.fb.control([])
     });

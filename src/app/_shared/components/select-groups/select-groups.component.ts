@@ -62,11 +62,10 @@ export class SelectGroupsComponent implements OnInit, ControlValueAccessor {
   private propagateChange = (_: any) => {};
 
   writeValue(values: number[]): void {
-    console.log(values)
     if (!values) {
       return;
     }
-    console.log(this.filteredItems)
+
     const selectedItems = this.filteredItems.filter(item => {
       return values.indexOf(item.id) !== -1;
     })
