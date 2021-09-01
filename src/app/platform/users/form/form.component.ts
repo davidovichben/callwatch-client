@@ -18,8 +18,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['../../units/unit-tree/unit-tree.component.styl']
+  templateUrl: './form.component.html'
 })
 export class FormComponent implements OnInit, OnDestroy {
 

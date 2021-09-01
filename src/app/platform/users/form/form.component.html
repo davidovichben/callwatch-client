@@ -60,7 +60,7 @@
       </mat-form-field>
     </div>
     <div class="col-12 col-lg-3 mb-3">
-      <mat-form-field class="w-100">
+      <mat-form-field class="w-100 disabled">
         <input matInput type="password" formControlName="password" [placeholder]="'password' | t" [required]="!user">
         <span matSuffix class="enabled link pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
         <mat-error *ngIf="!user">{{ errorMessages.required }}</mat-error>
