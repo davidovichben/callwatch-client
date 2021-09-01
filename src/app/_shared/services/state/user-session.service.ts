@@ -55,4 +55,8 @@ export class UserSessionService {
 
     return permissions[module] && permissions[module][action];
   }
+
+  isRootUser(): boolean {
+    return this.getUser().permissions === 'root';
+  }
 }

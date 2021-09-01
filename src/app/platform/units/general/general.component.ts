@@ -26,7 +26,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
   permissions = [];
   users = [];
 
-  isRoot = false;
+  isRootUnit = false;
+  isRootUser = false;
 
   constructor(private route: ActivatedRoute,
               private dialog: MatDialog,
@@ -40,7 +41,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
     this.sub.add(this.route.data.subscribe(data => {
       this.unit = data.unit;
-      this.isRoot = this.unit.id === 'root';
+      this.isRootUnit = this.unit.id === 'root';
+      this.isRootUser = this.userSession.isRootUser();
     }));
   }
 
