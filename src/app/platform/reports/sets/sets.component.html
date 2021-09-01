@@ -1,6 +1,6 @@
 <div class="mb-5 flex-between">
   <h1>{{ 'report_sets' | t }}</h1>
-  <button class="btn blue-btn" routerLink="./form">
+  <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('reports', 'create')">
     <i class="la la-plus ms-1"></i>
     <span>{{ 'add_report_set' | t }}</span>
   </button>
@@ -10,8 +10,8 @@
     <td>{{ item.name }}</td>
     <td>{{ item.totalReports }}</td>
     <td class="row-icons">
-      <i class="la la-edit" [routerLink]="['./form', item.id]"></i>
-      <i class="la la-trash" (click)="deleteReportSet(item.id)"></i>
+      <i class="la la-edit" [routerLink]="['./form', item.id]" *ngIf="userSession.hasPermission('reports', 'update')"></i>
+      <i class="la la-trash" (click)="deleteReportSet(item.id)" *ngIf="userSession.hasPermission('reports', 'delete')"></i>
     </td>
   </tr>
 </app-data-table>

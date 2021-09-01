@@ -1,6 +1,6 @@
 <div class="mb-5 flex-between">
   <h1>{{ 'users' | t }}</h1>
-  <button class="btn blue-btn" routerLink="./form">
+  <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('users', 'create')">
     <i class="la la-plus ms-1"></i>
     <span>{{ 'add_user' | t }}</span>
   </button>
@@ -10,8 +10,8 @@
     <td>{{ item.name }}</td>
     <td>{{ item.phone }}</td>
     <td class="row-icons">
-      <i class="la la-edit" [routerLink]="['./form', item.id]"></i>
-      <i class="la la-trash" (click)="deleteUser(item.id)"></i>
+      <i class="la la-edit" [routerLink]="['./form', item.id]" *ngIf="userSession.hasPermission('users', 'update')"></i>
+      <i class="la la-trash" (click)="deleteUser(item.id)" *ngIf="currentUser.id !== item.id && userSession.hasPermission('users', 'delete')"></i>
     </td>
   </tr>
 </app-data-table>

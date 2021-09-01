@@ -2,10 +2,10 @@
   <h1>{{ 'organization_structure' | t }}</h1>
   <app-unit-tree [rootUnit]="rootUnit"></app-unit-tree>
   <div class="mt-5 flex-center">
-    <button class="btn grey-btn">
-      <i class="la la-plus ms-1"></i>
-      <span>{{ 'add_unit' | t }}</span>
-    </button>
+<!--    <button class="btn grey-btn" *ngIf="userSession.hasPermission('units', 'create')">-->
+<!--      <i class="la la-plus ms-1"></i>-->
+<!--      <span>{{ 'add_unit' | t }}</span>-->
+<!--    </button>-->
   </div>
 </div>
 <div id="main">

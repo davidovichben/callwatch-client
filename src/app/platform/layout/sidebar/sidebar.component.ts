@@ -5,6 +5,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 
 import { AdminModules, PlatformModules } from 'src/app/_shared/constants/general';
+import { ModuleModel } from 'src/app/_shared/models/module.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -36,41 +37,34 @@ export class SidebarComponent implements OnInit {
   private setMenu(): void {
     this.menuType = this.router.url.substr(1, 5) === 'admin' ? 'admin' : 'platform';
     this.modules = this.menuType === 'admin' ? AdminModules : PlatformModules;
+
+    this.setModules();
   }
 
-  setModules(): boolean {
+  private setModules(): void {
     const user = this.userSession.getUser();
-
-    if (user.isAdmin) {
-      return true;
-    }
 
     const permissions = user.permissions;
     if (permissions === 'root') {
-      return true;
+      return;
     }
 
-    const activeUnitId = 1; // todo: fix unit select logic
-    const unitPermissions = permissions[activeUnitId];
-
     this.modules = this.modules.filter(module => {
-      if (module.subModules) {
-        module.subModules = module.subModules.filter(subModule => this.checkAllowedModule(unitPermissions, subModule));
+      if (module.subModules && !module.isGuarded) {
+        module.subModules = module.subModules.filter(subModule => this.checkAllowedModule(permissions, subModule));
         return module.subModules.length > 0;
       }
 
-      return this.checkAllowedModule(unitPermissions, module)
+      return this.checkAllowedModule(permissions, module);
     });
-
-    return true;
   }
 
-  checkAllowedModule(unitPermissions, module): boolean {
-    if (!module.guarded) {
+  private checkAllowedModule(permissions: any, module: ModuleModel): boolean {
+    if (!module.isGuarded) {
       return true;
     }
 
-    return unitPermissions && unitPermissions[module.name] && unitPermissions[module.name].read;
+    return permissions[module.name] && permissions[module.name].read;
   }
 
   setActiveModule(from?: string): void {

@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { FileInputModule } from 'src/app/_shared/components/file-input/file-input.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { UnitTreeSelectModule } from 'src/app/_shared/components/unit-tree-select/unit-tree-select.module';
 
 import { FormComponent } from 'src/app/platform/users/form/form.component';
 import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
@@ -44,18 +45,19 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [FormComponent, PasswordComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    TranslateModule,
-    FileInputModule
-  ],
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatSelectModule,
+		MatCheckboxModule,
+		MatDialogModule,
+		TranslateModule,
+		FileInputModule,
+		UnitTreeSelectModule
+	],
   providers: [
     UserService,
     PermissionService,

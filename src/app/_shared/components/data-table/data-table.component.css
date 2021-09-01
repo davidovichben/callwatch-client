@@ -22,7 +22,8 @@
   align-items: center;
   padding: 6px 10px;
   border-radius: 11px;
-  background-color: #f6f6f6;
+  background-color: #fff;
+  border: 1px solid #aeaeae;
 }
 
 #searchContainer {

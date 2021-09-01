@@ -38,16 +38,21 @@ export class UserSessionService {
     return null;
   }
 
-  hasPermission(unitId: number, module: string, action: string): boolean {
+  setPermissions(permissions: any): void {
+    const user = this.getUser();
+    user.permissions = permissions;
+
+    this.setUser(user);
+  }
+
+  hasPermission(module: string, action: string): boolean {
     const user = this.getUser();
 
     const permissions = user.permissions;
-    if (permissions === 'root' || user.isAdmin) {
+    if (permissions === 'root') {
       return true;
     }
 
-    const unitPermissions = permissions[unitId];
-
-    return unitPermissions && unitPermissions[module] && unitPermissions[module][action];
+    return permissions[module] && permissions[module][action];
   }
 }

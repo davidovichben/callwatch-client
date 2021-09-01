@@ -1,7 +1,7 @@
 <div class="mb-5 flex-between">
   <h1>{{ 'schedules' | t }}</h1>
   <div>
-    <button class="btn blue-btn" (click)="openFormDialog()">
+    <button class="btn blue-btn" (click)="openFormDialog()" *ngIf="userSession.hasPermission('schedules', 'create')">
       <i class="la la-plus ms-1"></i>
       <span>{{ 'add_schedule' | t }}</span>
     </button>
@@ -14,8 +14,8 @@
     </td>
     <td>{{ item.description }}</td>
     <td class="row-icons">
-      <i class="la la-edit" (click)="openFormDialog(item)" *ngIf="userSession.hasPermission(5,'schedules', 'update')"></i>
-      <i class="la la-trash" (click)="deleteSchedule(item.id)" *ngIf="userSession.hasPermission(5, 'schedules', 'delete')"></i>
+      <i class="la la-edit" (click)="openFormDialog(item)" *ngIf="userSession.hasPermission('schedules', 'update')"></i>
+      <i class="la la-trash" (click)="deleteSchedule(item.id)" *ngIf="userSession.hasPermission('schedules', 'delete')"></i>
     </td>
   </tr>
 </app-data-table>

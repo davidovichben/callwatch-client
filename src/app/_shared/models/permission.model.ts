@@ -6,4 +6,4 @@ export class PermissionModel {
   modules: ModuleModel[];
 }
 
-export const PermissionScopes = ['read', 'create', 'update', 'delete'];
+export const PermissionActions = ['read', 'create', 'update', 'delete'];

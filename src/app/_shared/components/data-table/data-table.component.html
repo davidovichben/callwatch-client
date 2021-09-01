@@ -4,10 +4,10 @@
       <input placeholder="חפש" [(ngModel)]="criteria.keyword" (keyup)="search($event)">
       <mat-icon>search</mat-icon>
     </div>
-    <div id="toggleFilters" (click)="showFilters = !showFilters" [ngClass]="{ active: showFilters }" *ngIf="hasExtendedSearch">
-      <mat-icon>import_export</mat-icon>
-      <span>סנן</span>
-    </div>
+<!--    <div id="toggleFilters" (click)="showFilters = !showFilters" [ngClass]="{ active: showFilters }" *ngIf="hasExtendedSearch">-->
+<!--      <mat-icon>import_export</mat-icon>-->
+<!--      <span>סנן</span>-->
+<!--    </div>-->
     <div *ngIf="activeSwitch">
       <mat-slide-toggle (change)="toggleActiveStatus($event.checked)" [checked]="isActive">{{ activeSwitch }}</mat-slide-toggle>
     </div>

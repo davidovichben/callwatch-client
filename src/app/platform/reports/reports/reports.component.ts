@@ -5,6 +5,7 @@ import { DataTableComponent } from 'src/app/_shared/components/data-table/data-t
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { ReportService } from 'src/app/_shared/services/http/report.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -23,6 +24,7 @@ export class ReportsComponent {
   constructor(private route: ActivatedRoute,
               private reportService: ReportService,
               private notificationService: NotificationService,
+              public userSession: UserSessionService,
               private t: TranslatePipe) {}
 
   fetchItems(): void {

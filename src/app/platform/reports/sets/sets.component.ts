@@ -6,10 +6,9 @@ import { DataTableComponent } from 'src/app/_shared/components/data-table/data-t
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { ReportSetService } from 'src/app/_shared/services/http/report-set.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
   selector: 'app-sets',
@@ -28,6 +27,7 @@ export class SetsComponent {
               private route: ActivatedRoute,
               private reportSetService: ReportSetService,
               private notificationService: NotificationService,
+              public userSession: UserSessionService,
               private t: TranslatePipe) {}
 
   fetchItems(): void {

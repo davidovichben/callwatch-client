@@ -1,5 +1,5 @@
 export const PlatformModules = [
-  { name: 'dashboard', isGuarded: false },
+  { name: 'dashboard' },
   { name: 'campaigns', isGuarded: true },
   { name: 'units', isGuarded: true },
   {
@@ -12,18 +12,14 @@ export const PlatformModules = [
   },
   {
     name: 'users',
-    isGuarded: true,
-    subModules: [
-      { name: 'users', isGuarded: true },
-      { name: 'groups', isGuarded: true, hasParentPrefix: true }
-    ]
+    isGuarded: true
   },
   {
     name: 'settings',
     isGuarded: false,
     subModules: [
-      { name: 'permissions', isGuarded: false },
-      { name: 'schedules', isGuarded: false }
+      { name: 'permissions', isGuarded: true },
+      { name: 'schedules', isGuarded: true }
     ]
   },
 ];

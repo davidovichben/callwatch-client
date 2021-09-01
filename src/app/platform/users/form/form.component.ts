@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
+import { UnitTreeSelectComponent } from 'src/app/_shared/components/unit-tree-select/unit-tree-select.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 
@@ -22,21 +23,18 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 })
 export class FormComponent implements OnInit, OnDestroy {
 
+  @ViewChild(UnitTreeSelectComponent) unitTree: UnitTreeSelectComponent;
+
   readonly authTypes = AuthTypes;
   readonly langs = Langs;
   readonly errorMessages = ErrorMessages;
   readonly sub = new Subscription();
 
-  readonly rootUnit: UnitModel = {
-    id: 'root',
-    units: []
-  }
-
   userForm: FormGroup;
 
   user: UserModel;
-
   permissions: SelectItemModel[] = [];
+  units: UnitModel[] = [];
 
   isSubmitting = false;
 
@@ -64,7 +62,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
     const routeData = this.route.snapshot.data;
 
-    this.rootUnit.units = routeData.units;
+    this.units = routeData.units;
     this.permissions = routeData.permissions;
 
     this.user = routeData.user;
@@ -74,29 +72,9 @@ export class FormComponent implements OnInit, OnDestroy {
 
       if (this.user.units === 'root') {
         this.userForm.get('units').patchValue([]);
-        this.setUnit(true, this.rootUnit);
+        this.unitTree.selectAll();
       }
     }
-  }
-
-  setUnit(checked: boolean, unit?: UnitModel): void {
-    const checkedIds = this.userForm.get('units').value;
-    if (checked) {
-      checkedIds.push(unit.id);
-    } else {
-      const index = checkedIds.indexOf(unit.id);
-      checkedIds.splice(index, 1);
-    }
-
-    if (unit.units) {
-      unit.units.forEach(iteratedUnit => {
-        this.setUnit(checked, iteratedUnit)
-      });
-    }
-  }
-
-  unitChecked(unitId: any): boolean {
-    return this.userForm.get('units').value.indexOf(unitId) !== -1;
   }
 
   openPasswordDialog(): void {

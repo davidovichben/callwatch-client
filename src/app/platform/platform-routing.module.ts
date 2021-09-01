@@ -3,10 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PlatformComponent } from 'src/app/platform/platform.component';
 
+import { UserService } from 'src/app/_shared/services/http/user.service';
+
+import { UserPermissionsResolve } from 'src/app/_shared/resolves/user-permissions.resolve';
+
 const routes: Routes = [
   {
     path: '',
     component: PlatformComponent,
+    resolve: { permissions: UserPermissionsResolve },
     children: [
       {
         path: '',
@@ -48,6 +53,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [UserService, UserPermissionsResolve]
 })
 export class PlatformRoutingModule {}

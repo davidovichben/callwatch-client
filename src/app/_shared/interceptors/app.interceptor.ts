@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/internal/operators';
@@ -13,8 +14,10 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
-  constructor(private userSession: UserSessionService, private helpers: HelpersService,
-              private notificationService: NotificationService) {}
+  constructor(private userSession: UserSessionService,
+              private notificationService: NotificationService,
+              private helpers: HelpersService,
+              private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const noLoader = req.headers.get('NoLoader');
@@ -33,7 +36,12 @@ export class AppInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        this.notificationService.serverError();
+        if (error.status === 403) {
+          this.router.navigate(['/platform', 'dashboard']);
+        } else {
+          this.notificationService.serverError();
+        }
+
         return throwError(error);
       }),
       finalize(() => {

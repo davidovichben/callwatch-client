@@ -27,7 +27,6 @@ export class UserService extends BaseHttpService {
       .catch(() => null);
   }
 
-
   getUser(userId: number): Promise<UserModel> {
     return this.http.get(this.endPoint + '/' + userId, this.getTokenRequest())
       .toPromise()
@@ -61,5 +60,12 @@ export class UserService extends BaseHttpService {
       .toPromise()
       .then(response => response as SelectItemModel[])
       .catch(() => []);
+  }
+
+  getPermissions(): Promise<any> {
+    return this.http.get(this.endPoint + '/permission', this.getTokenRequest())
+      .toPromise()
+      .then(response => response)
+      .catch(() => null);
   }
 }

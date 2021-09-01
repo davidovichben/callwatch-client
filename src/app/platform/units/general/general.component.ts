@@ -45,7 +45,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   hasPermission(module: string, action: string): boolean {
-    return this.userSession.hasPermission(this.unit.id, module, action);
+    return this.userSession.hasPermission(module, action);
   }
 
   openUserDialog(): void {

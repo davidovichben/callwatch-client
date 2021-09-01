@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { PermissionModel, PermissionScopes } from 'src/app/_shared/models/permission.model';
+import { PermissionModel, PermissionActions } from 'src/app/_shared/models/permission.model';
 import { PlatformModules } from 'src/app/_shared/constants/general';
 import { ModuleModel } from 'src/app/_shared/models/module.model';
 
@@ -16,7 +16,7 @@ import { ModuleModel } from 'src/app/_shared/models/module.model';
 export class FormComponent implements OnInit {
 
   readonly errorMessages = ErrorMessages;
-  readonly scopes =  PermissionScopes;
+  readonly actions =  PermissionActions;
 
   permission: PermissionModel;
 
@@ -39,7 +39,7 @@ export class FormComponent implements OnInit {
 
   private loadModules(): void {
     PlatformModules.forEach(module => {
-      if (module.subModules) {
+      if (module.subModules && !module.isGuarded) {
         module.subModules.forEach(subModule => {
           this.modules.push({ name: subModule.name });
         });
@@ -53,7 +53,7 @@ export class FormComponent implements OnInit {
     const match = this.modules.find(iteratedModule => iteratedModule.name === module.name);
     if (match) {
       match.checked = true;
-      this.scopes.forEach(scope => {
+      this.actions.forEach(scope => {
         match[scope] = module[scope];
         if (!module[scope]) {
           match.checked = false;
@@ -63,7 +63,7 @@ export class FormComponent implements OnInit {
   }
 
   checkRow(module: ModuleModel): void {
-    this.scopes.forEach(scope => module[scope] = module.checked);
+    this.actions.forEach(scope => module[scope] = module.checked);
   }
 
   checkAll(isChecked: boolean): void {
@@ -75,9 +75,8 @@ export class FormComponent implements OnInit {
 
   submit(form: NgForm): void {
     if (form.valid) {
-
       const modules = this.modules.filter(module => {
-        return this.scopes.some(scope => {
+        return this.actions.some(scope => {
           return !!module[scope];
         });
       });

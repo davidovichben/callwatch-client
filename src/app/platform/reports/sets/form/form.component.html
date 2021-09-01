@@ -20,5 +20,6 @@
       <p class="alert alert-danger" [@fade]="form.submitted && reportSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
     </div>
   </div>
+  <app-unit-tree-select name="units" [units]="units" [ngModel]="reportSet.units"></app-unit-tree-select>
 </form>
 

@@ -8,6 +8,8 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
+import { UserModel } from 'src/app/_shared/models/user.model';
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html'
@@ -21,10 +23,16 @@ export class UsersComponent {
     { label: 'phone', name: 'phone' }
   ];
 
+  currentUser: UserModel;
+
   constructor(public userSession: UserSessionService,
               private userService: UserService,
               private notificationService: NotificationService,
               private t: TranslatePipe) {}
+
+  ngOnInit() {
+    this.currentUser = this.userSession.getUser();
+  }
 
   fetchItems(): void {
     this.userService.getUsers(this.dataTable.criteria).then(response => {
@@ -33,10 +41,15 @@ export class UsersComponent {
   }
 
   deleteUser(userId: number): void {
-    this.userService.deleteUser(userId).then(response => {
-      if (response) {
-        const msg = this.t.transform('user_deleted');
-        this.notificationService.success(msg);
+    this.notificationService.warning().then(confirmation => {
+      if (confirmation.value) {
+        this.userService.deleteUser(userId).then(response => {
+          if (response) {
+            const msg = this.t.transform('user_deleted');
+            this.notificationService.success(msg);
+            this.fetchItems();
+          }
+        });
       }
     });
   }

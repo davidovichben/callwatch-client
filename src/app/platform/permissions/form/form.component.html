@@ -25,8 +25,8 @@
         <td>
           <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)" color="primary"></mat-checkbox>
         </td>
-        <td *ngFor="let scope of scopes">
-          <mat-checkbox [name]="'scope-' + index" [(ngModel)]="module[scope]" (change)="!module[scope] ? module.checked = false : null" color="primary"></mat-checkbox>
+        <td *ngFor="let action of actions">
+          <mat-checkbox [name]="'action-' + index" [(ngModel)]="module[action]" (change)="!module[action] ? module.checked = false : null" color="primary"></mat-checkbox>
         </td>
       </tr>
       </tbody>
