@@ -32,8 +32,7 @@ export class AppComponent implements OnInit {
   private setLocale(): void {
     this.lang = this.locale.getLang();
     if (this.lang) {
-      this.renderer.addClass(document.body, this.locale.dir);
-      this.renderer.setAttribute(document.body, 'dir', 'rtl');
+      this.setDirection();
 
       this.appHttp.getTranslations(this.lang).then(response => {
         this.locale.setTranslations(response);
@@ -46,8 +45,8 @@ export class AppComponent implements OnInit {
   private setSubscriptions(): void {
     this.locale.langChanged.subscribe(lang => {
       this.lang = lang;
-      this.renderer.addClass(document.body, this.locale.dir);
-      this.renderer.setAttribute(document.body, 'dir', 'rtl');
+
+      this.setDirection();
 
       this.appHttp.getTranslations(this.lang).then(response => {
         this.locale.setTranslations(response);
@@ -55,6 +54,12 @@ export class AppComponent implements OnInit {
     })
 
     this.helpers.pageSpinnerShown.subscribe(showSpinner => this.isLoading = showSpinner);
+  }
+
+  private setDirection(): void {
+    this.renderer.addClass(document.body, this.locale.dir);
+    this.renderer.removeClass(document.body, this.locale.dir === 'rtl' ? 'ltr' : 'rtl');
+    this.renderer.setAttribute(document.body, 'dir', this.locale.dir);
   }
 
   private listenRouterEvents(): void {

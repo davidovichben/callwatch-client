@@ -133,10 +133,10 @@
   { "key": "report_sets", "value": "מקבצי דוחות" },
   { "key": "set_name", "value": "שם סט" },
   { "key": "total_reports", "value": "סהכ סוגי דוחות" },
-  { "key": "report_set_deleted", "value": "סט הדוחות נמחק" },
+  { "key": "report_set_deleted", "value": "מקבץ הדוחות נמחק" },
   { "key": "add_report_set", "value": "הוספת מקבץ דוחות" },
   { "key": "edit_report_set", "value": "עריכת מקבץ דוחות" },
-  { "key": "report_set_name", "value": "שם סט דוחות" },
+  { "key": "report_set_name", "value": "שם מקבץ" },
   { "key": "report_types", "value": "סוגי דוחות" },
   { "key": "set_password", "value": "הגדר סיסמה" },
   { "key": "group", "value": "קבוצה" },
@@ -145,6 +145,7 @@
   { "key": "add_report", "value": "הוספת דוח" },
   { "key": "edit_report", "value": "עריכת דוח" },
   { "key": "remove_selected", "value": "הסר פריטים שנבחרו" },
-  { "key": "sets", "value": "מקבצי דוחות" }
+  { "key": "sets", "value": "מקבצי דוחות" },
+  { "key": "authorization_error", "value": "אינך רשאי לבצע את הפעולה" }
 ]
 

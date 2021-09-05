@@ -13,6 +13,8 @@ import { HelpersService } from 'src/app/_shared/services/generic/helpers.service
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 import { LoggedInGuard } from 'src/app/_shared/guards/logged-in.guard';
 import { GuestGuard } from 'src/app/_shared/guards/guest.guard';
 
@@ -34,7 +36,8 @@ import { AppInterceptor } from 'src/app/_shared/interceptors/app.interceptor';
     AppHttpService,
     GuestGuard,
     LoggedInGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
+    TranslatePipe,
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

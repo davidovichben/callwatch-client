@@ -1,18 +1,20 @@
-<ul id="tree">
-  <li>
-    <span [ngClass]="{ 'active': activeUnitId === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
-  </li>
-  <ul>
-    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
-  </ul>
-</ul>
-<ng-template #recursiveListTmpl let-list="list">
-  <li *ngFor="let unit of list" [ngClass]="{ disabled: unit.disabled }" (drop)="drop($event, unit)">
-    <i class="ms-1 la la-plus" [ngClass]="{ 'la-plus': unit.isToggled, 'la-minus': !unit.isToggled }"
-       (click)="unit.isToggled = !unit.isToggled" *ngIf="unit.units"></i>
-    <span [draggable]="!unit.disabled" [ngClass]="{ 'active': activeUnitId == unit.id }" (dragstart)="dragStart($event, unit)" (dragover)="allowDrop($event)" (click)="unitClicked(unit)">{{ unit.name }}</span>
-    <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.isToggled }">
-      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+<div id="treeWrapper">
+  <ul id="tree">
+    <li>
+      <span [ngClass]="{ 'active': activeUnitId === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
+    </li>
+    <ul>
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
     </ul>
-  </li>
-</ng-template>
+  </ul>
+  <ng-template #recursiveListTmpl let-list="list">
+    <li *ngFor="let unit of list" [ngClass]="{ disabled: unit.disabled }" (drop)="drop($event, unit)">
+      <i class="ms-1 la la-plus" [ngClass]="{ 'la-plus': unit.isToggled, 'la-minus': !unit.isToggled }"
+         (click)="unit.isToggled = !unit.isToggled" *ngIf="unit.units"></i>
+      <span [draggable]="!unit.disabled" [ngClass]="{ 'active': activeUnitId == unit.id }" (dragstart)="dragStart($event, unit)" (dragover)="allowDrop($event)" (click)="unitClicked(unit)">{{ unit.name }}</span>
+      <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.isToggled }">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+      </ul>
+    </li>
+  </ng-template>
+</div>

@@ -50,7 +50,7 @@
   { "key": "main_unit", "value": "Main Unit" },
   { "key": "main_user", "value": "Main user" },
   { "key": "mobile", "value": "Mobile" },
-  { "key": "modules", "value": "modules" },
+  { "key": "modules", "value": "Modules" },
   { "key": "monday", "value": "Monday" },
   { "key": "name", "value": "Name" },
   { "key": "add_user", "value": "Add User" },
@@ -144,6 +144,8 @@
   { "key": "report_name", "value": "Report Name" },
   { "key": "add_report", "value": "Add Report" },
   { "key": "edit_report", "value": "Edit Report" },
+  { "key": "edit_report", "value": "Emdit Report" },
   { "key": "remove_selected", "value": "Remove Selected" },
-  { "key": "sets", "value": "Report Sets" }
+  { "key": "sets", "value": "Report Sets" },
+  { "key": "authorization_error", "value": "You are unauthorized for this action" }
 ]

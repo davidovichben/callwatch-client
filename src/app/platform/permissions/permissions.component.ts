@@ -4,6 +4,7 @@ import { DataTableComponent } from 'src/app/_shared/components/data-table/data-t
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 @Component({
   selector: 'app-permissions',
@@ -18,7 +19,8 @@ export class PermissionsComponent {
   ];
 
   constructor(public userSession: UserSessionService,
-              private permissionService: PermissionService) {}
+              private permissionService: PermissionService,
+              private notificationService: NotificationService) {}
 
   fetchItems(): void {
     this.permissionService.getPermissions(this.dataTable.criteria).then(response => {
@@ -27,6 +29,15 @@ export class PermissionsComponent {
   }
 
   deletePermission(permissionId: number): void {
-
+    this.notificationService.warning().then(confirmation => {
+      if (confirmation.value) {
+        this.permissionService.deletePermission(permissionId).then(response => {
+          if (response) {
+            this.notificationService.success();
+            this.fetchItems();
+          }
+        });
+      }
+    });
   }
 }

@@ -1,0 +1,14 @@
+<div #select>
+  <div (click)="isOpened = !isOpened">{{ 'select_unit' | t }}</div>
+  <div id="options" [style]="{ top: position.y + 'px', right: position.x + 'px' }">
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: units }"></ng-container>
+  </div>
+</div>
+
+<ng-template #recursiveListTmpl let-list="list">
+  <div class="me-3" *ngFor="let unit of list">
+    <div class="option">{{ unit.name }}</div>
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+  </div>
+</ng-template>
+

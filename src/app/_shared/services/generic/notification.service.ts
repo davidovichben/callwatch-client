@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 declare const swal: any;
 
 @Injectable()
 export class NotificationService {
+
+  constructor(private t: TranslatePipe) {
+  }
 
   public success(title?: string, text?: string, extraOptions?: object): void {
     title = title ? title : 'הפעולה בוצעה בהצלחה';
@@ -70,6 +75,10 @@ export class NotificationService {
     }
 
     return swal.fire(options);
+  }
+
+  public authorizationError(): void {
+    return this.error(this.t.transform('authorization_error'));
   }
 
   public serverError(): void {

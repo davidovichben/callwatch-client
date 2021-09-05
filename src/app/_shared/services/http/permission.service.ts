@@ -48,6 +48,13 @@ export class PermissionService extends BaseHttpService {
       .catch(() => false);
   }
 
+  deletePermission(permissionId: number): Promise<boolean> {
+    return this.http.delete(this.endPoint + '/' + permissionId, this.getTokenRequest())
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
+
   selectPermissions(): Promise<PermissionModel[]> {
     return this.http.get(this.endPoint + '/select', this.getTokenRequest())
       .toPromise()

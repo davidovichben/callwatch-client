@@ -16,8 +16,7 @@ export class AppInterceptor implements HttpInterceptor {
 
   constructor(private userSession: UserSessionService,
               private notificationService: NotificationService,
-              private helpers: HelpersService,
-              private router: Router) {}
+              private helpers: HelpersService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const noLoader = req.headers.get('NoLoader');
@@ -37,7 +36,7 @@ export class AppInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
-          this.router.navigate(['/platform', 'dashboard']);
+          this.notificationService.authorizationError();
         } else {
           this.notificationService.serverError();
         }

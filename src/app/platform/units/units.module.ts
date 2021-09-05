@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { UnitFormModule } from 'src/app/platform/units/unit-form/unit-form.module';
 
 import { UnitsComponent } from './units.component';
 import { UnitTreeComponent } from './unit-tree/unit-tree.component';
@@ -36,7 +37,8 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		RouterModule.forChild(routes),
-    TranslateModule
+    TranslateModule,
+    UnitFormModule
 	],
   providers: [UnitService, UnitsResolve, TranslatePipe]
 })

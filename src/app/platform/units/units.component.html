@@ -1,15 +1,15 @@
 <div id="units">
-  <h1>{{ 'organization_structure' | t }}</h1>
+  <h1 class="text-center">{{ 'organization_structure' | t }}</h1>
   <app-unit-tree [rootUnit]="rootUnit"></app-unit-tree>
   <div class="mt-5 flex-center">
-<!--    <button class="btn grey-btn" *ngIf="userSession.hasPermission('units', 'create')">-->
-<!--      <i class="la la-plus ms-1"></i>-->
-<!--      <span>{{ 'add_unit' | t }}</span>-->
-<!--    </button>-->
+    <button class="btn blue-btn" (click)="openFormDialog()" *ngIf="userSession.hasPermission('units', 'create')">
+      <i class="la la-plus ms-1"></i>
+      <span>{{ 'add_unit' | t }}</span>
+    </button>
   </div>
 </div>
 <div id="main">
-  <div class="mb-5 pt-2 tabs">
+  <div class="mb-5 tabs">
     <a class="tab" [routerLink]="['/platform', 'units', activeUnitId, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>
   </div>
   <div class="px-3">
