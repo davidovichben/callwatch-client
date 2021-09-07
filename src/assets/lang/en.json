@@ -144,8 +144,10 @@
   { "key": "report_name", "value": "Report Name" },
   { "key": "add_report", "value": "Add Report" },
   { "key": "edit_report", "value": "Edit Report" },
-  { "key": "edit_report", "value": "Emdit Report" },
+  { "key": "edit_report", "value": "Edit Report" },
   { "key": "remove_selected", "value": "Remove Selected" },
   { "key": "sets", "value": "Report Sets" },
-  { "key": "authorization_error", "value": "You are unauthorized for this action" }
+  { "key": "authorization_error", "value": "You are unauthorized for this action" },
+  { "key": "select_unit", "value": "Select Unit" },
+  { "key": "select_parent_unit", "value": "Select Parent Unit" }
 ]

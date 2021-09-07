@@ -7,7 +7,10 @@
     <input matInput type="text" name="name" ngModel [placeholder]="'unit_name' | t" required>
     <mat-error>{{ errorMessages.required }}</mat-error>
   </mat-form-field>
-  <app-unit-select [units]="units"></app-unit-select>
+  <div>
+    <app-unit-select [units]="units" [placeholder]="'select_parent_unit'" ngModel #parentSelect="ngModel" name="parent" [required]="!userSession.isRootUser()"></app-unit-select>
+    <p class="alert alert-danger" [@fade]="form.submitted && parentSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
+  </div>
   <mat-form-field class="w-100">
     <input matInput type="text" name="externalID" ngModel [placeholder]="'external_identification' | t">
   </mat-form-field>

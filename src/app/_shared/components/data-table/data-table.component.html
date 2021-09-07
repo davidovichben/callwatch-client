@@ -2,7 +2,10 @@
   <div>
     <div id="searchContainer">
       <input placeholder="חפש" [(ngModel)]="criteria.keyword" (keyup)="search($event)">
-      <mat-icon>search</mat-icon>
+      <div>
+        <mat-icon *ngIf="criteria.keyword" (click)="resetSearch()">close</mat-icon>
+        <mat-icon (click)="search()">search</mat-icon>
+      </div>
     </div>
 <!--    <div id="toggleFilters" (click)="showFilters = !showFilters" [ngClass]="{ active: showFilters }" *ngIf="hasExtendedSearch">-->
 <!--      <mat-icon>import_export</mat-icon>-->

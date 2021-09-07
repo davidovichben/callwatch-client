@@ -27,6 +27,7 @@
 }
 
 #searchContainer {
+  width: 280px;
   margin-left: 15px;
 }
 
@@ -40,8 +41,13 @@
   color: #000;
 }
 
-#searchContainer > mat-icon {
+#searchContainer > div {
+  display: flex;
+}
+
+#searchContainer mat-icon {
   color: #adadad;
+  cursor: pointer;
 }
 
 #toggleFilters {

@@ -79,11 +79,11 @@ export class UnitsComponent implements OnInit, OnDestroy {
   }
 
   private checkAllowedModule(moduleName: string) {
-    if (!moduleName) {
+    if (moduleName === 'general') {
       return true;
     }
 
-    return  this.userSession.hasPermission(moduleName, 'read');
+    return this.userSession.hasPermission(moduleName, 'read');
   }
 
   ngOnDestroy() {

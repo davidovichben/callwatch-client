@@ -146,6 +146,8 @@
   { "key": "edit_report", "value": "עריכת דוח" },
   { "key": "remove_selected", "value": "הסר פריטים שנבחרו" },
   { "key": "sets", "value": "מקבצי דוחות" },
-  { "key": "authorization_error", "value": "אינך רשאי לבצע את הפעולה" }
+  { "key": "authorization_error", "value": "אינך רשאי לבצע את הפעולה" },
+  { "key": "select_unit", "value": "בחר יחידה" },
+  { "key": "select_parent_unit", "value": "בחר יחידת אב" }
 ]
 

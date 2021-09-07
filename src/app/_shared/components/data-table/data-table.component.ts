@@ -128,6 +128,11 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  resetSearch(): void {
+    this.criteria.keyword = '';
+    this.loadItems();
+  }
+
   extendedSearch(values: object): void {
     this.criteria.filters = values;
 
