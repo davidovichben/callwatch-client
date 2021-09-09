@@ -3,15 +3,46 @@
 :host
   display: block
   max-height: 720px
-  padding: 10px 50px
+  padding: 10px 60px
   overflow-y: auto
   direction: ltr
 
-#treeWrapper
+.rtl :host #treeWrapper
   direction: rtl
 
-ul
+.rtl :host ul
   margin: 2px 19px 0 0
+
+  li
+    border-right: 1px solid rgb(100, 100, 100)
+
+  li:last-child
+    border-right: none
+
+  li:before
+    right: -3px
+    content: ""
+
+  li:last-child:before
+    border-right: 1px solid rgb(100, 100, 100)
+
+.ltr :host ul
+  margin: 2px 0 0 19px
+
+  li
+    border-left: 1px solid rgb(100, 100, 100)
+
+  li:last-child
+    border-left: none
+
+  li:before
+    left: -3px
+    content: ""
+
+  li:last-child:before
+    border-left: 1px solid rgb(100, 100, 100)
+
+ul
 
   li
     margin: 0
@@ -19,7 +50,6 @@ ul
     line-height: 20px
     color: #369
     font-weight: bold
-    border-right: 1px solid rgb(100, 100, 100)
     cursor: pointer
 
     i
@@ -28,26 +58,19 @@ ul
     span.active
       text-decoration: underline
 
-  li:last-child
-    border-right: none
+  li.disabled
+    pointer-events: none
+    color: GreyColor
 
   li:before
     position: relative
     top: -0.3em
-    right: -3px
     display: inline-block
     height: 40px
     width: 12px
     color: #fff
     border-bottom: 1px solid rgb(100, 100, 100)
-    content: ""
 
-  li:last-child:before
-    border-right: 1px solid rgb(100, 100, 100)
-
-  li.disabled
-    pointer-events: none
-    color: GreyColor
 
 ul.toggled
   visibility: hidden
@@ -55,8 +78,15 @@ ul.toggled
 #tree
   margin: 0
 
+  > li:before
+    content: none
+
+.rtl :host #tree
   > li
     border-right: none
 
-  > li:before
-    content: none
+.ltr :host #tree
+  > li
+    border-left: none
+
+
