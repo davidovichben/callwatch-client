@@ -68,4 +68,11 @@ export class UserService extends BaseHttpService {
       .then(response => response)
       .catch(() => null);
   }
+
+  checkExists(username: string): Promise<any> {
+    return this.http.get(this.endPoint + '/exists', this.getTokenRequest({ username }, true))
+      .toPromise()
+      .then(response => response)
+      .catch(() => false);
+  }
 }

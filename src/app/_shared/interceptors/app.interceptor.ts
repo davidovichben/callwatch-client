@@ -20,7 +20,6 @@ export class AppInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const noLoader = req.headers.get('NoLoader');
-
     const authReq = req.clone({
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userSession.getToken()

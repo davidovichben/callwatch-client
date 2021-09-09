@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { PasswordComponent } from 'src/app/platform/users/form/password/password
 import { UnitTreeSelectComponent } from 'src/app/_shared/components/unit-tree-select/unit-tree-select.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
@@ -41,19 +42,19 @@ export class FormComponent implements OnInit, OnDestroy {
               private router: Router,
               private dialog: MatDialog,
               private fb: FormBuilder,
-              private userService: UserService) {}
+              private userService: UserService,
+              public userSession: UserSessionService) {}
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
       firstName: this.fb.control(null, Validators.required),
       lastName: this.fb.control(null, Validators.required),
       workNumber: this.fb.control(null),
-      email: this.fb.control(null, [Validators.required, Validators.pattern(EmailPattern)]),
+      username: this.fb.control(null, [Validators.required, Validators.pattern(EmailPattern)], this.checkUsernameUnique.bind(this)),
       mobile: this.fb.control(null),
       phone: this.fb.control(null, Validators.pattern(PhonePattern)),
       authType: this.fb.control(null),
       locale: this.fb.control(null),
-      username: this.fb.control(null, Validators.required),
       password: this.fb.control(null, Validators.required),
       permission: this.fb.control(null),
       units: this.fb.control([])
@@ -84,6 +85,20 @@ export class FormComponent implements OnInit, OnDestroy {
     this.sub.add(dialog.afterClosed().subscribe(password => {
       this.userForm.get('password').patchValue(password);
     }));
+  }
+
+  checkUsernameUnique(control: FormControl): Promise<{ exists: boolean }> {
+    if (this.user && this.user.username === control.value) {
+      return Promise.resolve(null);
+    }
+
+    return this.userService.checkExists(control.value).then(response => {
+      if (response) {
+        return response.exists ? { exists: true } : null;
+      }
+
+      return null;
+    });
   }
 
   submit(): void {

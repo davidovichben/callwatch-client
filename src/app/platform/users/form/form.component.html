@@ -26,9 +26,10 @@
     </div>
     <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
-        <input matInput type="email" formControlName="email" [placeholder]="'email' | t" required>
-        <mat-error *ngIf="userForm.get('email').errors && userForm.get('email').errors.required">{{ errorMessages.required }}</mat-error>
-        <mat-error *ngIf="userForm.get('email').errors && userForm.get('email').errors.pattern">{{ errorMessages.email }}</mat-error>
+        <input matInput type="email" formControlName="username" [placeholder]="'username' | t" required>
+        <mat-error *ngIf="userForm.get('username').errors && userForm.get('username').errors.required">{{ errorMessages.required }}</mat-error>
+        <mat-error *ngIf="userForm.get('username').errors && userForm.get('username').errors.pattern">{{ errorMessages.email }}</mat-error>
+        <mat-error *ngIf="userForm.get('username').errors && userForm.get('username').errors.exists">{{ 'username_exists' | t }}</mat-error>
       </mat-form-field>
     </div>
     <div class="col-12 col-lg-3 mb-3">
@@ -51,12 +52,6 @@
         <mat-select formControlName="authType" [placeholder]="'verification_type' | t">
           <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
         </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3 mb-3">
-      <mat-form-field class="w-100">
-        <input matInput type="text" formControlName="username" [placeholder]="'username' | t" required>
-        <mat-error>{{ errorMessages.required }}</mat-error>
       </mat-form-field>
     </div>
     <div class="col-12 col-lg-3 mb-3">
@@ -83,5 +78,5 @@
       </mat-form-field>
     </div>
   </div>
-  <app-unit-tree-select [units]="units" formControlName="units"></app-unit-tree-select>
+  <app-unit-tree-select [units]="units" [isRootUser]="userSession.isRootUser()" formControlName="units"></app-unit-tree-select>
 </form>

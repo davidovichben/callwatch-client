@@ -13,8 +13,9 @@ export abstract class BaseHttpService {
 
   protected constructor(protected userSession?: UserSessionService) {}
 
-  getTokenRequest(params?: any): { headers: HttpHeaders, params?: HttpParams } {
-    const request: { headers: HttpHeaders, params?: HttpParams } = { headers: this.getTokenHeaders() };
+  getTokenRequest(params?: any, noLoader?: boolean): { headers: HttpHeaders, params?: HttpParams } {
+    const request: { headers: HttpHeaders, params?: HttpParams } = { headers: this.getTokenHeaders(noLoader) };
+
     if (params) {
       request.params = new HttpParams({ fromObject: params } );
     }
@@ -22,10 +23,16 @@ export abstract class BaseHttpService {
     return request;
   }
 
-  getTokenHeaders(): HttpHeaders {
-    return new HttpHeaders({
+  getTokenHeaders(noLoader?: boolean): HttpHeaders {
+    const headers = {
       Authorization: 'Bearer ' + this.userSession.getToken()
-    });
+    };
+
+    if (noLoader) {
+      Object.assign(headers, { NoLoader: 'true' });
+    }
+
+    return new HttpHeaders(headers);
   }
 
   getBlobRequest(params?: any): { headers: HttpHeaders, responseType: 'blob' } {

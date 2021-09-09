@@ -156,5 +156,6 @@
   { "key": "resend_code", "value": "Resend code" },
   { "key": "fill_in_reset_code", "value": "Reset code was sent to the email address, type it in to reset" },
   { "key": "invalid_reset_token", "value": "Code is invalid or expired" },
-  { "key": "password_was_reset", "value": "The password was reset, login using your new password" }
+  { "key": "password_was_reset", "value": "The password was reset, login using your new password" },
+  { "key": "username_exists", "value": "Username exists in system" }
 ]

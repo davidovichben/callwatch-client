@@ -155,6 +155,7 @@
   { "key": "resend_code", "value": "שלח קוד שוב" },
   { "key": "fill_in_reset_code", "value": "קוד איפוס נשלח לכתובת המייל, הזן אותו כדי להמשיך" },
   { "key": "invalid_reset_token", "value": "קוד האיפוס אינו תקין או שפג תוקפו" },
-  { "key": "password_was_reset", "value": "הסיסמה אופסה, אנא התחבר באמצעות הסיסמה החדשה" }
+  { "key": "password_was_reset", "value": "הסיסמה אופסה, אנא התחבר באמצעות הסיסמה החדשה" },
+  { "key": "username_exists", "value": "שם המשתמש קיים במערכת" }
 ]
 

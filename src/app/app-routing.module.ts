@@ -6,14 +6,14 @@ import { GuestGuard } from 'src/app/_shared/guards/guest.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
-    canLoad: [GuestGuard]
-  },
-  {
     path: 'platform',
     loadChildren: () => import('./platform/platform.module').then(m => m.PlatformModule),
     canLoad: [LoggedInGuard]
+  },
+  {
+    path: '',
+    loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
+    canLoad: [GuestGuard]
   }
 ]
 

@@ -18,6 +18,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 export class UnitTreeSelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() units: UnitModel[];
+  @Input() isRootUser = false;
 
   readonly rootUnit = {
     id: 'root',
