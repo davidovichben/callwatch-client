@@ -118,6 +118,11 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
 
+  resetPermission(event: Event): void {
+    event.stopPropagation();
+    this.userForm.get('permission').reset()
+  }
+
   private handleServerResponse(response: boolean): void {
     if (response) {
       this.router.navigate(['/platform', 'users'])

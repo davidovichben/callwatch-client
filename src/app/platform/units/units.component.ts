@@ -8,6 +8,7 @@ import { UnitFormComponent } from 'src/app/platform/units/unit-form/unit-form.co
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
+import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
 
 import { UnitModules } from 'src/app/_shared/constants/general';
 
@@ -34,13 +35,18 @@ export class UnitsComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               public userSession: UserSessionService,
               private unitService: UnitService,
-              private notifications: NotificationService) {}
+              private notifications: NotificationService,
+              private unitStateService: UnitStateService) {}
 
   ngOnInit(): void {
     this.rootUnit.units = this.route.snapshot.data.units;
 
     this.sub.add(this.route.params.subscribe(params => {
       this.activeUnitId = params.id;
+    }));
+
+    this.sub.add(this.unitStateService.getUnits().subscribe(() => {
+      this.unitService.getUnits().then(response => this.rootUnit.units = response);
     }));
 
     this.setModules();

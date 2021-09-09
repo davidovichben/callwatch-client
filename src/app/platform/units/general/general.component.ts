@@ -12,6 +12,7 @@ import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { UnitModel } from 'src/app/_shared/models/unit.model';
+import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
 
 @Component({
   selector: 'app-general',
@@ -34,7 +35,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
               private userSession: UserSessionService,
               private notification: NotificationService,
               private unitUserService: UnitUserService,
-              private unitService: UnitService) {}
+              private unitService: UnitService,
+              private unitStateService: UnitStateService) {}
 
   ngOnInit(): void {
     this.users = this.route.snapshot.data.users;
@@ -81,9 +83,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   submit(form: NgForm): void {
+    Object.assign(form.value, { parent: this.unit.parent.id })
     this.unitService.updateUnit(this.unit.id, form.value).then(response => {
       if (response) {
         this.notification.success();
+        this.unitStateService.changeUnit()
       }
     })
   }

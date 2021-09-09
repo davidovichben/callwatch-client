@@ -26,7 +26,7 @@
     </div>
     <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
-        <input matInput type="email" formControlName="username" [placeholder]="'username' | t" required>
+        <input matInput type="email" formControlName="username" [placeholder]="'email' | t" required>
         <mat-error *ngIf="userForm.get('username').errors && userForm.get('username').errors.required">{{ errorMessages.required }}</mat-error>
         <mat-error *ngIf="userForm.get('username').errors && userForm.get('username').errors.pattern">{{ errorMessages.email }}</mat-error>
         <mat-error *ngIf="userForm.get('username').errors && userForm.get('username').errors.exists">{{ 'username_exists' | t }}</mat-error>
@@ -75,6 +75,7 @@
         <mat-select formControlName="permission" [placeholder]="'permission' | t">
           <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
         </mat-select>
+        <i matSuffix class="la la-times-circle" (click)="resetPermission($event)"></i>
       </mat-form-field>
     </div>
   </div>

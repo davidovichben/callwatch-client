@@ -62,6 +62,11 @@ export class FormComponent implements OnInit {
     }
   }
 
+  checkModuleAction(module: ModuleModel, action: string, checked: boolean): void {
+    const match = this.modules.find(m => m.name === module.name);
+    match[action] = checked;
+  }
+
   checkRow(module: ModuleModel): void {
     this.actions.forEach(scope => module[scope] = module.checked);
   }
