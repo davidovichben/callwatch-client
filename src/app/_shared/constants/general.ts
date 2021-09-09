@@ -34,7 +34,7 @@ export const UnitModules = [
   { name: 'calls', label: 'incoming_calls' },
 ];
 
-export const Langs = [
+export const Locales = [
   { label: 'עברית', code: 'he', key: 'hebrew' },
   { label: 'English', code: 'en', key: 'english' }
 ];

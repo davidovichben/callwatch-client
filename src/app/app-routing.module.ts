@@ -7,8 +7,7 @@ import { GuestGuard } from 'src/app/_shared/guards/guest.guard';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    loadChildren: () => import('./public/login/login.module').then(m => m.LoginModule),
+    loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
     canLoad: [GuestGuard]
   },
   {

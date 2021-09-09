@@ -11,7 +11,7 @@ import { UserService } from 'src/app/_shared/services/http/user.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
-import { Langs } from 'src/app/_shared/constants/general';
+import { Locales } from 'src/app/_shared/constants/general';
 import { EmailPattern, PhonePattern } from 'src/app/_shared/constants/patterns';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
@@ -25,7 +25,7 @@ export class FormComponent implements OnInit, OnDestroy {
   @ViewChild(UnitTreeSelectComponent) unitTree: UnitTreeSelectComponent;
 
   readonly authTypes = AuthTypes;
-  readonly langs = Langs;
+  readonly locales = Locales;
   readonly errorMessages = ErrorMessages;
   readonly sub = new Subscription();
 
@@ -52,7 +52,7 @@ export class FormComponent implements OnInit, OnDestroy {
       mobile: this.fb.control(null),
       phone: this.fb.control(null, Validators.pattern(PhonePattern)),
       authType: this.fb.control(null),
-      lang: this.fb.control(null),
+      locale: this.fb.control(null),
       username: this.fb.control(null, Validators.required),
       password: this.fb.control(null, Validators.required),
       permission: this.fb.control(null),

@@ -14,14 +14,14 @@ import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 })
 export class AppComponent implements OnInit {
 
-  lang: string;
+  locale: string;
 
   isLoading = false;
 
   constructor(private router: Router, private renderer: Renderer2,
               private helpers: HelpersService,
               private appHttp: AppHttpService,
-              public locale: LocaleService) {}
+              public localeService: LocaleService) {}
 
   ngOnInit() {
     this.setLocale();
@@ -30,26 +30,26 @@ export class AppComponent implements OnInit {
   }
 
   private setLocale(): void {
-    this.lang = this.locale.getLang();
-    if (this.lang) {
+    this.locale = this.localeService.getLocale();
+    if (this.locale) {
       this.setDirection();
 
-      this.appHttp.getTranslations(this.lang).then(response => {
-        this.locale.setTranslations(response);
+      this.appHttp.getTranslations(this.locale).then(response => {
+        this.localeService.setTranslations(response);
       })
     } else {
-      this.locale.setLang();
+      this.localeService.setLocale();
     }
   }
 
   private setSubscriptions(): void {
-    this.locale.langChanged.subscribe(lang => {
-      this.lang = lang;
+    this.localeService.localeChanged.subscribe(locale => {
+      this.locale = locale;
 
       this.setDirection();
 
-      this.appHttp.getTranslations(this.lang).then(response => {
-        this.locale.setTranslations(response);
+      this.appHttp.getTranslations(this.locale).then(response => {
+        this.localeService.setTranslations(response);
       })
     })
 
@@ -57,9 +57,9 @@ export class AppComponent implements OnInit {
   }
 
   private setDirection(): void {
-    this.renderer.addClass(document.body, this.locale.dir);
-    this.renderer.removeClass(document.body, this.locale.dir === 'rtl' ? 'ltr' : 'rtl');
-    this.renderer.setAttribute(document.body, 'dir', this.locale.dir);
+    this.renderer.addClass(document.body, this.localeService.dir);
+    this.renderer.removeClass(document.body, this.localeService.dir === 'rtl' ? 'ltr' : 'rtl');
+    this.renderer.setAttribute(document.body, 'dir', this.localeService.dir);
   }
 
   private listenRouterEvents(): void {

@@ -9,7 +9,6 @@ import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.styl'],
   animations: [fade]
 })
 export class LoginComponent {

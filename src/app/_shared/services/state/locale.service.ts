@@ -6,29 +6,29 @@ import { TranslationModel } from 'src/app/_shared/models/translation.model';
 @Injectable()
 export class LocaleService {
 
-  activeLang: string;
+  activeLocale: string;
   dir: 'rtl' | 'ltr';
 
-  langChanged: Subject<string> = new Subject();
+  localeChanged: Subject<string> = new Subject();
   translationLoaded: Subject<boolean> = new Subject();
 
   constructor() {
-    this.activeLang = this.getLang();
-    this.dir = this.activeLang === 'en' ? 'ltr' : 'rtl';
+    this.activeLocale = this.getLocale();
+    this.dir = this.activeLocale === 'en' ? 'ltr' : 'rtl';
   }
 
-  getLang(): string {
-    return localStorage.getItem('lang');
+  getLocale(): string {
+    return localStorage.getItem('locale');
   }
 
-  setLang(lang?: string): void {
-    this.activeLang = lang ? lang : 'he';
-    this.dir = this.activeLang === 'en' ? 'ltr' : 'rtl';
+  setLocale(locale?: string): void {
+    this.activeLocale = locale ? locale : 'he';
+    this.dir = this.activeLocale === 'en' ? 'ltr' : 'rtl';
 
-    localStorage.removeItem('lang');
-    localStorage.setItem('lang', this.activeLang);
+    localStorage.removeItem('locale');
+    localStorage.setItem('locale', this.activeLocale);
 
-    this.langChanged.next(this.activeLang);
+    this.localeChanged.next(this.activeLocale);
   }
 
   getTranslations(): TranslationModel[] {

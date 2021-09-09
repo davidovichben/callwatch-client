@@ -113,6 +113,7 @@
   { "key": "values_exist", "value": "Values already exist" },
   { "key": "verification_type", "value": "Verification Type" },
   { "key": "view", "value": "View" },
+  { "key": "submit", "value": "Submit" },
   { "key": "wednesday", "value": "Wednesday" },
   { "key": "sign_out", "value": "Sign Out" },
   { "key": "user_deleted", "value": "User deleted successfully" },
@@ -149,5 +150,11 @@
   { "key": "sets", "value": "Report Sets" },
   { "key": "authorization_error", "value": "You are unauthorized for this action" },
   { "key": "select_unit", "value": "Select Unit" },
-  { "key": "select_parent_unit", "value": "Select Parent Unit" }
+  { "key": "select_parent_unit", "value": "Select Parent Unit" },
+  { "key": "back_to_login", "value": "Back to login" },
+  { "key": "user_not_found", "value": "User not found" },
+  { "key": "resend_code", "value": "Resend code" },
+  { "key": "fill_in_reset_code", "value": "Reset code was sent to the email address, type it in to reset" },
+  { "key": "invalid_reset_token", "value": "Code is invalid or expired" },
+  { "key": "password_was_reset", "value": "The password was reset, login using your new password" }
 ]

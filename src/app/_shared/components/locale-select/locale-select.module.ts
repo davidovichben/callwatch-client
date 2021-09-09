@@ -5,16 +5,16 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { LangSelectComponent } from './lang-select.component';
+import { LocaleSelectComponent } from 'src/app/_shared/components/locale-select/locale-select.component';
 
 @NgModule({
-  declarations: [LangSelectComponent],
+  declarations: [LocaleSelectComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,
     MatSelectModule,
     TranslateModule
   ],
-  exports: [LangSelectComponent]
+  exports: [LocaleSelectComponent]
 })
-export class LangSelectModule {}
+export class LocaleSelectModule {}

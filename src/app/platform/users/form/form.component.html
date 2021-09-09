@@ -68,8 +68,8 @@
     </div>
     <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
-        <mat-select formControlName="lang" [placeholder]="'system_lang_default' | t">
-          <mat-option *ngFor="let lang of langs" [value]="lang.code">{{ lang.key | t }}</mat-option>
+        <mat-select formControlName="locale" [placeholder]="'system_lang_default' | t">
+          <mat-option *ngFor="let locale of locales" [value]="locale.code">{{ locale.key | t }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

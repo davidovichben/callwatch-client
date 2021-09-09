@@ -20,8 +20,29 @@ export class AppHttpService extends BaseHttpService {
       .catch(() => null);
   }
 
-  getTranslations(lang: string): Promise<TranslationModel[]> {
-    return this.http.get('/assets/lang/' + lang + '.json')
+  forgotPassword(username: string): Promise<any> {
+    return this.http.post(this.apiUrl + '/password/forgot', { username }, { headers: { noLoader: 'true' }})
+      .toPromise()
+      .then(() => true)
+      .catch(response => response);
+  }
+
+  checkResetToken(token: string): Promise<any> {
+    return this.http.post(this.apiUrl + '/password/checkToken', { token }, { headers: { noLoader: 'true' }})
+      .toPromise()
+      .then(() => true)
+      .catch(response => response);
+  }
+
+  resetPassword(password: string, username: string, token: string): Promise<boolean> {
+    return this.http.post(this.apiUrl + '/password/reset', { password, username, token })
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
+
+  getTranslations(locale: string): Promise<TranslationModel[]> {
+    return this.http.get('/assets/locale/' + locale + '.json')
       .toPromise()
       .then(response => response as TranslationModel[])
       .catch(() => undefined);

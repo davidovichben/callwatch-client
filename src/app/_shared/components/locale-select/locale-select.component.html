@@ -1,0 +1,5 @@
+<mat-form-field class="w-200p">
+  <mat-select (valueChange)="changeLocale($event)" [value]="localeService.activeLocale" [placeholder]="'select_lang' | t">
+    <mat-option *ngFor="let locale of locales" [value]="locale.code">{{ locale.label }}</mat-option>
+  </mat-select>
+</mat-form-field>
