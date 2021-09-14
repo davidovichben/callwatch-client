@@ -150,6 +150,7 @@
   { "key": "sets", "value": "Report Sets" },
   { "key": "authorization_error", "value": "You are unauthorized for this action" },
   { "key": "select_unit", "value": "Select Unit" },
+  { "key": "select_units", "value": "Select Units" },
   { "key": "select_parent_unit", "value": "Select Parent Unit" },
   { "key": "back_to_login", "value": "Back to login" },
   { "key": "user_not_found", "value": "User not found" },

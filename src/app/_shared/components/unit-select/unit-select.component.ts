@@ -5,8 +5,7 @@ import {
   forwardRef,
   HostListener,
   Input,
-  OnInit,
-  ViewChild
+  OnInit
 } from '@angular/core';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -42,16 +41,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
-  @ViewChild('select') selectEle: ElementRef;
-
   @Input() units: UnitModel[] = [];
   @Input() required: boolean;
   @Input() placeholder = 'select_unit';
+  @Input() multiple = false;
 
-  readonly position = {
-    x: 0,
-    y: 0
-  }
+  title: string;
 
   width: number;
 
@@ -60,31 +55,83 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
   filterValue: string;
   filteredUnits: UnitModel[] =[];
 
-  selectedUnit: UnitModel;
+  selected: any;
 
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
     this.filteredUnits = this.units;
+    if (this.multiple) {
+      this.selected = [];
+    }
+
+    this.title = this.placeholder;
   }
 
   ngAfterViewInit() {
-    const ele = this.selectEle.nativeElement;
-    const y = ele.offsetTop;
-    const x = ele.offsetLeft;
-
-    setTimeout(() => {
-      this.width = ele.clientWidth;
-      this.position.x = x;
-      this.position.y = y;
-    }, 0)
+    // const ele = this.selectEle.nativeElement.getBoundingClientRect();
+    // const y = ele.top;
+    // const x = ele.right - ele.left;
+    //
+    // setTimeout(() => {
+    //   this.width = ele.width;
+    //   this.position.x = x;
+    //   this.position.y = y;
+    // }, 0)
   }
 
-  selectUnit(unit: UnitModel): void {
-    this.selectedUnit = unit;
-    this.isOpened = false;
+  selectUnit(unit: UnitModel, checked?: boolean): void {
+    let output;
+    if (this.multiple) {
+      this.checkUnit(checked, unit);
+      this.selected = [];
+      this.units.forEach(unit => this.setMultipleSelected(unit));
+      this.setMultipleTitle();
 
-    this.propagateChange(this.selectedUnit.id);
+      output = this.selected.map(unit => unit.id);
+    } else {
+      this.isOpened = false;
+
+      this.title = unit.name;
+
+      output = unit.id;
+    }
+
+    this.propagateChange(output);
+  }
+
+  private checkUnit(checked: boolean, unit: UnitModel): void {
+    unit.checked = checked;
+    if (unit.units) {
+      unit.units.forEach(unit => this.checkUnit(checked, unit));
+    }
+  }
+
+  private setMultipleSelected(unit: UnitModel): void {
+    if (unit.checked) {
+      this.selected.push(unit);
+    }
+
+    if (unit.units) {
+      unit.units.forEach(unit => this.setMultipleSelected(unit));
+    }
+  }
+
+  private setMultipleTitle(): void {
+    this.title = '';
+    this.selected.forEach((unit, index) => {
+      this.title += unit.name;
+      if (index + 1 < this.selected.length) {
+        this.title += ', ';
+      }
+    });
+  }
+
+  checkAll(checked: boolean): void {
+    this.units.forEach(unit => this.checkUnit(checked, unit));
+    this.selected = [];
+    this.units.forEach(unit => this.setMultipleSelected(unit));
+    this.setMultipleTitle();
   }
 
   initFilter(value: string): void {
@@ -107,14 +154,45 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     })
   }
 
+  reset(event: Event): void {
+    event.stopPropagation();
+
+    this.selected = null;
+    if (this.multiple) {
+      this.checkAll(false);
+      this.selected = [];
+    }
+
+    this.title = this.placeholder;
+  }
+
+  private matchValues(unit: UnitModel, values: number[]): void {
+    if (values.indexOf(unit.id) !== -1) {
+      this.checkUnit(true, unit);
+    }
+
+    if (unit.units) {
+      unit.units.forEach(unit => this.matchValues(unit, values));
+    }
+  }
+
   private propagateChange = (_: any) => {};
 
-  writeValue(unit: UnitModel): void {
-    if (!unit) {
+  writeValue(value: any): void {
+    if (!value || value.length === 0) {
       return;
     }
 
-    this.selectedUnit = unit;
+    if (this.multiple) {
+      // TODO: make a combined filter for search and value writing
+
+      this.units.forEach(unit => this.matchValues(unit, value));
+      this.selected = [];
+      this.units.forEach(unit => this.setMultipleSelected(unit));
+      this.setMultipleTitle();
+    } else {
+      this.selected = value;
+    }
   }
 
   registerOnChange(fn: any) {

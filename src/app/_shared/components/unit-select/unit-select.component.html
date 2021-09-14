@@ -1,23 +1,27 @@
-<div #select>
-  <div id="selectLabel" [ngClass]="{ selected: selectedUnit }" (click)="isOpened = !isOpened">
-    <span>{{ selectedUnit ? selectedUnit.name : (placeholder | t) }} {{ required ? '* ': '' }}</span>
+<div id="selectLabel" [ngClass]="{ selected: selected }" (click)="isOpened = !isOpened">
+  <span>{{ title }} {{ required ? '* ': '' }}</span>
+  <div class="flex-center">
     <mat-icon>arrow_drop_down</mat-icon>
+    <i class="la la-times-circle" (click)="reset($event)"></i>
   </div>
-  <div id="dropdown" [@slideDown]="isOpened ? 'active' : 'inactive'" [style]="{ width: width + 'px', top: position.y + 'px', right: position.x + 'px' }" >
-    <div id="search" class="flex-between">
-      <input type="search" #searchInput (keyup)="initFilter(searchInput.value)">
-      <mat-icon>search</mat-icon>
-    </div>
-    <div id="options">
-      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits }"></ng-container>
-    </div>
+</div>
+<div id="dropdown" [@slideDown]="isOpened ? 'active' : 'inactive'">
+  <div id="search" class="flex-between">
+    <input type="search" #searchInput (keyup)="initFilter(searchInput.value)">
+    <mat-icon>search</mat-icon>
+  </div>
+  <div id="options">
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits, top: true }"></ng-container>
   </div>
 </div>
 
-<ng-template #recursiveListTmpl let-list="list">
-  <div class="pe-3" *ngFor="let unit of list">
-    <div class="option" (click)="selectUnit(unit)">{{ unit.name }}</div>
+<ng-template #recursiveListTmpl let-list="list" let-top="top">
+  <div [ngClass]="{ 'pe-3': !top }" *ngFor="let unit of list">
+    <span *ngIf="top" id="topSign" class="mx-1">-</span>
+    <mat-checkbox color="primary" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple">{{ unit.name }}</mat-checkbox>
+    <div class="option" (click)="selectUnit(unit)" *ngIf="!multiple">{{ unit.name }}</div>
     <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
   </div>
 </ng-template>
+
 

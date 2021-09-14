@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { UnitSelectComponent } from './unit-select.component';
-import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [UnitSelectComponent],
-  imports: [CommonModule, MatIconModule, TranslateModule],
+	imports: [CommonModule, MatIconModule, MatCheckboxModule],
   exports: [UnitSelectComponent]
 })
 export class UnitSelectModule {}

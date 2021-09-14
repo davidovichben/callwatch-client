@@ -6,6 +6,7 @@ export class UnitModel {
   adminId?: number;
   externalID?: string;
   disabled?: boolean;
+  checked?: boolean;
   units?: UnitModel[];
   users?: UserModel[];
   parent?: UnitModel;

@@ -4,7 +4,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
-import { UnitTreeSelectModule } from 'src/app/_shared/components/unit-tree-select/unit-tree-select.module';
 
 import { SetsComponent } from './sets.component';
 
@@ -24,8 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatDialogModule,
     DataTableModule,
-    TranslateModule,
-    UnitTreeSelectModule
+    TranslateModule
   ],
   providers: [
     ReportService,

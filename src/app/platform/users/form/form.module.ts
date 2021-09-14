@@ -10,7 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { FileInputModule } from 'src/app/_shared/components/file-input/file-input.module';
-import { UnitTreeSelectModule } from 'src/app/_shared/components/unit-tree-select/unit-tree-select.module';
+import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { SetPasswordModule } from 'src/app/_shared/components/set-password/set-password.module';
 
 import { FormComponent } from 'src/app/platform/users/form/form.component';
@@ -57,7 +57,7 @@ const routes: Routes = [
 		MatDialogModule,
 		TranslateModule,
 		FileInputModule,
-		UnitTreeSelectModule,
+    UnitSelectModule,
     SetPasswordModule
 	],
   providers: [

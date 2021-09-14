@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
-import { UnitTreeSelectComponent } from 'src/app/_shared/components/unit-tree-select/unit-tree-select.component';
+import { UnitSelectComponent } from 'src/app/_shared/components/unit-select/unit-select.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
@@ -23,7 +23,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 })
 export class FormComponent implements OnInit, OnDestroy {
 
-  @ViewChild(UnitTreeSelectComponent) unitTree: UnitTreeSelectComponent;
+  @ViewChild(UnitSelectComponent) unitSelect: UnitSelectComponent;
 
   readonly authTypes = AuthTypes;
   readonly locales = Locales;
@@ -72,7 +72,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
       if (this.user.units === 'root') {
         this.userForm.get('units').patchValue([]);
-        this.unitTree.selectAll();
+        this.unitSelect.checkAll(true);
       }
     }
   }
