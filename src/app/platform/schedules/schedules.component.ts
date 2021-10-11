@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { FormComponent } from 'src/app/platform/schedules/form/form.component';
@@ -15,9 +16,11 @@ import { ScheduleModel } from 'src/app/_shared/models/schedule.model';
   selector: 'app-schedules',
   templateUrl: './schedules.component.html'
 })
-export class SchedulesComponent {
+export class SchedulesComponent implements OnDestroy {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
+
+  readonly sub = new Subscription();
 
   readonly columns = [
     { label: 'name', name: 'name' },
@@ -37,10 +40,16 @@ export class SchedulesComponent {
   }
 
   openFormDialog(schedule?: ScheduleModel): void {
-    this.dialog.open(FormComponent, {
+    const dialog = this.dialog.open(FormComponent, {
       width: '800px',
       data: schedule ? schedule : new ScheduleModel()
     });
+
+    this.sub.add(dialog.afterClosed().subscribe(saved => {
+      if (saved) {
+        this.fetchItems();
+      }
+    }));
   }
 
   deleteSchedule(scheduleId: number): void {
@@ -50,9 +59,14 @@ export class SchedulesComponent {
           if (response) {
             const msg = this.t.transform('schedule_deleted');
             this.notifications.success(msg);
+            this.fetchItems();
           }
         })
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }
