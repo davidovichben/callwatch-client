@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
@@ -29,16 +30,17 @@ const routes: Routes = [
 
 @NgModule({
 	declarations: [FormComponent],
-	imports: [
-		CommonModule,
-		RouterModule.forChild(routes),
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
     ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatSelectModule,
-		MatButtonModule,
-    TranslateModule
-	],
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    TranslateModule,
+    MatCheckboxModule
+  ],
 	providers: [SwitchboardService, SwitchboardResolve]
 })
 export class FormModule {}

@@ -5,110 +5,109 @@
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
-  <section>
+  <section class="mb-3">
     <p class="h3 mb-3">{{ 'switchboard_details' | t }}</p>
     <div class="row">
-      <div class="col-12 col-lg-3">
+      <div class="mb-3 col-12 col-lg-3">
         <mat-form-field class="w-100">
           <input matInput type="text" formControlName="name" [placeholder]="'switchboard_name' | t" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-12 col-lg-3">
+      <div class="mb-3 col-12 col-lg-3">
         <mat-form-field class="w-100">
-          <mat-select formControlName="type" [placeholder]="'switchboard_type' | t" required>
-            <mat-option *ngFor="let type of types" [value]="type.value">{{ type.label | t }}</mat-option>
+          <mat-select formControlName="type" [placeholder]="'switchboard_type' | t" (valueChange)="toggleAxi($event)" required>
+            <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
           </mat-select>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-12 col-lg-3">
+      <div class="mb-3 col-12 col-lg-3">
         <mat-form-field class="w-100">
-          <input matInput type="text" formControlName="netAddress" [placeholder]="'net_address' | t">
+          <input matInput type="text" formControlName="netAddress" [placeholder]="'net_address' | t" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="mb-3 col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-select formControlName="dataManager" [placeholder]="'assigned_data_manager' | t">
+            <mat-option *ngFor="let manager of managers" [value]="manager">{{ manager }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="mb-3 col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <input matInput type="number" min="0" formControlName="minimalSeconds" [placeholder]="'minimal_number_of_seconds' | t" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
     </div>
   </section>
-<!--  <section>-->
-<!--    <p class="h1">{{ 'switchboard_settings' | t }}</p>-->
-<!--    <div class="row">-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <input matInput type="text" formControlName="name" [placeholder]="'switchboard_name' | t" required>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <mat-select formControlName="type" [placeholder]="'switchboard_type' | t" required>-->
-<!--            <mat-option *ngFor="let type of types" [value]="type.value">{{ type.label | t }}</mat-option>-->
-<!--          </mat-select>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <input matInput type="text" formControlName="netAddress" [placeholder]="'net_address' | t">-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <input matInput type="text" formControlName="name" [placeholder]="'switchboard_name' | t" required>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <mat-select formControlName="type" [placeholder]="'switchboard_type' | t" required>-->
-<!--            <mat-option *ngFor="let type of types" [value]="type.value">{{ type.label | t }}</mat-option>-->
-<!--          </mat-select>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <input matInput type="text" formControlName="netAddress" [placeholder]="'net_address' | t">-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <input matInput type="text" formControlName="name" [placeholder]="'switchboard_name' | t" required>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <mat-select formControlName="type" [placeholder]="'switchboard_type' | t" required>-->
-<!--            <mat-option *ngFor="let type of types" [value]="type.value">{{ type.label | t }}</mat-option>-->
-<!--          </mat-select>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <input matInput type="text" formControlName="netAddress" [placeholder]="'net_address' | t">-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <input matInput type="text" formControlName="name" [placeholder]="'switchboard_name' | t" required>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div class="col-12 col-lg-3 mb-3">-->
-<!--        <mat-form-field class="w-100">-->
-<!--          <mat-select formControlName="type" [placeholder]="'switchboard_type' | t" required>-->
-<!--            <mat-option *ngFor="let type of types" [value]="type.value">{{ type.label | t }}</mat-option>-->
-<!--          </mat-select>-->
-<!--          <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </section>-->
+  <section>
+    <p class="h3 mb-3">{{ 'switchboard_settings' | t }}</p>
+    <div class="mb-4 tabs">
+      <div class="tab" [ngClass]="{ active: activeTab === 'cti' }" (click)="activeTab = 'cti'">CTI</div>
+      <div class="tab" [ngClass]="{ active: activeTab === 'axl' }" (click)="activeTab = 'axl'" *ngIf="switchboardForm.get('type').value === 'CISCO'">AXL & CDR</div>
+    </div>
+    <div *ngIf="activeTab === 'cti'" formGroupName="cti">
+      <div class="row">
+        <div class="mb-3 col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="username" [placeholder]="'cti_username' | t" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mb-3 col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="password" [placeholder]="'cti_password' | t" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mb-3 col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <input matInput type="time" formControlName="dailyUpdateAt" [placeholder]="'cti_daily_update_time' | t" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-checkbox color="primary" (change)="toggleServiceNumber($event.checked, 'cti')" [checked]="switchboardForm.get('cti.number').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="number" [required]="!switchboardForm.get('cti.number').disabled">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'axl'" formGroupName="axl">
+      <div class="row">
+        <div class="mb-3 col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="address" [placeholder]="'axl_address' | t" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mb-3 col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="username" [placeholder]="'axl_username' | t" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mb-3 col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="password" [placeholder]="'axl_password' | t" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-checkbox color="primary" (change)="toggleServiceNumber($event.checked, 'axl')" [checked]="switchboardForm.get('axl.number').value">{{ 'axl_enable_services' | t }}</mat-checkbox>
+          <mat-form-field class="w-100">
+            <input matInput type="text" formControlName="number" [required]="!switchboardForm.get('axl.number').disabled">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </section>
 </form>

@@ -170,7 +170,20 @@
   { "key": "switchboard_type", "value": "Switchboard Type" },
   { "key": "net_address", "value": "Net Address" },
   { "key": "switchboard_details", "value": "Switchboard Details" },
+  { "key": "switchboard_settings", "value": "Switchboard Settings" },
   { "key": "upload_image", "value": "Upload Image" },
   { "key": "invalid_file_type", "value": "Invalid file type" },
-  { "key": "maximum_file_size", "value": "Maximum file size" }
+  { "key": "maximum_file_size", "value": "Maximum file size" },
+  { "key": "assigned_data_manager", "value": "Assigned Data Manager" },
+  { "key": "minimal_number_of_seconds", "value": "Minimal Number of Seconds" },
+  { "key": "cti_username", "value": "CTI Username" },
+  { "key": "cti_password", "value": "CTI Password" },
+  { "key": "cti_daily_update_time", "value": "Daily update time of JTAPI Permissions" },
+  { "key": "cti_enable_services", "value": "Enable services via CTI" },
+  { "key": "axl_address", "value": "AXL Service Access Address" },
+  { "key": "axl_username", "value": "AXL Username" },
+  { "key": "axl_password", "value": "AXL Password" },
+  { "key": "axl_enable_services", "value": "CDR Pull Support" }
 ]
+
+

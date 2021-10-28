@@ -5,7 +5,4 @@ export class SwitchboardModel {
   netAddress: string;
 }
 
-export enum SwitchboardTypes {
-  general = 'general',
-  other   = 'other'
-}
+export const SwitchboardTypes = ['CISCO', 'BROADSOFT', 'AVAYA'];

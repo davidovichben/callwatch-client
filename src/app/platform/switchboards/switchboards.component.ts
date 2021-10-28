@@ -6,8 +6,6 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
-import { SwitchboardTypes } from 'src/app/_shared/models/switchboard.model';
-
 @Component({
 	selector: 'app-switchboards',
 	templateUrl: './switchboards.component.html'
@@ -21,8 +19,6 @@ export class SwitchboardsComponent {
     { name: 'type', label: 'switchboard_type' },
     { name: 'netAddress', label: 'net_address' }
   ];
-
-  readonly types = SwitchboardTypes;
 
 	constructor(private notification: NotificationService,
         public userSession: UserSessionService,

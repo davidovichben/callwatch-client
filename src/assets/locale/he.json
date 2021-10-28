@@ -169,8 +169,21 @@
   { "key": "switchboard_type", "value": "סוג מרכזיה" },
   { "key": "net_address", "value": "כתובת רשת" },
   { "key": "switchboard_details", "value": "פרטי מרכזיה" },
+  { "key": "switchboard_settings", "value": "הגדרות מרכזיה" },
   { "key": "upload_image", "value": "העלאת תמונה" },
   { "key": "invalid_file_type", "value": "סוג קובץ שגוי" },
-  { "key": "maximum_file_size", "value": "גודל קובץ מקסימלי" }
+  { "key": "maximum_file_size", "value": "גודל קובץ מקסימלי" },
+  { "key": "assigned_data_manager", "value": "מנהל נתונים אחראי" },
+  { "key": "minimal_number_of_seconds", "value": "מספר שניות מינימלי" },
+  { "key": "cti_username", "value": "שם משתמש להתחברות ב - CTI" },
+  { "key": "cti_password", "value": "סיסמא להתחברות ב - CTI" },
+  { "key": "cti_daily_update_time", "value": "מועד עדכון יומי של הרשאות JTAPI" },
+  { "key": "cti_enable_services", "value": "הפעלת שירותים באמצעות CTI" },
+  { "key": "axl_address", "value": "כתובת הגישה לשירות AXL" },
+  { "key": "axl_username", "value": "שם משתמש להתחברות ב - AXL" },
+  { "key": "axl_password", "value": "סיסמא להתחברות ב - AXL" },
+  { "key": "axl_enable_services", "value": "תמיכה במשיכת CDR" }
 ]
+
+
 
