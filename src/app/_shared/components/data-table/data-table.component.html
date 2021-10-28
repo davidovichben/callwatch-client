@@ -1,16 +1,12 @@
 <div id="tableHeader">
   <div>
     <div id="searchContainer">
-      <input placeholder="חפש" [(ngModel)]="criteria.keyword" (keyup)="search($event)">
+      <input [placeholder]="'search' | t" [(ngModel)]="criteria.keyword" (keyup)="search($event)">
       <div>
         <mat-icon *ngIf="criteria.keyword" (click)="resetSearch()">close</mat-icon>
         <mat-icon (click)="search()">search</mat-icon>
       </div>
     </div>
-<!--    <div id="toggleFilters" (click)="showFilters = !showFilters" [ngClass]="{ active: showFilters }" *ngIf="hasExtendedSearch">-->
-<!--      <mat-icon>import_export</mat-icon>-->
-<!--      <span>סנן</span>-->
-<!--    </div>-->
     <div *ngIf="activeSwitch">
       <mat-slide-toggle (change)="toggleActiveStatus($event.checked)" [checked]="isActive">{{ activeSwitch }}</mat-slide-toggle>
     </div>
@@ -20,16 +16,24 @@
 <div [@slideToggle]="showFilters ? 'active' : 'inactive'">
   <app-side-filters [columns]="columns" (searchSubmitted)="extendedSearch($event)"></app-side-filters>
 </div>
-<p class="alert alert-success mb-3" *ngIf="savedItem">{{ savedItem }} נשמר בהצלחה.</p>
-<table class="table table-bordered" [ngClass]="{ 'table-hover': isSelectable }">
+<p class="alert alert-success mb-3" *ngIf="savedItem">
+  <span> {{ savedItem }}</span>
+  <span>{{ 'saved_successfully' | t }}</span>
+</p>
+<table class="table" [ngClass]="{ 'table-hover': isSelectable }">
 	<thead>
 	<tr>
 		<th *ngIf="hasCheckColumn" class="pointer table-header">
 			<mat-checkbox (change)="checkAll($event.checked)" [ngModel]="criteria.isCheckAll" *ngIf="items.length > 0 && !disableCheckAll"></mat-checkbox>
 		</th>
-		<th *ngFor="let column of columns" (click)="sort(column)" class="pointer table-header">
-			<span>{{ column.label | t }}</span>
-			<i class="la la-chevron-down mr-1" [@rotate]="rotateSortingIcon()" [@fade]="criteria.sort.column === column.name ? 'active' : 'inactive'"></i>
+		<th *ngFor="let column of columns" (click)="sort(column)" class="table-header">
+      <div class="d-flex align-items-center justify-content-center">
+        <span>{{ column.label | t }}</span>
+        <div class="sort-container">
+          <div class="triangle-up" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'ASC' }"></div>
+          <div class="triangle-down" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'DESC' }"></div>
+        </div>
+      </div>
 		</th>
 		<th class="table-header" *ngIf="hasActionsHeader">{{ 'actions' | t }}</th>
 	</tr>

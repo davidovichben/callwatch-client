@@ -10,6 +10,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 import { ScheduleModel } from 'src/app/_shared/models/schedule.model';
 
 @Component({

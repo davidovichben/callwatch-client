@@ -14,8 +14,7 @@ ul
   padding: 0
   list-style-type: none
 
-h1, h4
-  margin: 0 !important
+h1, h2, h3, h4, .h1, .h2, .h3, .h4
   color: BlueColor
 
 a, a:hover
@@ -150,9 +149,10 @@ th, td
   width: 11px !important
 
 .row-icons
-  > i
+  > mat-icon
     font-size: 24px
     cursor: pointer
+    color: GreyColor
 
 .tabs
   display: flex
@@ -201,6 +201,16 @@ th, td
   .ltr .pe-3
     padding-left: 1rem !important;
     padding-right: 0 !important
+
+/* --- Data Table ---*/
+
+.data-table
+
+  .table
+    background-color: WhiteColor
+
+tbody tr:nth-child(even)
+  background-color: LightColor !important
 
 /* --- Swal --- */
 

@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnDestroy, OnInit, EventEmitter, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -27,16 +27,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       transition('active => inactive', animate('200ms')),
       transition('inactive => active', animate('200ms'))
     ]),
-    trigger('rotate', [
-      state('inactive', style({
-        transform: 'rotate(0)',
-      })),
-      state('active', style({
-        transform: 'rotate(180deg)',
-      })),
-      transition('active => inactive', animate('200ms')),
-      transition('inactive => active', animate('200ms'))
-    ]),
     trigger('slideToggle', [
       state('inactive', style({
         pointerEvents: 'none',
@@ -55,6 +45,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class DataTableComponent implements OnInit, OnDestroy {
 
+  @HostBinding('class') class = 'data-table';
+
   @Input() columns: DataTableColumn[] = [];
   @Input() formUrl: string;
   @Input() activeSwitch: string;
@@ -63,7 +55,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() hasActionsHeader = true;
   @Input() hasExtendedSearch = true;
   @Input() limit = 30;
-  @Input() isSelectable = true;
+  @Input() isSelectable = false;
 
   @Output() fetchItems = new EventEmitter<boolean>();
 
@@ -196,10 +188,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
       return false;
     });
-  }
-
-  rotateSortingIcon(): string {
-    return (this.criteria.sort.direction === 'DESC') ? 'inactive' : 'active';
   }
 
   toggleActiveStatus(isActive: boolean): void {

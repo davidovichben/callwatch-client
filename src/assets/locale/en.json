@@ -23,6 +23,9 @@
   { "key": "description", "value": "Description" },
   { "key": "dial_times", "value": "Dial Times" },
   { "key": "edit", "value": "Edit" },
+  { "key": "showing", "value": "Showing" },
+  { "key": "out_of", "value": "out of" },
+  { "key": "listings", "value": "listings" },
   { "key": "email", "value": "Email" },
   { "key": "employee_name", "value": "Employee Name" },
   { "key": "employee_number", "value": "Employee Number" },
@@ -158,5 +161,13 @@
   { "key": "fill_in_reset_code", "value": "Reset code was sent to the email address, type it in to reset" },
   { "key": "invalid_reset_token", "value": "Code is invalid or expired" },
   { "key": "password_was_reset", "value": "The password was reset, login using your new password" },
-  { "key": "username_exists", "value": "Username exists in system" }
+  { "key": "username_exists", "value": "Username exists in system" },
+  { "key": "switchboard", "value": "Switchboard" },
+  { "key": "switchboards", "value": "Switchboards" },
+  { "key": "add_switchboard", "value": "Add Switchboard" },
+  { "key": "edit_switchboard", "value": "Edit Switchboard" },
+  { "key": "switchboard_name", "value": "Switchboard Name" },
+  { "key": "switchboard_type", "value": "Switchboard Type" },
+  { "key": "net_address", "value": "Net Address" },
+  { "key": "switchboard_details", "value": "Switchboard Details" }
 ]

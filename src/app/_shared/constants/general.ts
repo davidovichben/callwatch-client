@@ -19,7 +19,8 @@ export const PlatformModules = [
     isGuarded: false,
     subModules: [
       { name: 'permissions', isGuarded: true },
-      { name: 'schedules', isGuarded: true }
+      { name: 'schedules', isGuarded: true },
+      { name: 'switchboards', isGuarded: true }
     ]
   },
 ];

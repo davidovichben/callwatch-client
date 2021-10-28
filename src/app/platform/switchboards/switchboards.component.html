@@ -1,0 +1,20 @@
+<div class="mb-5 flex-between">
+  <p class="h1">{{ 'switchboards' | t }}</p>
+  <div>
+    <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('switchboards', 'create')">
+      <i class="la la-plus ms-1"></i>
+      <span>{{ 'add_switchboard' | t }}</span>
+    </button>
+  </div>
+</div>
+<app-data-table [columns]="columns" [hasActionsHeader]="true" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+	<tr *ngFor="let item of dataTable.items">
+		<td>{{ item.name }}</td>
+    <td>{{ types[item.type] | t }}</td>
+    <td>{{ item.netAddress }}</td>
+		<td class="row-icons">
+			<mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]">edit</mat-icon>
+			<mat-icon (click)="deleteItem(item.id)">delete</mat-icon>
+		</td>
+	</tr>
+</app-data-table>

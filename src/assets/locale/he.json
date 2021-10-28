@@ -22,6 +22,9 @@
   { "key": "description", "value": "תיאור" },
   { "key": "dial_times", "value": "זמני חיוג" },
   { "key": "edit", "value": "עריכה" },
+  { "key": "showing", "value": "מציג" },
+  { "key": "out_of", "value": "מתוך" },
+  { "key": "listings", "value": "רשומות" },
   { "key": "email", "value": "אימייל" },
   { "key": "employee_name", "value": "שם עובד" },
   { "key": "employee_number", "value": "מספר עובד" },
@@ -157,6 +160,14 @@
   { "key": "fill_in_reset_code", "value": "קוד איפוס נשלח לכתובת המייל, הזן אותו כדי להמשיך" },
   { "key": "invalid_reset_token", "value": "קוד האיפוס אינו תקין או שפג תוקפו" },
   { "key": "password_was_reset", "value": "הסיסמה אופסה, אנא התחבר באמצעות הסיסמה החדשה" },
-  { "key": "username_exists", "value": "שם המשתמש קיים במערכת" }
+  { "key": "username_exists", "value": "שם המשתמש קיים במערכת" },
+  { "key": "switchboard", "value": "מרכזיה" },
+  { "key": "switchboards", "value": "מרכזיות" },
+  { "key": "add_switchboard", "value": "הוסף מרכזיה" },
+  { "key": "edit_switchboard", "value": "ערוך מרכזיה" },
+  { "key": "switchboard_name", "value": "שם מרכזיה" },
+  { "key": "switchboard_type", "value": "סוג מרכזיה" },
+  { "key": "net_address", "value": "כתובת רשת" },
+  { "key": "switchboard_details", "value": "פרטי מרכזיה" }
 ]
 
