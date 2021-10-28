@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="formGroup">
+<form (ngSubmit)="submit()" [formGroup]="switchboardForm">
   <div class="mb-5 flex-between">
     <p class="h1">{{ switchboardId ? ('edit_switchboard' | t) : ('add_switchboard' | t) }}</p>
     <div>

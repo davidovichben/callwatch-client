@@ -11,8 +11,8 @@
   <tr *ngFor="let item of dataTable.items">
     <td>{{ item.name }}</td>
     <td class="row-icons">
-      <i class="la la-edit" [routerLink]="['form', item.id]" *ngIf="userSession.hasPermission('permissions', 'update')"></i>
-      <i class="la la-trash" (click)="deletePermission(item.id)" *ngIf="userSession.hasPermission('permissions', 'delete')"></i>
+      <mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('permissions', 'update')">edit</mat-icon>
+      <mat-icon (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('permissions', 'delete')">delete</mat-icon>
     </td>
   </tr>
 </app-data-table>

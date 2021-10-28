@@ -6,7 +6,7 @@ import { PermissionService } from 'src/app/_shared/services/http/permission.serv
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { PermissionModel, PermissionActions } from 'src/app/_shared/models/permission.model';
-import { PlatformModules } from 'src/app/_shared/constants/general';
+import { PlatformModules } from 'src/app/_shared/constants/modules';
 import { ModuleModel } from 'src/app/_shared/models/module.model';
 
 @Component({

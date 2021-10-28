@@ -1,11 +1,18 @@
 <form #form="ngForm" (ngSubmit)="submit(form)">
-  <mat-form-field>
-    <input matInput type="text" [ngModel]="permission.name" [placeholder]="'permission_name' | t" name="name" required>
-    <mat-error>{{ errorMessages.required | t }}</mat-error>
-  </mat-form-field>
-  <div>
-    <button class="ms-3 btn blue-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
-    <span class="btn grey-btn" (click)="checkAll(false)">{{ 'clear' | t }}</span>
+  <div class="flex-between">
+    <div>
+      <mat-form-field>
+        <input matInput type="text" [ngModel]="permission.name" [placeholder]="'permission_name' | t" name="name" required>
+        <mat-error>{{ errorMessages.required | t }}</mat-error>
+      </mat-form-field>
+      <div>
+        <button class="ms-3 btn blue-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
+        <span class="btn grey-btn" (click)="checkAll(false)">{{ 'clear' | t }}</span>
+      </div>
+    </div>
+    <div>
+      <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
+    </div>
   </div>
   <div>
     <table class="table table-striped my-3">
@@ -31,8 +38,5 @@
       </tr>
       </tbody>
     </table>
-    <div>
-      <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
-    </div>
   </div>
 </form>

@@ -10,8 +10,8 @@
     <td>{{ item.name }}</td>
     <td>{{ item.phone }}</td>
     <td class="row-icons">
-      <i class="la la-edit" [routerLink]="['./form', item.id]" *ngIf="userSession.hasPermission('users', 'update')"></i>
-      <i class="la la-trash" (click)="deleteUser(item.id)" *ngIf="currentUser.id !== item.id && userSession.hasPermission('users', 'delete')"></i>
+      <mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('users', 'update')">edit</mat-icon>
+      <mat-icon (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('users', 'delete')">delete</mat-icon>
     </td>
   </tr>
 </app-data-table>

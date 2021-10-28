@@ -23,13 +23,13 @@ export class FormComponent implements OnInit {
 
 	isSubmitting = false;
 
-  formGroup: FormGroup;
+  switchboardForm: FormGroup;
 
 	constructor(private router: Router, private route: ActivatedRoute,
         private fb: FormBuilder, private switchboardService: SwitchboardService) {}
 
 	ngOnInit(): void {
-    this.formGroup = this.fb.group({
+    this.switchboardForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control(null, Validators.required),
       netAddress: this.fb.control(null),
@@ -38,20 +38,20 @@ export class FormComponent implements OnInit {
     const routeData = this.route.snapshot.data;
     if (routeData.switchboard) {
       this.switchboardId = routeData.switchboard.id;
-      this.formGroup.patchValue(routeData.switchboard);
+      this.switchboardForm.patchValue(routeData.switchboard);
     }
   }
 
 	submit(): void {
-		if (this.formGroup.valid) {
+		if (this.switchboardForm.valid) {
 			this.isSubmitting = true;
 
 			if (this.switchboardId) {
-				this.switchboardService.updateSwitchboard(this.switchboardId, this.formGroup.value).then(response => {
+				this.switchboardService.updateSwitchboard(this.switchboardId, this.switchboardForm.value).then(response => {
           this.handleServerResponse(response)
         });
 			} else {
-				this.switchboardService.newSwitchboard(this.formGroup.value).then(response => {
+				this.switchboardService.newSwitchboard(this.switchboardForm.value).then(response => {
           this.handleServerResponse(response)
         });
 			}

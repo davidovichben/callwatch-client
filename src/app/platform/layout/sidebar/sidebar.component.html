@@ -15,7 +15,7 @@
       <span class="ms-3" [ngClass]="{ 'triangle-left': !module.isToggled, 'triangle-down': module.isToggled }"></span>
     </div>
     <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 60) + 'px' : 0 }">
-      <a *ngFor="let subModule of module.subModules" [routerLink]="subModule.hasParentPrefix ? ['/', menuType, module.name, subModule.name] : ['/', menuType, subModule.name]" class="justify-content-center sidebar-item">{{ subModule.name | t }}</a>
+      <a *ngFor="let subModule of module.subModules" [ngClass]="{ active: subModule.name === activeModule }" [routerLink]="subModule.hasParentPrefix ? ['/', menuType, module.name, subModule.name] : ['/', menuType, subModule.name]" class="justify-content-center sidebar-item">{{ subModule.name | t }}</a>
     </div>
   </ng-container>
 </div>

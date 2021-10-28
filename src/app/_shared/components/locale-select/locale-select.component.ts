@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 
-import { Locales } from 'src/app/_shared/constants/general';
+import { Locales } from 'src/app/_shared/constants/modules';
 
 @Component({
   selector: 'app-locale-select',

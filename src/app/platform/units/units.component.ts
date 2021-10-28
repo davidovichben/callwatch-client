@@ -10,7 +10,7 @@ import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
 
-import { UnitModules } from 'src/app/_shared/constants/general';
+import { UnitModules } from 'src/app/_shared/constants/modules';
 
 @Component({
   selector: 'app-units',

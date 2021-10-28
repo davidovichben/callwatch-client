@@ -168,6 +168,9 @@
   { "key": "switchboard_name", "value": "שם מרכזיה" },
   { "key": "switchboard_type", "value": "סוג מרכזיה" },
   { "key": "net_address", "value": "כתובת רשת" },
-  { "key": "switchboard_details", "value": "פרטי מרכזיה" }
+  { "key": "switchboard_details", "value": "פרטי מרכזיה" },
+  { "key": "upload_image", "value": "העלאת תמונה" },
+  { "key": "invalid_file_type", "value": "סוג קובץ שגוי" },
+  { "key": "maximum_file_size", "value": "גודל קובץ מקסימלי" }
 ]
 

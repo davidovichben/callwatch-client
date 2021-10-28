@@ -12,14 +12,16 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
-import { Locales } from 'src/app/_shared/constants/general';
+import { Locales } from 'src/app/_shared/constants/modules';
 import { EmailPattern, PhonePattern } from 'src/app/_shared/constants/patterns';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { ImageTypes, Megabyte } from 'src/app/_shared/constants/general';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html'
+  templateUrl: './form.component.html',
+  styles: [`img { width: 175px; height: 175px; }`]
 })
 export class FormComponent implements OnInit, OnDestroy {
 
@@ -29,6 +31,11 @@ export class FormComponent implements OnInit, OnDestroy {
   readonly locales = Locales;
   readonly errorMessages = ErrorMessages;
   readonly sub = new Subscription();
+
+  readonly avatarErrors = {
+    size: false,
+    type: false
+  }
 
   userForm: FormGroup;
 
@@ -46,19 +53,7 @@ export class FormComponent implements OnInit, OnDestroy {
               public userSession: UserSessionService) {}
 
   ngOnInit(): void {
-    this.userForm = this.fb.group({
-      firstName: this.fb.control(null, Validators.required),
-      lastName: this.fb.control(null, Validators.required),
-      workNumber: this.fb.control(null),
-      username: this.fb.control(null, [Validators.required, Validators.pattern(EmailPattern)], this.checkUsernameUnique.bind(this)),
-      mobile: this.fb.control(null),
-      phone: this.fb.control(null, Validators.pattern(PhonePattern)),
-      authType: this.fb.control(null),
-      locale: this.fb.control(null),
-      password: this.fb.control(null, Validators.required),
-      permission: this.fb.control(null),
-      units: this.fb.control([])
-    });
+    this.setForm();
 
     const routeData = this.route.snapshot.data;
 
@@ -75,6 +70,47 @@ export class FormComponent implements OnInit, OnDestroy {
         this.unitSelect.checkAll(true);
       }
     }
+  }
+
+  private setForm(): void {
+    this.userForm = this.fb.group({
+      firstName: this.fb.control(null, Validators.required),
+      lastName: this.fb.control(null, Validators.required),
+      workNumber: this.fb.control(null),
+      username: this.fb.control(null, [Validators.required, Validators.pattern(EmailPattern)], this.checkUsernameUnique.bind(this)),
+      mobile: this.fb.control(null),
+      phone: this.fb.control(null, Validators.pattern(PhonePattern)),
+      authType: this.fb.control(null),
+      locale: this.fb.control(null),
+      password: this.fb.control(null, Validators.required),
+      permission: this.fb.control(null),
+      units: this.fb.control([]),
+      avatar: this.fb.control(null)
+    });
+  }
+
+  uploadAvatar(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (event => {
+      this.userForm.get('avatar').patchValue(event.target.result);
+    });
+
+    this.avatarErrors.type = false;
+    this.avatarErrors.size = false;
+
+    console.log(file.size)
+
+    if (ImageTypes.indexOf(file.type.substr(6)) === -1) {
+      this.avatarErrors.type = true;
+      return;
+    }
+
+    if (file.size > 8 * Megabyte) {
+      this.avatarErrors.size = true;
+      return;
+    }
+
+    reader.readAsDataURL(file);
   }
 
   openPasswordDialog(): void {
@@ -101,6 +137,11 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
+  resetPermission(event: Event): void {
+    event.stopPropagation();
+    this.userForm.get('permission').reset();
+  }
+
   submit(): void {
     if (this.userForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
@@ -116,11 +157,6 @@ export class FormComponent implements OnInit, OnDestroy {
         this.userService.newUser(values).then(response => this.handleServerResponse(response));
       }
     }
-  }
-
-  resetPermission(event: Event): void {
-    event.stopPropagation();
-    this.userForm.get('permission').reset()
   }
 
   private handleServerResponse(response: boolean): void {

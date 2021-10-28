@@ -28,7 +28,7 @@ export class PermissionsComponent {
     });
   }
 
-  deletePermission(permissionId: number): void {
+  deleteItem(permissionId: number): void {
     this.notificationService.warning().then(confirmation => {
       if (confirmation.value) {
         this.permissionService.deletePermission(permissionId).then(response => {

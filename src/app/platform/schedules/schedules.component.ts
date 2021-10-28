@@ -31,8 +31,7 @@ export class SchedulesComponent implements OnDestroy {
   constructor(private scheduleService: ScheduleService,
               public userSession: UserSessionService,
               private dialog: MatDialog,
-              private notifications: NotificationService,
-              private t: TranslatePipe) {}
+              private notifications: NotificationService) {}
 
   fetchItems(): void {
     this.scheduleService.getSchedules(this.dataTable.criteria).then(response => {
@@ -53,13 +52,12 @@ export class SchedulesComponent implements OnDestroy {
     }));
   }
 
-  deleteSchedule(scheduleId: number): void {
+  deleteItem(scheduleId: number): void {
     this.notifications.warning().then(confirmation => {
       if (confirmation.value) {
         this.scheduleService.deleteSchedule(scheduleId).then(response => {
           if (response) {
-            const msg = this.t.transform('schedule_deleted');
-            this.notifications.success(msg);
+            this.notifications.success();
             this.fetchItems();
           }
         })

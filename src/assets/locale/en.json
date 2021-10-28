@@ -169,5 +169,8 @@
   { "key": "switchboard_name", "value": "Switchboard Name" },
   { "key": "switchboard_type", "value": "Switchboard Type" },
   { "key": "net_address", "value": "Net Address" },
-  { "key": "switchboard_details", "value": "Switchboard Details" }
+  { "key": "switchboard_details", "value": "Switchboard Details" },
+  { "key": "upload_image", "value": "Upload Image" },
+  { "key": "invalid_file_type", "value": "Invalid file type" },
+  { "key": "maximum_file_size", "value": "Maximum file size" }
 ]

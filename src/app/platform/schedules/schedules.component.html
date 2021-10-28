@@ -14,8 +14,8 @@
     </td>
     <td>{{ item.description }}</td>
     <td class="row-icons">
-      <i class="la la-edit" (click)="openFormDialog(item)" *ngIf="userSession.hasPermission('schedules', 'update')"></i>
-      <i class="la la-trash" (click)="deleteSchedule(item.id)" *ngIf="userSession.hasPermission('schedules', 'delete')"></i>
+      <mat-icon class="ms-2" (click)="openFormDialog(item)" *ngIf="userSession.hasPermission('schedules', 'update')">edit</mat-icon>
+      <mat-icon (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('schedules', 'delete')">delete</mat-icon>
     </td>
   </tr>
 </app-data-table>

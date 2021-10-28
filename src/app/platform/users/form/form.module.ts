@@ -9,7 +9,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { FileInputModule } from 'src/app/_shared/components/file-input/file-input.module';
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { SetPasswordModule } from 'src/app/_shared/components/set-password/set-password.module';
 
@@ -56,7 +55,6 @@ const routes: Routes = [
 		MatCheckboxModule,
 		MatDialogModule,
 		TranslateModule,
-		FileInputModule,
     UnitSelectModule,
     SetPasswordModule
 	],

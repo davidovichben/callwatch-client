@@ -8,8 +8,6 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { ReportSetService } from 'src/app/_shared/services/http/report-set.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
 @Component({
   selector: 'app-sets',
   templateUrl: './sets.component.html'
@@ -27,8 +25,7 @@ export class SetsComponent {
               private route: ActivatedRoute,
               private reportSetService: ReportSetService,
               private notificationService: NotificationService,
-              public userSession: UserSessionService,
-              private t: TranslatePipe) {}
+              public userSession: UserSessionService) {}
 
   fetchItems(): void {
     this.reportSetService.getReportSets(this.dataTable.criteria).then(response => {
@@ -36,14 +33,12 @@ export class SetsComponent {
     })
   }
 
-  deleteReportSet(reportSetId: number): void {
+  deleteItem(reportSetId: number): void {
     this.notificationService.warning().then(confirmation => {
       if (confirmation.value) {
         this.reportSetService.deleteReportSet(reportSetId).then(response => {
           if (response) {
-            const msg = this.t.transform('report_set_deleted');
-            this.notificationService.success(msg);
-
+            this.notificationService.success();
             this.fetchItems();
           }
         });

@@ -6,7 +6,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 
-import { AdminModules, PlatformModules } from 'src/app/_shared/constants/general';
+import { AdminModules, PlatformModules } from 'src/app/_shared/constants/modules';
 import { ModuleModel } from 'src/app/_shared/models/module.model';
 
 @Component({
@@ -97,10 +97,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const activeModule = this.modules.find(module => module.name === url);
-    if (activeModule) {
-      this.activeModule = activeModule.name;
-    }
+    this.findActiveModule(this.modules, url);
+  }
+
+  private findActiveModule(modules: ModuleModel[], url: string, parent?: ModuleModel): void {
+    modules.forEach(module => {
+      if (module.subModules) {
+        this.findActiveModule(module.subModules, url, module);
+      }
+
+      if (module.name === url) {
+        this.activeModule = module.name;
+        if (parent) {
+          parent.isToggled = true;
+        }
+      }
+    });
   }
 
   logout(): void {

@@ -13,8 +13,8 @@
     <td>{{ types[item.type] | t }}</td>
     <td>{{ item.netAddress }}</td>
 		<td class="row-icons">
-			<mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]">edit</mat-icon>
-			<mat-icon (click)="deleteItem(item.id)">delete</mat-icon>
+			<mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('switchboards', 'update')">edit</mat-icon>
+			<mat-icon (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('switchboards', 'delete')">delete</mat-icon>
 		</td>
 	</tr>
 </app-data-table>
