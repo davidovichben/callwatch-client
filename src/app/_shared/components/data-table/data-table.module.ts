@@ -8,13 +8,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
 import { DataTableComponent } from './data-table.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { SideFiltersComponent } from './side-filters/side-filters.component';
-import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [

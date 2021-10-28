@@ -1,14 +1,16 @@
-<div id="logo"></div>
-<div id="menu" class="flex-grow-1" [ngClass]="{ 'opened': isOpened, 'closed': !isOpened }">
+<div class="logo flex-center">
+  <span>Call Watch Pro</span>
+</div>
+<div id="menu" class="flex-grow-1">
   <ng-container *ngFor="let module of modules">
     <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule }" *ngIf="!module.subModules">
       <img [src]="'/assets/img/modules/' + module.name + '.svg'">
-      <span class="name">{{ module.name | t }}</span>
+      <span>{{ module.name | t }}</span>
     </a>
     <div class="sidebar-item justify-content-between" (click)="module.isToggled = !module.isToggled" *ngIf="module.subModules">
       <div>
         <img [src]="'/assets/img/modules/' + module.name + '.svg'">
-        <span class="name">{{ module.name | t }}</span>
+        <span>{{ module.name | t }}</span>
       </div>
       <span class="ms-3" [ngClass]="{ 'triangle-left': !module.isToggled, 'triangle-down': module.isToggled }"></span>
     </div>
@@ -18,9 +20,10 @@
   </ng-container>
 </div>
 <div id="logout" class="px-3 sidebar-item" (click)="logout()">
-  <i class="la la-sign-out ms-1 f-18"></i>
-  <span class="f-14 name">{{ 'sign_out' | t }}</span>
+  <img src="/assets/img/icons/logout.svg">
+  <span>{{ 'exit' | t }}</span>
 </div>
-<!--<div id="toggleSidebar" class="justify-content-end sidebar-item">-->
-<!--  <i class="la la-bars" (click)="isOpened = !isOpened"></i>-->
-<!--</div>-->
+<div id="toggleSidebar" class="px-3 justify-content-end sidebar-item">
+  <i class="la la-angle-right f-20" *ngIf="(pageDirection === 'rtl' && toggleState === 'opened') || (pageDirection === 'ltr' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
+  <i class="la la-angle-left f-20" *ngIf="(pageDirection === 'ltr' && toggleState === 'opened') || (pageDirection === 'rtl' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
+</div>

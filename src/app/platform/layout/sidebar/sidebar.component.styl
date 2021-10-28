@@ -3,10 +3,26 @@
 :host
   display: flex
   flex-direction: column
-  background-color: #333
+  background-color: DarkBlueColor
   color: #fff
+  transition: 0.3s
 
-#logo
+:host.opened
+  width: 260px
+
+  img
+    margin: 0 10px
+
+:host.closed
+  width: 80px
+
+  .sidebar-item
+    justify-content: center !important
+
+  span
+    display: none
+
+.logo
   height: 80px
   background-color: BlueColor
 
@@ -14,21 +30,11 @@
   transition: 0.3s
 
   .sidebar-item:hover, .sidebar-item.active
-    color: blueColor
+    background-color: BlueColor
 
   .sub-modules
     transition: 0.5s
     overflow: hidden
-
-#menu.opened
-  width: 260px
-
-  img
-    margin: 0 10px
-
-#menu.closed
-    span
-      display: none
 
 .sidebar-item
   display: flex

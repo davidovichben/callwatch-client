@@ -4,6 +4,10 @@
   src: url('assets/fonts/OpenSansHebrew-Regular.ttf')
   font-family: OpenSans
 
+@font-face
+  src: url('assets/fonts/Magistral-Medium.ttf')
+  font-family: Magistral
+
 body
   margin: 0
   padding: 0
@@ -68,6 +72,9 @@ th, td
 .f-18
   font-size: 18px
 
+.f-20
+  font-size: 20px
+
 .w-100p
   width: 100px
 
@@ -107,9 +114,9 @@ th, td
   color: WhiteColor !important
 
 .white-btn
-  background-color LightColor !important
-  color BlueColor !important
-  border 1px solid BlueColor !important
+  background-color: LightColor !important
+  color: BlueColor !important
+  border: 1px solid BlueColor !important
 
 .grey-btn
   background-color: GreyColor !important
@@ -141,8 +148,12 @@ th, td
   border-top: 6px solid WhiteColor
 
 .required:after
-  content:" *"
+  content: " *"
   color: RedColor
+
+.logo
+  font-size: 28px
+  font-family: Magistral
 
 .icon-img
   height: 11px !important
@@ -152,7 +163,7 @@ th, td
   > mat-icon
     font-size: 24px
     cursor: pointer
-    color: GreyColor
+    color: DarkGreyColor
 
 .tabs
   display: flex
