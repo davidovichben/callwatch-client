@@ -183,7 +183,14 @@
   { "key": "axl_address", "value": "AXL Service Access Address" },
   { "key": "axl_username", "value": "AXL Username" },
   { "key": "axl_password", "value": "AXL Password" },
-  { "key": "axl_enable_services", "value": "CDR Pull Support" }
+  { "key": "axl_enable_services", "value": "CDR Pull Support" },
+  { "key": "new_unique_day", "value": "New Unique Day" },
+  { "key": "add_unique_day", "value": "Add Unique Day" },
+  { "key": "unique_day_name", "value": "Unique Day Name" },
+  { "key": "from_date", "value": "From Date" },
+  { "key": "to_date", "value": "To Date" },
+  { "key": "from_time", "value": "From Time" },
+  { "key": "to_time", "value": "To Time" }
 ]
 
 

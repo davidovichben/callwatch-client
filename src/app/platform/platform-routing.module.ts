@@ -44,6 +44,10 @@ const routes: Routes = [
         loadChildren: () => import('./schedules/schedules.module').then(m => m.SchedulesModule)
       },
       {
+        path: 'uniqueDays',
+        loadChildren: () => import('./unique-days/unique-days.module').then(m => m.UniqueDaysModule)
+      },
+      {
         path: 'switchboards',
         loadChildren: () => import('./switchboards/switchboards.module').then(m => m.SwitchboardsModule)
       },

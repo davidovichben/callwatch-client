@@ -1,6 +1,4 @@
-<div class="logo flex-center">
-  <span>Call Watch Pro</span>
-</div>
+<div class="logo flex-center">{{ toggleState === 'opened' ? 'Call Watch Pro' : 'CWP' }}</div>
 <div id="menu" class="flex-grow-1">
   <ng-container *ngFor="let module of modules">
     <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule }" *ngIf="!module.subModules">

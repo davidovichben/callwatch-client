@@ -13,6 +13,6 @@ import { PlatformComponent } from 'src/app/platform/platform.component';
     CommonModule,
     PlatformRoutingModule,
     LayoutModule
-  ]
+  ],
 })
 export class PlatformModule {}

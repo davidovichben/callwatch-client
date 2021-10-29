@@ -1,0 +1,15 @@
+<app-data-table [columns]="columns" [hasActionsHeader]="true" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+<div class="data-table-menus">
+	<div>
+		<button mat-flat-button class="blue-btn" routerLink="./form">{{ 'new_unique_day' | t }}</button>
+	</div>
+</div>
+	<tr *ngFor="let item of dataTable.items">
+		<td>{{ item.name }}</td>
+    <td>{{ item.description }}</td>
+		<td class="row-icons">
+      <mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('schedules', 'update')">edit</mat-icon>
+      <mat-icon (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('schedules', 'delete')">delete</mat-icon>
+		</td>
+	</tr>
+</app-data-table>
