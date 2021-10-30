@@ -5,6 +5,7 @@ import { BaseHttpService } from 'src/app/_shared/services/http/base-http.service
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { UniqueDayModel } from 'src/app/_shared/models/unique-day.model';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
 
@@ -53,4 +54,11 @@ export class UniqueDayService extends BaseHttpService {
 			.then(() => true)
 			.catch(() => false);
 	}
+
+  selectUniqueDays(): Promise<SelectItemModel[]> {
+    return this.http.get(this.endPoint + '/select', this.getTokenRequest())
+      .toPromise()
+      .then(response => response as SelectItemModel[])
+      .catch(() => []);
+  }
 }

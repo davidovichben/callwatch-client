@@ -31,6 +31,23 @@ export class FormComponent implements OnInit {
         private fb: FormBuilder, private switchboardService: SwitchboardService) {}
 
 	ngOnInit(): void {
+    this.setForm();
+
+    const routeData = this.route.snapshot.data;
+    if (routeData.switchboard) {
+      this.switchboardId = routeData.switchboard.id;
+      this.switchboardForm.patchValue(routeData.switchboard);
+
+      ['cti', 'axl'].forEach(service => {
+        const number = this.switchboardForm.get(service + '.number').value;
+        if (number) {
+          this.toggleServiceNumber(true, service);
+        }
+      });
+    }
+  }
+
+  private setForm(): void {
     this.switchboardForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control(null, Validators.required),
@@ -50,19 +67,6 @@ export class FormComponent implements OnInit {
         number: this.fb.control({ value: null, disabled: true })
       })
     });
-
-    const routeData = this.route.snapshot.data;
-    if (routeData.switchboard) {
-      this.switchboardId = routeData.switchboard.id;
-      this.switchboardForm.patchValue(routeData.switchboard);
-
-      ['cti', 'axl'].forEach(service => {
-        const number = this.switchboardForm.get(service + '.number').value;
-        if (number) {
-          this.toggleServiceNumber(true, service);
-        }
-      });
-    }
   }
 
   toggleAxi(value: string): void {
@@ -93,16 +97,16 @@ export class FormComponent implements OnInit {
   }
 
 	submit(): void {
-		if (this.switchboardForm.valid) {
+		if (this.switchboardForm.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
 			if (this.switchboardId) {
 				this.switchboardService.updateSwitchboard(this.switchboardId, this.switchboardForm.value).then(response => {
-          this.handleServerResponse(response)
+          this.handleServerResponse(response);
         });
 			} else {
 				this.switchboardService.newSwitchboard(this.switchboardForm.value).then(response => {
-          this.handleServerResponse(response)
+          this.handleServerResponse(response);
         });
 			}
 		}

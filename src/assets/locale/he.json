@@ -40,6 +40,7 @@
   { "key": "full", "value": "מלאה" },
   { "key": "full_name", "value": "שם מלא" },
   { "key": "general", "value": "כללי" },
+  { "key": "day", "value": "יום" },
   { "key": "has_root_permissions", "value": "למשתמש יש הרשאות לכל היחידות" },
   { "key": "hebrew", "value": "עברית" },
   { "key": "hello", "value": "שלום" },
@@ -190,7 +191,13 @@
   { "key": "from_date", "value": "מתאריך" },
   { "key": "to_date", "value": "עד תאריך" },
   { "key": "from_time", "value": "משעה" },
-  { "key": "to_time", "value": "עד שעה" }
+  { "key": "to_time", "value": "עד שעה" },
+  { "key": "type", "value": "סוג" },
+  { "key": "regular", "value": "רגיל" },
+  { "key": "unique", "value": "מיוחד" },
+  { "key": "schedule_details", "value": "פרטי לוח זמנים" },
+  { "key": "call_times", "value": "זמני חיוג" },
+  { "key": "schedule_type", "value": "סוג לוח זמנים" }
 ]
 
 

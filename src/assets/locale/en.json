@@ -41,6 +41,7 @@
   { "key": "full", "value": "full" },
   { "key": "full_name", "value": "Full Name" },
   { "key": "general", "value": "General" },
+  { "key": "day", "value": "Day" },
   { "key": "has_root_permissions", "value": "The user has permissions for all units" },
   { "key": "hebrew", "value": "hebrew" },
   { "key": "hello", "value": "Hello" },
@@ -191,7 +192,13 @@
   { "key": "from_date", "value": "From Date" },
   { "key": "to_date", "value": "To Date" },
   { "key": "from_time", "value": "From Time" },
-  { "key": "to_time", "value": "To Time" }
+  { "key": "to_time", "value": "To Time" },
+  { "key": "type", "value": "type" },
+  { "key": "regular", "value": "regular" },
+  { "key": "unique", "value": "unique" },
+  { "key": "schedule_details", "value": "Schedule Details" },
+  { "key": "call_times", "value": "Call Times" },
+  { "key": "schedule_type", "value": "Schedule Type" }
 ]
 
 

@@ -10,10 +10,7 @@ import { SwitchboardsComponent } from './switchboards.component';
 import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: SwitchboardsComponent
-	},
+	{ path: '', component: SwitchboardsComponent },
 	{ path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) }
 ];
 

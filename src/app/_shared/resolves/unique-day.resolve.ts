@@ -8,10 +8,10 @@ import { UniqueDayModel } from 'src/app/_shared/models/unique-day.model';
 @Injectable()
 export class UniqueDayResolve implements Resolve<UniqueDayModel> {
 
-	constructor(private uniquedayService: UniqueDayService) {}
+	constructor(private uniqueDayService: UniqueDayService) {}
 
 	resolve(snapshot: ActivatedRouteSnapshot) {
 		const uniqueDayId = +snapshot.params.id;
-		return this.uniquedayService.getUniqueDay(uniqueDayId).then(response => response as UniqueDayModel);
+		return this.uniqueDayService.getUniqueDay(uniqueDayId).then(response => response as UniqueDayModel);
 	}
 }
