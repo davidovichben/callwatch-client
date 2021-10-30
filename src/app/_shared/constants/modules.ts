@@ -20,6 +20,7 @@ export const PlatformModules = [
     subModules: [
       { name: 'permissions', isGuarded: true },
       { name: 'schedules', isGuarded: true },
+      { name: 'uniqueDays', label: 'unique_days', isGuarded: true },
       { name: 'switchboards', isGuarded: true }
     ]
   },

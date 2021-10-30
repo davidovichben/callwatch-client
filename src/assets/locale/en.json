@@ -176,6 +176,7 @@
   { "key": "maximum_file_size", "value": "Maximum file size" },
   { "key": "assigned_data_manager", "value": "Assigned Data Manager" },
   { "key": "minimal_number_of_seconds", "value": "Minimal Number of Seconds" },
+  { "key": "unique_days", "value": "Unique Days" },
   { "key": "cti_username", "value": "CTI Username" },
   { "key": "cti_password", "value": "CTI Password" },
   { "key": "cti_daily_update_time", "value": "Daily update time of JTAPI Permissions" },

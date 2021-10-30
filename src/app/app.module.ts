@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -40,7 +41,8 @@ import { AppInterceptor } from 'src/app/_shared/interceptors/app.interceptor';
     LoggedInGuard,
     TranslatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true, strict: true } },
+    {provide: MAT_DATE_LOCALE, useValue: 'he-IL'}
   ],
   bootstrap: [AppComponent]
 })

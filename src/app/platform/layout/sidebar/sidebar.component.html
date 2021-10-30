@@ -3,7 +3,7 @@
   <ng-container *ngFor="let module of modules">
     <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule }" *ngIf="!module.subModules">
       <img [src]="'/assets/img/modules/' + module.name + '.svg'">
-      <span>{{ module.name | t }}</span>
+      <span>{{ module.label ? (module.label | t) : (module.name | t) }}</span>
     </a>
     <div class="sidebar-item justify-content-between" (click)="module.isToggled = !module.isToggled" *ngIf="module.subModules">
       <div>
@@ -13,7 +13,10 @@
       <span class="ms-3" [ngClass]="{ 'triangle-left': !module.isToggled, 'triangle-down': module.isToggled }"></span>
     </div>
     <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 60) + 'px' : 0 }">
-      <a *ngFor="let subModule of module.subModules" [ngClass]="{ active: subModule.name === activeModule }" [routerLink]="subModule.hasParentPrefix ? ['/', menuType, module.name, subModule.name] : ['/', menuType, subModule.name]" class="justify-content-center sidebar-item">{{ subModule.name | t }}</a>
+      <a *ngFor="let subModule of module.subModules"
+        [ngClass]="{ active: subModule.name === activeModule }"
+        [routerLink]="subModule.hasParentPrefix ? ['/', menuType, module.name, subModule.name] : ['/', menuType, subModule.name]"
+        class="justify-content-center sidebar-item">{{ subModule.label ? (subModule.label | t) : (subModule.name | t) }}</a>
     </div>
   </ng-container>
 </div>
