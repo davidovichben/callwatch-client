@@ -20,14 +20,14 @@
   <span> {{ savedItem }}</span>
   <span>{{ 'saved_successfully' | t }}</span>
 </p>
-<table class="table" [ngClass]="{ 'table-hover': isSelectable }">
+<table class="table table-striped" [ngClass]="{ 'table-hover': isSelectable }">
 	<thead>
 	<tr>
 		<th *ngIf="hasCheckColumn" class="pointer table-header">
 			<mat-checkbox (change)="checkAll($event.checked)" [ngModel]="criteria.isCheckAll" *ngIf="items.length > 0 && !disableCheckAll"></mat-checkbox>
 		</th>
 		<th *ngFor="let column of columns" (click)="sort(column)" class="table-header">
-      <div class="d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center">
         <span>{{ column.label | t }}</span>
         <div class="sort-container">
           <div class="triangle-up" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'ASC' }"></div>

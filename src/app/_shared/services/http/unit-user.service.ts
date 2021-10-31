@@ -4,8 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { BaseHttpService } from './base-http.service';
 import { UserSessionService } from '../state/user-session.service';
 
-import { UserModel } from 'src/app/_shared/models/user.model';
-
 @Injectable()
 export class UnitUserService extends BaseHttpService {
 
@@ -15,11 +13,11 @@ export class UnitUserService extends BaseHttpService {
     super(userSession);
   }
 
-  getUsers(unitId: number): Promise<UserModel[]> {
+  getUsers(unitId: number): Promise<any> {
     return this.http.get(this.endPoint + '/' + unitId + '/user', this.getTokenRequest())
       .toPromise()
-      .then(response => response as UserModel[])
-      .catch(() => []);
+      .then(response => response as any)
+      .catch(() => null);
   }
 
   newUser(unitId: number, userId: number): Promise<any> {

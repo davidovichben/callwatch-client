@@ -4,6 +4,19 @@
   display: flex
   flex-direction: column
   flex-grow: 1
+  transition: 0.3s ease
+
+.ltr :host.opened
+  margin-left: 220px
+
+.rtl :host.opened
+  margin-right: 220px
+
+.ltr :host.closed
+  margin-left: 80px
+
+.rtl :host.closed
+  margin-right: 80px
 
 header
   height: 80px

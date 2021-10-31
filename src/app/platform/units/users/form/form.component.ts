@@ -9,7 +9,8 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html'
+  templateUrl: './form.component.html',
+  styles: [`::ng-deep .close-circle { width: 18px !important }`]
 })
 export class FormComponent {
 

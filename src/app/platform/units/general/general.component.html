@@ -13,56 +13,10 @@
         <mat-option *ngFor="let user of unit.users" [value]="user.id">{{ user.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field  *ngIf="!isRootUnit" [ngClass]="{ disabled: !hasPermission('units', 'update') }">
+    <mat-form-field *ngIf="!isRootUnit" [ngClass]="{ disabled: !hasPermission('units', 'update') }">
       <input matInput name="externalID" [placeholder]="'external_identification' | t" [ngModel]="unit.externalID">
     </mat-form-field>
   </div>
   <button class="btn blue-btn" type="submit" *ngIf="hasPermission('units', 'update') && !isRootUnit">{{ 'save' | t }}</button>
 </form>
-<div class="mt-5">
-  <p class="mb-3 f-18 grey-text">{{ 'users' | t }}</p>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>{{ 'user' | t }}</th>
-      <th *ngIf="unit.id !== 'root'">{{ 'permission' | t }}</th>
-      <th>{{ 'actions' | t }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of unit.users; let index = index">
-      <td>{{ user.name }}</td>
-      <td *ngIf="unit.id !== 'root'">{{ user.permission }}</td>
-      <td class="row-icons">
-        <i class="la la-trash" *ngIf="(!isRootUnit || isRootUser) && hasPermission('users', 'delete')" (click)="deleteUser(user.id, index)"></i>
-      </td>
-    </tr>
-    <tr *ngIf="unit.users && unit.users.length === 0">
-      <td colspan="4">{{ 'no_users_in_unit' | t }}.</td>
-    </tr>
-    </tbody>
-  </table>
-  <button class="btn blue-btn" (click)="openUserDialog()" *ngIf="(!isRootUnit || isRootUser) && hasPermission('users', 'create')">{{ 'add_user' | t }}</button>
-</div>
-<div class="mt-5" *ngIf="unit.parent">
-  <p class="mb-3 f-18 grey-text">{{ 'parent_users' | t }}</p>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>{{ 'user' | t }}</th>
-      <th>{{ 'permission' | t }}</th>
-      <th>{{ 'unit' | t }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of unit.parent.users">
-      <td>{{ user.name }}</td>
-      <td>{{ user.permission ? user.permission : 'primary_f' | t }}</td>
-      <td>{{ user.unit ? user.unit : 'primary' | t }}</td>
-    </tr>
-    <tr *ngIf="unit.parent.users && unit.parent.users.length === 0">
-      <td colspan="4">{{ 'no_users_parent_unit' | t }}.</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+

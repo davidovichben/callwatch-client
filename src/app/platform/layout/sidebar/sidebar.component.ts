@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +17,8 @@ import { ModuleModel } from 'src/app/_shared/models/module.model';
 export class SidebarComponent implements OnInit, OnDestroy {
 
   @HostBinding('class') toggleState = 'opened';
+
+  @Output() toggled = new EventEmitter();
 
   readonly sub = new Subscription();
 
@@ -122,6 +124,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   toggleSidebar(): void {
     this.toggleState = (this.toggleState === 'opened') ? 'closed' : 'opened';
+    this.toggled.emit(this.toggleState);
   }
 
   ngOnDestroy() {

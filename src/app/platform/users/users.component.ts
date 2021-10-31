@@ -18,7 +18,9 @@ export class UsersComponent {
 
   readonly columns = [
     { label: 'full_name', name: 'name' },
-    { label: 'phone', name: 'phone' }
+    { label: 'permission', name: 'permission' },
+    { label: 'phone', name: 'phone' },
+    { label: 'username', name: 'username' }
   ];
 
   currentUser: UserModel;

@@ -78,7 +78,7 @@ export class FormComponent implements OnInit, OnDestroy {
       lastName: this.fb.control(null, Validators.required),
       workNumber: this.fb.control(null),
       username: this.fb.control(null, [Validators.required, Validators.pattern(EmailPattern)], this.checkUsernameUnique.bind(this)),
-      mobile: this.fb.control(null),
+      mobile: this.fb.control(null, Validators.pattern(PhonePattern)),
       phone: this.fb.control(null, Validators.pattern(PhonePattern)),
       authType: this.fb.control(null),
       locale: this.fb.control(null),

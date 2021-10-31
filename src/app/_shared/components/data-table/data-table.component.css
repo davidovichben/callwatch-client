@@ -112,7 +112,6 @@ th {
 
 ::ng-deep td {
 	padding: 0.5rem;
-	text-align: center !important;
 	font-size: 14px;
 }
 

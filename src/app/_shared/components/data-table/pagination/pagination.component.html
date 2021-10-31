@@ -1,4 +1,4 @@
-<div class="d-flex align-content-center justify-content-between justify-content-lg-end">
+<div class="d-flex align-content-center justify-content-between">
   <div class="mb-3 mb-lg-0 text-center text-lg-right">
     <span>
       <span>{{ 'showing' | t }}</span>
@@ -9,12 +9,12 @@
     </span>
   </div>
   <ul class="justify-content-center pagination">
-    <li class="page-item" *ngIf="data.currentPage > 1">
+    <li class="page-item" [ngClass]="{ disabled: data.currentPage <= 1 }">
       <a class="page-link" routerLink="./" [queryParams]="{ page: 1 }">
         <i class="la la-angle-double-right"></i>
       </a>
     </li>
-	  <li class="page-item" *ngIf="data.currentPage > 1">
+	  <li class="page-item" [ngClass]="{ disabled: data.currentPage <= 1 }">
 		  <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage - 1 }">
 			  <i class="la la-angle-right"></i>
 		  </a>
@@ -25,7 +25,7 @@
     <li class="page-item" *ngIf="data.currentPage - 1 >= 1">
       <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage - 1 }">{{ data.currentPage - 1 }}</a>
     </li>
-    <li class="page-item active" *ngIf="data.totalPages > 1">
+    <li class="page-item active">
       <a class="page-link">{{ data.currentPage }}</a>
     </li>
     <li class="page-item" *ngIf="data.currentPage + 1 <= data.totalPages">
@@ -34,12 +34,12 @@
     <li class="page-item" *ngIf="data.currentPage + 2 <= data.totalPages">
       <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage + 2 }">{{ data.currentPage + 2 }}</a>
     </li>
-	  <li class="page-item" *ngIf="data.currentPage < data.totalPages">
+	  <li class="page-item" [ngClass]="{ disabled: data.currentPage >= data.totalPages }">
 		  <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage + 1 }">
 			  <i class="la la-angle-left"></i>
 		  </a>
 	  </li>
-    <li class="page-item" *ngIf="data.currentPage < data.totalPages">
+    <li class="page-item" [ngClass]="{ disabled: data.currentPage >= data.totalPages }">
       <a class="page-link" routerLink="./" [queryParams]="{ page: data.totalPages }">
         <i class="la la-angle-double-left"></i>
       </a>

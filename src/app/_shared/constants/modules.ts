@@ -1,6 +1,5 @@
 export const PlatformModules = [
   { name: 'dashboard' },
-  { name: 'campaigns', isGuarded: true },
   { name: 'units', isGuarded: true },
   {
     name: 'reports',
@@ -32,8 +31,8 @@ export const AdminModules = [
 
 export const UnitModules = [
   { name: 'general', label: 'general' },
-  { name: 'campaigns', label: 'campaigns' },
-  { name: 'calls', label: 'incoming_calls' },
+  { name: 'users', label: 'users' },
+  { name: 'switchboards', label: 'switchboards' },
 ];
 
 export const Locales = [

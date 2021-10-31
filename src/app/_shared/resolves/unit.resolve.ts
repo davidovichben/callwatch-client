@@ -11,6 +11,7 @@ export class UnitResolve implements Resolve<UnitModel> {
   constructor(private unitService: UnitService) {}
 
   resolve(snapshot: ActivatedRouteSnapshot) {
-    return this.unitService.getUnit(snapshot.parent.parent.params.id).then(response => response as UnitModel);
+    const unitId = snapshot.params.id;
+    return this.unitService.getUnit(unitId).then(response => response as UnitModel);
   }
 }

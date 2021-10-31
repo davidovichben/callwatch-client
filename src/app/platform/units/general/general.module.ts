@@ -7,24 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { FormModule } from './form/form.module';
 
 import { GeneralComponent } from './general.component';
-
-import { UserService } from 'src/app/_shared/services/http/user.service';
-import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
-
-import { UserSelectResolve } from 'src/app/_shared/resolves/user-select.resolve';
-import { UnitResolve } from 'src/app/_shared/resolves/unit.resolve';
 
 const routes: Routes = [
   {
     path: '',
-    component: GeneralComponent,
-    resolve: {
-      users: UserSelectResolve,
-      unit: UnitResolve
-    }
+    component: GeneralComponent
   }
 ];
 
@@ -37,14 +26,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    TranslateModule,
-    FormModule
-  ],
-  providers: [
-    UserService,
-    UnitUserService,
-    UnitResolve,
-    UserSelectResolve
+    TranslateModule
   ]
 })
 export class GeneralModule {}

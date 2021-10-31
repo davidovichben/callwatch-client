@@ -11,6 +11,7 @@ import { UnitTreeComponent } from './unit-tree/unit-tree.component';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
+import { UnitResolve } from 'src/app/_shared/resolves/unit.resolve';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -18,11 +19,16 @@ const routes: Routes = [
   {
     path: ':id',
     component: UnitsComponent,
-    resolve: { units: UnitsResolve },
+    resolve: {
+      unit: UnitResolve,
+      units: UnitsResolve
+    },
     pathMatch: '',
     data: { noPadding: true },
     children: [
       { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
+      { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+      { path: 'switchboards', loadChildren: () => import('./switchboards/switchboards.module').then(m => m.SwitchboardsModule) },
       { path: '', redirectTo: 'general' }
     ]
   },
@@ -40,6 +46,11 @@ const routes: Routes = [
     TranslateModule,
     UnitFormModule
 	],
-  providers: [UnitService, UnitsResolve, TranslatePipe]
+  providers: [
+    UnitService,
+    UnitResolve,
+    UnitsResolve,
+    TranslatePipe
+  ]
 })
 export class UnitsModule {}

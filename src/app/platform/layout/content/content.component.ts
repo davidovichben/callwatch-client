@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -13,6 +13,8 @@ import { UserModel } from 'src/app/_shared/models/user.model';
   styleUrls: ['./content.component.styl']
 })
 export class ContentComponent implements OnInit, OnDestroy {
+
+  @Input() @HostBinding('class') sidebarToggleState = 'opened';
 
   readonly sub = new Subscription();
 

@@ -1,16 +1,22 @@
-<div class="logo flex-center">{{ toggleState === 'opened' ? 'Call Watch Pro' : 'CWP' }}</div>
-<div id="menu" class="flex-grow-1">
+<div class="logo flex-center">
+  <span>{{ toggleState === 'opened' ? 'Call Watch Pro' : 'CWP' }}</span>
+</div>
+<div id="menu" [class]="'flex-grow-1 dir-' + pageDirection">
   <ng-container *ngFor="let module of modules">
     <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule }" *ngIf="!module.subModules">
-      <img [src]="'/assets/img/modules/' + module.name + '.svg'">
+      <figure>
+        <img [src]="'/assets/img/modules/' + module.name + '.svg'">
+      </figure>
       <span>{{ module.label ? (module.label | t) : (module.name | t) }}</span>
     </a>
-    <div class="sidebar-item justify-content-between" (click)="module.isToggled = !module.isToggled" *ngIf="module.subModules">
-      <div>
+    <div class="sidebar-item" (click)="module.isToggled = !module.isToggled" *ngIf="module.subModules">
+      <figure>
         <img [src]="'/assets/img/modules/' + module.name + '.svg'">
+      </figure>
+      <div class="w-100 flex-between">
         <span>{{ module.name | t }}</span>
+        <span class="px-1" [ngClass]="{ 'triangle-side': !module.isToggled, 'triangle-down': module.isToggled }"></span>
       </div>
-      <span class="ms-3" [ngClass]="{ 'triangle-left': !module.isToggled, 'triangle-down': module.isToggled }"></span>
     </div>
     <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 60) + 'px' : 0 }">
       <a *ngFor="let subModule of module.subModules"
@@ -20,11 +26,13 @@
     </div>
   </ng-container>
 </div>
-<div id="logout" class="px-3 sidebar-item" (click)="logout()">
-  <img src="/assets/img/icons/logout.svg">
+<div id="logout" class="sidebar-item" (click)="logout()">
+  <figure>
+    <img src="/assets/img/icons/logout.svg">
+  </figure>
   <span>{{ 'exit' | t }}</span>
 </div>
-<div id="toggleSidebar" class="px-3 justify-content-end sidebar-item">
+<div id="toggleSidebar" class="px-3 sidebar-item" [ngClass]="{ 'justify-content-end': toggleState === 'opened', 'justify-content-center': toggleState === 'closed' }">
   <i class="la la-angle-right f-20" *ngIf="(pageDirection === 'rtl' && toggleState === 'opened') || (pageDirection === 'ltr' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
   <i class="la la-angle-left f-20" *ngIf="(pageDirection === 'ltr' && toggleState === 'opened') || (pageDirection === 'rtl' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
 </div>

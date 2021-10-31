@@ -7,7 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { FormComponent } from './form.component';
+import { FormComponent } from 'src/app/platform/units/users/form/form.component';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 

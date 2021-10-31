@@ -1,2 +1,2 @@
-<app-sidebar></app-sidebar>
-<app-content></app-content>
+<app-sidebar (toggled)="sidebarToggleState = $event"></app-sidebar>
+<app-content [sidebarToggleState]="sidebarToggleState"></app-content>

@@ -10,6 +10,8 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 })
 export class PlatformComponent implements OnInit {
 
+  sidebarToggleState = 'opened';
+
   constructor(private route: ActivatedRoute, private userSession: UserSessionService) {}
 
   ngOnInit() {

@@ -1,30 +1,35 @@
 @import '~src/assets/variables';
 
 :host
+  position: fixed
+  top: 0
   display: flex
+  height: 100vh
   flex-direction: column
   background-color: DarkBlueColor
   color: #fff
-  transition: 0.3s
+  transition: 0.3s ease
 
 :host.opened
-  width: 260px
-
-  img
-    margin: 0 10px
+  width: 220px
 
 :host.closed
   width: 80px
 
   .sidebar-item
-    justify-content: center !important
 
-  span
-    display: none
+    span
+      opacity: 0
+      pointer-events: none
 
 .logo
   height: 80px
   background-color: BlueColor
+
+  span
+    max-height: 40px
+    overflow: hidden
+    word-break: break-all
 
 #menu
   transition: 0.3s
@@ -39,14 +44,32 @@
 .sidebar-item
   display: flex
   align-items: center
-  height: 60px
+  height: 70px
   color: #fff
   cursor: pointer
   transition: 0.3s
 
-  img
-    height: 30px
+  figure
+    display: flex
+    align-items: center
     width: 30px
+    margin: 0 25px
+    text-align: center
+
+    img
+      height: 30px
+      width: 30px
+
+  span
+    max-height: 30px
+    overflow: hidden
+    transition: 0.3s
+
+.dir-rtl .sidebar-item.active
+  border-right: 12px solid LighterBlueColor
+
+.dir-ltr .sidebar-item.active
+  border-left: 12px solid LighterBlueColor
 
 #toggleSidebar
   background-color: BlueColor
@@ -54,4 +77,4 @@
   img
     height: 20px
     width: 20px
-    margin-left: 0
+    margin: 0

@@ -13,6 +13,9 @@ body
   padding: 0
   font-family: OpenSans
 
+th:first-child, td:first-child
+  padding: 0.75rem 25px !important
+
 ul
   margin: 0
   padding: 0
@@ -35,9 +38,6 @@ button
 
 button:focus
   outline: 0 !important
-
-th, td
-  text-align: center
 
 .flex-grow-1
   flex-grow: 1
@@ -135,6 +135,10 @@ th, td
 
 .blue-btn
   background-color: BlueColor !important
+  transition: 0.3s
+
+.blue-btn:hover
+  background-color: LightBlueColor !important
 
 .small-btn
   min-width: 50px !important
@@ -142,16 +146,16 @@ th, td
   font-size: 14px !important
   padding: 0 !important
 
-.triangle-down, .triangle-left
+.triangle-down, .triangle-side
   transition: 0.2s
 
-.triangle-left
+.triangle-side
   border: 6px solid transparent
 
-.rtl .triangle-left
+.rtl .triangle-side
   border-right: 6px solid WhiteColor
 
-.ltr .triangle-left
+.ltr .triangle-side
   border-left: 6px solid WhiteColor
 
 .triangle-down
@@ -171,6 +175,11 @@ th, td
   height: 11px !important
   width: 11px !important
 
+.close-circle
+  border-radius: 50%
+  background-color: LightBlackColor
+  color: #fff
+
 .row-icons
 
   mat-icon
@@ -182,7 +191,7 @@ th, td
 
   th
     border: none
-    color: #606060
+    color: LightBlackColor
 
   tbody
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16)
@@ -205,7 +214,7 @@ th, td
     width: 150px
     padding: 5px 0
     cursor: pointer
-    color: #606060
+    color: LightBlackColor
     text-align: center
 
   .tab.active, .tab:hover
@@ -237,6 +246,10 @@ form
   min-width: 120px
   font-size: 14px !important
 
+.table-striped > tbody > tr:nth-of-type(odd)
+  background-color: GreyColor
+  --bs-table-accent-bg: GreyColor
+
 /*--- Bootstrap LTR ---*/
 
   .ltr .ms-1
@@ -258,8 +271,28 @@ form
   .table
     background-color: WhiteColor
 
-app-data-table tbody tr:nth-child(even)
-  background-color: LightColor !important
+  .table > :not(caption) > * > *
+    padding: 0.75rem 0.75rem
+
+app-data-table
+
+  tbody tr:nth-child(even)
+    background-color: LightColor !important
+
+  app-pagination
+    .page-link
+      border-color: transparent !important
+      color: BlueColor !important
+      font-size: 12px
+
+    .page-item.active
+      .page-link
+        background-color: BlueColor !important
+        color: #fff !important
+
+    .page-item.disabled
+      .page-link
+        background-color: LightColor
 
 /* --- Swal --- */
 

@@ -24,10 +24,6 @@ const routes: Routes = [
         data: { 'noPadding': true }
       },
       {
-        path: 'campaigns',
-        loadChildren: () => import('./campaigns/campaigns.module').then(m => m.CampaignsModule)
-      },
-      {
         path: 'reports',
         loadChildren: () => import('./reports/reports-routing.module').then(m => m.ReportsRoutingModule)
       },

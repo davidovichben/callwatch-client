@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12 col-lg-9">
+    <p class="mb-3 f-18 grey-text">{{ 'users' | t }}</p>
+    <table class="table table-striped simple-table">
+      <thead>
+      <tr>
+        <th>{{ 'user' | t }}</th>
+        <th *ngIf="unit.id !== 'root'">{{ 'permission' | t }}</th>
+        <th>{{ 'actions' | t }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of unitUsers; let index = index">
+        <td>{{ user.name }}</td>
+        <td *ngIf="unit.id !== 'root'">{{ user.permission }}</td>
+        <td>
+          <mat-icon class="close-circle pointer" *ngIf="(!isRootUnit) && userSession.hasPermission('users', 'delete')" (click)="deleteUser(user.id, index)">close</mat-icon>
+        </td>
+      </tr>
+      <tr *ngIf="unit.users && unit.users.length === 0">
+        <td colspan="4">{{ 'no_users_in_unit' | t }}.</td>
+      </tr>
+      </tbody>
+    </table>
+    <button class="btn blue-btn" (click)="openUserDialog()" *ngIf="(!isRootUnit || isRootUser) && userSession.hasPermission('users', 'create')">{{ 'add_user' | t }}</button>
+  </div>
+  <div class="col-12 col-lg-9 mt-5" *ngIf="parentUsers">
+    <p class="mb-3 f-18 grey-text">{{ 'parent_users' | t }}</p>
+    <table class="table table-striped simple-table">
+      <thead>
+      <tr>
+        <th>{{ 'user' | t }}</th>
+        <th>{{ 'permission' | t }}</th>
+        <th>{{ 'unit' | t }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of parentUsers">
+        <td>{{ user.name }}</td>
+        <td>{{ user.permission ? user.permission : 'primary_f' | t }}</td>
+        <td>{{ user.unit ? user.unit : 'primary' | t }}</td>
+      </tr>
+      <tr *ngIf="parentUsers && parentUsers.length === 0">
+        <td colspan="4">{{ 'no_users_parent_unit' | t }}.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
