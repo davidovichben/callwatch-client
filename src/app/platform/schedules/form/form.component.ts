@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { ScheduleTypes } from 'src/app/_shared/models/schedule.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { WeekDays } from 'src/app/_shared/constants/general';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { CallTimeModel } from 'src/app/_shared/models/call-time.model';
 
 @Component({
   selector: 'app-form',
@@ -26,10 +30,13 @@ export class FormComponent {
 
   scheduleId: number;
 
+  callTimes: CallTimeModel[] = [];
+
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private scheduleService: ScheduleService) {}
+              private fb: FormBuilder, private scheduleService: ScheduleService,
+              private notification: NotificationService, private t: TranslatePipe) {}
 
   ngOnInit() {
     this.setForms();
@@ -54,15 +61,16 @@ export class FormComponent {
     this.callTimeForm = this.fb.group({
       day: this.fb.control(null, Validators.required),
       startTime: this.fb.control(null, Validators.required),
-      endTime: this.fb.control(null, Validators.required)
-    })
+      endTime: this.fb.control(null, Validators.required),
+      allDay: this.fb.control(null)
+    });
   }
 
   allDayChecked(checked: boolean): void {
     const startTime = this.callTimeForm.get('startTime');
     const endTime = this.callTimeForm.get('endTime');
     const validators = checked ? [] : [Validators.required];
-    
+
     [startTime, endTime].forEach(ctrl => {
       if (checked) {
         ctrl.disable();
@@ -78,15 +86,43 @@ export class FormComponent {
 
   addCallTime(): void {
     if (this.callTimeForm.valid) {
-      (this.scheduleForm.get('callTimes') as FormArray).push(this.callTimeForm);
+
+      const callTime = this.callTimeForm.value;
+      callTime.isActive = true;
+      this.callTimes.push(callTime);
+
+      this.allDayChecked(false);
+
+      this.callTimeForm.reset();
+
+      setTimeout( () => {
+        Object.keys(this.callTimeForm.controls).forEach(key => {
+          this.callTimeForm.get(key).setErrors(null);
+        })
+      }, 0)
     }
   }
 
-  removeCallTime(index: number): void {
-    (this.scheduleForm.get('callTimes') as FormArray).removeAt(index);
+  confirmTimeUpdate(callTime: CallTimeModel, startTime: string, endTime: string): void {
+    if ((startTime && !endTime) || (!startTime && endTime)) {
+      const msg = this.t.transform('schedule_times_missing_error');
+      this.notification.error(msg);
+      return;
+    }
+
+    if (!startTime && !endTime) {
+      startTime = null;
+      endTime = null;
+    }
+
+    callTime.startTime = startTime;
+    callTime.endTime = endTime;
+    callTime.editing = false;
   }
 
-  //TODO: check unique and week day uniqueness
+  removeCallTime(index: number): void {
+    this.callTimes.splice(index, 1);
+  }
 
   submit(): void {
     if (this.scheduleForm.valid && !this.isSubmitting) {

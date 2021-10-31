@@ -47,19 +47,19 @@
     <!--        </bd-select>-->
     <!--      </div>-->
     <div class="mb-3 col-12 col-lg-3 d-flex align-items-center">
-      <mat-checkbox color="primary" (change)="allDayChecked(allDayInput.checked)" #allDayInput>{{ 'all_day' | t }}</mat-checkbox>
+      <mat-checkbox color="primary" (change)="allDayChecked(allDayInput.checked)" formControlName="allDay" #allDayInput>{{ 'all_day' | t }}</mat-checkbox>
     </div>
   </div>
   <div class="row">
     <div class="mb-3 col-12 col-lg-3">
       <mat-form-field class="w-100">
-        <input matInput type="time" formControlName="startTime" [placeholder]="'from_time' | t" [required]="!allDayInput.checked">
+        <input matInput type="time" formControlName="startTime" [placeholder]="'from_hour' | t" [required]="!allDayInput.checked">
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
     </div>
     <div class="mb-3 col-12 col-lg-3">
       <mat-form-field class="w-100">
-        <input matInput type="time" formControlName="endTime" [placeholder]="'to_time' | t" [required]="!allDayInput.checked">
+        <input matInput type="time" formControlName="endTime" [placeholder]="'to_hour' | t" [required]="!allDayInput.checked">
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
     </div>
@@ -67,28 +67,40 @@
       <button type="submit" class="mt-1 btn blue-btn">{{ 'add' | t }}</button>
     </div>
   </div>
-  <table class="mt-3 table table-striped">
+  <table class="mt-3 w-75 table table-striped simple-table" [formGroup]="scheduleForm">
     <thead>
       <tr>
         <th>{{ 'day' | t }}</th>
-        <th>{{ 'to_time' | t }}</th>
-        <th>{{ 'from_time' | t }}</th>
+        <th>{{ 'from_hour' | t }}</th>
+        <th>{{ 'to_hour' | t }}</th>
         <th>{{ 'active' | t }}</th>
         <th></th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let callTime of scheduleForm.get('callTimes').value; let index = index">
+    <tbody formArrayName="callTimes">
+      <tr *ngFor="let callTime of callTimes; let index = index">
         <td>{{ callTime.day | t }}</td>
-        <td>{{ callTime.startTime }}</td>
-        <td>{{ callTime.endTime }}</td>
         <td>
-          <mat-slide-toggle></mat-slide-toggle>
+          <span *ngIf="!callTime.editing">{{ callTime.startTime ?? ('all_day' | t) }}</span>
+          <input type="time" [value]="callTime.startTime" #startTimeInput [hidden]="!callTime.editing">
+        </td>
+        <td>
+          <span *ngIf="!callTime.editing">{{ callTime.endTime ?? ('all_day' | t) }}</span>
+          <input type="time" [value]="callTime.endTime" #endTimeInput [hidden]="!callTime.editing">
+        </td>
+        <td>
+          <mat-slide-toggle color="primary" [checked]="callTime.isActive" (change)="callTime.isActive = $event.checked"></mat-slide-toggle>
         </td>
         <td class="row-icons">
-          <mat-icon class="ms-2">edit</mat-icon>
-          <mat-icon (click)="removeCallTime(index)">delete</mat-icon>
+          <div class="d-flex align-items-center">
+            <button class="blue-btn" type="button" (click)="confirmTimeUpdate(callTime, startTimeInput.value, endTimeInput.value)" *ngIf="callTime.editing">{{ 'confirm' | t }}</button>
+            <mat-icon class="ms-2" (click)="callTime.editing = true" *ngIf="!callTime.editing">edit</mat-icon>
+            <mat-icon (click)="removeCallTime(index)">delete</mat-icon>
+          </div>
         </td>
+      </tr>
+      <tr *ngIf="callTimes.length === 0">
+        <td class="text-center bold" colspan="5">{{ 'call_times_not_added' | t }}.</td>
       </tr>
     </tbody>
   </table>

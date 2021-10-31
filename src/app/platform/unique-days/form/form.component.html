@@ -30,13 +30,13 @@
       <div class="row">
         <div class="mb-3 col-12 col-lg-3">
           <mat-form-field class="w-100">
-            <input matInput type="time" name="startTime" [ngModel]="uniqueDay.startTime" [placeholder]="'from_time' | t" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
+            <input matInput type="time" name="startTime" [ngModel]="uniqueDay.startTime" [placeholder]="'from_hour' | t" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="mb-3 col-12 col-lg-3">
           <mat-form-field class="w-100">
-            <input matInput type="time" name="endTime" [ngModel]="uniqueDay.endTime" [placeholder]="'to_time' | t" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
+            <input matInput type="time" name="endTime" [ngModel]="uniqueDay.endTime" [placeholder]="'to_hour' | t" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>

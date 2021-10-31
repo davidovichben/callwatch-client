@@ -20,6 +20,8 @@ import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.servi
 import { ScheduleResolve } from 'src/app/_shared/resolves/schedule.resolve';
 import { UniqueDaySelectResolve } from 'src/app/_shared/resolves/unique-day-select.resolve';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 const routes: Routes = [
   {
     path: '',
@@ -54,7 +56,8 @@ const routes: Routes = [
     ScheduleService,
     UniqueDayService,
     ScheduleResolve,
-    UniqueDaySelectResolve
+    UniqueDaySelectResolve,
+    TranslatePipe
   ]
 })
 export class FormModule {}

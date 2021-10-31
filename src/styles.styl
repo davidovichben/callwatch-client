@@ -30,6 +30,9 @@ input[type=checkbox], input[type=radio]
 input[type=file]
   display: none
 
+button
+  border: none
+
 button:focus
   outline: 0 !important
 
@@ -54,6 +57,9 @@ th, td
   align-items: center
   justify-content: flex-end
 
+.bold
+  font-weight: bold
+
 .underline
   text-decoration: underline
 
@@ -65,6 +71,9 @@ th, td
 
 .blue-text
   color: BlueColor
+
+.red-text
+  color: RedColor
 
 .f-12
   font-size: 12px
@@ -163,10 +172,30 @@ th, td
   width: 11px !important
 
 .row-icons
-  > mat-icon
+
+  mat-icon
     font-size: 24px
     cursor: pointer
     color: DarkGreyColor
+
+.simple-table
+
+  th
+    border: none
+    color: #606060
+
+  tbody
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16)
+
+  td
+    color: BlueColor
+
+  .row-icons
+
+    button
+      height: 20px
+      width: 50px
+      min-width: initial !important
 
 .tabs
   display: flex
@@ -229,7 +258,7 @@ form
   .table
     background-color: WhiteColor
 
-tbody tr:nth-child(even)
+app-data-table tbody tr:nth-child(even)
   background-color: LightColor !important
 
 /* --- Swal --- */
