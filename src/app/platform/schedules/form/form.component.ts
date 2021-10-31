@@ -47,6 +47,7 @@ export class FormComponent {
     if (routeData.schedule) {
       this.scheduleId = routeData.schedule.id;
       this.scheduleForm.patchValue(routeData.schedule);
+      this.callTimes = routeData.schedule.callTimes;
     }
   }
 
@@ -145,12 +146,25 @@ export class FormComponent {
     if (this.scheduleForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
+      const values = { ...this.scheduleForm.value };
+      values.callTimes = [...this.callTimes];
+      if (values.type === 'unique') {
+        const callTimes = [];
+        this.callTimes.forEach(callTime => {
+          const row = { ...callTime } as CallTimeModel;
+          row.day = row.day.id;
+          callTimes.push(row);
+        });
+
+        values.callTimes = callTimes;
+      }
+
       if (this.scheduleId) {
-        this.scheduleService.updateSchedule(this.scheduleId, this.scheduleForm.value).then(response => {
+        this.scheduleService.updateSchedule(this.scheduleId, values).then(response => {
           this.handleServerResponse(response);
         });
       } else {
-        this.scheduleService.newSchedule(this.scheduleForm.value).then(response => {
+        this.scheduleService.newSchedule(values).then(response => {
           this.handleServerResponse(response);
         });
       }

@@ -1,6 +1,6 @@
 export class CallTimeModel {
   id: number;
-  day?: string | CallTimeModel;
+  day?: any; // string || UniqueDayModel
   startDate: string;
   endDate: string;
   startTime: string;

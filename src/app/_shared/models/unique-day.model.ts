@@ -8,4 +8,4 @@ export class UniqueDayModel {
   description: string;
 }
 
-export const UniqueDayTypes = ['rosh_hashana', 'yom_kippur', 'sukkut', 'hanukkah']
+export const UniqueDayTypes = []
