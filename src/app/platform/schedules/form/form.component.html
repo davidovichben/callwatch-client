@@ -15,7 +15,7 @@
     </div>
     <div class="mb-3 col-12 col-lg-3">
       <mat-form-field class="w-100">
-        <mat-select formControlName="type" [placeholder]="'schedule_type' | t" (valueChange)="typeChanged($event)" required>
+        <mat-select formControlName="type" [placeholder]="'schedule_type' | t" (valueChange)="typeChanged($event)" #typeInput required>
           <mat-option *ngFor="let type of types" [value]="type">{{ type | t }}</mat-option>
         </mat-select>
         <mat-error>{{ errorMessages.required | t }}</mat-error>
@@ -32,8 +32,8 @@
 </form>
 <form (ngSubmit)="addCallTime()" [formGroup]="callTimeForm">
   <p class="h3 mb-3">{{ 'call_times' | t }}</p>
-  <div class="row">
-    <div class="mb-3 col-12 col-lg-3" *ngIf="scheduleForm.get('type').value !== 'unique'">
+  <div class="row align-items-center">
+    <div class="mb-3 col-12 col-lg-3" *ngIf="typeInput.value !== 'unique'">
       <mat-form-field class="w-100">
         <mat-select formControlName="day" [placeholder]="'select_day' | t" required>
           <mat-option *ngFor="let day of weekDays" [value]="day">{{ day | t }}</mat-option>
@@ -41,10 +41,20 @@
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
     </div>
-    <div class="mb-3 col-12 col-lg-3" *ngIf="scheduleForm.get('type').value === 'unique'">
+    <div class="mb-3 col-12 col-lg-3" *ngIf="typeInput.value === 'unique'">
       <bd-select class="w-100" formControlName="day" [placeholder]="'select_unique_day' | t" required>
         <bd-option *ngFor="let day of uniqueDays" [value]="day">{{ day.name }}</bd-option>
       </bd-select>
+    </div>
+    <div class="mb-3 col-12 col-lg-3" *ngIf="typeInput.value === 'unique'">
+      <mat-form-field class="w-100">
+        <input matInput type="date" [placeholder]="'from_hour' | t" [value]="callTimeForm.get('day').value ? callTimeForm.get('day').value.startDate : null" disabled>
+      </mat-form-field>
+    </div>
+    <div class="mb-3 col-12 col-lg-3" *ngIf="scheduleForm.get('type').value === 'unique'">
+      <mat-form-field class="w-100">
+        <input matInput type="date" [placeholder]="'from_hour' | t" [value]="callTimeForm.get('day').value ? callTimeForm.get('day').value.endDate : null" disabled>
+      </mat-form-field>
     </div>
   </div>
   <div class="row">
@@ -69,6 +79,8 @@
     <thead>
       <tr>
         <th>{{ 'day' | t }}</th>
+        <th *ngIf="typeInput.value === 'unique'">{{ 'from_date' | t }}</th>
+        <th *ngIf="typeInput.value === 'unique'">{{ 'to_date' | t }}</th>
         <th>{{ 'from_hour' | t }}</th>
         <th>{{ 'to_hour' | t }}</th>
         <th>{{ 'active' | t }}</th>
@@ -77,7 +89,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let callTime of callTimes; let index = index">
-        <td>{{ scheduleForm.get('type').value === 'unique' ? (callTime.day.name) : (callTime.day | t) }}</td>
+        <td>{{ typeInput.value === 'unique' ? (callTime.day.name) : (callTime.day | t) }}</td>
+        <td *ngIf="typeInput.value === 'unique'">{{ callTime.day.startDate | date: 'd/MM/Y' }}</td>
+        <td *ngIf="typeInput.value === 'unique'">{{ callTime.day.endDate | date: 'd/MM/Y' }}</td>
         <td>
           <span *ngIf="!callTime.editing">{{ callTime.startTime ?? ('all_day' | t) }}</span>
           <input type="time" [value]="callTime.startTime" #startTimeInput [hidden]="!callTime.editing">
@@ -98,7 +112,7 @@
         </td>
       </tr>
       <tr *ngIf="callTimes.length === 0">
-        <td class="text-center bold" colspan="5">{{ 'call_times_not_added' | t }}.</td>
+        <td class="text-center bold" [attr.colspan]="typeInput.value === 'unique' ? 7 : 5">{{ 'call_times_not_added' | t }}.</td>
       </tr>
     </tbody>
   </table>

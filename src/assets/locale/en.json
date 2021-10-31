@@ -201,7 +201,8 @@
   { "key": "call_times", "value": "Call Times" },
   { "key": "schedule_type", "value": "Schedule Type" },
   { "key": "call_times_not_added", "value": "Call times have not been added" },
-  { "key": "schedule_times_missing_error", "value": "To hour and from hour must both be filled or left blank" }
+  { "key": "schedule_times_missing_error", "value": "To hour and from hour must both be filled or left blank" },
+  { "key": "schedule_type_changed_warning", "value": "Changing type will remove selected days from table, continue?" }
 ]
 
 

@@ -1,10 +1,10 @@
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-
 export class CallTimeModel {
   id: number;
-  day: string | SelectItemModel;
+  day?: string | CallTimeModel;
+  startDate: string;
+  endDate: string;
   startTime: string;
   endTime: string;
-  isActive: boolean;
-  editing: boolean;
+  isActive?: boolean;
+  editing?: boolean;
 }

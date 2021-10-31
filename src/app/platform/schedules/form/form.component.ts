@@ -69,7 +69,8 @@ export class FormComponent {
     const currentValue = this.scheduleForm.get('type').value;
 
     if (currentValue !== selectedValue && this.callTimes.length > 0) {
-      this.notification.warning().then(confirmation => {
+      const msg = this.t.transform('schedule_type_changed_warning');
+      this.notification.warning(msg).then(confirmation => {
         if (confirmation.value) {
           this.callTimes = [];
           this.callTimeForm.get('day').reset();
