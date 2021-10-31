@@ -162,8 +162,10 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
     });
 	}
 
-	resetValue(event: MouseEvent): void {
-    event.stopPropagation();
+	resetValue(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
 
     this.value = null;
     this.label = null;
@@ -188,8 +190,11 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
   writeValue(value: any): void {
     if (value) {
       this.initialValue = value;
-	}
+	  }
 
+    if (!value) {
+      this.resetValue();
+    }
 	}
 
 	registerOnChange(fn: any) {

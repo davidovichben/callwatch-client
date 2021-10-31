@@ -9,7 +9,6 @@
     <td>{{ item.description }}</td>
 		<td class="row-icons">
       <mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('schedules', 'update')">edit</mat-icon>
-      <mat-icon (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('schedules', 'delete')">delete</mat-icon>
 		</td>
 	</tr>
 </app-data-table>

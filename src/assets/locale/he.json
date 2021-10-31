@@ -188,6 +188,7 @@
   { "key": "new_unique_day", "value": "יום מיוחד חדש" },
   { "key": "add_unique_day", "value": "הוספת יום מיוחד" },
   { "key": "unique_day_name", "value": "שם יום מיוחד" },
+  { "key": "select_unique_day", "value": "בחר יום מיוחד" },
   { "key": "from_date", "value": "מתאריך" },
   { "key": "to_date", "value": "עד תאריך" },
   { "key": "from_hour", "value": "משעה" },

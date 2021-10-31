@@ -54,8 +54,7 @@ export class FormComponent {
     this.scheduleForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control(null, Validators.required),
-      description: this.fb.control(null),
-      callTimes: this.fb.array([])
+      description: this.fb.control(null)
     });
 
     this.callTimeForm = this.fb.group({
@@ -64,6 +63,23 @@ export class FormComponent {
       endTime: this.fb.control(null, Validators.required),
       allDay: this.fb.control(null)
     });
+  }
+
+  typeChanged(selectedValue: string): void {
+    const currentValue = this.scheduleForm.get('type').value;
+
+    if (currentValue !== selectedValue && this.callTimes.length > 0) {
+      this.notification.warning().then(confirmation => {
+        if (confirmation.value) {
+          this.callTimes = [];
+          this.callTimeForm.get('day').reset();
+        } else {
+          setTimeout(() => this.scheduleForm.get('type').patchValue(currentValue), 0);
+        }
+      })
+    } else {
+      this.callTimeForm.get('day').reset();
+    }
   }
 
   allDayChecked(checked: boolean): void {

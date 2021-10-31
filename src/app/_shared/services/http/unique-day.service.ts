@@ -48,13 +48,6 @@ export class UniqueDayService extends BaseHttpService {
 			.catch(() => false);
 	}
 
-	deleteUniqueDay(uniqueDayId: number): Promise<boolean> {
-		return this.http.delete(this.endPoint + '/' + uniqueDayId, this.getTokenRequest())
-			.toPromise()
-			.then(() => true)
-			.catch(() => false);
-	}
-
   selectUniqueDays(): Promise<SelectItemModel[]> {
     return this.http.get(this.endPoint + '/select', this.getTokenRequest())
       .toPromise()

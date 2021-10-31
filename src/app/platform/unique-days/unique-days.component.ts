@@ -28,15 +28,4 @@ export class UniqueDaysComponent {
 			this.dataTable.setItems(response);
 		});
 	}
-
-	deleteItem(uniquedayId: number): void {
-		this.notification.warning().then(confirmation => {
-			if (confirmation.value) {
-				this.uniqueDayService.deleteUniqueDay(uniquedayId).then(() => {
-					this.notification.success();
-					this.fetchItems();
-				});
-			}
-		});
-	}
 }
