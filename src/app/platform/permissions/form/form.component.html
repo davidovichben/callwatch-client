@@ -1,21 +1,29 @@
-<form #form="ngForm" (ngSubmit)="submit(form)">
+<form #form="ngForm" (ngSubmit)="submit(form)" class="narrow-form">
   <div class="flex-between">
-    <div>
-      <mat-form-field>
-        <input matInput type="text" [ngModel]="permission.name" [placeholder]="'permission_name' | t" name="name" required>
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
-      <div>
-        <button class="ms-3 btn blue-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
-        <span class="btn grey-btn" (click)="checkAll(false)">{{ 'clear' | t }}</span>
+    <div class="row">
+      <div class="col-12 col-lg-4">
+        <mat-form-field class="w-100">
+          <input matInput type="text" name="name" [ngModel]="permission.name" [placeholder]="'permission_name' | t" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-4">
+        <mat-form-field class="w-100">
+          <input matInput type="text" name="description" [ngModel]="permission.description" [placeholder]="'description' | t">
+        </mat-form-field>
       </div>
     </div>
     <div>
+      <button type="button" class="ms-1 btn grey-btn" [routerLink]="['/platform', 'permissions']">{{ 'cancel' | t }}</button>
       <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
     </div>
   </div>
   <div>
-    <table class="table table-striped my-3">
+    <button class="ms-1 btn blue-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
+    <button class="btn grey-btn" (click)="checkAll(false)">{{ 'clear' | t }}</button>
+  </div>
+  <div>
+    <table class="my-3 table table-striped simple-table">
       <thead>
       <tr>
         <th>{{ 'modules' | t }}</th>

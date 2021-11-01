@@ -134,7 +134,7 @@ button:focus
   border: 1px solid BlueColor !important
 
 .grey-btn
-  background-color: GreyColor !important
+  background-color: DarkGreyColor !important
 
 .blue-btn
   background-color: BlueColor !important
@@ -198,9 +198,6 @@ button:focus
     border: none
     color: LightBlackColor
 
-  tbody
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16)
-
   td
     color: BlueColor
 
@@ -209,6 +206,9 @@ button:focus
     button
       width: 60px
       min-width: initial !important
+
+.simple-table.table-striped tbody
+  background-color: WhiteColor
 
 .tabs
   display: flex
@@ -237,6 +237,11 @@ button:focus
 form
   .row
     width: 75%
+
+  // TODO: possibly remove narrow-form and look for a app wide form width
+
+.narrow-form
+  width: 75%
 
 /* --- Material ---*/
 

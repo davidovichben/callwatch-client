@@ -2,6 +2,7 @@
   <div class="mb-5 flex-between">
     <p class="h1">{{ switchboardId ? ('edit_switchboard' | t) : ('add_switchboard' | t) }}</p>
     <div>
+      <button type="button" class="ms-1 btn grey-btn" [routerLink]="['/platform', 'switchboards']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>

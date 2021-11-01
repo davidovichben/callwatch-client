@@ -5,13 +5,13 @@ import { NgForm } from '@angular/forms';
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { PermissionModel, PermissionActions } from 'src/app/_shared/models/permission.model';
-import { PlatformModules } from 'src/app/_shared/constants/modules';
+import { PermissionModel, PermissionActions, PermissionModules } from 'src/app/_shared/models/permission.model';
 import { ModuleModel } from 'src/app/_shared/models/module.model';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html'
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.styl']
 })
 export class FormComponent implements OnInit {
 
@@ -20,14 +20,16 @@ export class FormComponent implements OnInit {
 
   permission: PermissionModel;
 
-  modules: ModuleModel[] = [];
+  modules = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private permissionService: PermissionService) {}
 
   ngOnInit(): void {
-    this.loadModules();
+    this.modules = PermissionModules.map(module => {
+      return { name: module }
+    });
 
     this.permission = this.route.snapshot.data.permission;
     if (this.permission) {
@@ -35,18 +37,6 @@ export class FormComponent implements OnInit {
     } else {
       this.permission = new PermissionModel();
     }
-  }
-
-  private loadModules(): void {
-    PlatformModules.forEach(module => {
-      if (module.subModules && !module.isGuarded) {
-        module.subModules.forEach(subModule => {
-          this.modules.push({ name: subModule.name });
-        });
-      } else if (module.isGuarded) {
-        this.modules.push({ name: module.name });
-      }
-    });
   }
 
   private loadModule(module: ModuleModel): void {
@@ -86,7 +76,7 @@ export class FormComponent implements OnInit {
         });
       });
 
-      const values = { name: form.value.name, modules };
+      const values = { ...form.value, modules };
 
       if (this.permission.id) {
         this.permissionService.updatePermission(this.permission.id, values).then(response => {

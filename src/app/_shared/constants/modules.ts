@@ -6,7 +6,7 @@ export const PlatformModules = [
     isGuarded: true,
     subModules: [
       { name: 'reports', isGuarded: true },
-      { name: 'sets', isGuarded: true, hasParentPrefix: true }
+      { name: 'reportSets', label: 'report_sets', isGuarded: true }
     ]
   },
   {

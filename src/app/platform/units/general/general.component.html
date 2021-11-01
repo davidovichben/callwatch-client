@@ -1,25 +1,25 @@
 <form (ngSubmit)="submit(form)" #form="ngForm">
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100" [ngClass]="{ disabled: isRootUnit || !hasPermission('units', 'update') }">
-        <input matInput type="text" [placeholder]="'unit_name' | t" name="name" [ngModel]="unit.name">
+  <div class="row">
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="w-100">
+        <input matInput type="text" [placeholder]="'unit_name' | t" name="name" [ngModel]="unit.name" [disabled]="isRootUnit || !hasPermission('units', 'update')">
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100" *ngIf="!isRootUnit">
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="w-100">
         <input matInput type="text" [placeholder]="'parent_unit' | t" [value]="unit.parent ? unit.parent.name : ('primary' | t)" disabled>
       </mat-form-field>
     </div>
   </div>
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100" [ngClass]="{ disabled: !hasPermission('units', 'update') }">
-        <input matInput name="admin" [ngModel]="unit.admin" [placeholder]="'unit_administrator' | t">
+  <div class="row">
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="w-100">
+        <input matInput name="admin" [ngModel]="unit.admin" [placeholder]="'unit_administrator' | t" [disabled]="!hasPermission('units', 'update')">
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100" [ngClass]="{ disabled: !hasPermission('units', 'update') }" *ngIf="!isRootUnit">
-        <input matInput name="externalID" [ngModel]="unit.externalID" [placeholder]="'external_identification' | t">
+    <div class="col-12 col-lg-3 mb-3">
+      <mat-form-field class="w-100">
+        <input matInput name="externalID" [ngModel]="unit.externalID" [placeholder]="'external_identification' | t" [disabled]="isRootUnit || !hasPermission('units', 'update')">
       </mat-form-field>
     </div>
   </div>

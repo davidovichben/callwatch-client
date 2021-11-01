@@ -25,7 +25,11 @@ const routes: Routes = [
       },
       {
         path: 'reports',
-        loadChildren: () => import('./reports/reports-routing.module').then(m => m.ReportsRoutingModule)
+        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
+      },
+      {
+        path: 'reportSets',
+        loadChildren: () => import('./report-sets/report-sets.module').then(m => m.ReportSetsModule)
       },
       {
         path: 'users',

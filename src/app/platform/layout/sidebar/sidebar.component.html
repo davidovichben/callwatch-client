@@ -20,8 +20,8 @@
     </div>
     <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 80) + 'px' : 0 }">
       <a *ngFor="let subModule of module.subModules"
-        [ngClass]="{ active: subModule.name === activeModule }"
-        [routerLink]="subModule.hasParentPrefix ? ['/', menuType, module.name, subModule.name] : ['/', menuType, subModule.name]"
+         [ngClass]="{ active: subModule.name === activeModule }"
+         [routerLink]="['/', menuType, subModule.name]"
         class="justify-content-center sidebar-item">{{ subModule.label ? (subModule.label | t) : (subModule.name | t) }}</a>
     </div>
   </ng-container>

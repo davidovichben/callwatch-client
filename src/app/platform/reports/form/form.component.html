@@ -2,6 +2,7 @@
   <div class="flex-between">
     <h1>{{ report.id ? ('edit_report' | t) : ('add_report' | t) }}</h1>
     <div>
+      <button type="button" class="ms-1 btn grey-btn" [routerLink]="['/platform', 'reports']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
