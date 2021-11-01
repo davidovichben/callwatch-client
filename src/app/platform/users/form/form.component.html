@@ -12,13 +12,15 @@
       <div class="row w-75">
         <div class="col-12 col-lg-3 mb-3">
           <mat-form-field class="w-100">
-            <input matInput type="text" formControlName="firstName" [placeholder]="'first_name' | t" required>
+            <mat-label>{{ 'first_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="firstName" required>
             <mat-error>{{ errorMessages.required }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3 mb-3">
           <mat-form-field class="w-100">
-            <input matInput type="text" formControlName="lastName" [placeholder]="'last_name' | t" required>
+            <mat-label>{{ 'last_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="lastName" required>
             <mat-error>{{ errorMessages.required }}</mat-error>
           </mat-form-field>
         </div>
@@ -52,7 +54,9 @@
         <div class="container">
           <img [src]="userForm.get('avatar').value ? userForm.get('avatar').value : '/assets/img/general/user.png'">
           <div class="overlay" *ngIf="userForm.get('avatar').value">
-            <mat-icon class="pointer flex-end" (click)="userForm.get('avatar').reset()">delete</mat-icon>
+            <figure>
+              <mat-icon class="pointer flex-end" (click)="userForm.get('avatar').reset()">delete</mat-icon>
+            </figure>
           </div>
         </div>
         <label>

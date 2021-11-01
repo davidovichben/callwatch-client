@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +23,10 @@ import { LoggedInGuard } from 'src/app/_shared/guards/logged-in.guard';
 import { GuestGuard } from 'src/app/_shared/guards/guest.guard';
 
 import { AppInterceptor } from 'src/app/_shared/interceptors/app.interceptor';
+
+const appearance: MatFormFieldDefaultOptions = {
+  appearance: 'outline'
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +48,8 @@ import { AppInterceptor } from 'src/app/_shared/interceptors/app.interceptor';
     TranslatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true, strict: true } },
-    {provide: MAT_DATE_LOCALE, useValue: 'he-IL'}
+    // { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
+    { provide: MAT_DATE_LOCALE, useValue: 'he-IL' }
   ],
   bootstrap: [AppComponent]
 })
