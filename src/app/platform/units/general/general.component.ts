@@ -45,7 +45,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   submit(form: NgForm): void {
-    Object.assign(form.value, { parent: this.unit.parent.id });
+    if (this.unit.parent) {
+      Object.assign(form.value, { parent: this.unit.parent.id });
+    }
+    
     this.unitService.updateUnit(this.unit.id, form.value).then(response => {
       if (response) {
         this.notifications.success();
