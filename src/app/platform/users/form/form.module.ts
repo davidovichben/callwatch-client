@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { SetPasswordModule } from 'src/app/_shared/components/set-password/set-password.module';
+import { MatIconModule } from '@angular/material/icon';
 
 import { FormComponent } from 'src/app/platform/users/form/form.component';
 import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
@@ -47,19 +48,20 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [FormComponent, PasswordComponent],
-	imports: [
-		CommonModule,
-		RouterModule.forChild(routes),
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatSelectModule,
-		MatCheckboxModule,
-		MatDialogModule,
-		TranslateModule,
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    TranslateModule,
     UnitSelectModule,
-    SetPasswordModule
-	],
+    SetPasswordModule,
+    MatIconModule
+  ],
   providers: [
     UserService,
     PermissionService,

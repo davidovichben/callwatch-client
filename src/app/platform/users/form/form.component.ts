@@ -24,7 +24,7 @@ import { ImageTypes, Megabyte } from 'src/app/_shared/constants/general';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styles: [`img { width: 175px; height: 175px; }`]
+  styleUrls: ['./form.component.styl']
 })
 export class FormComponent implements OnInit, OnDestroy {
 
