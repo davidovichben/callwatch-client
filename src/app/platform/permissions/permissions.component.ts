@@ -15,7 +15,8 @@ export class PermissionsComponent {
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
   readonly columns = [
-    { label: 'name', name: 'name' }
+    { label: 'name', name: 'name' },
+    { label: 'description', name: 'description' }
   ];
 
   constructor(public userSession: UserSessionService,

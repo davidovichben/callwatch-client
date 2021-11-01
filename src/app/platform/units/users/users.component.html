@@ -17,7 +17,7 @@
           <mat-icon class="close-circle pointer" *ngIf="(!isRootUnit) && userSession.hasPermission('users', 'delete')" (click)="deleteUser(user.id, index)">close</mat-icon>
         </td>
       </tr>
-      <tr *ngIf="unit.users && unit.users.length === 0">
+      <tr *ngIf="users.length === 0">
         <td colspan="4">{{ 'no_users_in_unit' | t }}.</td>
       </tr>
       </tbody>
@@ -40,7 +40,7 @@
         <td>{{ user.permission ? user.permission : 'primary_f' | t }}</td>
         <td>{{ user.unit ? user.unit : 'primary' | t }}</td>
       </tr>
-      <tr *ngIf="parentUsers && parentUsers.length === 0">
+      <tr *ngIf="parentUsers.length === 0">
         <td colspan="4">{{ 'no_users_parent_unit' | t }}.</td>
       </tr>
       </tbody>

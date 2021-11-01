@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { FormComponent } from './form.component';
+import { FormComponent } from 'src/app/platform/reports/form/form.component';
 
 import { ReportService } from 'src/app/_shared/services/http/report.service';
 

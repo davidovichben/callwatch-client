@@ -203,7 +203,10 @@
   { "key": "schedule_times_missing_error", "value": "חובה להזין משעה ועד שעה או להשאיר את שני השדות ריקים" },
   { "key": "schedule_type_changed_warning", "value": "שינוי סוג לוח זמנים ימחק את הימים שהוזנו בטבלה, להמשיך?" },
   { "key": "select_permission", "value": "בחר הרשאה" },
-  { "key": "delete_user", "value": "מחק משתמש" }
+  { "key": "delete_user", "value": "מחק משתמש" },
+  { "key": "timed_reports", "value": "דו\"חות מתוזמנים" },
+  { "key": "routers", "value": "נתבים" },
+  { "key": "calls", "value": "שיחות" }
 ]
 
 

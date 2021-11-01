@@ -56,7 +56,7 @@ export class FormComponent {
   private setForms(): void {
     this.scheduleForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
-      type: this.fb.control(null, Validators.required),
+      type: this.fb.control('regular', Validators.required),
       description: this.fb.control(null)
     });
 

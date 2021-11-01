@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { ReportsComponent } from './reports.component';
+import { ReportsComponent } from 'src/app/platform/reports/reports.component';
 
 import { ReportService } from 'src/app/_shared/services/http/report.service';
 

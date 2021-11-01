@@ -6,18 +6,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 
-import { SetsComponent } from './sets.component';
+import { ReportSetsComponent } from './report-sets.component';
 
 import { ReportService } from 'src/app/_shared/services/http/report.service';
 import { ReportSetService } from 'src/app/_shared/services/http/report-set.service';
 
 const routes: Routes = [
-  { path: '', component: SetsComponent },
+  { path: '', component: ReportSetsComponent },
   { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) }
 ];
 
 @NgModule({
-  declarations: [SetsComponent],
+  declarations: [ReportSetsComponent],
   imports: [
     RouterModule.forChild(routes),
     MatDialogModule,
@@ -30,4 +30,4 @@ const routes: Routes = [
     ReportSetService
   ]
 })
-export class SetsModule {}
+export class ReportSetsModule {}

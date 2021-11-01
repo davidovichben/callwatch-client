@@ -9,10 +9,10 @@ import { ReportSetService } from 'src/app/_shared/services/http/report-set.servi
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 @Component({
-  selector: 'app-sets',
-  templateUrl: './sets.component.html'
+  selector: 'app-report-sets',
+  templateUrl: './report-sets.component.html'
 })
-export class SetsComponent {
+export class ReportSetsComponent {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
