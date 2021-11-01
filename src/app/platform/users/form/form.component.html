@@ -48,9 +48,12 @@
         </div>
       </div>
       <div class="text-center flex-grow-1">
-        <figure class="mb-3">
+        <div class="container">
           <img [src]="userForm.get('avatar').value ? userForm.get('avatar').value : '/assets/img/general/user.png'">
-        </figure>
+          <div class="overlay" *ngIf="userForm.get('avatar').value">
+            <mat-icon class="pointer flex-end" (click)="userForm.get('avatar').reset()">delete</mat-icon>
+          </div>
+        </div>
         <label>
           <p class="f-12 blue-text underline pointer">{{ 'upload_image' | t }}</p>
           <input type="file" (change)="uploadAvatar(avatarInput.files[0])" #avatarInput>
