@@ -156,22 +156,17 @@ button:focus
   font-size: 14px !important
   padding: 0 !important
 
-.triangle-down, .triangle-side
-  transition: 0.2s
+.arrow
+  transition: all 0.2s ease
 
-.triangle-side
-  border: 6px solid transparent
+.rtl .rotate-side
+  transform: rotate(-90deg)
 
-.rtl .triangle-side
-  border-right: 6px solid WhiteColor
+.ltr .arrow
+  transform:  scaleX(-1)
 
-.ltr .triangle-side
-  border-left: 6px solid WhiteColor
-
-.triangle-down
-  margin-top: 8px
-  border: 6px solid transparent
-  border-top: 6px solid WhiteColor
+.ltr .rotate-side
+  transform:  scaleX(-1) rotate(-90deg)
 
 .required:after
   content: " *"

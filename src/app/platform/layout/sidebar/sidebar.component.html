@@ -15,7 +15,7 @@
       </figure>
       <div class="w-100 flex-between">
         <span>{{ module.name | t }}</span>
-        <span class="px-1" [ngClass]="{ 'triangle-side': !module.isToggled, 'triangle-down': module.isToggled }"></span>
+        <mat-icon class="mx-2 arrow" [ngClass]="{ 'rotate-side': module.isToggled }">arrow_left</mat-icon>
       </div>
     </div>
     <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 80) + 'px' : 0 }">
