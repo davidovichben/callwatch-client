@@ -7,12 +7,12 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-import { fade } from 'src/app/_shared/constants/animations';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-unit-form',
   templateUrl: './unit-form.component.html',
-  animations: [fade]
+  animations: [Fade]
 })
 export class UnitFormComponent {
 

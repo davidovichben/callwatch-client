@@ -65,13 +65,21 @@
   color: #8d8d8d;
 }
 
-tr, th, ::ng-deep td {
-  border: none !important;
-  border-width: 0;
+tr, ::ng-deep td {
+  border: 1px solid #ebebeb;
+  padding: 0.5rem;
+  font-size: 14px;
 }
 
 th {
+  border: none !important;
+  border-width: 0;
+  font-size: 14px;
   cursor: pointer;
+}
+
+th:last-child, ::ng-deep .row-icons {
+  text-align: center;
 }
 
 .sort-container {
@@ -108,11 +116,6 @@ th {
 
 ::ng-deep tr.checked > td {
 	background-color: rgba(0, 0, 0, .075);
-}
-
-::ng-deep td {
-	padding: 0.5rem;
-	font-size: 14px;
 }
 
 ::ng-deep .row-actions > a {

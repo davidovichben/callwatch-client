@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NavigationStart, NavigationEnd, Router } from '@angular/router';
 
-import { fade } from 'src/app/_shared/constants/animations';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
@@ -10,7 +10,7 @@ import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  animations: [fade]
+  animations: [Fade]
 })
 export class AppComponent implements OnInit {
 

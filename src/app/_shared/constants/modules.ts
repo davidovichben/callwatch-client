@@ -1,20 +1,19 @@
 export const PlatformModules = [
-  { name: 'dashboard' },
-  { name: 'units', isGuarded: true },
+  { name: 'dashboard', icon: 'dashboard' },
+  { name: 'units', icon: 'account_tree', isGuarded: true },
   {
     name: 'reports',
+    icon: 'assignment',
     isGuarded: true,
     subModules: [
       { name: 'reports', isGuarded: true },
       { name: 'reportSets', label: 'report_sets', isGuarded: true }
     ]
   },
-  {
-    name: 'users',
-    isGuarded: true
-  },
+  { name: 'users', icon: 'group', isGuarded: true },
   {
     name: 'settings',
+    icon: 'settings',
     isGuarded: false,
     subModules: [
       { name: 'permissions', isGuarded: true },

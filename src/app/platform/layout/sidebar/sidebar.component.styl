@@ -3,10 +3,9 @@
 :host
   position: fixed
   top: 0
-  display: flex
   height: 100vh
   flex-direction: column
-  background-color: DarkBlueColor
+  background-color: #1e2635
   color: #fff
   transition: 0.3s ease
 
@@ -23,7 +22,7 @@
       pointer-events: none
 
 .logo
-  height: 80px
+  height: 8.5vh !important
   background-color: BlueColor
 
   span
@@ -32,14 +31,16 @@
     word-break: break-all
 
 #menu
-  transition: 0.3s
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  overflow: auto
+  height: 86vh
 
-  .sidebar-item:hover, .sidebar-item.active
-    background-color: BlueColor
+  #modules
 
-  .sub-modules
-    transition: 0.5s
-    overflow: hidden
+    .sidebar-item:hover, .sidebar-item.active
+      background-color: BlueColor
 
 .sidebar-item
   display: flex
@@ -52,13 +53,10 @@
   figure
     display: flex
     align-items: center
-    width: 30px
     margin: 0 25px
-    text-align: center
 
-    img
-      height: 30px
-      width: 30px
+    mat-icon
+      font-size: 32px
 
   span
     max-height: 30px
@@ -68,13 +66,36 @@
 .rtl :host .sidebar-item.active
   border-right: 12px solid LighterBlueColor
 
+  figure
+    margin: 0 13px 0 25px !important
+
 .ltr :host .sidebar-item.active
   border-left: 12px solid LighterBlueColor
 
+  figure
+    margin: 0 25px 0 13px !important
+
+.sub-modules
+  overflow: hidden
+
+  .sidebar-item
+    background-color: DarkBlueColor
+    font-size: 14px
+
+  :before
+    content: ""
+    width: 80px
+
+  .sidebar-item.active, .sidebar-item:hover
+    color: LighterBlueColor !important
+    font-weight: bold
+    border: none
+    background-color: DarkBlueColor !important
+
 #toggleSidebar
+  height: 5.5vh
   background-color: BlueColor
 
-  img
-    height: 20px
-    width: 20px
+  mat-icon
     margin: 0
+    font-size: 20px

@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-export const fade = trigger('fade', [
+export const Fade = trigger('fade', [
   state('inactive', style({
     display: 'none',
     opacity: '0'
@@ -13,17 +13,15 @@ export const fade = trigger('fade', [
   transition('inactive => active', animate('200ms'))
 ]);
 
-export const slideDown = trigger('slideDown', [
+export const SlideDown = trigger('slideDown', [
   state('inactive', style({
     height: '0',
-    display: 'none',
     opacity: '0',
   })),
   state('active', style({
     height: '*',
-    display: '*',
     opacity: '1',
   })),
-  transition('inactive => active', animate('200ms ease-in')),
-  transition('active => inactive', animate('200ms ease-out'))
+  transition('inactive => active', animate('300ms ease-in')),
+  transition('active => inactive', animate('300ms ease-out'))
 ]);

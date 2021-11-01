@@ -7,13 +7,13 @@ import { ReportSetService } from 'src/app/_shared/services/http/report-set.servi
 import { ReportSetModel } from 'src/app/_shared/models/report-set.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-import { fade } from 'src/app/_shared/constants/animations';
+import { Fade } from 'src/app/_shared/constants/animations';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  animations: [fade]
+  animations: [Fade]
 })
 export class FormComponent implements OnInit {
 

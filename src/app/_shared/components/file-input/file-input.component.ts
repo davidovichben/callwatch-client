@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { fade } from 'src/app/_shared/constants/animations';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-file-input',
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.styl'],
-  animations: [fade]
+  animations: [Fade]
 })
 export class FileInputComponent {
 

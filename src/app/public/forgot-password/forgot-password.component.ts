@@ -6,12 +6,12 @@ import { PinInputComponent } from 'src/app/_shared/components/pin-input/pin-inpu
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { fade } from 'src/app/_shared/constants/animations';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  animations: [fade]
+  animations: [Fade]
 })
 export class ForgotPasswordComponent {
 

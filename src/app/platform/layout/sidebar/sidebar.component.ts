@@ -26,6 +26,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   modules = [];
   activeModule = null;
+  activeSubModule = null;
 
   pageDirection: 'rtl' | 'ltr';
 
@@ -111,6 +112,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
       if (module.name === url) {
         this.activeModule = module.name;
         if (parent) {
+          this.activeModule = parent.name;
+          this.activeSubModule = module.name;
+        }
+        if (parent) {
           parent.isToggled = true;
         }
       }
@@ -122,7 +127,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
+  toggleSubModules(module: ModuleModel): void {
+    if (this.toggleState === 'closed') {
+      this.toggleState = 'opened';
+    }
+
+    module.isToggled = !module.isToggled;
+  }
+
   toggleSidebar(): void {
+    this.modules.forEach(module => module.isToggled = false);
+
     this.toggleState = (this.toggleState === 'opened') ? 'closed' : 'opened';
     this.toggled.emit(this.toggleState);
   }

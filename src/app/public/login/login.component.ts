@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { fade } from 'src/app/_shared/constants/animations';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
@@ -9,7 +9,7 @@ import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  animations: [fade]
+  animations: [Fade]
 })
 export class LoginComponent {
 
