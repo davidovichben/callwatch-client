@@ -7,6 +7,7 @@
         <mat-icon (click)="search()">search</mat-icon>
       </div>
     </div>
+    <ng-content select=".data-table-filters"></ng-content>
     <div *ngIf="activeSwitch">
       <mat-slide-toggle (change)="toggleActiveStatus($event.checked)" [checked]="isActive">{{ activeSwitch }}</mat-slide-toggle>
     </div>
@@ -26,16 +27,16 @@
 		<th *ngIf="hasCheckColumn" class="pointer table-header">
 			<mat-checkbox (change)="checkAll($event.checked)" [ngModel]="criteria.isCheckAll" *ngIf="items.length > 0 && !disableCheckAll"></mat-checkbox>
 		</th>
-		<th *ngFor="let column of columns" (click)="sort(column)" class="table-header">
+		<th *ngFor="let column of columns" class="table-header">
       <div class="d-flex align-items-center">
         <span>{{ column.label | t }}</span>
         <div class="sort-container">
-          <div class="triangle-up" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'ASC' }"></div>
-          <div class="triangle-down" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'DESC' }"></div>
+          <div class="triangle-up" (click)="sort(column, 'desc')" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'desc' }"></div>
+          <div class="triangle-down" (click)="sort(column, 'asc')" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'asc' }"></div>
         </div>
       </div>
 		</th>
-		<th class="table-header" *ngIf="hasActionsHeader"></th>
+		<th class="table-header" *ngIf="hasActionsHeader">{{ 'actions' | t }}</th>
 	</tr>
 	</thead>
   <tbody>

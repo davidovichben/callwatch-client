@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 
@@ -7,6 +8,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { UserModel } from 'src/app/_shared/models/user.model';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
   selector: 'app-users',
@@ -20,17 +22,21 @@ export class UsersComponent {
     { label: 'full_name', name: 'name' },
     { label: 'permission', name: 'permission' },
     { label: 'phone', name: 'phone' },
-    { label: 'username', name: 'username' }
+    { label: 'email', name: 'username' }
   ];
 
   currentUser: UserModel;
 
-  constructor(public userSession: UserSessionService,
-              private userService: UserService,
-              private notificationService: NotificationService) {}
+  permissions: SelectItemModel[] = [];
+
+  constructor(private route: ActivatedRoute,
+    public userSession: UserSessionService,
+    private userService: UserService,
+    private notificationService: NotificationService) {}
 
   ngOnInit() {
     this.currentUser = this.userSession.getUser();
+    this.permissions = this.route.snapshot.data.permissions;
   }
 
   fetchItems(): void {

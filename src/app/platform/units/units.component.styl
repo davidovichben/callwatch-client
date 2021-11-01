@@ -1,13 +1,25 @@
+@import '~src/assets/variables';
+
 :host
   display: flex
   flex-direction: row
   height: 100%
+  border-top: 1px solid #dbe0e6
 
 #units
-  padding-bottom: 10px
-  background-color: #fff
+  padding-top: 25px
+  background-color: LightGreyColor
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16)
-  overflow: auto
+  border-left: 1px solid LighterGreyColor
+  border-right: 1px solid LighterGreyColor
 
 #main
+  padding: 0 40px
   flex-grow: 1
+  background-color: #fff
+
+  .tabs
+    margin: 100px 0 20px 0
+
+    .tab
+      font-size: 22px

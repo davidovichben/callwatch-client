@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  forwardRef,
-  HostListener,
-  Input,
-  OnInit
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -18,14 +10,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   animations: [
     trigger('slideDown', [
       state('inactive', style({
-        display: 'none',
         height: '0',
         opacity: '0',
+        pointerEvents: 'none'
       })),
       state('active', style({
-        display: '*',
         height: '*',
         opacity: '1',
+        pointerEvents: 'all'
       })),
       transition('inactive => active', animate('200ms ease-in')),
       transition('active => inactive', animate('200ms ease-out'))
@@ -48,14 +40,15 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
 
   title: string;
 
-  width: number;
-
   isOpened = false;
 
   filterValue: string;
   filteredUnits: UnitModel[] =[];
 
   selected: any;
+
+  y: number;
+  width: number;
 
   constructor(private elementRef: ElementRef) {}
 
@@ -69,15 +62,15 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   ngAfterViewInit() {
-    // const ele = this.selectEle.nativeElement.getBoundingClientRect();
-    // const y = ele.top;
-    // const x = ele.right - ele.left;
-    //
-    // setTimeout(() => {
-    //   this.width = ele.width;
-    //   this.position.x = x;
-    //   this.position.y = y;
-    // }, 0)
+    setTimeout(() => {
+      const ele = this.elementRef.nativeElement.getBoundingClientRect();
+
+      // const unitLength = this.filteredUnits.length > 5 ? 5 : this.filteredUnits.length;
+      // const offsetTop = (unitLength * 43);
+
+      this.y = ele.y;
+      this.width = ele.width;
+    }, 0)
   }
 
   selectUnit(unit: UnitModel, checked?: boolean): void {
@@ -119,12 +112,21 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
 
   private setMultipleTitle(): void {
     this.title = '';
-    this.selected.forEach((unit, index) => {
-      this.title += unit.name;
-      if (index + 1 < this.selected.length) {
+
+    for (let i = 0; i < 3; i++) {
+      if (!this.selected[i]) {
+        break;
+      }
+
+      this.title += this.selected[i].name;
+      if (this.selected[i + 1] && i < 2) {
         this.title += ', ';
       }
-    });
+
+      if (i === 2) {
+        this.title += '...';
+      }
+    }
   }
 
   checkAll(checked: boolean): void {

@@ -23,6 +23,8 @@ import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-sel
 import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
 import { UserResolve } from 'src/app/_shared/resolves/user.resolve';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 const routes: Routes = [
   {
     path: '',
@@ -64,7 +66,8 @@ const routes: Routes = [
     UnitService,
     PermissionSelectResolve,
     UnitsResolve,
-    UserResolve
+    UserResolve,
+    TranslatePipe
   ]
 })
 export class FormModule {}

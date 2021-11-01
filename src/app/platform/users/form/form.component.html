@@ -103,3 +103,6 @@
     </div>
   </section>
 </form>
+<div class="mt-3 mt-lg-5" *ngIf="user">
+  <button class="btn red-btn" (click)="deleteUser()">{{ 'delete' | t }}</button>
+</div>

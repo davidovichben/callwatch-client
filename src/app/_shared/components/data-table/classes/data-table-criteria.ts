@@ -1,5 +1,5 @@
 export class DataTableCriteria {
-	sort: { column?: string, direction?: 'ASC' | 'DESC' };
+	sort: { column?: string, direction?: 'asc' | 'desc' };
 	filters: object;
 	page: number;
 	keyword: string;

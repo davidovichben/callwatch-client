@@ -6,9 +6,9 @@ import { Subscription } from 'rxjs';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
+import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
 
 import { UnitModel } from 'src/app/_shared/models/unit.model';
-import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
 
 @Component({
   selector: 'app-general',
@@ -32,8 +32,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
               private unitStateService: UnitStateService) {}
 
   ngOnInit(): void {
-    this.sub.add(this.route.data.subscribe(data => {
-      this.unit = this.route.parent.parent.snapshot.data.unit;
+    const route = this.route.parent.parent;
+    this.sub.add(route.data.subscribe(() => {
+      this.unit = route.snapshot.data.unit;
 
       this.isRootUnit = this.unit.id === 'root';
     }));

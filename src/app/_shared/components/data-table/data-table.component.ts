@@ -139,9 +139,9 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  sort(column: DataTableColumn): void {
+  sort(column: DataTableColumn , dir: 'asc' | 'desc'): void {
     this.criteria.sort.column = column.name;
-    this.criteria.sort.direction = (this.criteria.sort.direction === 'DESC') ? 'ASC' : 'DESC';
+    this.criteria.sort.direction = dir;
     this.loadItems();
   }
 

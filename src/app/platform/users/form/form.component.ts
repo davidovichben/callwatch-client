@@ -9,6 +9,9 @@ import { UnitSelectComponent } from 'src/app/_shared/components/unit-select/unit
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
@@ -50,7 +53,9 @@ export class FormComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               private fb: FormBuilder,
               private userService: UserService,
-              public userSession: UserSessionService) {}
+              public userSession: UserSessionService,
+              private notifications: NotificationService,
+              private t: TranslatePipe) {}
 
   ngOnInit(): void {
     this.setForm();
@@ -97,8 +102,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
     this.avatarErrors.type = false;
     this.avatarErrors.size = false;
-
-    console.log(file.size)
 
     if (ImageTypes.indexOf(file.type.substr(6)) === -1) {
       this.avatarErrors.type = true;
@@ -157,6 +160,19 @@ export class FormComponent implements OnInit, OnDestroy {
         this.userService.newUser(values).then(response => this.handleServerResponse(response));
       }
     }
+  }
+
+  deleteUser(): void {
+    const msg = this.t.transform('delete_user') + '?';
+    this.notifications.warning(msg).then(confirmation => {
+      if (confirmation.value && !this.isSubmitting) {
+        this.isSubmitting = true;
+
+        this.userService.deleteUser(this.user.id).then(response => {
+          this.handleServerResponse(response);
+        });
+      }
+    })
   }
 
   private handleServerResponse(response: boolean): void {

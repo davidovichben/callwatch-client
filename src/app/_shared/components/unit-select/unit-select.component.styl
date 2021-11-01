@@ -1,23 +1,25 @@
-@import '~src/assets/variables';
-
 #selectLabel
   display: flex
   justify-content: space-between
+  max-height: 30px
   margin: 8px 0
   color: rgba(0, 0, 0, .54)
   border-bottom: 1px solid #aeaeae
   cursor: pointer
+  overflow: hidden
 
   i
     color: #000
 
 #dropdown
-  height: 240px
   z-index: 999999999
   background-color: #fff
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16)
 
   #search
+    min-width: 500px
     border-bottom: 1px solid rgba(0, 0, 0, .54)
+    background-color: #fff
 
     > input
       width: 100%
@@ -25,21 +27,24 @@
       border: none
       outline: 0
 
-  #options
-    position: relative
-    max-height: 200px
+  #optionsWrapper
+    direction: ltr
+    position: fixed
+    max-height: 250px
+    min-width: 500px
     overflow-y: auto
+    overflow-x: hidden
+    z-index: 999999999
 
-    #topSign
-      font-size: 18px
-      color: rgba(0, 0, 0, .54)
+  #options
+    direction: rtl
+    background-color: #fff
+
+    .unit:nth-of-type(odd)
+      background-color: rgba(0, 0, 0, .04)
 
     .option
       width: 100%
       padding: 8px 4px
       font-size: 14px
       cursor: pointer
-
-    .option:hover, .option.active
-      background-color: BlueColor
-      color: #fff

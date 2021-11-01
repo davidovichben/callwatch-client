@@ -1,7 +1,7 @@
 <div class="logo flex-center">
   <span>{{ toggleState === 'opened' ? 'Call Watch Pro' : 'CWP' }}</span>
 </div>
-<div id="menu" [class]="'flex-grow-1 dir-' + pageDirection">
+<div id="menu" class="flex-grow-1">
   <ng-container *ngFor="let module of modules">
     <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule }" *ngIf="!module.subModules">
       <figure>
@@ -18,7 +18,7 @@
         <span class="px-1" [ngClass]="{ 'triangle-side': !module.isToggled, 'triangle-down': module.isToggled }"></span>
       </div>
     </div>
-    <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 60) + 'px' : 0 }">
+    <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 80) + 'px' : 0 }">
       <a *ngFor="let subModule of module.subModules"
         [ngClass]="{ active: subModule.name === activeModule }"
         [routerLink]="subModule.hasParentPrefix ? ['/', menuType, module.name, subModule.name] : ['/', menuType, subModule.name]"

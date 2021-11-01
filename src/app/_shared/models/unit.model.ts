@@ -3,7 +3,7 @@ import { UserModel } from 'src/app/_shared/models/user.model';
 export class UnitModel {
   id: any;
   name?: string;
-  adminId?: number;
+  admin?: string;
   externalID?: string;
   disabled?: boolean;
   checked?: boolean;

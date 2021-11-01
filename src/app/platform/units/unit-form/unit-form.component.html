@@ -4,7 +4,7 @@
 </div>
 <form #form="ngForm" (ngSubmit)="submit(form)">
   <mat-form-field class="w-100">
-    <input matInput type="text" name="name" ngModel [placeholder]="'unit_name' | t" required>
+    <input matInput type="text" name="name" autocomplete="off" ngModel [placeholder]="'unit_name' | t" required>
     <mat-error>{{ errorMessages.required }}</mat-error>
   </mat-form-field>
   <div>

@@ -1,4 +1,4 @@
-<div id="selectLabel" [ngClass]="{ selected: selected }" (click)="isOpened = !isOpened">
+<div id="selectLabel" [ngClass]="{ selected: selected }" (click)="isOpened = true">
   <span>{{ title }} {{ required ? '* ': '' }}</span>
   <div class="flex-center">
     <mat-icon>arrow_drop_down</mat-icon>
@@ -7,21 +7,24 @@
 </div>
 <div id="dropdown" [@slideDown]="isOpened ? 'active' : 'inactive'">
   <div id="search" class="flex-between">
-    <input type="search" #searchInput (keyup)="initFilter(searchInput.value)">
+    <input type="search" [placeholder]="'search' | t" #searchInput (keyup)="initFilter(searchInput.value)">
     <mat-icon>search</mat-icon>
   </div>
-  <div id="options">
-    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits, top: true }"></ng-container>
+  <div id="optionsWrapper" [ngStyle]="{ top: y + 'px', width: width + 'px' }">
+    <div id="options">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits, padding: 10 }"></ng-container>
+    </div>
   </div>
 </div>
 
-<ng-template #recursiveListTmpl let-list="list" let-top="top">
-  <div [ngClass]="{ 'pe-3': !top }" *ngFor="let unit of list">
-    <span *ngIf="top" id="topSign" class="mx-1">-</span>
-    <mat-checkbox color="primary" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple">{{ unit.name }}</mat-checkbox>
-    <div class="option" (click)="selectUnit(unit)" *ngIf="!multiple">{{ unit.name }}</div>
-    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
-  </div>
+<ng-template #recursiveListTmpl let-list="list" let-padding="padding">
+  <ng-container *ngFor="let unit of list">
+    <div class="unit" [ngStyle]="{ padding: '8px ' + padding + 'px' }">
+      <mat-checkbox color="primary" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple">{{ unit.name }}</mat-checkbox>
+      <div class="option" (click)="selectUnit(unit)" *ngIf="!multiple">{{ unit.name }}</div>
+    </div>
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units, padding: padding + 10 }"></ng-container>
+  </ng-container>
 </ng-template>
 
 
