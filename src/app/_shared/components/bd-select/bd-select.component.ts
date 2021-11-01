@@ -65,6 +65,7 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
   @Input() placeholder = 'בחר פריטים';
   @Input() searchPlaceholder = 'חפש...';
   @Input() scrollBottom = false;
+  @Input() required = false;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() deselected: EventEmitter<boolean> = new EventEmitter();
@@ -90,6 +91,10 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
   constructor(private elementRef: ElementRef) {}
 
   ngAfterContentInit() {
+    if (this.required) {
+      this.placeholder += '*';
+    }
+
     if (this.multiple) {
       this.value = [];
       this.label = [];

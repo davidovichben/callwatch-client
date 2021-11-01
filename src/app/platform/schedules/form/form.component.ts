@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
@@ -18,6 +18,8 @@ import { CallTimeModel } from 'src/app/_shared/models/call-time.model';
   templateUrl: './form.component.html'
 })
 export class FormComponent {
+
+  @ViewChild('callTimeFormDirective') callTimeDirective: FormGroupDirective;
 
   readonly types = ScheduleTypes;
   readonly weekDays = WeekDays;
@@ -84,6 +86,10 @@ export class FormComponent {
     }
   }
 
+  loadDayTimes(): void {
+    this.callTimeForm.patchValue(this.callTimeForm.get('day').value);
+  }
+
   allDayChecked(checked: boolean): void {
     const startTime = this.callTimeForm.get('startTime');
     const endTime = this.callTimeForm.get('endTime');
@@ -111,13 +117,8 @@ export class FormComponent {
 
       this.allDayChecked(false);
 
+      this.callTimeDirective.resetForm();
       this.callTimeForm.reset();
-
-      setTimeout( () => {
-        Object.keys(this.callTimeForm.controls).forEach(key => {
-          this.callTimeForm.get(key).setErrors(null);
-        })
-      }, 0)
     }
   }
 

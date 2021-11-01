@@ -5,6 +5,7 @@ export class CallTimeModel {
   endDate: string;
   startTime: string;
   endTime: string;
+  allDay: boolean;
   isActive?: boolean;
   editing?: boolean;
 }
