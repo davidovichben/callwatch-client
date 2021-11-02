@@ -48,7 +48,7 @@ const appearance: MatFormFieldDefaultOptions = {
     TranslatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true, strict: true } },
-    // { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
     { provide: MAT_DATE_LOCALE, useValue: 'he-IL' }
   ],
   bootstrap: [AppComponent]

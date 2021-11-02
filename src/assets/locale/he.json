@@ -4,6 +4,7 @@
   { "key": "add_campaign", "value": "הוספת קמפיין" },
   { "key": "add_organization", "value": "הוספת ארגוןו" },
   { "key": "add_permission", "value": "הוספת הרשאה" },
+  { "key": "edit_permission", "value": "עריכת הרשאה" },
   { "key": "add_unit", "value": "הוספת יחידה" },
   { "key": "add_user", "value": "הוספת משתמש" },
   { "key": "all_day", "value": "כל היום" },

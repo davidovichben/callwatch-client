@@ -1,24 +1,27 @@
 <form (ngSubmit)="submit(form)" #form="ngForm">
-  <div class="flex-between">
+  <div class="flex-header">
     <h1>{{ reportSet.id ? ('edit_report_set' | t) : ('add_report_set' | t) }}</h1>
     <div>
-      <button type="button" class="ms-1 btn grey-btn" [routerLink]="['/platform', 'reportSets']">{{ 'cancel' | t }}</button>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'reportSets']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12 col-lg-3 mb-3">
-      <mat-form-field class="w-100">
-        <input matInput type="text" name="name" [ngModel]="reportSet.name" [placeholder]="'report_set_name' | t" required>
-        <mat-error>{{ errorMessages.required }}</mat-error>
-      </mat-form-field>
+  <div class="form-body">
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'report_set_name' | t }}</mat-label>
+          <input matInput type="text" name="name" [ngModel]="reportSet.name" required>
+          <mat-error>{{ errorMessages.required }}</mat-error>
+        </mat-form-field>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-sm-6">
-      <h4>{{ 'reports' | t }}</h4>
-      <app-select-groups name="reports" [ngModel]="reportSet.reports" [items]="reports" #reportSelect="ngModel" required></app-select-groups>
-      <p class="alert alert-danger" [@fade]="form.submitted && reportSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
+    <div class="row">
+      <div class="col-12 col-sm-6">
+        <h4>{{ 'reports' | t }}</h4>
+        <app-select-groups name="reports" [ngModel]="reportSet.reports" [items]="reports" #reportSelect="ngModel" required></app-select-groups>
+        <p class="alert alert-danger" [@fade]="form.submitted && reportSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
+      </div>
     </div>
   </div>
 </form>

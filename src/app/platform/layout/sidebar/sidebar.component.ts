@@ -100,6 +100,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.activeSubModule = null;
+
     this.findActiveModule(this.modules, url);
   }
 

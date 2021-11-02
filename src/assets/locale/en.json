@@ -4,6 +4,7 @@
   { "key": "add_campaign", "value": "Add Campaign" },
   { "key": "add_organization", "value": "Add Organization" },
   { "key": "add_permission", "value": "Add Permission" },
+  { "key": "edit_permission", "value": "Edit Permission" },
   { "key": "add_schedule", "value": "Add Schedule" },
   { "key": "add_unit", "value": "Add Unit" },
   { "key": "add_user", "value": "Add User" },

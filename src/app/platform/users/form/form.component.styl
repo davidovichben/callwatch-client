@@ -1,23 +1,32 @@
-img
-  width: 175px
-  height: 175px
-
-.container
+#avatarUpload
   position: relative
   padding: 0
   width: fit-content
 
-.overlay
-  padding: 10px
-  background: rgb(0, 0, 0)
-  background: rgba(0, 0, 0, 0.5)
-  height: 175px
-  transition: .5s ease
-  opacity: 0
-  color: rgba(255, 255, 255, 0.65)
-  font-size: 25px
-  display: flex
-  justify-content: end
+  img, #defaultAvatar
+    width: 175px
+    height: 175px
 
-.container:hover .overlay
-  opacity: 1
+  #defaultAvatar
+    font-size: 160px
+
+  img
+    border-radius: 50%
+
+  .overlay
+    display: flex
+    align-items: flex-end
+    justify-content: center
+    height: 175px
+    padding: 10px
+    background: rgba(0, 0, 0, 0.5)
+    transition: .5s ease
+    opacity: 0
+    color: rgba(255, 255, 255, 0.65)
+    font-size: 25px
+    border-radius: 50%
+
+#avatarUpload:hover
+
+  .overlay
+    opacity: 1

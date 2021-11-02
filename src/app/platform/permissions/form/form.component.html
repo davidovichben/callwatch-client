@@ -1,50 +1,51 @@
-<form #form="ngForm" (ngSubmit)="submit(form)" class="narrow-form">
-  <div class="flex-between">
+<form #form="ngForm" (ngSubmit)="submit(form)">
+  <div class="form-header">
+    <p class="h1">{{ permission.id ? ('edit_permission' | t) : ('add_permission' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'permissions']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
     <div class="row">
-      <div class="col-12 col-lg-4">
+      <div class="col-12 col-lg-3">
         <mat-form-field class="w-100">
-          <input matInput type="text" name="name" [ngModel]="permission.name" [placeholder]="'permission_name' | t" required>
+          <mat-label>{{ 'permission_name' | t }}</mat-label>
+          <input matInput type="text" name="name" [ngModel]="permission.name" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-12 col-lg-4">
+      <div class="col-12 col-lg-3">
         <mat-form-field class="w-100">
-          <input matInput type="text" name="description" [ngModel]="permission.description" [placeholder]="'description' | t">
+          <mat-label>{{ 'description' | t }}</mat-label>
+          <input matInput type="text" name="description" [ngModel]="permission.description">
         </mat-form-field>
       </div>
     </div>
-    <div>
-      <button type="button" class="ms-1 btn grey-btn" [routerLink]="['/platform', 'permissions']">{{ 'cancel' | t }}</button>
-      <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
+    <div class="mt-3">
+      <table class="table table-striped simple-table">
+        <thead>
+        <tr>
+          <th>{{ 'modules' | t }}</th>
+          <th>{{ 'check_all' | t }}</th>
+          <th>{{ 'view' | t }}</th>
+          <th>{{ 'create' | t }}</th>
+          <th>{{ 'edit' | t }}</th>
+          <th>{{ 'delete' | t }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let module of modules; let index = index">
+          <td>{{ module.name | t }}</td>
+          <td>
+            <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)" color="primary"></mat-checkbox>
+          </td>
+          <td *ngFor="let action of actions">
+            <mat-checkbox [name]="'action-' + index" [checked]="module[action]" [value]="module[action]" (change)="checkModuleAction(module, action, $event.checked)" color="primary"></mat-checkbox>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div>
-    <button class="ms-1 btn blue-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
-    <button class="btn grey-btn" type="button" (click)="checkAll(false)">{{ 'clear' | t }}</button>
-  </div>
-  <div>
-    <table class="my-3 table table-striped simple-table">
-      <thead>
-      <tr>
-        <th>{{ 'modules' | t }}</th>
-        <th>{{ 'check_all' | t }}</th>
-        <th>{{ 'view' | t }}</th>
-        <th>{{ 'create' | t }}</th>
-        <th>{{ 'edit' | t }}</th>
-        <th>{{ 'delete' | t }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let module of modules; let index = index">
-        <td>{{ module.name | t }}</td>
-        <td>
-          <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)" color="primary"></mat-checkbox>
-        </td>
-        <td *ngFor="let action of actions">
-          <mat-checkbox [name]="'action-' + index" [checked]="module[action]" [value]="module[action]" (change)="checkModuleAction(module, action, $event.checked)" color="primary"></mat-checkbox>
-        </td>
-      </tr>
-      </tbody>
-    </table>
   </div>
 </form>

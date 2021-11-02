@@ -12,11 +12,10 @@
 }
 
 #tableHeader {
-  margin-bottom: 20px;
   justify-content: space-between;
 }
 
-#searchContainer, #toggleFilters {
+#toggleFilters {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,21 +27,6 @@
 
 #searchContainer {
   width: 280px;
-  margin-left: 15px;
-}
-
-#searchContainer > input {
-  border: none;
-  background-color: inherit;
-  outline: 0;
-}
-
-#searchContainer > input::placeholder {
-  color: #000;
-}
-
-#searchContainer > div {
-  display: flex;
 }
 
 #searchContainer mat-icon {

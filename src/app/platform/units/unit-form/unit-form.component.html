@@ -4,7 +4,8 @@
 </div>
 <form #form="ngForm" (ngSubmit)="submit(form)">
   <mat-form-field class="w-100">
-    <input matInput type="text" name="name" autocomplete="off" ngModel [placeholder]="'unit_name' | t" required>
+    <mat-label>{{ 'unit_name' | t }}</mat-label>
+    <input matInput type="text" name="name" autocomplete="off" ngModel required>
     <mat-error>{{ errorMessages.required }}</mat-error>
   </mat-form-field>
   <div>
@@ -12,7 +13,8 @@
     <p class="alert alert-danger" [@fade]="form.submitted && parentSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
   </div>
   <mat-form-field class="w-100">
-    <input matInput type="text" name="externalID" ngModel [placeholder]="'external_identification' | t">
+    <mat-label>{{ 'external_identification' | t }}</mat-label>
+    <input matInput type="text" name="externalID" ngModel>
   </mat-form-field>
   <div class="text-center">
     <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>

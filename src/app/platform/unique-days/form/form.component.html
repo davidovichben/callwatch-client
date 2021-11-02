@@ -1,57 +1,63 @@
 <form (ngSubmit)="submit(form)" #form="ngForm">
-  <div class="mb-5 flex-between">
+  <div class="form-header">
     <p class="h1">{{ uniqueDay.id ? uniqueDay.name : ('add_unique_day' | t) }}</p>
     <div>
-      <button type="button" class="ms-1 btn grey-btn" [routerLink]="['/platform', 'uniqueDays']">{{ 'cancel' | t }}</button>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'uniqueDays']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
-  <section>
+  <div class="form-body">
     <div class="row">
-      <div class="mb-3 col-12 col-lg-3">
+      <div class="col-12 col-lg-3">
         <mat-form-field class="w-100">
-          <input matInput type="text" name="name" [ngModel]="uniqueDay.name" [placeholder]="'unique_day_name' | t" required>
+          <mat-label>{{ 'unique_day_name' | t }}</mat-label>
+          <input matInput type="text" name="name" [ngModel]="uniqueDay.name" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
-      <div class="mb-3 col-12 col-lg-3">
+      <div class="col-12 col-lg-3">
         <mat-form-field class="w-100">
-          <input matInput name="startDate" [ngModel]="uniqueDay.startDate" [placeholder]="'from_date' | t" [matDatepicker]="startDatePicker" required>
+          <mat-label>{{ 'from_date' | t }}</mat-label>
+          <input matInput name="startDate" [ngModel]="uniqueDay.startDate" [matDatepicker]="startDatePicker" required>
           <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #startDatePicker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="mb-3 col-12 col-lg-3">
+      <div class="col-12 col-lg-3">
         <mat-form-field class="w-100">
-          <input matInput name="endDate" [ngModel]="uniqueDay.endDate" [placeholder]="'to_date' | t" [matDatepicker]="endDatePicker" required>
+          <mat-label>{{ 'to_date' | t }}</mat-label>
+          <input matInput name="endDate" [ngModel]="uniqueDay.endDate" [matDatepicker]="endDatePicker" required>
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="row">
-        <div class="mb-3 col-12 col-lg-3">
+        <div class="col-12 col-lg-3">
           <mat-form-field class="w-100">
-            <input matInput type="time" name="startTime" [ngModel]="uniqueDay.startTime" [placeholder]="'from_hour' | t" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
+            <mat-label>{{ 'from_hour' | t }}</mat-label>
+            <input matInput type="time" name="startTime" [ngModel]="uniqueDay.startTime" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
-        <div class="mb-3 col-12 col-lg-3">
+        <div class="col-12 col-lg-3">
           <mat-form-field class="w-100">
-            <input matInput type="time" name="endTime" [ngModel]="uniqueDay.endTime" [placeholder]="'to_hour' | t" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
+            <mat-label>{{ 'to_hour' | t }}</mat-label>
+            <input matInput type="time" name="endTime" [ngModel]="uniqueDay.endTime" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
-        <div class="mb-3 col-12 col-lg-3 d-flex align-items-center">
+        <div class="col-12 col-lg-3 d-flex align-items-center">
           <mat-checkbox #allDayInput color="primary" (change)="resetTimes($event.checked, form)" [checked]="uniqueDay.id && !form.value.startTime && !form.value.endTime">{{ 'all_day' | t }}</mat-checkbox>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="mb-3 col-12 col-lg-6">
+      <div class="col-12 col-lg-6">
         <mat-form-field class="w-100">
-          <textarea matInput rows="8" name="description" [ngModel]="uniqueDay.description" [placeholder]="'description' | t"></textarea>
+          <mat-label>{{ 'description' | t }}</mat-label>
+          <textarea matInput rows="8" name="description" [ngModel]="uniqueDay.description"></textarea>
         </mat-form-field>
       </div>
     </div>
-  </section>
+  </div>
 </form>

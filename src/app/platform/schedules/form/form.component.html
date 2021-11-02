@@ -1,83 +1,97 @@
-<form class="mb-3" (ngSubmit)="submit()" [formGroup]="scheduleForm">
-  <div class="mb-5 flex-between">
+<form (ngSubmit)="submit()" [formGroup]="scheduleForm">
+  <div class="form-header">
     <p class="h1">{{ scheduleId ? ('edit_schedule' | t) : ('add_schedule' | t) }}</p>
     <div>
-      <button type="button" class="ms-1 btn grey-btn" [routerLink]="['/platform', 'schedules']">{{ 'cancel' | t }}</button>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'schedules']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
-  <p class="h3 mb-3">{{ 'schedule_details' | t }}</p>
-  <div class="row">
-    <div class="mb-3 col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <input matInput type="text" formControlName="name" [placeholder]="'schedule_name' | t" required>
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
+  <div class="form-body">
+    <p class="h3 mb-3">{{ 'schedule_details' | t }}</p>
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'schedule_name' | t }}</mat-label>
+          <input matInput type="text" formControlName="name" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'schedule_type' | t }}</mat-label>
+          <mat-select formControlName="type" (valueChange)="typeChanged($event)" #typeInput required>
+            <mat-option *ngFor="let type of types" [value]="type">{{ type | t }}</mat-option>
+          </mat-select>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="mb-3 col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-select formControlName="type" [placeholder]="'schedule_type' | t" (valueChange)="typeChanged($event)" #typeInput required>
-          <mat-option *ngFor="let type of types" [value]="type">{{ type | t }}</mat-option>
-        </mat-select>
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="mb-3 col-12 col-lg-6">
-      <mat-form-field class="w-100">
-        <textarea matInput formControlName="description" [placeholder]="'description' | t" rows="6"></textarea>
-      </mat-form-field>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'description' | t }}</mat-label>
+          <textarea matInput formControlName="description" rows="6"></textarea>
+        </mat-form-field>
+      </div>
     </div>
   </div>
 </form>
 <form #callTimeFormDirective="ngForm" (ngSubmit)="addCallTime()" [formGroup]="callTimeForm">
-  <p class="h3 mb-3">{{ 'call_times' | t }}</p>
-  <div class="row align-items-center">
-    <div class="mb-3 col-12 col-lg-3" *ngIf="typeInput.value !== 'unique'">
-      <mat-form-field class="w-100">
-        <mat-select formControlName="day" [placeholder]="'select_day' | t" required>
-          <mat-option *ngFor="let day of weekDays" [value]="day">{{ day | t }}</mat-option>
-        </mat-select>
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
+  <div class="form-body">
+    <p class="h3 mb-3">{{ 'call_times' | t }}</p>
+    <div class="row align-items-center">
+      <div class="col-12 col-lg-3" *ngIf="typeInput.value !== 'unique'">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'select_day' | t }}</mat-label>
+          <mat-select formControlName="day" required>
+            <mat-option *ngFor="let day of weekDays" [value]="day">{{ day | t }}</mat-option>
+          </mat-select>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3" *ngIf="typeInput.value === 'unique'">
+        <div>
+          <bd-select class="w-100" formControlName="day" [placeholder]="'select_unique_day' | t" [required]="true" (ngModelChange)="loadDayTimes()">
+            <bd-option *ngFor="let day of uniqueDays" [value]="day">{{ day.name }}</bd-option>
+          </bd-select>
+          <mat-error *ngIf="callTimeForm.get('day').errors && callTimeFormDirective.submitted">{{ errorMessages.required | t }}</mat-error>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3" *ngIf="typeInput.value === 'unique'">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'from_date' | t }}</mat-label>
+          <input matInput type="date" [value]="callTimeForm.get('day').value ? callTimeForm.get('day').value.startDate : null" disabled>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3" *ngIf="scheduleForm.get('type').value === 'unique'">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'to_date' | t }}</mat-label>
+          <input matInput type="date" [value]="callTimeForm.get('day').value ? callTimeForm.get('day').value.endDate : null" disabled>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="mb-3 col-12 col-lg-3" *ngIf="typeInput.value === 'unique'">
-      <bd-select class="w-100" formControlName="day" [placeholder]="'select_unique_day' | t" [required]="true" (ngModelChange)="loadDayTimes()">
-        <bd-option *ngFor="let day of uniqueDays" [value]="day">{{ day.name }}</bd-option>
-      </bd-select>
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'from_hour' | t }}</mat-label>
+          <input matInput type="time" formControlName="startTime" [required]="!allDayInput.checked">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'to_hour' | t }}</mat-label>
+          <input matInput type="time" formControlName="endTime" [required]="!allDayInput.checked">
+          <mat-error *ngIf="callTimeForm.get('endTime').errors">{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3 mt-3">
+        <mat-checkbox class="ms-3" color="primary" (change)="allDayChecked(allDayInput.checked)" formControlName="allDay" #allDayInput>{{ 'all_day' | t }}</mat-checkbox>
+        <button type="submit" class="mt-1 btn blue-btn">{{ 'add' | t }}</button>
+      </div>
     </div>
-    <div class="mb-3 col-12 col-lg-3" *ngIf="typeInput.value === 'unique'">
-      <mat-form-field class="w-100">
-        <input matInput type="date" [placeholder]="'from_date' | t" [value]="callTimeForm.get('day').value ? callTimeForm.get('day').value.startDate : null" disabled>
-      </mat-form-field>
-    </div>
-    <div class="mb-3 col-12 col-lg-3" *ngIf="scheduleForm.get('type').value === 'unique'">
-      <mat-form-field class="w-100">
-        <input matInput type="date" [placeholder]="'to_date' | t" [value]="callTimeForm.get('day').value ? callTimeForm.get('day').value.endDate : null" disabled>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="mb-3 col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <input matInput type="time" formControlName="startTime" [placeholder]="'from_hour' | t" [required]="!allDayInput.checked">
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="mb-3 col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <input matInput type="time" formControlName="endTime" [placeholder]="'to_hour' | t" [required]="!allDayInput.checked">
-        <mat-error *ngIf="callTimeForm.get('endTime').errors">{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3">
-      <mat-checkbox class="ms-3" color="primary" (change)="allDayChecked(allDayInput.checked)" formControlName="allDay" #allDayInput>{{ 'all_day' | t }}</mat-checkbox>
-      <button type="submit" class="mt-1 btn blue-btn">{{ 'add' | t }}</button>
-    </div>
-  </div>
-  <table class="mt-3 w-75 table table-striped simple-table">
-    <thead>
+    <table class="table table-striped simple-table">
+      <thead>
       <tr>
         <th>{{ 'day' | t }}</th>
         <th *ngIf="typeInput.value === 'unique'">{{ 'from_date' | t }}</th>
@@ -88,8 +102,8 @@
         <th>{{ 'active' | t }}</th>
         <th></th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       <tr *ngFor="let callTime of callTimes; let index = index">
         <td>{{ typeInput.value === 'unique' ? (callTime.day.name) : (callTime.day | t) }}</td>
         <td *ngIf="typeInput.value === 'unique'">{{ callTime.day.startDate | date: 'd/MM/Y' }}</td>
@@ -119,6 +133,7 @@
       <tr *ngIf="callTimes.length === 0">
         <td class="text-center bold" [attr.colspan]="typeInput.value === 'unique' ? 7 : 5">{{ 'call_times_not_added' | t }}.</td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </form>

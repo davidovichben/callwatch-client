@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-switchboards',
-  templateUrl: './switchboards.component.html',
-  styleUrls: ['./switchboards.component.less']
+  templateUrl: './switchboards.component.html'
 })
 export class SwitchboardsComponent implements OnInit {
 

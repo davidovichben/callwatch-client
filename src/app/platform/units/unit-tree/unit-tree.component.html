@@ -1,20 +1,19 @@
-<div id="treeWrapper">
-  <ul id="tree">
-    <li>
-      <span [ngClass]="{ 'active': activeUnitId === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
-    </li>
-    <ul id="mainBranch">
-      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
-    </ul>
+<ul id="tree">
+  <li>
+    <span [ngClass]="{ 'active': activeUnitId === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
+  </li>
+  <ul id="mainBranch">
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
   </ul>
-  <ng-template #recursiveListTmpl let-list="list">
-    <li *ngFor="let unit of list" [ngClass]="{ disabled: unit.disabled }" (drop)="drop($event, unit)">
-      <i class="ms-2 la la-plus" [ngClass]="{ 'la-plus': !unit.toggled, 'la-minus': unit.toggled }"
-         (click)="unit.toggled = !unit.toggled" *ngIf="unit.units"></i>
-      <span [draggable]="!unit.disabled" [ngClass]="{ 'active': activeUnitId == unit.id }" (dragstart)="dragStart($event, unit)" (dragover)="allowDrop($event)" (click)="unitClicked(unit)">{{ unit.name }}</span>
-      <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.toggled }">
-        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
-      </ul>
-    </li>
-  </ng-template>
-</div>
+</ul>
+<ng-template #recursiveListTmpl let-list="list">
+  <li *ngFor="let unit of list" [ngClass]="{ disabled: unit.disabled }" (drop)="drop($event, unit)">
+    <i class="ms-2 la la-plus" [ngClass]="{ 'la-plus': !unit.toggled, 'la-minus': unit.toggled }"
+       (click)="unit.toggled = !unit.toggled" *ngIf="unit.units"></i>
+    <span [draggable]="!unit.disabled" [ngClass]="{ 'active': activeUnitId == unit.id }" (dragstart)="dragStart($event, unit)" (dragover)="allowDrop($event)" (click)="unitClicked(unit)">{{ unit.name }}</span>
+    <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.toggled }">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+    </ul>
+  </li>
+</ng-template>
+

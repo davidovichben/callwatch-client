@@ -109,6 +109,9 @@ button:focus
 .w-200p
   width: 200px
 
+.w-250p
+  width: 250px
+
 .w-300p
   width: 300px
 
@@ -168,6 +171,9 @@ button:focus
   height: 30px
   font-size: 14px !important
   padding: 0 !important
+
+.white-bg
+  background-color: WhiteColor
 
 .arrow
   transition: all 0.2s ease
@@ -248,15 +254,20 @@ button:focus
 /*--- Forms ---*/
 
 form
-  .row
-    width: 75%
 
-  // TODO: possibly remove narrow-form and look for a app wide form width
+  .form-header
+    @extend .flex-between
+    margin-bottom: 15px
+    background-color: GreyColor
 
-.narrow-form
-  width: 75%
+  .form-body
+    padding: 12px 20px
+    background-color: WhiteColor
 
 /* --- Material ---*/
+
+.mat-form-field-outline
+  background-color: WhiteColor
 
 .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
 .mat-checkbox-checked.mat-primary .mat-checkbox-background
