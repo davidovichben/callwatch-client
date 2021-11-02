@@ -3,8 +3,10 @@
     <mat-form-field id="searchContainer" class="ms-3">
       <mat-label>{{ 'search' | t }}</mat-label>
       <input matInput [(ngModel)]="criteria.keyword" (keyup)="search($event)">
-      <mat-icon matSuffix (click)="resetSearch()" *ngIf="criteria.keyword" >close</mat-icon>
-      <mat-icon matSuffix (click)="search()">search</mat-icon>
+      <div matSuffix class="d-flex">
+        <mat-icon (click)="resetSearch()" *ngIf="criteria.keyword" >close</mat-icon>
+        <mat-icon (click)="search()">search</mat-icon>
+      </div>
     </mat-form-field>
     <ng-content select=".data-table-filters"></ng-content>
     <div *ngIf="activeSwitch">

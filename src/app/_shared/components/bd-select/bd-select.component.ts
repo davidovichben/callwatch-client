@@ -36,20 +36,19 @@ import { BdOptionComponent } from './bd-option/bd-option.component';
 		]),
 		trigger('placeholder', [
 			state('inactive', style({
-				fontSize: '*',
-				top: '*',
-				color: '*',
-				fontWeight: 'normal'
+        top: '*',
+        lineHeight: '*',
+        padding: '0',
+        fontSize: '*'
 			})),
 			state('active', style({
-        top: '-12px',
-        fontSize: '12px',
-				color: '#000',
-				opacity: '.54',
-				fontWeight: 'bold'
+        top: '-2px',
+        lineHeight: '0.6',
+        padding: '0 4px',
+        fontSize: '12px'
 			})),
-			transition('active => inactive', animate('300ms ease-in')),
-			transition('inactive => active', animate('300ms ease-in'))
+			transition('active => inactive', animate('200ms')),
+			transition('inactive => active', animate('200ms'))
 		])
 	],
 	providers: [

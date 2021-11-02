@@ -29,11 +29,6 @@
   width: 280px;
 }
 
-#searchContainer mat-icon {
-  color: #adadad;
-  cursor: pointer;
-}
-
 #toggleFilters {
   cursor: pointer;
 }

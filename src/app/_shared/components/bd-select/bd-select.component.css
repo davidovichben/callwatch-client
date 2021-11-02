@@ -6,18 +6,68 @@
 }
 
 #selectLabel {
-	color: rgba(0, 0, 0, .42);
-	position: relative;
-	width: 100%;
-  padding: 3.4px;
-  border-bottom: 1px solid;
+  position: relative;
+  height: 59.5px;
+  width: 100%;
+  margin-bottom: 20px;
+  color: rgba(0, 0, 0, .6);
+  border: 2px solid transparent;
+  border-radius: 5px;
+  box-sizing: content-box;
+  transition: border-color 0.1s;
+  z-index: 99;
 }
 
-#selectLabel.active > #placeholder {
+#selectLabel:hover {
+  border: 2px solid #000;
+}
+
+#selectLabel.opened {
+  border: 2px solid #3f51b5;
+}
+
+#selectLabel.selected #placeholder {
   position: absolute;
+  background: #fff;
+  font-size: 1rem;
+}
+
+#selectLabel.opened #placeholder {
+  color: #3f51b5;
+}
+
+#selectLabelBorder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, .12);
+  border-radius: 5px;
+  pointer-events: none;
+  transition: 0s;
+}
+
+#selectLabel.opened #selectLabelBorder, #selectLabel:hover #selectLabelBorder {
+  border: none;
+}
+
+#selectLabelCover {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  padding: 0 .75em 0 .75em;
+  background-color: #fff;
 }
 
 #selectedValue {
+  padding: 0 4px;
+}
+
+#selectedValue, mat-icon {
   color: #000;
 }
 
@@ -42,6 +92,10 @@
 
 #buttons {
   display: flex;
+}
+
+mat-icon {
+  color: #000;
 }
 
 #resetIcon {
