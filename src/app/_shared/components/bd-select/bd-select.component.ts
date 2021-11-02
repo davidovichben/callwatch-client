@@ -42,7 +42,7 @@ import { BdOptionComponent } from './bd-option/bd-option.component';
         fontSize: '*'
 			})),
 			state('active', style({
-        top: '-2px',
+        top: '-1px',
         lineHeight: '0.6',
         padding: '0 4px',
         fontSize: '12px'
