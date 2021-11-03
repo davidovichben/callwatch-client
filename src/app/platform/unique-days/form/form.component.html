@@ -31,24 +31,24 @@
           <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="row">
-        <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
-            <mat-label>{{ 'from_hour' | t }}</mat-label>
-            <input matInput type="time" name="startTime" [ngModel]="uniqueDay.startTime" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
-            <mat-error>{{ errorMessages.required | t }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
-            <mat-label>{{ 'to_hour' | t }}</mat-label>
-            <input matInput type="time" name="endTime" [ngModel]="uniqueDay.endTime" [required]="!allDayInput.checked" [disabled]="allDayInput.checked">
-            <mat-error>{{ errorMessages.required | t }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-12 col-lg-3 d-flex align-items-center">
-          <mat-checkbox #allDayInput color="primary" (change)="resetTimes($event.checked, form)" [checked]="uniqueDay.id && !form.value.startTime && !form.value.endTime">{{ 'all_day' | t }}</mat-checkbox>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'from_hour' | t }}</mat-label>
+          <input matInput type="time" name="startTime" [ngModel]="uniqueDay.startTime" [required]="!allDayInput.value" [disabled]="allDayInput.value">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'to_hour' | t }}</mat-label>
+          <input matInput type="time" name="endTime" [ngModel]="uniqueDay.endTime" [required]="!allDayInput.value" [disabled]="allDayInput.value">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3 mt-3">
+        <mat-checkbox class="ms-3" name="allDay" [ngModel]="uniqueDay.allDay" (change)="resetTimes($event.checked, form)" #allDayInput="ngModel" >{{ 'all_day' | t }}</mat-checkbox>
       </div>
     </div>
     <div class="row">

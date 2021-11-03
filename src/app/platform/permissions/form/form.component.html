@@ -42,10 +42,10 @@
         <tr *ngFor="let module of modules; let index = index">
           <td>{{ module.name | t }}</td>
           <td>
-            <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)" color="primary"></mat-checkbox>
+            <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)"></mat-checkbox>
           </td>
           <td *ngFor="let action of actions">
-            <mat-checkbox [name]="'action-' + index" [checked]="module[action]" [value]="module[action]" (change)="checkModuleAction(module, action, $event.checked)" color="primary"></mat-checkbox>
+            <mat-checkbox [name]="'action-' + index" [checked]="module[action]" [value]="module[action]" (change)="checkModuleAction(module, action, $event.checked)"></mat-checkbox>
           </td>
         </tr>
         </tbody>
