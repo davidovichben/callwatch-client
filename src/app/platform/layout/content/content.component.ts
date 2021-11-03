@@ -34,10 +34,14 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.checkAdminViewing();
     this.setPadding();
 
-    this.helpers.urlChanged.subscribe(() => {
+    this.sub.add(this.helpers.urlChanged.subscribe(() => {
       this.checkAdminViewing();
       this.setPadding();
-    })
+    }));
+
+    this.sub.add(this.userSession.userUpdated.subscribe(() => {
+      this.user = this.userSession.getUser();
+    }));
   }
 
   private setPadding(): void {

@@ -181,7 +181,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private handleServerResponse(response: any): void {
     if (response) {
-      if (response.avatar) {
+      if (this.user) {
         this.userSession.updateUser('avatar', response.avatar);
       }
 
