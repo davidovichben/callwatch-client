@@ -10,7 +10,7 @@ export class UserModel {
   permission: any;
   isAdmin: boolean;
   isRoot: boolean;
-  logo: File;
+  avatar: string;
   authType: string;
   unit: string;
   units: UnitModel[] | 'root';

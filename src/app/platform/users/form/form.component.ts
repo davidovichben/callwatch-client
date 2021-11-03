@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,7 +26,7 @@ import { ImageTypes, Megabyte } from 'src/app/_shared/constants/general';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.styl']
 })
-export class FormComponent implements OnInit, OnDestroy {
+export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(UnitSelectComponent) unitSelect: UnitSelectComponent;
 
@@ -69,11 +69,15 @@ export class FormComponent implements OnInit, OnDestroy {
     if (this.user) {
       this.userForm.patchValue(this.user);
       this.userForm.get('password').clearValidators();
+    }
+  }
 
-      if (this.user.units === 'root') {
-        this.userForm.get('units').patchValue([]);
+  ngAfterViewInit(): void {
+    if (this.user && this.user.units === 'root') {
+      this.userForm.get('units').patchValue([]);
+      setTimeout(() => {
         this.unitSelect.checkAll(true);
-      }
+      }, 0);
     }
   }
 
@@ -175,8 +179,12 @@ export class FormComponent implements OnInit, OnDestroy {
     })
   }
 
-  private handleServerResponse(response: boolean): void {
+  private handleServerResponse(response: any): void {
     if (response) {
+      if (response.avatar) {
+        this.userSession.updateUser('avatar', response.avatar);
+      }
+
       this.router.navigate(['/platform', 'users'])
     }
 

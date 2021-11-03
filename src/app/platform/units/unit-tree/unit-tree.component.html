@@ -1,4 +1,5 @@
-<ul id="tree">
+<div class="loader" *ngIf="loadingUnits"></div>
+<ul id="tree" *ngIf="!loadingUnits">
   <li>
     <span [ngClass]="{ 'active': activeUnitId === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
   </li>

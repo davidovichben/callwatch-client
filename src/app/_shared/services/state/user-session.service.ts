@@ -30,6 +30,12 @@ export class UserSessionService {
     return null;
   }
 
+  updateUser(property: string, value: any): void {
+    const user = this.getUser();
+    user[property] = value;
+    this.setUser(user);
+  }
+
   getToken(): string {
     if (sessionStorage.getItem('user')) {
       return JSON.parse(sessionStorage.getItem('user')).token;

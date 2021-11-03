@@ -16,7 +16,7 @@ export class UnitService extends BaseHttpService {
   }
 
   getUnits(): Promise<UnitModel[]> {
-    return this.http.get(this.endPoint, this.getTokenRequest())
+    return this.http.get(this.endPoint, this.getTokenRequest(null, true))
       .toPromise()
       .then(response => response as UnitModel[])
       .catch(() => []);
@@ -37,7 +37,7 @@ export class UnitService extends BaseHttpService {
   }
 
   updateUnit(unitId: number, values: object): Promise<boolean> {
-    return this.http.put(this.endPoint + '/' + unitId, values, this.getTokenRequest())
+    return this.http.put(this.endPoint + '/' + unitId, values, this.getTokenRequest(null, true))
       .toPromise()
       .then(() => true)
       .catch(() => false);
