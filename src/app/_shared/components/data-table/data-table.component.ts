@@ -67,12 +67,15 @@ export class DataTableComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   isActive = true;
   savedItem: string;
+  columnLength = 0;
 
   constructor(protected router: Router, protected route: ActivatedRoute,
               protected helpers: HelpersService) {}
 
   ngOnInit() {
     this.checkSavedItem('saved-item');
+
+    this.columnLength = this.columns.length + +this.hasCheckColumn + +this.hasActionsHeader;
 
     this.sub.add(this.route.queryParams.subscribe(() => this.init()));
   }

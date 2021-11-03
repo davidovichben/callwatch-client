@@ -91,7 +91,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       phone: this.fb.control(null, Validators.pattern(PhonePattern)),
       authType: this.fb.control(null),
       locale: this.fb.control(null),
-      password: this.fb.control(null, Validators.required),
+      password: this.fb.control({ value: null, disabled: true }, Validators.required),
       permission: this.fb.control(null),
       units: this.fb.control([]),
       avatar: this.fb.control(null)
