@@ -1,30 +1,40 @@
-<div id="selectLabel" [ngClass]="{ selected: selected }" (click)="isOpened = true">
-  <span>{{ title }} {{ required ? '* ': '' }}</span>
-  <div class="flex-center">
-    <mat-icon>arrow_drop_down</mat-icon>
-    <i class="la la-times-circle" (click)="reset($event)"></i>
+<div id="selectLabel" [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="isOpened = true">
+  <div id="selectLabelBorder"></div>
+  <div id="selectLabelCover">
+    <span id="placeholder" [@placeholder]="selected && (!multiple || selected.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
+    <div id="multipleSelectedItems" *ngIf="selected && multiple">
+      <span>{{ title }} {{ required ? '* ': '' }}</span>
+    </div>
+    <span id="selectedValue" *ngIf="selected && !multiple">{{ title }}</span>
+    <div id="buttons">
+      <mat-icon id="resetIcon" (click)="reset($event)" *ngIf="selected">close</mat-icon>
+      <mat-icon>expand_more</mat-icon>
+    </div>
   </div>
 </div>
-<div id="dropdown" [@slideDown]="isOpened ? 'active' : 'inactive'">
+<div id="dropdown" [@slideToggle]="isOpened ? 'active' : 'inactive'">
   <div id="search" class="flex-between">
-    <input type="search" [placeholder]="'search' | t" #searchInput (keyup)="initFilter(searchInput.value)">
-    <mat-icon>search</mat-icon>
+    <div id="filterInput">
+      <input (keyup)="initFilter(filterValueEle.value)" [placeholder]="'search' | t" class="w-100" #filterValueEle>
+    </div>
   </div>
-  <div id="optionsWrapper" [ngStyle]="{ top: y + 'px', width: width + 'px' }">
+  <div id="optionsWrapper">
     <div id="options">
-      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits, padding: 10 }"></ng-container>
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits }"></ng-container>
     </div>
   </div>
 </div>
-
-<ng-template #recursiveListTmpl let-list="list" let-padding="padding">
-  <ng-container *ngFor="let unit of list">
-    <div class="unit" [ngStyle]="{ padding: '8px ' + padding + 'px' }">
-      <mat-checkbox color="primary" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple">{{ unit.name }}</mat-checkbox>
-      <div class="option" (click)="selectUnit(unit)" *ngIf="!multiple">{{ unit.name }}</div>
+<ng-template #recursiveListTmpl let-list="list">
+  <li *ngFor="let unit of list">
+    <div class="d-flex align-items-center">
+      <mat-icon class="arrow pointer" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !unit.units }" (click)="unit.isToggled = !unit.isToggled">arrow_left</mat-icon>
+      <mat-checkbox color="primary" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple"></mat-checkbox>
+      <div (click)="selectUnit(unit)" class="unit-label">{{ unit.name }}</div>
     </div>
-    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units, padding: padding + 10 }"></ng-container>
-  </ng-container>
+    <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.isToggled }">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
+    </ul>
+  </li>
 </ng-template>
 
 
