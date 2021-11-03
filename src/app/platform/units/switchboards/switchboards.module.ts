@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+
 import { SwitchboardsComponent } from './switchboards.component';
 
-
+const routes: Routes = [
+  { path: '', component: SwitchboardsComponent }
+];
 
 @NgModule({
   declarations: [
     SwitchboardsComponent
   ],
   imports: [
-    CommonModule
+    RouterModule.forChild(routes)
   ]
 })
-export class SwitchboardsModule { }
+export class SwitchboardsModule {}
