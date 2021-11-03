@@ -120,6 +120,14 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     reader.readAsDataURL(file);
   }
 
+  deleteAvatar(): void {
+    this.notifications.warning().then(confirmation => {
+      if (confirmation.value) {
+        this.userForm.get('avatar').reset();
+      }
+    });
+  }
+
   openPasswordDialog(): void {
     const dialog = this.dialog.open(PasswordComponent,{
       width: '400px'

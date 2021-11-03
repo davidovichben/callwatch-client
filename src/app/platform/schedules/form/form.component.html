@@ -110,21 +110,21 @@
         <td *ngIf="typeInput.value === 'unique'">{{ callTime.day.endDate | date: 'd/MM/Y' }}</td>
         <td>
           <span *ngIf="!callTime.editing">{{ callTime.startTime ?? ('all_day' | t) }}</span>
-          <input type="time" [value]="callTime.startTime" #startTimeInput [hidden]="!callTime.editing">
+          <input type="time" #startTimeInput [value]="callTime.startTime" [disabled]="callTime.allDay || rowAllDayInput.checked" [hidden]="!callTime.editing">
         </td>
         <td>
           <span *ngIf="!callTime.editing">{{ callTime.endTime ?? ('all_day' | t) }}</span>
-          <input type="time" [value]="callTime.endTime" #endTimeInput [hidden]="!callTime.editing">
+          <input type="time" #endTimeInput [value]="callTime.endTime" [disabled]="callTime.allDay || rowAllDayInput.checked" [hidden]="!callTime.editing">
         </td>
         <td>
-          <mat-slide-toggle [checked]="callTime.allDay" (change)="callTime.startTime = null; callTime.endTime = null"></mat-slide-toggle>
+          <mat-checkbox #rowAllDayInput [checked]="callTime.allDay" [disabled]="!callTime.editing" (change)="startTimeInput.value = null; endTimeInput.value = null"></mat-checkbox>
         </td>
         <td>
           <mat-slide-toggle [checked]="callTime.isActive" (change)="callTime.isActive = $event.checked"></mat-slide-toggle>
         </td>
         <td class="row-icons">
           <div class="d-flex align-items-center">
-            <button class="ms-2 btn blue-btn" type="button" (click)="confirmTimeUpdate(callTime, startTimeInput.value, endTimeInput.value)" *ngIf="callTime.editing">{{ 'confirm' | t }}</button>
+            <button class="ms-2 btn blue-btn" type="button" (click)="confirmTimeUpdate(callTime, startTimeInput.value, endTimeInput.value, rowAllDayInput.checked)" *ngIf="callTime.editing">{{ 'confirm' | t }}</button>
             <mat-icon class="ms-2" (click)="callTime.editing = true" *ngIf="!callTime.editing">edit</mat-icon>
             <mat-icon (click)="removeCallTime(index)">delete</mat-icon>
           </div>

@@ -27,10 +27,10 @@ ul
 h1, h2, h3, h4, .h1, .h2, .h3, .h4
   color: BlueColor
 
-h1, h1
+h1, .h1
   font-size: 2rem
 
-h4, .h4
+h3, .h3
   font-size: 1.125rem
 
 a, a:hover
@@ -261,6 +261,9 @@ button:focus
   border-radius: 50%
   object-fit: cover
 
+.user-default-avatar
+  color: DarkGreyColor
+
 /*--- Forms ---*/
 
 form
@@ -271,12 +274,31 @@ form
     background-color: GreyColor
 
   .form-body
-    padding: 12px 20px
+    padding: 2rem
     background-color: WhiteColor
-    border: 1px solid GreyColor
     border-radius: 5px
 
+    section
+      margin-bottom: 50px
+
+    section:last-of-type
+      margin-bottom: 20px
+
 /* --- Material ---*/
+
+.mat-form-field-infix
+  padding: 0.5em !important
+  border-top: 0.4em solid #0000 !important
+
+.mat-form-field-appearance-outline .mat-form-field-infix
+  padding: 1em !important
+  height: 50px !important
+
+.mat-form-field-appearance-outline
+
+  .mat-form-field-outline-thick
+
+    color: DarkGreyColor
 
 .mat-form-field-label
   font-family: OpenSans !important
@@ -287,6 +309,10 @@ form
 .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
 .mat-checkbox-checked.mat-primary .mat-checkbox-background
   background-color: BlueColor
+
+.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background
+  background-color: DarkGreyColor
 
 /*--- Bootstrap ---*/
 

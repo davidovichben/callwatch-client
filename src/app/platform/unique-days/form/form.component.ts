@@ -29,15 +29,6 @@ export class FormComponent implements OnInit {
 		this.uniqueDay = routeData.uniqueDay ? routeData.uniqueDay : new UniqueDayModel();
 	}
 
-  resetTimes(checked: boolean, form: NgForm): void {
-    if (!checked) {
-      return;
-    }
-
-    form.controls.startTime.reset();
-    form.controls.endTime.reset();
-  }
-
 	submit(form: NgForm): void {
 		if (form.valid) {
 			this.isSubmitting = true;
