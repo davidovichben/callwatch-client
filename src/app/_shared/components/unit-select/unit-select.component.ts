@@ -1,28 +1,14 @@
 import { AfterViewInit, Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { placeholder, slideToggle } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-unit-select',
   templateUrl: './unit-select.component.html',
   styleUrls: ['./unit-select.component.styl'],
-  animations: [
-    trigger('slideDown', [
-      state('inactive', style({
-        height: '0',
-        opacity: '0',
-        pointerEvents: 'none'
-      })),
-      state('active', style({
-        height: '*',
-        opacity: '1',
-        pointerEvents: 'all'
-      })),
-      transition('inactive => active', animate('200ms ease-in')),
-      transition('active => inactive', animate('200ms ease-out'))
-    ])
-  ],
+  animations: [placeholder, slideToggle],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -83,6 +69,7 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
 
       output = this.selected.map(unit => unit.id);
     } else {
+      this.selected = unit;
       this.isOpened = false;
 
       this.title = unit.name;

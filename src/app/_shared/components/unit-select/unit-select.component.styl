@@ -1,50 +1,139 @@
+:host
+  display: block
+  position: relative
+  min-width: 180px
+  border-radius: 11px
+
 #selectLabel
+  position: relative
+  height: 59.5px
+  width: 100%
+  margin-bottom: 20px
+  color: rgba(0, 0, 0, .6)
+  border: 1px solid rgba(0, 0, 0, .12)
+  border-radius: 5px
+  box-sizing: content-box
+  z-index: 99
+
+#selectLabel:hover
+  border-color: transparent
+
+#selectLabel.opened
+  border-color: transparen
+
+#selectLabel.selected #placeholder
+  position: absolute
+  background: #fff
+  font-size: 1rem
+
+#selectLabel.opened #placeholder
+  color: #3f51b5
+
+#selectLabelBorder
+  position: absolute
+  top: -1px
+  right: -1px
+  height: 62px
+  width: 100%
+  border: 2px solid transparent
+  border-radius: 5px
+  pointer-events: none
+  transition: border-color 0.1s
+
+#selectLabel:hover #selectLabelBorder
+  border-color: #000
+
+#selectLabel.opened #selectLabelBorder
+  border-color: #3f51b5
+
+#selectLabelCover
   display: flex
   justify-content: space-between
-  max-height: 30px
-  margin: 8px 0
-  color: rgba(0, 0, 0, .54)
-  border-bottom: 1px solid #aeaeae
-  cursor: pointer
+  align-items: center
+  height: 100%
+  width: 100%
+  border-radius: 5px
+  padding: 0 .75em 0 .75em
+  background-color: #fff
+
+#selectedValue
+  padding: 0 4px
+
+#selectedValue, mat-icon
+  color: #000
+
+#multipleSelectedItems
+  height: 30px
   overflow: hidden
 
-  i
-    color: #000
+#multipleSelectedItems > span
+  display: inline-flex
+  align-items: center
+  height: 100%
+  margin-left: 3px
+
+#selectLabel, #filterInput
+  display: flex
+  justify-content: space-between
+  align-items: center
+  cursor: pointer
+
+#buttons
+  display: flex
+
+mat-icon
+  color: #000
+
+#resetIcon
+  margin: 0 3px
 
 #dropdown
-  z-index: 999999999
+  position: absolute
+  top: 37px
+  width: 100%
+  border: 1px solid rgba(0, 0, 0, .15)
+  border-top: none
   background-color: #fff
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16)
+  z-index: 999999999
 
-  #search
-    min-width: 500px
-    border-bottom: 1px solid rgba(0, 0, 0, .54)
-    background-color: #fff
+#filterInput
+  padding: 4px 2px
+  width: 100%
 
-    > input
-      width: 100%
-      height: 40px
-      border: none
-      outline: 0
+#filterInput > input
+  padding: 6px 2px
+  flex-grow: 1
+  border: 1px solid #aaa
+  border-radius: 4px
+  outline: none
+  font-size: 18px
 
-  #optionsWrapper
-    direction: ltr
-    position: fixed
-    max-height: 250px
-    min-width: 500px
-    overflow-y: auto
-    overflow-x: hidden
-    z-index: 999999999
+#filterInput > i
+  margin-left: 6px
 
-  #options
-    direction: rtl
-    background-color: #fff
+#options
+  overflow: auto
+  list-style-type: none
+  margin: 0
+  padding: 0
+  max-height: 350px
 
-    .unit:nth-of-type(odd)
-      background-color: rgba(0, 0, 0, .04)
+.rtl :host ul
+  margin: 2px 25px 0 0
 
-    .option
-      width: 100%
-      padding: 8px 4px
-      font-size: 14px
-      cursor: pointer
+.ltr :host ul
+  margin: 2px 0 0 25px
+
+.unit-label
+  width: 100%
+  padding: 3px 5px
+  cursor: pointer
+
+.unit-label:hover
+  background-color #f5f5f5
+
+ul
+  display: none
+
+ul.toggled
+  display: block
