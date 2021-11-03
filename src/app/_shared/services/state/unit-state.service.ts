@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+
+import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Injectable({ providedIn: 'root' })
 
 export class UnitStateService {
 
-  private subject = new Subject<any>();
+  subject = new Subject<UnitModel>();
 
-  changeUnit() {
-    this.subject.next();
-  }
-
-  getUnits(): Observable<any> {
-    return this.subject.asObservable();
+  changeUnit(unit: UnitModel): void {
+    this.subject.next(unit);
   }
 }

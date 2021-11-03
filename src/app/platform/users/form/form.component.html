@@ -9,8 +9,8 @@
   <div class="form-body row go-0 p-3">
     <div class="col-12 col-lg-3 text-center">
       <div id="avatarUpload" class="container">
-        <mat-icon id="defaultAvatar" *ngIf="!userForm.get('avatar').value">account_circle</mat-icon>
-        <img [src]="userForm.get('avatar').value" *ngIf="userForm.get('avatar').value">
+        <mat-icon class="user-default-avatar" *ngIf="!userForm.get('avatar').value">account_circle</mat-icon>
+        <img class="user-avatar" [src]="userForm.get('avatar').value" *ngIf="userForm.get('avatar').value">
         <div class="overlay" *ngIf="userForm.get('avatar').value">
           <mat-icon class="pointer" (click)="userForm.get('avatar').reset()">delete</mat-icon>
         </div>

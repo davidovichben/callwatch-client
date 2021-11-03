@@ -52,7 +52,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.unitService.updateUnit(this.unit.id, form.value).then(response => {
       if (response) {
         this.notifications.success();
-        this.unitStateService.changeUnit()
+
+        if (this.unit.name !== form.value.name) {
+          this.unit.name = form.value.name;
+          this.unitStateService.changeUnit(this.unit);
+        }
       }
     })
   }

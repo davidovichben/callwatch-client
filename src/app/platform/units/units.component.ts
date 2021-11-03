@@ -8,7 +8,6 @@ import { UnitFormComponent } from 'src/app/platform/units/unit-form/unit-form.co
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
-import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
 
 import { UnitModules } from 'src/app/_shared/constants/modules';
 
@@ -21,7 +20,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
   readonly rootUnit = {
     id: 'root',
-    name: 'ROOT',
+    name: '',
     units: []
   }
 
@@ -31,28 +30,28 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
   activeUnitId: any;
 
+  loadingUnits: boolean;
+
   constructor(private route: ActivatedRoute,
               private dialog: MatDialog,
               public userSession: UserSessionService,
               private unitService: UnitService,
-              private notifications: NotificationService,
-              private unitStateService: UnitStateService) {}
+              private notifications: NotificationService) {}
 
   ngOnInit(): void {
+    this.rootUnit.name = this.userSession.getUser().organization;
     this.rootUnit.units = this.route.snapshot.data.units;
 
     this.sub.add(this.route.params.subscribe(params => {
       this.activeUnitId = params.id;
     }));
 
-    this.sub.add(this.unitStateService.getUnits().subscribe(() => {
-      this.unitService.getUnits().then(response => this.rootUnit.units = response);
-    }));
-
     this.setModules();
   }
 
   openFormDialog(): void {
+    const units = { ...this.rootUnit.units };
+
     const dialog = this.dialog.open(UnitFormComponent, {
       width: '600px',
       data: this.rootUnit.units
@@ -60,9 +59,14 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
     this.sub.add(dialog.afterClosed().subscribe(saved => {
       if (saved) {
+        this.loadingUnits = true;
         this.unitService.getUnits().then(response => {
-          this.notifications.success();
-          this.rootUnit.units = response;
+          if (response) {
+            this.notifications.success();
+            this.rootUnit.units = response;
+          }
+
+          this.loadingUnits = false;
         })
       }
     }))

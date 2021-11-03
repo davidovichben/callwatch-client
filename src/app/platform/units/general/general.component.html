@@ -17,16 +17,16 @@
     <div class="col-12 col-lg-3 mb-3">
       <mat-form-field class="w-100">
         <mat-label>{{ 'unit_administrator' | t }}</mat-label>
-        <input matInput name="admin" [ngModel]="unit.admin" [disabled]="!hasPermission('units', 'update')">
+        <input matInput name="admin" [ngModel]="unit.admin" [disabled]="isRootUnit || !hasPermission('units', 'update')">
       </mat-form-field>
     </div>
-    <div class="col-12 col-lg-3 mb-3">
+    <div class="col-12 col-lg-3 mb-3" *ngIf="!isRootUnit">
       <mat-form-field class="w-100">
         <mat-label>{{ 'external_identification' | t }}</mat-label>
-        <input matInput name="externalID" [ngModel]="unit.externalID" [disabled]="isRootUnit || !hasPermission('units', 'update')">
+        <input matInput name="externalID" [ngModel]="unit.externalID" [disabled]="!hasPermission('units', 'update')">
       </mat-form-field>
     </div>
   </div>
-  <button class="btn blue-btn" type="submit" *ngIf="hasPermission('units', 'update') && !isRootUnit">{{ 'save' | t }}</button>
+  <button class="btn blue-btn" type="submit" *ngIf="!isRootUnit && hasPermission('units', 'update')">{{ 'save' | t }}</button>
 </form>
 
