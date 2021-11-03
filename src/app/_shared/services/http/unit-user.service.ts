@@ -28,7 +28,7 @@ export class UnitUserService extends BaseHttpService {
   }
 
   deleteUser(unitId: number, userId: number): Promise<boolean> {
-    return this.http.delete(this.endPoint + '/user/' + userId, this.getTokenRequest())
+    return this.http.delete(this.endPoint + '/' + unitId + '/user', this.getTokenRequest({ userId }))
       .toPromise()
       .then(() => true)
       .catch(() => false);

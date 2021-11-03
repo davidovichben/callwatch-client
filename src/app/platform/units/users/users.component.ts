@@ -60,18 +60,20 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.sub.add(dialog.afterClosed().subscribe(saved => {
       if (saved) {
         this.unitUserService.getUsers(this.unit.id).then(response => {
-          this.unit.users = response;
+          this.unitUsers = response.unit;
         });
       }
     }));
   }
 
-  deleteUser(userId: number, index: number): void {
+  deleteUser(userId: number): void {
     this.notifications.warning().then(confirmation => {
       if (confirmation.value) {
         this.unitUserService.deleteUser(this.unit.id, userId).then(response => {
           if (response) {
-            this.users.splice(index, 1);
+            this.unitUserService.getUsers(this.unit.id).then(response => {
+              this.unitUsers = response.unit;
+            });
           }
         })
       }

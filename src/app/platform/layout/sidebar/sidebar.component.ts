@@ -132,6 +132,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   toggleSubModules(module: ModuleModel): void {
     if (this.toggleState === 'closed') {
       this.toggleState = 'opened';
+      this.toggled.emit(this.toggleState);
     }
 
     module.isToggled = !module.isToggled;

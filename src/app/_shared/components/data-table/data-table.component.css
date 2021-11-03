@@ -29,6 +29,10 @@
   width: 280px;
 }
 
+#searchContainer mat-icon {
+  cursor: pointer;
+}
+
 #toggleFilters {
   cursor: pointer;
 }
@@ -54,7 +58,6 @@ th {
   border: none !important;
   border-width: 0;
   font-size: 14px;
-  cursor: pointer;
 }
 
 th:last-child, ::ng-deep .row-icons {
@@ -65,6 +68,7 @@ th:last-child, ::ng-deep .row-icons {
   display: flex;
   flex-direction: column;
   margin: 0 5px;
+  cursor: pointer;
 }
 
 .triangle-up, .triangle-down {
