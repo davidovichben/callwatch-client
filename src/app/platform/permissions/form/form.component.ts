@@ -6,7 +6,7 @@ import { PermissionService } from 'src/app/_shared/services/http/permission.serv
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { PermissionModel, PermissionActions, PermissionModules } from 'src/app/_shared/models/permission.model';
-import { ModuleModel } from 'src/app/_shared/models/module.model';
+import { PermissionModuleModel } from 'src/app/_shared/models/permission-module.model';
 
 @Component({
   selector: 'app-form',
@@ -20,7 +20,7 @@ export class FormComponent implements OnInit {
 
   permission: PermissionModel;
 
-  modules = [];
+  modules: PermissionModuleModel[] = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -39,7 +39,7 @@ export class FormComponent implements OnInit {
     }
   }
 
-  private loadModule(module: ModuleModel): void {
+  private loadModule(module: PermissionModuleModel): void {
     const match = this.modules.find(iteratedModule => iteratedModule.name === module.name);
     if (match) {
       match.checked = true;
@@ -52,17 +52,16 @@ export class FormComponent implements OnInit {
     }
   }
 
-  checkModuleAction(module: ModuleModel, action: string, checked: boolean): void {
+  checkModuleAction(module: PermissionModuleModel, action: string, checked: boolean): void {
     const match = this.modules.find(m => m.name === module.name);
-    match.read = true;
     match[action] = checked;
   }
 
-  isReadAutoEnabled(module: ModuleModel): boolean {
+  isReadAutoEnabled(module: PermissionModuleModel): boolean {
     return (module.create || module.update || module.delete);
   }
 
-  checkRow(module: ModuleModel): void {
+  checkRow(module: PermissionModuleModel): void {
     this.actions.forEach(scope => module[scope] = module.checked);
   }
 

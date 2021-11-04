@@ -4,8 +4,4 @@ export class ModuleModel {
   isGuarded?: boolean;
   isToggled?: boolean;
   subModules?: ModuleModel[];
-  read: boolean;
-  create: boolean;
-  update: boolean;
-  delete: boolean;
 }
