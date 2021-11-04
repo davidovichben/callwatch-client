@@ -22,6 +22,9 @@ header
   height: 8.5vh
   padding: 0 10px
 
+  .user-default-avatar, .user-avatar
+    cursor: pointer
+
   .user-default-avatar
     font-size: 60px
 
@@ -31,8 +34,16 @@ header
 
 #content
   flex-grow: 1
-  padding: 25px 100px
+  padding: 25px
   background-color: LightGreyColor
 
 #content.no-padding
   padding: 0
+
+@media (min-width: 992px)
+  #content
+    padding: 25px 50px
+
+@media (min-width: 1200px)
+  #content
+    padding: 25px 100px

@@ -34,10 +34,14 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.checkAdminViewing();
     this.setPadding();
 
-    this.helpers.urlChanged.subscribe(() => {
+    this.sub.add(this.helpers.urlChanged.subscribe(() => {
       this.checkAdminViewing();
       this.setPadding();
-    })
+    }));
+
+    this.sub.add(this.userSession.userUpdated.subscribe(() => {
+      this.user = this.userSession.getUser();
+    }));
   }
 
   private setPadding(): void {
@@ -54,6 +58,11 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   checkAdminViewing(): void {
     this.isAdminViewing = this.router.url.substr(1, 8) === 'platform' && this.user.isAdmin;
+  }
+
+  logout(): void {
+    this.userSession.unsetUser();
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {

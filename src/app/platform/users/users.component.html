@@ -5,7 +5,7 @@
     <span>{{ 'add_user' | t }}</span>
   </button>
 </div>
-<app-data-table [columns]="columns" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+<app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('users')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <div class="data-table-filters">
     <bd-select [(ngModel)]="dataTable.criteria.filters['permissionId']" (ngModelChange)="fetchItems()" [placeholder]="'select_permission' | t">
       <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
@@ -13,12 +13,23 @@
   </div>
   <tr *ngFor="let item of dataTable.items">
     <td>{{ item.name }}</td>
+    <td>{{ item.username }}</td>
     <td>{{ item.permission }}</td>
     <td>{{ item.phone }}</td>
-    <td>{{ item.username }}</td>
-    <td class="row-icons">
-      <mat-icon class="ms-2" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('users', 'update')">edit</mat-icon>
-      <mat-icon (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('users', 'delete')">delete</mat-icon>
+    <td class="text-left">{{ item.email }}</td>
+    <td class="row-icons" *ngIf="userSession.canModify('users')">
+      <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('users', 'update')">
+          <mat-icon>edit</mat-icon>
+          <span>{{ 'edit' | t }}</span>
+        </button>
+        <button mat-menu-item class="row-action" (click)="deleteItem(item.id)"
+                *ngIf="userSession.hasPermission('users', 'delete') && item.id === userSession.getUser().id">
+          <mat-icon>delete</mat-icon>
+          <span>{{ 'delete' | t }}</span>
+        </button>
+      </mat-menu>
     </td>
   </tr>
 </app-data-table>

@@ -93,6 +93,14 @@ th:last-child, ::ng-deep .row-icons {
   border-top-color: #5f5f5f;
 }
 
+#noItemsRow {
+  background-color: #fff;
+}
+
+#noItemsRow td {
+  box-shadow: none;
+}
+
 ::ng-deep .table-hover tbody tr {
   cursor: pointer;
 }

@@ -3,12 +3,12 @@
     <a [routerLink]="['/', 'admin', 'organizations']">{{ 'back_to_organizations' | t }}</a>
   </div>
   <div class="px-3">
-    <mat-icon class="user-default-avatar" *ngIf="!user.avatar">account_circle</mat-icon>
-    <img class="user-avatar" [src]="user.avatar" *ngIf="user.avatar">
-<!--    <div class="ms-3">-->
-<!--      <span>{{ 'hello' | t }}, </span>-->
-<!--      <span>{{ user.firstName }}</span>-->
-<!--    </div>-->
+    <mat-icon class="user-default-avatar" [matMenuTriggerFor]="menu" *ngIf="!user.avatar">account_circle</mat-icon>
+    <img class="user-avatar" [src]="user.avatar" [matMenuTriggerFor]="menu" *ngIf="user.avatar">
+    <mat-menu #menu="matMenu">
+<!--      <span id="username">{{ user.firstName + ' ' + user.lastName }}</span>-->
+      <button mat-menu-item (click)="logout()">{{ 'logout' | t }}</button>
+    </mat-menu>
 <!--    <app-locale-select></app-locale-select>-->
   </div>
 </header>

@@ -7,6 +7,7 @@ import { UserModel } from 'src/app/_shared/models/user.model';
 export class UserSessionService {
 
   loginChange: Subject<boolean> = new Subject();
+  userUpdated: Subject<boolean> = new Subject();
 
   isLoggedIn(): boolean {
     return !!sessionStorage.getItem('user');
@@ -34,6 +35,8 @@ export class UserSessionService {
     const user = this.getUser();
     user[property] = value;
     this.setUser(user);
+
+    this.userUpdated.next(true);
   }
 
   getToken(): string {
@@ -60,6 +63,17 @@ export class UserSessionService {
     }
 
     return permissions[module] && permissions[module][action];
+  }
+
+  canModify(module: string): boolean {
+    const user = this.getUser();
+
+    const permissions = user.permissions;
+    if (permissions === 'root') {
+      return true;
+    }
+
+    return permissions[module] && (permissions[module]['update'] || permissions[module]['delete']);
   }
 
   isRootUser(): boolean {

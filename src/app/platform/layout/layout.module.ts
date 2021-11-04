@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { LocaleSelectModule } from 'src/app/_shared/components/locale-select/locale-select.module';
@@ -16,7 +17,8 @@ import { ContentComponent } from './content/content.component';
     RouterModule,
     TranslateModule,
     LocaleSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ],
   exports: [SidebarComponent, ContentComponent]
 })

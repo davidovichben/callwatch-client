@@ -87,23 +87,29 @@ export class FormComponent {
   }
 
   loadDayTimes(): void {
-    this.callTimeForm.patchValue(this.callTimeForm.get('day').value);
+    const value = this.callTimeForm.get('day').value;
+    this.callTimeForm.patchValue(value);
+    if (!value) {
+      return;
+    }
+
+    const controls = ['startTime', 'endTime'];
+
+    controls.forEach((ctrl: string) => {
+      value.allDay ? this.callTimeForm.get(ctrl).disable() : this.callTimeForm.get(ctrl).enable();
+    });
   }
 
   allDayChecked(checked: boolean): void {
-    const startTime = this.callTimeForm.get('startTime');
-    const endTime = this.callTimeForm.get('endTime');
     const validators = checked ? [] : [Validators.required];
 
+    const startTime = this.callTimeForm.get('startTime');
+    const endTime = this.callTimeForm.get('endTime');
+
     [startTime, endTime].forEach(ctrl => {
-      if (checked) {
-        ctrl.disable();
-      } else {
-        ctrl.enable();
-      }
+      checked ? ctrl.disable() : ctrl.enable();
 
       ctrl.setValidators(validators);
-      ctrl.reset();
       ctrl.updateValueAndValidity();
     });
   }
@@ -122,8 +128,8 @@ export class FormComponent {
     }
   }
 
-  confirmTimeUpdate(callTime: CallTimeModel, startTime: string, endTime: string): void {
-    if ((startTime && !endTime) || (!startTime && endTime)) {
+  confirmTimeUpdate(callTime: CallTimeModel, startTime: string, endTime: string, allDay: boolean): void {
+    if ((!startTime && !endTime && !allDay) || (startTime && !endTime) || (!startTime && endTime)) {
       const msg = this.t.transform('schedule_times_missing_error');
       this.notification.error(msg);
       return;
@@ -134,17 +140,29 @@ export class FormComponent {
       endTime = null;
     }
 
+    callTime.allDay = allDay;
     callTime.startTime = startTime;
     callTime.endTime = endTime;
     callTime.editing = false;
   }
 
   removeCallTime(index: number): void {
-    this.callTimes.splice(index, 1);
+    this.notification.warning().then(confirmation => {
+      if (confirmation.value) {
+        this.callTimes.splice(index, 1);
+      }
+    })
   }
 
   submit(): void {
     if (this.scheduleForm.valid && !this.isSubmitting) {
+      const editing = this.callTimes.find(callTime => callTime.editing);
+      if (editing) {
+        const msg = this.t.transform('calltime_editing_submit_error');
+        this.notification.error(msg);
+        return;
+      }
+
       this.isSubmitting = true;
 
       const values = { ...this.scheduleForm.value };

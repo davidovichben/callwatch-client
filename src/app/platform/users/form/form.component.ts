@@ -68,7 +68,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.user = routeData.user;
     if (this.user) {
       this.userForm.patchValue(this.user);
-      this.userForm.get('password').clearValidators();
     }
   }
 
@@ -86,18 +85,19 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       firstName: this.fb.control(null, Validators.required),
       lastName: this.fb.control(null, Validators.required),
       workNumber: this.fb.control(null),
-      username: this.fb.control(null, [Validators.required, Validators.pattern(EmailPattern)], this.checkUsernameUnique.bind(this)),
+      email: this.fb.control(null, [Validators.required, Validators.pattern(EmailPattern)]),
       mobile: this.fb.control(null, Validators.pattern(PhonePattern)),
       phone: this.fb.control(null, Validators.pattern(PhonePattern)),
       authType: this.fb.control(null),
+      username: this.fb.control(null, Validators.required, this.checkUsernameUnique.bind(this)),
+      password: this.fb.control(null),
       locale: this.fb.control(null),
-      password: this.fb.control(null, Validators.required),
-      permission: this.fb.control(null),
+      permission: this.fb.control(null, Validators.required),
       units: this.fb.control([]),
       avatar: this.fb.control(null)
     });
-  }
 
+  }
   uploadAvatar(file: File): void {
     const reader = new FileReader();
     reader.onload = (event => {
@@ -118,6 +118,14 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     reader.readAsDataURL(file);
+  }
+
+  deleteAvatar(): void {
+    this.notifications.warning().then(confirmation => {
+      if (confirmation.value) {
+        this.userForm.get('avatar').reset();
+      }
+    });
   }
 
   openPasswordDialog(): void {
@@ -150,6 +158,13 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   submit(): void {
+    if (!this.user) {
+      this.userForm.get('password').setValidators(Validators.required);
+      this.userForm.get('password').updateValueAndValidity();
+    }
+
+    console.log(this.userForm.value)
+
     if (this.userForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
@@ -181,7 +196,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private handleServerResponse(response: any): void {
     if (response) {
-      if (response.avatar) {
+      if (this.user && this.user.id === this.userSession.getUser().id) {
         this.userSession.updateUser('avatar', response.avatar);
       }
 

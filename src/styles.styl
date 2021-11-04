@@ -27,10 +27,10 @@ ul
 h1, h2, h3, h4, .h1, .h2, .h3, .h4
   color: BlueColor
 
-h1, h1
+h1, .h1
   font-size: 2rem
 
-h4, .h4
+h3, .h3
   font-size: 1.125rem
 
 a, a:hover
@@ -79,8 +79,14 @@ button:focus
   align-items: center
   justify-content: flex-end
 
+.ltr
+  direction: ltr
+
 .bold
   font-weight: bold
+
+.text-left
+  text-align: left !important
 
 .underline
   text-decoration: underline
@@ -217,6 +223,14 @@ button:focus
     cursor: pointer
     color: DarkGreyColor
 
+  mat-menu
+
+    mat-icon
+      margin: 0 !important
+
+.row-action
+  font-family: OpenSans
+
 .simple-table
 
   th
@@ -261,6 +275,9 @@ button:focus
   border-radius: 50%
   object-fit: cover
 
+.user-default-avatar
+  color: DarkGreyColor
+
 /*--- Forms ---*/
 
 form
@@ -271,12 +288,56 @@ form
     background-color: GreyColor
 
   .form-body
-    padding: 12px 20px
+    padding: 1rem
     background-color: WhiteColor
-    border: 1px solid GreyColor
     border-radius: 5px
 
+    section
+      margin-bottom: 20px
+
+    .mat-form-field
+      width: 100%
+
+@media (min-width: 992px)
+
+  .form-body
+    padding: 2rem
+
+    section
+      margin-bottom: 50px
+
+@media (max-width: 992px)
+  .form-header
+
+    .h1
+      font-size: 1.5rem
+
+    .btn
+      min-width: 100px
+
+  .form-body
+
+    .h4
+      text-align: center
+
 /* --- Material ---*/
+
+.mat-form-field-infix
+  padding: 0.5em !important
+  border-top: 0.4em solid #0000 !important
+
+.mat-form-field-appearance-outline .mat-form-field-infix
+  padding: 1em 0 !important
+  height: 50px !important
+
+.mat-form-field-appearance-outline
+
+  .mat-form-field-prefix, .mat-form-field-suffix
+    top: -0.15em !important
+
+  .mat-form-field-outline-thick
+
+    color: DarkGreyColor
 
 .mat-form-field-label
   font-family: OpenSans !important
@@ -284,9 +345,16 @@ form
 .mat-form-field-outline
   background-color: WhiteColor
 
+textarea.mat-input-element
+  margin: 15px 0 !important
+
 .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
 .mat-checkbox-checked.mat-primary .mat-checkbox-background
   background-color: BlueColor
+
+.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background
+  background-color: DarkGreyColor
 
 /*--- Bootstrap ---*/
 
@@ -323,10 +391,13 @@ form
   .table > :not(caption) > * > *
     padding: 0.75rem 0.75rem
 
-app-data-table
+  tbody tr:nth-child(odd)
+    background-color: LightColor !important
 
   tbody tr:nth-child(even)
-    background-color: LightColor !important
+    background-color: WhiteColor !important
+
+app-data-table
 
   app-pagination
     .page-link
@@ -348,8 +419,14 @@ app-data-table
 .swal2-container
   z-index: 99999999 !important
 
+.swal2-styled.swal2-confirm, .swal2-styled.swal2-cancel
+  box-shadow: none !important
+
 .swal2-styled.swal2-confirm
   background-color: BlueColor
+
+.swal2-styled.swal2-cancel
+  background-color: DarkGreyColor
 
 /*--- Loader --- */
 

@@ -9,6 +9,12 @@
   color: #fff
   transition: 0.3s ease
 
+.rtl :host
+  right: 0
+
+.ltr :host
+  left: 0
+
 :host.opened
   width: 220px
 
@@ -20,6 +26,9 @@
     span
       opacity: 0
       pointer-events: none
+
+    .arrow
+      display: none
 
 .logo
   height: 8.5vh !important
@@ -34,17 +43,18 @@
   display: flex
   flex-direction: column
   justify-content: space-between
-  overflow: auto
   height: 86vh
+  overflow-y: auto
+  overflow-x: hidden
 
 :host.closed
   #menu
     overflow: visible
 
-  #modules
+#modules
 
-    .sidebar-item:hover, .sidebar-item.active
-      background-color: BlueColor
+  .sidebar-item:hover, .sidebar-item.active
+    background-color: BlueColor
 
 .sidebar-item
   display: flex
@@ -90,11 +100,15 @@
     content: ""
     width: 80px
 
-.sidebar-item.active, .sidebar-item:hover
-  color: LighterBlueColor !important
-  font-weight: bold
-  border: none
-  background-color: DarkBlueColor !important
+  .sidebar-item.active, .sidebar-item:hover
+    color: LighterBlueColor !important
+    font-weight: bold
+    border: none
+    background-color: DarkBlueColor !important
+
+:host.closed
+  .sub-modules
+    display: none
 
 #toggleSidebar
   height: 5.5vh

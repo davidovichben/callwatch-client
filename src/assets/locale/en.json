@@ -52,6 +52,7 @@
   { "key": "invalid_email_or_password", "value": "Invalid email or password" },
   { "key": "last_name", "value": "Last Name" },
   { "key": "login", "value": "Login" },
+  { "key": "logout", "value": "Logout" },
   { "key": "main_unit", "value": "Main Unit" },
   { "key": "main_user", "value": "Main user" },
   { "key": "mobile", "value": "Mobile" },
@@ -202,13 +203,14 @@
   { "key": "call_times", "value": "Call Times" },
   { "key": "schedule_type", "value": "Schedule Type" },
   { "key": "call_times_not_added", "value": "Call times have not been added" },
-  { "key": "schedule_times_missing_error", "value": "To hour and from hour must both be filled or left blank" },
+  { "key": "schedule_times_missing_error", "value": "Call times must both be filled or all day checked" },
   { "key": "schedule_type_changed_warning", "value": "Changing type will remove selected days from table, continue?" },
   { "key": "select_permission", "value": "Select Permission" },
   { "key": "delete_user", "value": "Delete User" },
   { "key": "timed_reports", "value": "Timed Reports" },
   { "key": "routers", "value": "Routers" },
-  { "key": "calls", "value": "Calls" }
+  { "key": "calls", "value": "Calls" },
+  { "key": "calltime_editing_submit_error", "value": "Can't submit while editing call times" }
 ]
 
 
