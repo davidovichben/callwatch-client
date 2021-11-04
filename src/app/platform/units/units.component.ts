@@ -50,8 +50,6 @@ export class UnitsComponent implements OnInit, OnDestroy {
   }
 
   openFormDialog(): void {
-    const units = { ...this.rootUnit.units };
-
     const dialog = this.dialog.open(UnitFormComponent, {
       width: '600px',
       data: this.rootUnit.units

@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -18,6 +27,8 @@ import { placeholder, slideToggle } from 'src/app/_shared/constants/animations';
   ]
 })
 export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+
+  @ViewChild('element') elementView: ElementRef;
 
   @Input() units: UnitModel[] = [];
   @Input() required: boolean;
@@ -45,18 +56,44 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     }
 
     this.title = this.placeholder;
+    this.setCoords();
   }
 
   ngAfterViewInit() {
+    this.setCoords();
+  }
+
+  setCoords(): void {
     setTimeout(() => {
       const ele = this.elementRef.nativeElement.getBoundingClientRect();
 
-      // const unitLength = this.filteredUnits.length > 5 ? 5 : this.filteredUnits.length;
-      // const offsetTop = (unitLength * 43);
+      const unitLength = this.filteredUnits.length;
+      const offsetTop = unitLength < 5 ? ((unitLength + 1) * 47) : 282;
 
-      this.y = ele.y;
-      this.width = ele.width;
+      if (window.innerHeight <= ele.bottom + offsetTop) {
+        this.y = ele.top - offsetTop;
+      } else {
+        this.y = ele.bottom;
+      }
+
+      this.width = this.elementView.nativeElement.clientWidth;
     }, 0)
+  }
+
+  unitClicked(unit): void {
+    if (this.multiple) {
+      this.toggleUnit(unit);
+    } else {
+      this.selectUnit(unit);
+    }
+  }
+
+  toggleUnit(unit: any, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    unit.isToggled = !unit.isToggled;
   }
 
   selectUnit(unit: UnitModel, checked?: boolean): void {
@@ -65,7 +102,6 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       this.checkUnit(checked, unit);
       this.selected = [];
       this.units.forEach(unit => this.setMultipleSelected(unit));
-      this.setMultipleTitle();
 
       output = this.selected.map(unit => unit.id);
     } else {
@@ -97,30 +133,10 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     }
   }
 
-  private setMultipleTitle(): void {
-    this.title = '';
-
-    for (let i = 0; i < 3; i++) {
-      if (!this.selected[i]) {
-        break;
-      }
-
-      this.title += this.selected[i].name;
-      if (this.selected[i + 1] && i < 2) {
-        this.title += ', ';
-      }
-
-      if (i === 2) {
-        this.title += '...';
-      }
-    }
-  }
-
   checkAll(checked: boolean): void {
     this.units.forEach(unit => this.checkUnit(checked, unit));
     this.selected = [];
     this.units.forEach(unit => this.setMultipleSelected(unit));
-    this.setMultipleTitle();
   }
 
   initFilter(value: string): void {
@@ -178,7 +194,6 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       this.units.forEach(unit => this.matchValues(unit, value));
       this.selected = [];
       this.units.forEach(unit => this.setMultipleSelected(unit));
-      this.setMultipleTitle();
     } else {
       this.selected = value;
     }
