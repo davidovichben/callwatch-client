@@ -145,7 +145,11 @@ export class FormComponent {
   }
 
   removeCallTime(index: number): void {
-    this.callTimes.splice(index, 1);
+    this.notification.warning().then(confirmation => {
+      if (confirmation.value) {
+        this.callTimes.splice(index, 1);
+      }
+    })
   }
 
   submit(): void {

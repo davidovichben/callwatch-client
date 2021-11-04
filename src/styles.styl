@@ -217,6 +217,14 @@ button:focus
     cursor: pointer
     color: DarkGreyColor
 
+  mat-menu
+
+    mat-icon
+      margin: 0 !important
+
+.row-action
+  font-family: OpenSans
+
 .simple-table
 
   th
@@ -374,10 +382,13 @@ textarea.mat-input-element
   .table > :not(caption) > * > *
     padding: 0.75rem 0.75rem
 
-app-data-table
+  tbody tr:nth-child(odd)
+    background-color: LightColor !important
 
   tbody tr:nth-child(even)
-    background-color: LightColor !important
+    background-color: WhiteColor !important
+
+app-data-table
 
   app-pagination
     .page-link
@@ -399,8 +410,14 @@ app-data-table
 .swal2-container
   z-index: 99999999 !important
 
+.swal2-styled.swal2-confirm, .swal2-styled.swal2-cancel
+  box-shadow: none !important
+
 .swal2-styled.swal2-confirm
   background-color: BlueColor
+
+.swal2-styled.swal2-cancel
+  background-color: DarkGreyColor
 
 /*--- Loader --- */
 
