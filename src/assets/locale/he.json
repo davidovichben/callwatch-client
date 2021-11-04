@@ -51,6 +51,7 @@
   { "key": "invalid_email_or_password", "value": "סיסמה או אימייל שגויים" },
   { "key": "last_name", "value": "שם משפחה" },
   { "key": "login", "value": "התחברות" },
+  { "key": "logout", "value": "התנתקות" },
   { "key": "main_unit", "value": "יחידה ראשית" },
   { "key": "main_user", "value": "משתמש ראשי" },
   { "key": "mobile", "value": "טלפון נייד" },

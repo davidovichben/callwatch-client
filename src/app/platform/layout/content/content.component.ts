@@ -60,6 +60,11 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.isAdminViewing = this.router.url.substr(1, 8) === 'platform' && this.user.isAdmin;
   }
 
+  logout(): void {
+    this.userSession.unsetUser();
+    this.router.navigate(['/']);
+  }
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

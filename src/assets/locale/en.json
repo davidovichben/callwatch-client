@@ -52,6 +52,7 @@
   { "key": "invalid_email_or_password", "value": "Invalid email or password" },
   { "key": "last_name", "value": "Last Name" },
   { "key": "login", "value": "Login" },
+  { "key": "logout", "value": "Logout" },
   { "key": "main_unit", "value": "Main Unit" },
   { "key": "main_user", "value": "Main user" },
   { "key": "mobile", "value": "Mobile" },

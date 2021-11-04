@@ -269,20 +269,48 @@ button:focus
 form
 
   .form-header
-    @extend .flex-between
     margin-bottom: 15px
     background-color: GreyColor
 
   .form-body
-    padding: 2rem
+    padding: 1rem
     background-color: WhiteColor
     border-radius: 5px
 
     section
+      margin-bottom: 20px
+
+    .mat-form-field
+      width: 100%
+
+@media (min-width: 992px)
+
+  .form-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+  .form-body
+    padding: 2rem
+
+    section
       margin-bottom: 50px
 
-    section:last-of-type
+@media (max-width: 992px)
+
+  .form-header
+    text-align: center
+
+    .h1
       margin-bottom: 20px
+
+  .form-body
+
+    .row
+      justify-content: center
+
+    .h4
+      text-align: center
 
 /* --- Material ---*/
 

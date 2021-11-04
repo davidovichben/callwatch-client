@@ -6,8 +6,8 @@
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
-  <div class="form-body row go-0">
-    <div class="col-12 col-lg-3 text-center">
+  <div class="form-body row g-0">
+    <div class="col-12 col-xl-3 text-center">
       <div id="avatarUpload" class="container">
         <mat-icon class="user-default-avatar" *ngIf="!userForm.get('avatar').value">account_circle</mat-icon>
         <img class="user-avatar" [src]="userForm.get('avatar').value" *ngIf="userForm.get('avatar').value">
@@ -22,33 +22,33 @@
       <p class="alert alert-danger mx-auto w-250p" *ngIf="avatarErrors.type">{{ 'invalid_file_type' | t }}.</p>
       <p class="alert alert-danger mx-auto w-250p" *ngIf="avatarErrors.size">{{ 'maximum_file_size' | t }} - 8MB.</p>
     </div>
-    <div class="col-12 col-lg-9">
+    <div class="col-12 col-xl-9">
       <section>
         <p class="h4 mb-3">{{ 'personal_details' | t }}</p>
         <div class="d-flex">
           <div class="row">
-            <div class="col-12 col-lg-5">
-              <mat-form-field class="w-100">
+            <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+              <mat-form-field>
                 <mat-label>{{ 'first_name' | t }}</mat-label>
                 <input matInput type="text" formControlName="firstName" required>
                 <mat-error>{{ errorMessages.required }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-5">
-              <mat-form-field class="w-100">
+            <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+              <mat-form-field>
                 <mat-label>{{ 'last_name' | t }}</mat-label>
                 <input matInput type="text" formControlName="lastName" required>
                 <mat-error>{{ errorMessages.required }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-5">
-              <mat-form-field class="w-100">
+            <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+              <mat-form-field>
                 <mat-label>{{ 'employee_number' | t }}</mat-label>
                 <input matInput type="text" formControlName="workNumber">
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-5">
-              <mat-form-field class="w-100">
+            <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+              <mat-form-field>
                 <mat-label>{{ 'email' | t }}</mat-label>
                 <input matInput type="email" formControlName="username" required>
                 <mat-error *ngIf="userForm.get('username').errors?.required">{{ errorMessages.required }}</mat-error>
@@ -56,15 +56,15 @@
                 <mat-error *ngIf="userForm.get('username').errors?.exists">{{ 'username_exists' | t }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-5">
-              <mat-form-field class="w-100">
+            <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+              <mat-form-field>
                 <mat-label>{{ 'mobile' | t }}</mat-label>
                 <input matInput type="text" formControlName="mobile">
                 <mat-error>{{ errorMessages.phone }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-5">
-              <mat-form-field class="w-100">
+            <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+              <mat-form-field>
                 <mat-label>{{ 'phone' | t }}</mat-label>
                 <input matInput type="text" formControlName="phone">
                 <mat-error>{{ errorMessages.phone }}</mat-error>
@@ -76,32 +76,32 @@
       <section>
         <p class="h4 mb-3">{{ 'user_settings' | t }}</p>
         <div class="row">
-          <div class="col-12 col-lg-5">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+            <mat-form-field>
               <mat-label>{{ 'verification_type' | t }}</mat-label>
               <mat-select formControlName="authType">
                 <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-5">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+            <mat-form-field>
               <mat-label>{{ 'password' | t }}</mat-label>
               <input matInput type="password" formControlName="password" [required]="!user">
               <span matSuffix class="enabled link pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
               <mat-error *ngIf="!user">{{ errorMessages.required }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-5">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+            <mat-form-field>
               <mat-label>{{ 'system_lang_default' | t }}</mat-label>
               <mat-select formControlName="locale">
                 <mat-option *ngFor="let locale of locales" [value]="locale.code">{{ locale.key | t }}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-5">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
+            <mat-form-field>
               <mat-label>{{ 'permission' | t }}</mat-label>
               <mat-select formControlName="permission">
                 <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
@@ -114,7 +114,7 @@
       <section>
         <p class="h4 mb-3">{{ 'organization_units' | t }}</p>
         <div class="row">
-          <div class="col-12 col-lg-5">
+          <div class="col-12 col-md-9 col-lg-6 col-xxl-5">
             <app-unit-select formControlName="units" [units]="units" [placeholder]="'select_units' | t" [multiple]="true"></app-unit-select>
           </div>
         </div>
