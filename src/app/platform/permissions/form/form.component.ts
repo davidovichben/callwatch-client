@@ -54,7 +54,12 @@ export class FormComponent implements OnInit {
 
   checkModuleAction(module: ModuleModel, action: string, checked: boolean): void {
     const match = this.modules.find(m => m.name === module.name);
+    match.read = true;
     match[action] = checked;
+  }
+
+  isReadAutoEnabled(module: ModuleModel): boolean {
+    return (module.create || module.update || module.delete);
   }
 
   checkRow(module: ModuleModel): void {
