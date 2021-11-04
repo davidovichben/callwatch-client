@@ -51,7 +51,7 @@
       </div>
       <div class="col-12 col-lg-3" *ngIf="typeInput.value === 'unique'">
         <div>
-          <bd-select formControlName="day" [placeholder]="'select_unique_day' | t" [required]="true" (ngModelChange)="loadDayTimes()">
+          <bd-select class="w-100" formControlName="day" [placeholder]="'select_unique_day' | t" [required]="true" (ngModelChange)="loadDayTimes()">
             <bd-option *ngFor="let day of uniqueDays" [value]="day">{{ day.name }}</bd-option>
           </bd-select>
           <mat-error *ngIf="callTimeForm.get('day').errors && callTimeFormDirective.submitted">{{ errorMessages.required | t }}</mat-error>

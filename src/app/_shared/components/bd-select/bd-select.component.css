@@ -40,7 +40,7 @@
   top: -1px;
   right: -1px;
   height: 46.5px;
-  width: 303px;
+  width: 100%;
   border: 2px solid transparent;
   border-radius: 5px;
   pointer-events: none;
@@ -70,7 +70,7 @@
   padding: 0 4px;
 }
 
-#selectedValue, mat-icon {
+#selectedValue {
   color: #000;
 }
 
@@ -99,7 +99,7 @@
 }
 
 mat-icon {
-  color: #000;
+  color: rgba(0, 0, 0, .54);
 }
 
 #resetIcon {
@@ -111,7 +111,7 @@ mat-icon {
 #dropdown {
   position: absolute;
   top: 37px;
-  width: 101%;
+  width: 100%;
   border: 2px solid #3f51b5;
   border-top: none;
   background-color: #fff;
@@ -131,10 +131,6 @@ mat-icon {
   border-radius: 4px;
   outline: none;
   font-size: 16px;
-}
-
-#filterInput > i {
-	margin-left: 6px;
 }
 
 #options {

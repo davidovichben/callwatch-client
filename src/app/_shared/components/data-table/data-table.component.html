@@ -2,10 +2,10 @@
   <div>
     <mat-form-field id="searchContainer" class="ms-3">
       <mat-label>{{ 'search' | t }}</mat-label>
-      <input matInput [(ngModel)]="criteria.keyword" (keyup)="search($event)">
+      <input matInput [ngModel]="criteria.keyword" (keyup)="search(searchInput.value, $event)" #searchInput="ngModel">
       <div matSuffix class="d-flex">
-        <mat-icon (click)="resetSearch()" *ngIf="criteria.keyword" >close</mat-icon>
-        <mat-icon (click)="search()">search</mat-icon>
+        <mat-icon (click)="resetSearch(searchInput)" *ngIf="searchInput.value || criteria.keyword">close</mat-icon>
+        <mat-icon (click)="search(searchInput.value)">search</mat-icon>
       </div>
     </mat-form-field>
     <ng-content select=".data-table-filters"></ng-content>
@@ -15,9 +15,9 @@
   </div>
   <ng-content select=".data-table-menus"></ng-content>
 </div>
-<div [@slideToggle]="showFilters ? 'active' : 'inactive'">
-  <app-side-filters [columns]="columns" (searchSubmitted)="extendedSearch($event)"></app-side-filters>
-</div>
+<!--<div [@slideToggle]="showFilters ? 'active' : 'inactive'">-->
+<!--  <app-side-filters [columns]="columns" (searchSubmitted)="extendedSearch($event)"></app-side-filters>-->
+<!--</div>-->
 <p class="alert alert-success mb-3" *ngIf="savedItem">
   <span> {{ savedItem }}</span>
   <span>{{ 'saved_successfully' | t }}</span>

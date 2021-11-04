@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnDestroy, OnInit, EventEmitter, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
@@ -117,30 +118,34 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  search(event?: KeyboardEvent): void {
+  search(keyword: string, event?: KeyboardEvent): void {
     if (((event && (event.code === 'Enter' || event.code === 'NumpadEnter')) || !event) && !this.isLoading) {
+      this.criteria.keyword = keyword;
       this.loadItems();
     }
   }
 
-  resetSearch(): void {
-    this.criteria.keyword = '';
-    this.loadItems();
-  }
-
-  extendedSearch(values: object): void {
-    this.criteria.filters = values;
-
-    if (this.criteria.page  > 1) {
-      this.criteria.page = 1;
-      this.paginationData.currentPage = this.criteria.page;
-
-      const url: string = this.router.url.substring(0, this.router.url.indexOf('?'));
-      this.router.navigateByUrl(url);
-    } else {
-      this.search();
+  resetSearch(searchInput: NgModel): void {
+    searchInput.reset();
+    if (this.criteria.keyword) {
+      this.criteria.keyword = '';
+      this.loadItems();
     }
   }
+
+  // extendedSearch(values: object): void {
+  //   this.criteria.filters = values;
+  //
+  //   if (this.criteria.page  > 1) {
+  //     this.criteria.page = 1;
+  //     this.paginationData.currentPage = this.criteria.page;
+  //
+  //     const url: string = this.router.url.substring(0, this.router.url.indexOf('?'));
+  //     this.router.navigateByUrl(url);
+  //   } else {
+  //     this.search();
+  //   }
+  // }
 
   sort(column: DataTableColumn , dir: 'asc' | 'desc'): void {
     this.criteria.sort.column = column.name;

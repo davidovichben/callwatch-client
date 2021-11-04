@@ -88,8 +88,10 @@ export class FormComponent {
 
   loadDayTimes(): void {
     const value = this.callTimeForm.get('day').value;
-
     this.callTimeForm.patchValue(value);
+    if (!value) {
+      return;
+    }
 
     const controls = ['startTime', 'endTime'];
 
