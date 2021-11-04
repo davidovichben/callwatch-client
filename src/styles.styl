@@ -79,8 +79,14 @@ button:focus
   align-items: center
   justify-content: flex-end
 
+.ltr
+  direction: ltr
+
 .bold
   font-weight: bold
+
+.text-left
+  text-align: left !important
 
 .underline
   text-decoration: underline
@@ -325,6 +331,9 @@ form
   height: 50px !important
 
 .mat-form-field-appearance-outline
+
+  .mat-form-field-prefix, .mat-form-field-suffix
+    top: -0.15em !important
 
   .mat-form-field-outline-thick
 

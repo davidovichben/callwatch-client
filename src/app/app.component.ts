@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
               public localeService: LocaleService) {}
 
   ngOnInit() {
-    this.setLocale();
     this.setSubscriptions();
+    this.setLocale();
     this.listenRouterEvents();
   }
 

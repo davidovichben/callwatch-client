@@ -45,13 +45,14 @@
             <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)"></mat-checkbox>
           </td>
           <td *ngFor="let action of actions">
-            <mat-checkbox [name]="'action-' + index"
-                          [value]="module[action]" [checked]="module[action] || isReadAutoEnabled(module)"
-                          [disabled]="isReadAutoEnabled(module)"
+            <mat-checkbox [name]="'action-' + index" [value]="module[action]"
+                          [checked]="module[action] || isReadAutoEnabled(module)"
+                          [disabled]="isReadAutoEnabled(module) || module.checked"
                           (change)="checkModuleAction(module, 'read', $event.checked)"
                           *ngIf="action === 'read'"></mat-checkbox>
 
-            <mat-checkbox [name]="'action-' + index" [value]="module[action]" [checked]="module[action]"
+            <mat-checkbox [name]="'action-' + index" [value]="module[action]"
+                          [checked]="module[action]" [disabled]="module.checked"
                           (change)="checkModuleAction(module, action, $event.checked)"
                           *ngIf="action !== 'read'">
             </mat-checkbox>

@@ -110,14 +110,14 @@
         <td *ngIf="typeInput.value === 'unique'">{{ callTime.day.endDate | date: 'd/MM/Y' }}</td>
         <td>
           <span *ngIf="!callTime.editing">{{ callTime.startTime ?? ('all_day' | t) }}</span>
-          <input type="time" #startTimeInput [value]="callTime.startTime" [disabled]="callTime.allDay || rowAllDayInput.checked" [hidden]="!callTime.editing">
+          <input type="time" #startTimeInput [value]="callTime.startTime" [disabled]="rowAllDayInput.checked" [hidden]="!callTime.editing">
         </td>
         <td>
           <span *ngIf="!callTime.editing">{{ callTime.endTime ?? ('all_day' | t) }}</span>
-          <input type="time" #endTimeInput [value]="callTime.endTime" [disabled]="callTime.allDay || rowAllDayInput.checked" [hidden]="!callTime.editing">
+          <input type="time" #endTimeInput [value]="callTime.endTime" [disabled]="rowAllDayInput.checked" [hidden]="!callTime.editing">
         </td>
         <td>
-          <mat-checkbox #rowAllDayInput [checked]="callTime.allDay" [disabled]="!callTime.editing" (change)="startTimeInput.value = null; endTimeInput.value = null"></mat-checkbox>
+          <mat-checkbox #rowAllDayInput [checked]="callTime.allDay" [disabled]="!callTime.editing"></mat-checkbox>
         </td>
         <td>
           <mat-slide-toggle [checked]="callTime.isActive" (change)="callTime.isActive = $event.checked"></mat-slide-toggle>

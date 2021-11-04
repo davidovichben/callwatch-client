@@ -13,6 +13,7 @@ export class UserModel {
   avatar: string;
   authType: string;
   unit: string;
+  email: string;
   units: UnitModel[] | 'root';
 }
 
