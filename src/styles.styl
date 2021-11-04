@@ -269,6 +269,7 @@ button:focus
 form
 
   .form-header
+    @extend .flex-between
     margin-bottom: 15px
     background-color: GreyColor
 
@@ -285,11 +286,6 @@ form
 
 @media (min-width: 992px)
 
-  .form-header
-    display: flex
-    justify-content: space-between
-    align-items: center
-
   .form-body
     padding: 2rem
 
@@ -297,12 +293,13 @@ form
       margin-bottom: 50px
 
 @media (max-width: 992px)
-
   .form-header
-    text-align: center
 
     .h1
-      margin-bottom: 20px
+      font-size: 1.5rem
+
+    .btn
+      min-width: 100px
 
   .form-body
 

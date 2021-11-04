@@ -8,15 +8,15 @@
   </div>
   <div class="form-body">
     <div class="row">
-      <div class="col-12 col-lg-3">
-        <mat-form-field class="w-100">
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+        <mat-form-field>
           <mat-label>{{ 'permission_name' | t }}</mat-label>
           <input matInput type="text" name="name" [ngModel]="permission.name" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-12 col-lg-3">
-        <mat-form-field class="w-100">
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+        <mat-form-field>
           <mat-label>{{ 'description' | t }}</mat-label>
           <input matInput type="text" name="description" [ngModel]="permission.description">
         </mat-form-field>
