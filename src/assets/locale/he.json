@@ -2,7 +2,7 @@
   { "key": "active", "value": "פעיל" },
   { "key": "add", "value": "הוספה" },
   { "key": "add_campaign", "value": "הוספת קמפיין" },
-  { "key": "add_organization", "value": "הוספת ארגוןו" },
+  { "key": "add_organization", "value": "הוספת ארגון" },
   { "key": "add_permission", "value": "הוספת הרשאה" },
   { "key": "edit_permission", "value": "עריכת הרשאה" },
   { "key": "add_unit", "value": "הוספת יחידה" },

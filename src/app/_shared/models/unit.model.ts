@@ -7,7 +7,9 @@ export class UnitModel {
   externalID?: string;
   disabled?: boolean;
   checked?: boolean;
+  toggled?: boolean;
   units?: UnitModel[];
   users?: UserModel[];
   parent?: UnitModel;
+  ancestors?: UnitModel[];
 }

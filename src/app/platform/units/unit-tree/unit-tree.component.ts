@@ -53,6 +53,18 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     }));
   }
 
+  toggleUnit(unit: UnitModel): void {
+    if (unit.units || unit.toggled) {
+      unit.toggled = !unit.toggled;
+      return;
+    }
+
+    this.unitService.getUnits(unit.id).then(response => {
+      unit.units = response;
+      unit.toggled = true;
+    });
+  }
+
   setActiveBranch(units: UnitModel[], unitId: number, parentId?: number): void {
     units.forEach(iteratedUnit => {
       if (this.activeUnit) {

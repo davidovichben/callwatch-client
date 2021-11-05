@@ -15,8 +15,13 @@ export class UnitService extends BaseHttpService {
     super(userSession);
   }
 
-  getUnits(): Promise<UnitModel[]> {
-    return this.http.get(this.endPoint, this.getTokenRequest(null, true))
+  getUnits(unitId?: number): Promise<UnitModel[]> {
+    const params = {};
+    if (unitId) {
+      Object.assign(params, { unitId });
+    }
+
+    return this.http.get(this.endPoint, this.getTokenRequest(params, true))
       .toPromise()
       .then(response => response as UnitModel[])
       .catch(() => []);

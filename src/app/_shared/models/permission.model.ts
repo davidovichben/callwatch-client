@@ -8,7 +8,7 @@ export class PermissionModel {
 }
 
 export const PermissionModules = [
-  'reports', 'timed_reports', 'users', 'campaigns', 'routers', 'schedules', 'units', 'calls'
+  'reports', 'timed_reports', 'users', 'switchboards', 'routers', 'schedules', 'units', 'calls'
 ];
 
 export const PermissionActions = ['read', 'create', 'update', 'delete'];

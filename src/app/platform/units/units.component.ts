@@ -9,6 +9,8 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
+import { UnitModel } from 'src/app/_shared/models/unit.model';
+
 import { UnitModules } from 'src/app/_shared/constants/modules';
 
 @Component({
@@ -28,7 +30,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
   modules = UnitModules;
 
-  activeUnitId: any;
+  activeUnit: UnitModel;
 
   loadingUnits: boolean;
 
@@ -42,16 +44,14 @@ export class UnitsComponent implements OnInit, OnDestroy {
     this.rootUnit.name = this.userSession.getUser().organization;
     this.rootUnit.units = this.route.snapshot.data.units;
 
-    this.sub.add(this.route.params.subscribe(params => {
-      this.activeUnitId = params.id;
+    this.sub.add(this.route.params.subscribe(() => {
+      this.activeUnit = this.route.snapshot.data.unit;
     }));
 
     this.setModules();
   }
 
   openFormDialog(): void {
-    const units = { ...this.rootUnit.units };
-
     const dialog = this.dialog.open(UnitFormComponent, {
       width: '600px',
       data: this.rootUnit.units

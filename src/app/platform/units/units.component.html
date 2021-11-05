@@ -10,10 +10,10 @@
 </div>
 <div id="main">
   <div class="my-5">
-
+    <span *ngFor="let ancestor of activeUnit.ancestors">{{ ancestor.name }}</span>
   </div>
   <div class="tabs">
-    <a class="tab" [routerLink]="['/platform', 'units', activeUnitId, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>
+    <a class="tab" [routerLink]="['/platform', 'units', activeUnit.id, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>
   </div>
   <div>
     <router-outlet></router-outlet>
