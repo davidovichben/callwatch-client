@@ -5,20 +5,20 @@
       <thead>
       <tr>
         <th>{{ 'user' | t }}</th>
-        <th *ngIf="!isRootUnit">{{ 'permission' | t }}</th>
+        <th>{{ 'permission' | t }}</th>
         <th *ngIf="!isRootUnit && userSession.hasPermission('users', 'delete')">{{ 'actions' | t }}</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let user of unitUsers">
         <td>{{ user.name }}</td>
-        <td *ngIf="unit.id !== 'root'">{{ user.permission ? user.permission : ('primary_f' | t) }}</td>
+        <td>{{ user.permission ? user.permission : ('primary_f' | t) }}</td>
         <td class="row-icons" *ngIf="!isRootUnit && userSession.hasPermission('users', 'delete')">
           <mat-icon (click)="deleteUser(user.id)">delete</mat-icon>
         </td>
       </tr>
       <tr *ngIf="unitUsers.length === 0">
-        <td colspan="4">{{ 'no_users_in_unit' | t }}.</td>
+        <td class="text-center" colspan="4">{{ 'no_users_in_unit' | t }}.</td>
       </tr>
       </tbody>
     </table>
@@ -41,7 +41,7 @@
         <td>{{ user.unit ? user.unit : 'primary' | t }}</td>
       </tr>
       <tr *ngIf="parentUsers.length === 0">
-        <td colspan="4">{{ 'no_users_parent_unit' | t }}.</td>
+        <td class="text-center" colspan="4">{{ 'no_users_parent_unit' | t }}.</td>
       </tr>
       </tbody>
     </table>

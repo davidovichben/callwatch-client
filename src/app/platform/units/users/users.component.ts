@@ -51,6 +51,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   openUserDialog(): void {
     const dialog = this.dialog.open(FormComponent, {
       width: '400px',
+      backdropClass: 'no-overflow',
       data: {
         unitId: this.unit.id,
         users: this.users

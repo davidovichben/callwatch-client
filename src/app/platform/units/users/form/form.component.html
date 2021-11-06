@@ -3,12 +3,11 @@
   <i class="la la-times" mat-dialog-close></i>
 </div>
 <form (ngSubmit)="submit(form)" #form="ngForm">
-  <mat-form-field class="d-block">
-    <mat-label>{{ 'name' | t }}</mat-label>
-    <mat-select name="userId" ngModel required>
-      <mat-option *ngFor="let user of data.users" [value]="user.id">{{ user.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div>
+    <bd-select class="w-100" name="userId" ngModel required>
+      <bd-option *ngFor="let user of data.users" [value]="user.id">{{ user.name }}</bd-option>
+    </bd-select>
+  </div>
   <div class="text-center">
     <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
   </div>
