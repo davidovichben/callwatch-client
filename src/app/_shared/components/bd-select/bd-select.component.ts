@@ -93,8 +93,13 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
   constructor(private elementRef: ElementRef, private t: TranslatePipe) {}
 
   ngOnInit() {
-    this.placeholder = this.t.transform('select_items');
-    this.searchPlaceholder = this.t.transform('search') + '...';
+    if (!this.placeholder) {
+      this.placeholder = this.t.transform('select_items');
+    }
+
+    if (!this.searchPlaceholder) {
+      this.searchPlaceholder = this.t.transform('search') + '...';
+    }
   }
 
   ngAfterContentInit() {
