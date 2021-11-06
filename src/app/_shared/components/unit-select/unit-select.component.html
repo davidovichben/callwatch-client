@@ -18,11 +18,11 @@
   </div>
 </div>
 <div id="dropdown" #dropdownEle [ngStyle]="{ 'top': y + 'px', 'width': width + 'px' }" [ngClass]="{ 'toggle-up': toggleUp }" [@slideToggle]="isOpened ? 'active' : 'inactive'">
-  <div id="search" class="flex-between">
-    <div id="filterInput">
-      <input (keyup)="initFilter(filterValueEle.value)" [placeholder]="'search' | t" class="w-100" #filterValueEle>
-    </div>
-  </div>
+<!--  <div id="search" class="flex-between">-->
+<!--    <div id="filterInput">-->
+<!--      <input (keyup)="initFilter(filterValueEle.value)" [placeholder]="'search' | t" class="w-100" #filterValueEle>-->
+<!--    </div>-->
+<!--  </div>-->
   <div id="optionsWrapper">
     <div id="options">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits }"></ng-container>

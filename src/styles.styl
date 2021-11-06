@@ -403,6 +403,11 @@ form
 .mat-form-field-outline
   background-color: WhiteColor
 
+.mat-form-field.large-suffix
+
+  .mat-form-field-suffix
+    top: -0.3em
+
 textarea.mat-input-element
   margin: 15px 0 !important
 
@@ -491,6 +496,16 @@ bd-select
     right: 0
     left: -1px
 
+/*--- Unit Select ---*/
+
+app-unit-select
+
+  #selectLabel.opened #placeholder
+    color: LightBlueColor !important
+
+  #selectLabel.opened #selectLabelBorder, #dropdown
+    border-color: LightBlueColor !important
+
 /*--- Swal ---*/
 
 .swal2-container
@@ -505,52 +520,5 @@ bd-select
 .swal2-styled.swal2-cancel
   background-color: DarkGreyColor
 
-/*--- Loader --- */
 
-.overlay
-  position: absolute
-  top: 0
-  right: 0
-  height: 100vh
-  width: 100%
-  background: rgba(0, 0, 0, 0.3)
-  z-index: 999999999
-  overflow: hidden
 
-.loader, .loader:after
-  border-radius: 50%
-  width: 10em
-  height: 10em
-
-.loader
-  position: relative
-  margin: 60px auto
-  font-size: 10px
-  text-indent: -9999em
-  border-top: 1.1em solid BlueColor
-  border-right: 1.1em solid BlueColor
-  border-bottom: 1.1em solid BlueColor
-  border-left: 1.1em solid #fff
-  -webkit-transform: translateZ(0)
-  -ms-transform: translateZ(0)
-  transform: translateZ(0)
-  -webkit-animation: load8 1.1s infinite linear
-  animation: load8 1.1s infinite linear
-
-@-webkit-keyframes load8
-  0%
-    -webkit-transform: rotate(0deg)
-    transform: rotate(0deg)
-
-  100%
-    -webkit-transform: rotate(360deg)
-    transform: rotate(360deg)
-
-@keyframes load8
-  0%
-    -webkit-transform: rotate(0deg)
-    transform: rotate(0deg)
-
-  100%
-    -webkit-transform: rotate(360deg)
-    transform: rotate(360deg)
