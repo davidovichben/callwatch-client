@@ -26,7 +26,7 @@ export const SlideDown = trigger('slideDown', [
   transition('active => inactive', animate('300ms ease-out'))
 ]);
 
-export const placeholder = trigger('placeholder', [
+export const Placeholder = trigger('placeholder', [
   state('inactive', style({
     top: '*',
     lineHeight: '*',
@@ -45,7 +45,7 @@ export const placeholder = trigger('placeholder', [
 
 
 
-export const slideToggle = trigger('slideToggle', [
+export const SlideToggle = trigger('slideToggle', [
   state('inactive', style({
     display: 'none',
     height: '0',

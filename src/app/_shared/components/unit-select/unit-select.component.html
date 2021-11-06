@@ -1,23 +1,23 @@
-<div id="selectLabel" #element [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="isOpened = !isOpened">
+<div id="selectLabel" #widthElement [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
   <div id="selectLabelBorder" (window:resize)="setCoords()" (window:scroll)="setCoords()"></div>
   <div id="selectLabelCover">
     <span id="placeholder" [@placeholder]="selected && (!multiple || selected.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
     <div id="selectedValue" *ngIf="selected">
       <span *ngIf="!multiple">{{ title }} {{ required ? '* ': '' }}</span>
       <mat-chip-list *ngIf="multiple">
-        <mat-chip removable *ngFor="let unit of selected" (removed)="selectUnit(unit, false)">
+        <span class="label-chip" *ngFor="let unit of selected">
           <span>{{ unit.name }}</span>
-          <i matChipRemove class="la la-times-circle mt-1"></i>
-        </mat-chip>
+          <i (click)="selectUnit(unit, false)" class="la la-times-circle mt-1"></i>
+        </span>
       </mat-chip-list>
     </div>
     <div id="buttons">
       <mat-icon id="resetIcon" (click)="reset($event)" *ngIf="selected?.length > 0">close</mat-icon>
-      <mat-icon>expand_more</mat-icon>
+      <mat-icon>arrow_drop_down</mat-icon>
     </div>
   </div>
 </div>
-<div id="dropdown" [ngStyle]="{ 'top': y + 'px', 'width': width + 'px' }" [@slideToggle]="isOpened ? 'active' : 'inactive'">
+<div id="dropdown" #dropdownEle [ngStyle]="{ 'top': y + 'px', 'width': width + 'px' }" [ngClass]="{ 'toggle-up': toggleUp }" [@slideToggle]="isOpened ? 'active' : 'inactive'">
   <div id="search" class="flex-between">
     <div id="filterInput">
       <input (keyup)="initFilter(filterValueEle.value)" [placeholder]="'search' | t" class="w-100" #filterValueEle>
@@ -30,9 +30,9 @@
   </div>
 </div>
 <ng-template #recursiveListTmpl let-list="list">
-  <li *ngFor="let unit of list">
+  <li *ngFor="let unit of list" [@slideToggle]="isOpened ? 'active' : 'inactive'">
     <div class="d-flex align-items-center unit" (click)="unitClicked(unit)">
-      <mat-icon class="arrow pointer" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !unit.units }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
+      <mat-icon class="arrow pointer" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !unit.hasUnits }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
       <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple"></mat-checkbox>
       <div>{{ unit.name }}</div>
     </div>

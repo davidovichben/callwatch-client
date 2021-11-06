@@ -6,11 +6,11 @@
 
 #selectLabel
   position: relative
-  height: 59.5px
+  height: 44px
   width: 100%
   margin-bottom: 20px
   color: rgba(0, 0, 0, .6)
-  border: 1px solid rgba(0, 0, 0, .12)
+  border: 1px solid rgba(0, 0, 0, .08)
   border-radius: 5px
   box-sizing: content-box
   z-index: 99
@@ -33,15 +33,15 @@
   position: absolute
   top: -1px
   right: -1px
-  height: 62px
+  height: 46.5px
   width: 100%
   border: 2px solid transparent
   border-radius: 5px
   pointer-events: none
-  transition: border-color 0.1s
+  transition: border-color 0.2s
 
 #selectLabel:hover #selectLabelBorder
-  border-color: #000
+  border-color: #afafaf
 
 #selectLabel.opened #selectLabelBorder
   border-color: #3f51b5
@@ -57,7 +57,7 @@
   background-color: #fff
 
 #selectedValue
-  height: 32px
+  height: 25px
   overflow: hidden
 
 #selectedValue > span
@@ -83,30 +83,32 @@ mat-icon
 
 #dropdown
   position: fixed
-  box-shadow: 0 2px 8px 0 #bdbdbd99
-  border-radius: 4px
-  border: 1px solid rgba(0, 0, 0, .15)
+  border: 2px solid #3f51b5
   border-top: none
   background-color: #fff
   z-index: 999999999
+  border-radius: 0 0 5px 5px
+
+mat-icon
+  color: rgba(0,0,0,.54)
+
+.toggle-up
+  border-bottom: none !important
+  border-top: 2px solid #3f51b5 !important
+  border-radius: 5px 5px 0 0 !important
 
 #filterInput
   padding: 4px 2px
-  height: 47px
-  background-color #f5f5f5
   width: 100%
 
 #filterInput > input
-  padding: 6px 2px
+  padding: 6px 11px
+  margin: 6px
   flex-grow: 1
-  border: none
-  background-color #f5f5f5
+  border: 1px solid #aaa
   border-radius: 4px
   outline: none
-  font-size: 18px
-
-#filterInput > i
-  margin-left: 6px
+  font-size: 16px
 
 #options
   overflow: auto
@@ -135,3 +137,14 @@ ul
 
 ul.toggled
   display: block
+
+.label-chip
+  display: flex
+  margin: 0 3px
+  max-width: 100%
+  padding: 0 5px
+  margin-top: 5px
+  background: #f5f5f5
+  font-size: 14px
+  border: 1px solid #f0f0f0
+  border-radius: 2px
