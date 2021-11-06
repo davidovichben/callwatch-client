@@ -56,11 +56,14 @@
 
   .sidebar-item:hover, .sidebar-item.active
     background-color: BlueColor
+    margin: 10px 10px
+    border-radius: 10px
 
 .sidebar-item
   display: flex
   align-items: center
   height: 70px
+  margin: 10px 0px
   color: #fff
   cursor: pointer
   transition: 0.3s
@@ -94,6 +97,7 @@
   overflow: hidden
 
   .sidebar-item
+    margin: 0
     background-color: DarkBlueColor
     font-size: 14px
 
@@ -106,6 +110,8 @@
     font-weight: bold
     border: none
     background-color: DarkBlueColor !important
+    margin: 0 !important
+    border-radius: 0 !important
 
 :host.closed
   .sub-modules

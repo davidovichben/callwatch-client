@@ -1,4 +1,4 @@
-<div id="selectLabel" [ngClass]="{ 'opened': isSelectOpened, 'selected' : value }" (click)="openDropdown()">
+<div id="selectLabel" [ngClass]="{ 'hasError': hasError, 'opened': isSelectOpened, 'selected' : value }" (click)="openDropdown()">
 	<div id="selectLabelBorder"></div>
   <div id="selectLabelCover">
     <span id="placeholder" [@placeholder]="value && (!multiple || value.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
