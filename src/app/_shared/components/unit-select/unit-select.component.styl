@@ -19,7 +19,7 @@
   border-color: transparent
 
 #selectLabel.opened
-  border-color: transparen
+  border-color: transparent
 
 #selectLabel.selected #placeholder
   position: absolute
@@ -57,16 +57,10 @@
   background-color: #fff
 
 #selectedValue
-  padding: 0 4px
-
-#selectedValue, mat-icon
-  color: #000
-
-#multipleSelectedItems
-  height: 30px
+  height: 32px
   overflow: hidden
 
-#multipleSelectedItems > span
+#selectedValue > span
   display: inline-flex
   align-items: center
   height: 100%
@@ -88,9 +82,9 @@ mat-icon
   margin: 0 3px
 
 #dropdown
-  position: absolute
-  top: 37px
-  width: 100%
+  position: fixed
+  box-shadow: 0 2px 8px 0 #bdbdbd99
+  border-radius: 4px
   border: 1px solid rgba(0, 0, 0, .15)
   border-top: none
   background-color: #fff
@@ -98,12 +92,15 @@ mat-icon
 
 #filterInput
   padding: 4px 2px
+  height: 47px
+  background-color #f5f5f5
   width: 100%
 
 #filterInput > input
   padding: 6px 2px
   flex-grow: 1
-  border: 1px solid #aaa
+  border: none
+  background-color #f5f5f5
   border-radius: 4px
   outline: none
   font-size: 18px
@@ -116,7 +113,7 @@ mat-icon
   list-style-type: none
   margin: 0
   padding: 0
-  max-height: 350px
+  max-height: 235px
 
 .rtl :host ul
   margin: 2px 25px 0 0
@@ -124,12 +121,13 @@ mat-icon
 .ltr :host ul
   margin: 2px 0 0 25px
 
-.unit-label
+.unit
+  padding: 0 5px
   width: 100%
-  padding: 3px 5px
+  height: 47px
   cursor: pointer
 
-.unit-label:hover
+.unit:hover
   background-color #f5f5f5
 
 ul
