@@ -7,9 +7,5 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 export class UnitStateService {
 
-  subject = new Subject<UnitModel>();
-
-  changeUnit(unit: UnitModel): void {
-    this.subject.next(unit);
-  }
+  unitNameChanged = new Subject<UnitModel>();
 }

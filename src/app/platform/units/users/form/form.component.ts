@@ -7,12 +7,16 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
+import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styles: [`::ng-deep .close-circle { width: 18px !important }`]
 })
 export class FormComponent {
+
+  readonly errorMessages = ErrorMessages;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private dialogRef: MatDialogRef<FormComponent>,

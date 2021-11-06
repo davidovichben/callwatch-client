@@ -65,6 +65,7 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
   @Input() searchPlaceholder = 'חפש...';
   @Input() scrollBottom = false;
   @Input() required = false;
+  @Input() hasError = false;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() deselected: EventEmitter<boolean> = new EventEmitter();
@@ -174,6 +175,7 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
     this.value = null;
     this.label = null;
 
+    this.isSelectOpened = false;
     this.deselected.emit(true);
     this.propagateChange(null);
   }

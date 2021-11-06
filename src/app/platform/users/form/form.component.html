@@ -79,6 +79,7 @@
             <mat-form-field>
               <mat-label>{{ 'verification_type' | t }}</mat-label>
               <mat-select formControlName="authType">
+                <mat-option>--</mat-option>
                 <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -102,9 +103,10 @@
           <div class="col-12 col-lg-6 col-xxl-5">
             <mat-form-field>
               <mat-label>{{ 'system_lang_default' | t }}</mat-label>
-              <mat-select formControlName="locale">
+              <mat-select formControlName="locale" required>
                 <mat-option *ngFor="let locale of locales" [value]="locale.code">{{ locale.key | t }}</mat-option>
               </mat-select>
+              <mat-error>{{ errorMessages.required }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-6 col-xxl-5">
@@ -113,7 +115,6 @@
               <mat-select formControlName="permission" required>
                 <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
               </mat-select>
-              <mat-icon matSuffix (click)="resetPermission($event)" *ngIf="userForm.get('permission').value">close</mat-icon>
               <mat-error>{{ errorMessages.required }}</mat-error>
             </mat-form-field>
           </div>
@@ -123,7 +124,8 @@
         <p class="h4 mb-3">{{ 'organization_units' | t }}</p>
         <div class="row">
           <div class="col-12 col-lg-6 col-xxl-5">
-            <app-unit-select formControlName="units" [units]="units" [placeholder]="'select_units' | t" [multiple]="true"></app-unit-select>
+            <app-unit-select formControlName="units" [units]="units" [placeholder]="'select_units' | t" [multiple]="true" [required]="true"></app-unit-select>
+<!--            <p class="input-error">{{ errorMessages.required }}</p>-->
           </div>
         </div>
       </section>

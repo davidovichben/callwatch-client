@@ -241,6 +241,11 @@ button:focus
   background-color: LightBlackColor
   color: #fff
 
+.input-error
+  padding: 0 10px
+  font-size: 12px
+  color: RedColor
+
 .row-icons
 
   mat-icon
@@ -257,6 +262,9 @@ button:focus
   font-family: OpenSans
 
 .simple-table
+
+  th, td
+    font-size: 14px
 
   th
     border: none
@@ -327,7 +335,7 @@ form
     background-color: GreyColor
 
   .form-body
-    padding: 1rem
+    padding: 4rem 1rem
     background-color: WhiteColor
     border-radius: 5px
 
@@ -372,14 +380,24 @@ form
 .mat-form-field-appearance-outline
 
   .mat-form-field-prefix, .mat-form-field-suffix
-    top: -0.15em !important
+    border-color: LightBlueColor
 
   .mat-form-field-outline-thick
-
     color: DarkGreyColor
+
+.mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-thick
+    color: LightBlueColor
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled)
+  color: LightBlueColor
 
 .mat-form-field-label
   font-family: OpenSans !important
+
+.mat-form-field.mat-focused
+  .mat-form-field-label
+    color: LightBlueColor
 
 .mat-form-field-outline
   background-color: WhiteColor
@@ -394,6 +412,9 @@ textarea.mat-input-element
 .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background
   background-color: DarkGreyColor
+
+.mat-dialog-container
+  overflow: visible
 
 /*--- Bootstrap ---*/
 
@@ -451,9 +472,19 @@ app-data-table
 
     .page-item.disabled
       .page-link
-        background-color: LightColor
+        color: LightColor
 
-/* --- Swal --- */
+/*--- BD Select ---*/
+
+bd-select
+
+  #selectLabel.opened #placeholder
+    color: LightBlueColor !important
+
+  #selectLabel.opened #selectLabelBorder, #dropdown
+    border-color: LightBlueColor !important
+
+/*--- Swal ---*/
 
 .swal2-container
   z-index: 99999999 !important

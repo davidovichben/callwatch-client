@@ -17,6 +17,7 @@ export class BdOptionComponent implements AfterViewInit {
   label: string;
 
   @HostBinding('class.selected') public selected = false;
+  @Input() @HostBinding('class.default') public default = false;
 
   @HostBinding('style.display')
   display = 'block';

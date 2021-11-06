@@ -6,12 +6,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.module';
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { SetPasswordModule } from 'src/app/_shared/components/set-password/set-password.module';
-import { MatIconModule } from '@angular/material/icon';
 
 import { FormComponent } from 'src/app/platform/users/form/form.component';
 import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
@@ -57,10 +58,11 @@ const routes: Routes = [
     MatSelectModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatIconModule,
     TranslateModule,
+    BdSelectModule,
     UnitSelectModule,
-    SetPasswordModule,
-    MatIconModule
+    SetPasswordModule
   ],
   providers: [
     UserService,

@@ -16,7 +16,7 @@
     <td>{{ item.username }}</td>
     <td>{{ item.permission }}</td>
     <td>{{ item.phone }}</td>
-    <td class="text-left">{{ item.email }}</td>
+    <td>{{ item.email }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('users')">
       <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
       <mat-menu #menu="matMenu">
@@ -25,7 +25,7 @@
           <span>{{ 'edit' | t }}</span>
         </button>
         <button mat-menu-item class="row-action" (click)="deleteItem(item.id)"
-                *ngIf="userSession.hasPermission('users', 'delete') && item.id === userSession.getUser().id">
+                *ngIf="userSession.hasPermission('users', 'delete') && item.id !== userSession.getUser().id">
           <mat-icon>delete</mat-icon>
           <span>{{ 'delete' | t }}</span>
         </button>

@@ -1,6 +1,6 @@
 <div id="page">
   <header>
-    <app-locale-select></app-locale-select>
+    <span id="locale" (click)="switchLocale()">{{ activeLocale === 'he' ? 'ENGLISH' : 'עברית' }}</span>
   </header>
   <h1 class="logo">Call Watch Pro</h1>
   <div id="main">

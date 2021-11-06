@@ -30,7 +30,8 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(UnitSelectComponent) unitSelect: UnitSelectComponent;
 
-  readonly authTypes = AuthTypes;
+  readonly
+  authTypes = AuthTypes;
   readonly locales = Locales;
   readonly errorMessages = ErrorMessages;
   readonly sub = new Subscription();
@@ -91,7 +92,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       authType: this.fb.control(null),
       username: this.fb.control(null, Validators.required, this.checkUsernameUnique.bind(this)),
       password: this.fb.control(null),
-      locale: this.fb.control(null),
+      locale: this.fb.control(null, Validators.required),
       permission: this.fb.control(null, Validators.required),
       units: this.fb.control([]),
       avatar: this.fb.control(null)
@@ -150,11 +151,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
       return null;
     });
-  }
-
-  resetPermission(event: Event): void {
-    event.stopPropagation();
-    this.userForm.get('permission').reset();
   }
 
   submit(): void {

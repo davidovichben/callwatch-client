@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
@@ -38,8 +39,9 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    TranslateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatIconModule,
+    TranslateModule
   ],
 	providers: [SwitchboardService, SwitchboardResolve]
 })

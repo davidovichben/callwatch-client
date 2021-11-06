@@ -26,7 +26,6 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
 
   activeUnitId: number | string;
 
-  activeBranch = {};
   activeUnit: UnitModel;
 
   constructor(private route: ActivatedRoute,
@@ -41,15 +40,17 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       this.activeUnitId = params.id;
     }));
 
-    this.sub.add(this.unitStateService.subject.subscribe(unit => {
-      // this.setActiveBranch(this.rootUnit.units, unit.id);
-    //   console.log(this.activeBranch)
-    //   this.activeBranch.forEach(unit => {
-    //     if (unit.id !== this.activeUnit.id) {
-    //       unit.toggled = true;
-    //     }
-    //   });
-    //   this.activeUnit.name = unit.name;
+    this.sub.add(this.unitStateService.unitNameChanged.subscribe(changedUnit => {
+      let units = this.rootUnit.units;
+      changedUnit.ancestors.forEach((ancestor, index) => {
+        const unit = units.find(unit => unit.id === ancestor.id);
+        if (unit) {
+          units = unit.units;
+          if (unit.id === changedUnit.id) {
+            unit.name = changedUnit.name
+          }
+        }
+      });
     }));
   }
 
@@ -62,30 +63,6 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     this.unitService.getUnits(unit.id).then(response => {
       unit.units = response;
       unit.toggled = true;
-    });
-  }
-
-  setActiveBranch(units: UnitModel[], unitId: number, parentId?: number): void {
-    units.forEach(iteratedUnit => {
-      if (this.activeUnit) {
-        return;
-      }
-
-      // if (!parentId) {
-      //   this.activeBranch = [];
-      // } else {
-      //   this.activeBranch
-      // }
-
-      this.activeBranch[iteratedUnit.id] = { iteratedUnit, subUnit: {} };
-
-      if (iteratedUnit.id === unitId) {
-        this.activeUnit = iteratedUnit;
-      }
-
-      if (iteratedUnit.units) {
-        this.setActiveBranch(iteratedUnit.units, unitId, iteratedUnit.id);
-      }
     });
   }
 
