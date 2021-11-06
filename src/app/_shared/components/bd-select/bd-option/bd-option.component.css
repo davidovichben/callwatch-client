@@ -1,9 +1,17 @@
 :host {
+  min-height: 40px;
   padding: 8px 4px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 :host:hover, :host.selected {
-  background-color: #3f51b5;
-  color: #fff;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+:host.selected {
+  color: #5681a5;
+}
+
+:host.default.selected {
+  background-color: #fff !important;
 }

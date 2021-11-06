@@ -7,7 +7,6 @@
     </div>
     <span id="selectedValue" *ngIf="value && !multiple">{{ label }}</span>
     <div id="buttons">
-      <mat-icon id="resetIcon" (click)="resetValue($event)" *ngIf="value">close</mat-icon>
       <mat-icon>arrow_drop_down</mat-icon>
     </div>
   </div>
@@ -17,6 +16,7 @@
 		<input (keyup)="filter()" [placeholder]="searchPlaceholder" [(ngModel)]="filterValue" class="w-100" #filterValueEle>
 	</div>
 	<div id="options" [ngStyle]="{ 'maxHeight': optionsHeight }">
+    <bd-option [default]="true" (click)="resetValue($event)" *ngIf="!this.required">--</bd-option>
     <ng-content></ng-content>
   </div>
 </div>

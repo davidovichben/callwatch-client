@@ -3,10 +3,12 @@
 :host
   position: fixed
   top: 0
+  display: flex
   height: 100vh
   flex-direction: column
   background-color: #1e2635
   color: #fff
+  overflow-y: visible
   transition: 0.3s ease
 
 .rtl :host
@@ -33,7 +35,6 @@
 .logo
   height: 8.5vh !important
   min-height: 80px
-  background-color: BlueColor
 
   span
     max-height: 40px
@@ -44,7 +45,8 @@
   display: flex
   flex-direction: column
   justify-content: space-between
-  height: 86vh
+  flex-grow: 1
+  height: 80vh
   overflow-y: auto
   overflow-x: hidden
 
@@ -55,18 +57,19 @@
 #modules
 
   .sidebar-item:hover, .sidebar-item.active
-    background-color: BlueColor
     margin: 10px 10px
     border-radius: 10px
+    background-color: AlphaBlueColor
+    color: LighterBlueColor
 
 .sidebar-item
   display: flex
   align-items: center
   height: 70px
-  margin: 10px 0px
+  margin: 10px 0
   color: #fff
   cursor: pointer
-  transition: 0.3s
+  transition: 0.3s ease margin
 
   figure
     display: flex
@@ -82,14 +85,11 @@
     transition: 0.3s
 
 .rtl :host .sidebar-item.active
-  border-right: 12px solid LighterBlueColor
 
   figure
     margin: 0 13px 0 25px !important
 
 .ltr :host .sidebar-item.active
-  border-left: 12px solid LighterBlueColor
-
   figure
     margin: 0 25px 0 13px !important
 
@@ -119,6 +119,8 @@
 
 #toggleSidebar
   height: 5.5vh
+  min-height: 50px
+  margin: 0
   background-color: BlueColor
 
   mat-icon

@@ -175,6 +175,7 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
     this.value = null;
     this.label = null;
 
+    this.isSelectOpened = false;
     this.deselected.emit(true);
     this.propagateChange(null);
   }
