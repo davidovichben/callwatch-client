@@ -38,7 +38,7 @@ export class UnitService extends BaseHttpService {
     return this.http.post(this.endPoint, values, this.getTokenRequest())
       .toPromise()
       .then(() => true)
-      .catch(response => response);
+      .catch(() => false);
   }
 
   updateUnit(unitId: number, values: object): Promise<boolean> {

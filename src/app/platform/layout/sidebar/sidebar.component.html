@@ -16,7 +16,7 @@
         </figure>
         <div class="w-100 flex-between">
           <span>{{ module.name | t }}</span>
-          <mat-icon class="mx-2 arrow" [ngClass]="{ 'rotate-side': module.isToggled }">chevron_left</mat-icon>
+          <mat-icon class="mx-2 side-chevron" [ngClass]="{ 'rotate-side': module.isToggled }">chevron_left</mat-icon>
         </div>
       </div>
       <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 70) + 'px' : 0, transition: toggleState === 'opened' ? '0.3s ease' : '0s' }">

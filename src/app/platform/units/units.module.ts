@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { UnitFormModule } from 'src/app/platform/units/unit-form/unit-form.module';
@@ -43,6 +44,7 @@ const routes: Routes = [
 	imports: [
 		CommonModule,
 		RouterModule.forChild(routes),
+    MatIconModule,
     TranslateModule,
     UnitFormModule
 	],

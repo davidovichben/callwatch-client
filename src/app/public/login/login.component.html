@@ -1,5 +1,5 @@
 <form (ngSubmit)="submit(form)" #form="ngForm">
-  <h3 class="mb-5 text-center blue-text">{{ 'system_login' | t }}</h3>
+  <h3 class="text-center blue-text">{{ 'system_login' | t }}</h3>
   <div class="mb-3">
     <label class="blue-text">{{ 'username' | t }}</label>
     <input type="email" class="form-control" ngModel name="username" required>
@@ -14,4 +14,3 @@
     <a class="f-12 blue-text" routerLink="./forgot">{{ 'forgot_password' | t }}?</a>
   </div>
 </form>
-<mat-icon class="d-none">home</mat-icon>

@@ -212,17 +212,17 @@ button:focus
 .white-bg
   background-color: WhiteColor
 
-.arrow
+.side-chevron
   transition: all 0.2s ease
 
 .rtl .rotate-side
   transform: rotate(-90deg)
 
-.ltr .arrow
-  transform:  scaleX(-1)
+.ltr .side-chevron
+  transform: scaleX(-1)
 
 .ltr .rotate-side
-  transform:  scaleX(-1) rotate(-90deg)
+  transform: scaleX(-1) rotate(-90deg)
 
 .required:after
   content: " *"
@@ -302,6 +302,20 @@ button:focus
 
 .user-default-avatar
   color: DarkGreyColor
+
+.breadcrumbs
+  display: flex
+
+  a
+    color: LightBlackColor
+
+  a.active
+    color: BlueColor
+    font-weight: bold
+
+  mat-icon
+    margin: 0 12px
+    color: DarkGreyColor
 
 /*--- Forms ---*/
 
