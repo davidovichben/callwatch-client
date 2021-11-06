@@ -1,23 +1,16 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  forwardRef,
-  HostListener,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, forwardRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { placeholder, slideToggle } from 'src/app/_shared/constants/animations';
+import { UnitService } from 'src/app/_shared/services/http/unit.service';
+
+import { Placeholder, SlideToggle } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-unit-select',
   templateUrl: './unit-select.component.html',
   styleUrls: ['./unit-select.component.styl'],
-  animations: [placeholder, slideToggle],
+  animations: [SlideToggle, Placeholder],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -28,7 +21,8 @@ import { placeholder, slideToggle } from 'src/app/_shared/constants/animations';
 })
 export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
-  @ViewChild('element') elementView: ElementRef;
+  @ViewChild('dropdownEle') dropdownEle: ElementRef;
+  @ViewChild('widthElement') widthElement: ElementRef;
 
   @Input() units: UnitModel[] = [];
   @Input() required: boolean;
@@ -46,8 +40,9 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
 
   y: number;
   width: number;
+  toggleUp: boolean;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, private unitService: UnitService) {}
 
   ngOnInit() {
     this.filteredUnits = this.units;
@@ -56,10 +51,14 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     }
 
     this.title = this.placeholder;
-    this.setCoords();
   }
 
   ngAfterViewInit() {
+    this.setCoords();
+  }
+
+  toggleDropdown(): void {
+    this.isOpened = !this.isOpened;
     this.setCoords();
   }
 
@@ -67,16 +66,18 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     setTimeout(() => {
       const ele = this.elementRef.nativeElement.getBoundingClientRect();
 
-      const unitLength = this.filteredUnits.length;
-      const offsetTop = unitLength < 5 ? ((unitLength + 1) * 47) : 282;
+      const dropdownEle = this.dropdownEle.nativeElement.getBoundingClientRect();
+      const offsetTop = dropdownEle.height;
 
       if (window.innerHeight <= ele.bottom + offsetTop) {
-        this.y = ele.top - offsetTop;
+        this.toggleUp = true;
+        this.y = ele.top - offsetTop + 8;
       } else {
-        this.y = ele.bottom;
+        this.toggleUp = false;
+        this.y = ele.bottom - 5;
       }
 
-      this.width = this.elementView.nativeElement.clientWidth;
+      this.width = this.widthElement.nativeElement.clientWidth;
     }, 0)
   }
 
@@ -93,7 +94,17 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       event.stopPropagation();
     }
 
-    unit.isToggled = !unit.isToggled;
+    if (unit.units || unit.isToggled) {
+      unit.isToggled = !unit.isToggled;
+      this.setCoords();
+      return;
+    }
+
+    this.unitService.getUnits(unit.id).then(response => {
+      unit.units = response;
+      unit.isToggled = true;
+      this.setCoords();
+    });
   }
 
   selectUnit(unit: UnitModel, checked?: boolean): void {
