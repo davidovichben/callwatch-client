@@ -27,12 +27,6 @@
       </div>
     </ng-container>
   </div>
-  <div id="logout" class="sidebar-item" (click)="logout()">
-    <figure>
-      <mat-icon inline>logout</mat-icon>
-    </figure>
-    <span>{{ 'exit' | t }}</span>
-  </div>
 </div>
 <div id="toggleSidebar" class="px-3 sidebar-item" [ngClass]="{ 'justify-content-end': toggleState === 'opened', 'justify-content-center': toggleState === 'closed' }">
   <i class="la la-angle-right f-20" *ngIf="(pageDirection === 'rtl' && toggleState === 'opened') || (pageDirection === 'ltr' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
