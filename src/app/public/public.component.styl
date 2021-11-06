@@ -1,3 +1,5 @@
+@import '~src/assets/variables';
+
 :host
   display: flex
   justify-content: center
@@ -15,7 +17,15 @@
   box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.72)
 
   header
-    margin: 20px 0 
+    width: 100%
+    margin: 20px 0
+    padding: 0 20px
+
+    #locale
+      font-weight: bold
+      color: BlueColor
+      text-decoration: underline
+      cursor: pointer
 
   .logo
     margin-bottom: 70px

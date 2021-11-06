@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { PublicRoutingModule } from './public-routing.module';
-import { LocaleSelectModule } from 'src/app/_shared/components/locale-select/locale-select.module';
 
 import { PublicComponent } from './public.component';
 
 @NgModule({
   declarations: [PublicComponent],
-	imports: [PublicRoutingModule, LocaleSelectModule]
+	imports: [PublicRoutingModule, CommonModule]
 })
 export class PublicModule {}

@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { LocaleSelectModule } from 'src/app/_shared/components/locale-select/locale-select.module';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ContentComponent } from './content/content.component';
@@ -16,7 +15,6 @@ import { ContentComponent } from './content/content.component';
     CommonModule,
     RouterModule,
     TranslateModule,
-    LocaleSelectModule,
     MatIconModule,
     MatMenuModule
   ],

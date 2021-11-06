@@ -4,7 +4,7 @@
 </div>
 <form (ngSubmit)="submit(form)" #form="ngForm">
   <div>
-    <bd-select class="w-100" name="userId" ngModel required>
+    <bd-select class="w-100" name="userId" ngModel [placeholder]="'name' | t" required>
       <bd-option *ngFor="let user of data.users" [value]="user.id">{{ user.name }}</bd-option>
     </bd-select>
   </div>
