@@ -55,7 +55,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
         if (this.unit.name !== form.value.name) {
           this.unit.name = form.value.name;
-          this.unitStateService.changeUnit(this.unit);
+          this.unitStateService.unitNameChanged.next(this.unit);
         }
       }
     })
