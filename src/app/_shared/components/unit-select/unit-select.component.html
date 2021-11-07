@@ -1,4 +1,4 @@
-<div id="selectLabel" #widthElement [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
+<div id="selectLabel" #widthElement [ngClass]="{ 'hasError': hasError, 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
   <div id="selectLabelBorder"></div>
   <div id="selectLabelCover">
     <span id="placeholder" [@placeholder]="selected && (!multiple || selected.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
