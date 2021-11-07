@@ -1,13 +1,13 @@
 <div id="selectLabel" #widthElement [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
-  <div id="selectLabelBorder" (window:resize)="setCoords()" (window:scroll)="setCoords()"></div>
+  <div id="selectLabelBorder"></div>
   <div id="selectLabelCover">
     <span id="placeholder" [@placeholder]="selected && (!multiple || selected.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
     <div id="selectedValue" *ngIf="selected">
       <span *ngIf="!multiple">{{ title }} {{ required ? '* ': '' }}</span>
       <mat-chip-list *ngIf="multiple">
         <span class="label-chip" *ngFor="let unit of selected">
-          <span>{{ unit.name }}</span>
-          <i (click)="selectUnit(unit, false)" class="la la-times-circle mt-1"></i>
+          <span class="mx-2">{{ unit.name }}</span>
+          <i class="la la-times" (click)="selectUnit(unit, false)"></i>
         </span>
       </mat-chip-list>
     </div>
@@ -17,7 +17,8 @@
     </div>
   </div>
 </div>
-<div id="dropdown" #dropdownEle [ngStyle]="{ 'top': y + 'px', 'width': width + 'px' }" [ngClass]="{ 'toggle-up': toggleUp }" [@slideToggle]="isOpened ? 'active' : 'inactive'">
+<div id="dropdown" #dropdownEle [ngStyle]="{ top: top ? top + 'px' : null, bottom: bottom ? bottom + 'px' : null, width: width + 'px' }"
+     [ngClass]="{ 'toggle-up': bottom }" [@slideToggle]="isOpened ? 'active' : 'inactive'">
 <!--  <div id="search" class="flex-between">-->
 <!--    <div id="filterInput">-->
 <!--      <input (keyup)="initFilter(filterValueEle.value)" [placeholder]="'search' | t" class="w-100" #filterValueEle>-->
