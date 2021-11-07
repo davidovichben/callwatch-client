@@ -6,11 +6,11 @@
   <mat-form-field class="w-100">
     <mat-label>{{ 'unit_name' | t }}</mat-label>
     <input matInput type="text" name="name" autocomplete="off" ngModel required>
-    <mat-error>{{ errorMessages.required }}</mat-error>
+    <mat-error>{{ errorMessages.required | t }}</mat-error>
   </mat-form-field>
   <div>
     <app-unit-select [units]="units" [placeholder]="'select_parent_unit' | t" ngModel #parentSelect="ngModel" name="parent" [required]="!userSession.isRootUser()"></app-unit-select>
-    <p class="alert alert-danger" [@fade]="form.submitted && parentSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required }}</p>
+    <p class="alert alert-danger" [@fade]="form.submitted && parentSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
   </div>
   <mat-form-field class="w-100">
     <mat-label>{{ 'external_identification' | t }}</mat-label>

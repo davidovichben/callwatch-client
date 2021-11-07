@@ -8,6 +8,7 @@ export class UserModel {
   name: string;
   token: string;
   permission: any;
+  permissions: any;
   isAdmin: boolean;
   isRoot: boolean;
   avatar: string;
