@@ -5,7 +5,7 @@
   <div class="d-flex align-items-center px-3">
     <mat-icon class="user-default-avatar" *ngIf="!user.avatar">account_circle</mat-icon>
     <img class="user-avatar" [src]="user.avatar" *ngIf="user.avatar">
-    <span id="username" class="mx-3 pointer">{{ user.firstName + ' ' + user.lastName }}</span>
+    <span id="username">{{ user.firstName + ' ' + user.lastName }}</span>
     <mat-icon class="pointer" [matMenuTriggerFor]="menu">expand_more</mat-icon>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="logout()">{{ 'logout' | t }}</button>

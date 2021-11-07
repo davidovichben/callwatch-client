@@ -8,12 +8,12 @@
   </ul>
 </ul>
 <ng-template #recursiveListTmpl let-list="list">
-  <li *ngFor="let unit of list" [ngClass]="{ disabled: unit.disabled }" (drop)="drop($event, unit)">
+  <li *ngFor="let unit of list" (drop)="drop($event, unit)">
 
     <i class="ms-2 la la-plus" [ngClass]="{ 'la-plus': !unit.toggled, 'la-minus': unit.toggled }"
        (click)="toggleUnit(unit)" *ngIf="unit.hasUnits"></i>
 
-    <span [draggable]="!unit.disabled" [ngClass]="{ 'active': activeUnitId == unit.id }" (dragstart)="dragStart($event, unit)" (dragover)="allowDrop($event)" (click)="unitClicked(unit)">{{ unit.name }}</span>
+    <span [draggable]="!unit.disabled" [ngClass]="{ 'disabled': unit.disabled, 'active': activeUnitId == unit.id }" (dragstart)="dragStart($event, unit)" (dragover)="allowDrop($event)" (click)="unitClicked(unit)">{{ unit.name }}</span>
     <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.toggled }">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
     </ul>
