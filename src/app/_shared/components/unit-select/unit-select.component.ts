@@ -38,9 +38,9 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
 
   selected: any;
 
-  y: number;
+  top: number;
+  bottom: number;
   width: number;
-  toggleUp: boolean;
 
   constructor(private elementRef: ElementRef, private unitService: UnitService) {}
 
@@ -62,19 +62,21 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     this.setCoords();
   }
 
+  @HostListener('window:scroll')
+  @HostListener('window:resize')
   setCoords(): void {
     setTimeout(() => {
-      const ele = this.elementRef.nativeElement.getBoundingClientRect();
-
+      const parentEle = this.elementRef.nativeElement.getBoundingClientRect();
       const dropdownEle = this.dropdownEle.nativeElement.getBoundingClientRect();
+
       const offsetTop = dropdownEle.height;
 
-      if (window.innerHeight <= ele.bottom + offsetTop) {
-        this.toggleUp = true;
-        this.y = ele.top - offsetTop + 8;
+      if (window.innerHeight <= parentEle.bottom + offsetTop) {
+        this.bottom = window.innerHeight - parentEle.top - 8;
+        this.top = null;
       } else {
-        this.toggleUp = false;
-        this.y = ele.bottom - 5;
+        this.top = parentEle.bottom - 5;
+        this.bottom = null;
       }
 
       this.width = this.widthElement.nativeElement.clientWidth;
