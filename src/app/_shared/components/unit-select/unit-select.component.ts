@@ -50,6 +50,10 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       this.selected = [];
     }
 
+    if (this.required) {
+      this.placeholder += '*';
+    }
+
     this.title = this.placeholder;
   }
 

@@ -127,7 +127,7 @@
   { "key": "define_password", "value": "Define Password" },
   { "key": "schedule_deleted", "value": "Schedule deleted successfully" },
   { "key": "report_permissions", "value": "Report Permissions" },
-  { "key": "actions", "value": "actions" },
+  { "key": "actions", "value": "Actions" },
   { "key": "groups", "value": "Groups" },
   { "key": "user_groups", "value": "User Groups" },
   { "key": "add_user_group", "value": "Add User Group" },

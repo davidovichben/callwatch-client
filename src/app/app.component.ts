@@ -10,7 +10,7 @@ import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.styl'],
+  styles: [`.overlay { position: fixed }`],
   animations: [Fade]
 })
 export class AppComponent implements OnInit {

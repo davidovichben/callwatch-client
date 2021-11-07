@@ -1,5 +1,5 @@
 <form (ngSubmit)="submit(form)" #form="ngForm">
-  <div class="flex-header">
+  <div class="form-header">
     <h1>{{ reportSet.id ? ('edit_report_set' | t) : ('add_report_set' | t) }}</h1>
     <div>
       <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'reportSets']">{{ 'cancel' | t }}</button>

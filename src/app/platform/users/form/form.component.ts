@@ -30,16 +30,17 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(UnitSelectComponent) unitSelect: UnitSelectComponent;
 
-  readonly
-  authTypes = AuthTypes;
-  readonly locales = Locales;
-  readonly errorMessages = ErrorMessages;
   readonly sub = new Subscription();
 
+  readonly authTypes = AuthTypes;
+  readonly locales = Locales;
+  readonly errorMessages = ErrorMessages;
   readonly avatarErrors = {
     size: false,
     type: false
   }
+
+  loggedUser: UserModel;
 
   userForm: FormGroup;
 
@@ -59,6 +60,8 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
               private t: TranslatePipe) {}
 
   ngOnInit(): void {
+    this.loggedUser = this.userSession.getUser();
+
     this.setForm();
 
     const routeData = this.route.snapshot.data;
@@ -94,11 +97,11 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       password: this.fb.control(null),
       locale: this.fb.control(null, Validators.required),
       permission: this.fb.control(null, Validators.required),
-      units: this.fb.control([]),
+      units: this.fb.control([], this.loggedUser.isRoot ? null : Validators.required),
       avatar: this.fb.control(null)
     });
-
   }
+
   uploadAvatar(file: File): void {
     const reader = new FileReader();
     reader.onload = (event => {
@@ -158,8 +161,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.userForm.get('password').setValidators(Validators.required);
       this.userForm.get('password').updateValueAndValidity();
     }
-
-    console.log(this.userForm.value)
 
     if (this.userForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;

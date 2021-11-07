@@ -51,19 +51,22 @@ ul
     line-height: 20px
     color: BlueColor
     font-size: 14px
-    cursor: pointer
 
     i
       background-color: WhiteColor
       border: 1px solid LightBlackColor
+      cursor: pointer
+
+    span
+      cursor: pointer
 
     span.active
       text-decoration: underline
       font-weight: bold
 
-  li.disabled
-    pointer-events: none
-    color: GreyColor
+    span.disabled
+      cursor: none
+      color: LightBlackColor
 
   li:before
     position: relative

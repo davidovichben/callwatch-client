@@ -12,6 +12,7 @@ export class UserModel {
   isRoot: boolean;
   avatar: string;
   authType: string;
+  locale: string;
   unit: string;
   email: string;
   units: UnitModel[] | 'root';
