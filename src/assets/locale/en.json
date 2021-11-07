@@ -50,7 +50,7 @@
   { "key": "holidays", "value": "Holidays" },
   { "key": "inactive", "value": "Inactive" },
   { "key": "incoming_calls", "value": "Incoming Calls" },
-  { "key": "invalid_email_or_password", "value": "Invalid email or password" },
+  { "key": "invalid_username_or_password", "value": "Invalid username or password" },
   { "key": "last_name", "value": "Last Name" },
   { "key": "login", "value": "Login" },
   { "key": "logout", "value": "Logout" },

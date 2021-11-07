@@ -49,7 +49,7 @@
   { "key": "holidays", "value": "חגים" },
   { "key": "inactive", "value": "לא פעיל" },
   { "key": "incoming_calls", "value": "שיחות נכנסות" },
-  { "key": "invalid_email_or_password", "value": "סיסמה או אימייל שגויים" },
+  { "key": "invalid_username_or_password", "value": "סיסמה או שם משתמש שגויים" },
   { "key": "last_name", "value": "שם משפחה" },
   { "key": "login", "value": "התחברות" },
   { "key": "logout", "value": "התנתקות" },

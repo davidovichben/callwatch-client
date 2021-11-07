@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UnitFormComponent } from 'src/app/platform/units/unit-form/unit-form.component';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
+import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
@@ -38,7 +39,8 @@ export class UnitsComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               public userSession: UserSessionService,
               private unitService: UnitService,
-              private notifications: NotificationService) {}
+              private notifications: NotificationService,
+              private unitStateService: UnitStateService) {}
 
   ngOnInit(): void {
     this.rootUnit.name = this.userSession.getUser().organization;
@@ -46,6 +48,14 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
     this.sub.add(this.route.params.subscribe(() => {
       this.activeUnit = this.route.snapshot.data.unit;
+    }));
+
+    this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit =>
+    {
+      const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor.id === unit.id);
+      if (activeUnit) {
+        activeUnit.name = unit.name;
+      }
     }));
 
     this.setModules();
