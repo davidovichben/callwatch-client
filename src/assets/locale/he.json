@@ -26,6 +26,7 @@
   { "key": "showing", "value": "מציג" },
   { "key": "out_of", "value": "מתוך" },
   { "key": "listings", "value": "רשומות" },
+  { "key": "select_items", "value": "בחר פריטים" },
   { "key": "email", "value": "אימייל" },
   { "key": "employee_name", "value": "שם עובד" },
   { "key": "employee_number", "value": "מספר עובד" },

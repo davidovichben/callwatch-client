@@ -124,11 +124,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     });
   }
 
-  logout(): void {
-    this.userSession.unsetUser();
-    this.router.navigate(['/']);
-  }
-
   toggleSubModules(module: ModuleModel): void {
     if (this.toggleState === 'closed') {
       this.toggleState = 'opened';

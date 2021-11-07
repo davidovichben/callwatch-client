@@ -21,13 +21,13 @@ export class FormComponent implements OnInit {
 
   switchboardId: number;
 
-	isSubmitting = false;
-
   switchboardForm: FormGroup;
 
   activeTab = 'cti';
 
-	constructor(private router: Router, private route: ActivatedRoute,
+  isSubmitting = false;
+
+  constructor(private router: Router, private route: ActivatedRoute,
         private fb: FormBuilder, private switchboardService: SwitchboardService) {}
 
 	ngOnInit(): void {
@@ -96,7 +96,21 @@ export class FormComponent implements OnInit {
     control.updateValueAndValidity();
   }
 
+  toggleInvalidTabs(): void {
+    ['cti', 'axl'].forEach(tab => {
+      const oppositeTab = tab === 'cti' ? 'axl' : 'cti';
+
+      if (this.activeTab === tab && this.switchboardForm.get(tab).valid && this.switchboardForm.get(oppositeTab).invalid) {
+        this.activeTab = oppositeTab;
+      }
+    });
+  }
+
 	submit(): void {
+    if (this.switchboardForm.get('type').value === 'CISCO') {
+      this.toggleInvalidTabs();
+    }
+
 		if (this.switchboardForm.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 

@@ -27,6 +27,7 @@
   { "key": "showing", "value": "Showing" },
   { "key": "out_of", "value": "out of" },
   { "key": "listings", "value": "listings" },
+  { "key": "select_items", "value": "Select Items" },
   { "key": "email", "value": "Email" },
   { "key": "employee_name", "value": "Employee Name" },
   { "key": "employee_number", "value": "Employee Number" },

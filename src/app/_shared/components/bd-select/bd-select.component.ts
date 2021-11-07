@@ -15,6 +15,8 @@ import { Subscription } from 'rxjs';
 
 import { BdOptionComponent } from './bd-option/bd-option.component';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 @Component({
 	selector: 'bd-select',
 	templateUrl: './bd-select.component.html',
@@ -61,8 +63,8 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
   @Input() optionsHeight = '280px';
 
   @Input() multiple = false;
-  @Input() placeholder = 'בחר פריטים';
-  @Input() searchPlaceholder = 'חפש...';
+  @Input() placeholder;
+  @Input() searchPlaceholder;
   @Input() scrollBottom = false;
   @Input() required = false;
   @Input() hasError = false;
@@ -88,7 +90,17 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
 	label: any;
   activeOption: BdOptionComponent;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, private t: TranslatePipe) {}
+
+  ngOnInit() {
+    if (!this.placeholder) {
+      this.placeholder = this.t.transform('select_items');
+    }
+
+    if (!this.searchPlaceholder) {
+      this.searchPlaceholder = this.t.transform('search') + '...';
+    }
+  }
 
   ngAfterContentInit() {
     if (this.required) {
