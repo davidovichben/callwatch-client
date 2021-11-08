@@ -15,7 +15,6 @@ export class LocaleService {
   constructor() {
     this.activeLocale = this.getLocale();
     this.dir = this.activeLocale === 'en' ? 'ltr' : 'rtl';
-    this.dir = this.activeLocale === 'en' ? 'ltr' : 'rtl';
   }
 
   getLocale(): string {
