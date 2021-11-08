@@ -9,7 +9,7 @@
   { "key": "add_unit", "value": "Add Unit" },
   { "key": "add_user", "value": "Add User" },
   { "key": "all_day", "value": "All day" },
-  { "key": "are_you_sure", "value": "Are you sure" },
+  { "key": "are_you_sure", "value": "Are you sure?" },
   { "key": "campaigns", "value": "Campaigns" },
   { "key": "cancel", "value": "Cancel" },
   { "key": "check_all", "value": "Check All" },
@@ -222,7 +222,9 @@
   { "key": "permission_has", "value": "This permission has" },
   { "key": "related_users", "value": "related users" },
   { "key": "please_replace_it_s", "value":  "Please choose a different permission" },
-  { "key": "create_delete_permission_s", "value": "A new permission must be assigned, please create one before deleting." }
+  { "key": "create_delete_permission_s", "value": "A new permission must be assigned, please create one before deleting." },
+  { "key": "action_done_successfully", "value": "Action Done Successfully!" },
+  { "key": "error", "value": "Error" }
 ]
 
 

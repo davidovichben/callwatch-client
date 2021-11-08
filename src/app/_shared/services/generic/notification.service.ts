@@ -10,13 +10,13 @@ export class NotificationService {
   constructor(private t: TranslatePipe) {}
 
   public success(title?: string, text?: string, extraOptions?: object): void {
-    title = title ? title : 'הפעולה בוצעה בהצלחה';
+    title = title ? title : this.t.transform('action_done_successfully');
     let options = {
       position: 'center',
       icon: 'success',
       title,
       text: text ? text : '',
-      confirmButtonText: 'אישור',
+      confirmButtonText: this.t.transform('confirm'),
       timer: 2500
     };
 
@@ -30,9 +30,9 @@ export class NotificationService {
   public error(text?: string, title?: string, extraOptions?: object): void {
     let options = {
       icon: 'error',
-      title: title ? title : 'אירעה שגיאה',
+      title: title ? title : this.t.transform('error'),
       text,
-      confirmButtonText: 'סגור'
+      confirmButtonText: this.t.transform('close')
     };
 
     if (extraOptions) {
@@ -44,12 +44,12 @@ export class NotificationService {
 
   public warning(title?: string, text?: string, extraOptions?: object): Promise<any> {
     let options = {
-      title: title ? title : 'האם אתה בטוח?',
+      title: title ? title : this.t.transform('are_you_sure'),
       text: text ? text : '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'אישור',
-      cancelButtonText: 'ביטול'
+      confirmButtonText: this.t.transform('confirm'),
+      cancelButtonText: this.t.transform('cancel')
     };
 
     if (extraOptions) {
@@ -65,8 +65,8 @@ export class NotificationService {
       text: text ? text : '',
       icon: 'info',
       showCancelButton: true,
-      confirmButtonText: 'אישור',
-      cancelButtonText: 'ביטול'
+      confirmButtonText: 'confirm',
+      cancelButtonText: 'cancel'
     };
 
     if (extraOptions) {

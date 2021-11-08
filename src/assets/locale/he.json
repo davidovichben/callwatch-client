@@ -8,7 +8,7 @@
   { "key": "add_unit", "value": "הוספת יחידה" },
   { "key": "add_user", "value": "הוספת משתמש" },
   { "key": "all_day", "value": "כל היום" },
-  { "key": "are_you_sure", "value": "האם אתה בטוח" },
+  { "key": "are_you_sure", "value": "האם אתה בטוח?" },
   { "key": "campaigns", "value": "קמפיינים" },
   { "key": "cancel", "value": "ביטול" },
   { "key": "check_all", "value": "בחר הכל" },
@@ -221,7 +221,9 @@
   { "key": "permission_has", "value": "להרשאה זו" },
   { "key": "related_users", "value": "משתמשים מקושרים" },
   { "key": "please_replace_it_s", "value":  "אנא בחר הרשאה חדשה במקומה" },
-  { "key": "create_delete_permission_s", "value": "יש להגדיר הרשאה חדשה, אנא צור הרשאה חדשה לפני מחיקה" }
+  { "key": "create_delete_permission_s", "value": "יש להגדיר הרשאה חדשה, אנא צור הרשאה חדשה לפני מחיקה" },
+  { "key": "action_done_successfully", "value": "הפעולה בוצעה בהצלחה!" },
+  { "key": "error", "value": "שגיאה" }
 ]
 
 
