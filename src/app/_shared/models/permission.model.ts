@@ -4,11 +4,13 @@ export class PermissionModel {
   id: number;
   name: string;
   description: string;
+  userCount: number;
   modules: ModuleModel[];
 }
 
 export const PermissionModules = [
-  'reports', 'timed_reports', 'users', 'switchboards', 'routers', 'schedules', 'units', 'calls'
+  'reports', 'timed_reports', 'users', 'switchboards',
+  'routers', 'schedules', 'units', 'calls'
 ];
 
 export const PermissionActions = ['read', 'create', 'update', 'delete'];

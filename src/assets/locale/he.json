@@ -117,6 +117,7 @@
   { "key": "upload_image", "value": "העלאת תמונה" },
   { "key": "user", "value": "משתמש" },
   { "key": "user_settings", "value": "הגדרות משתמש" },
+  { "key": "user_count", "value": "מס' משתמשים" },
   { "key": "username", "value": "שם משתמש" },
   { "key": "users", "value": "משתמשים" },
   { "key": "values_exist", "value": "הערכים שהוזנו כבר קיימים" },
@@ -214,7 +215,13 @@
   { "key": "timed_reports", "value": "דו\"חות מתוזמנים" },
   { "key": "routers", "value": "נתבים" },
   { "key": "calls", "value": "שיחות" },
-  { "key": "calltime_editing_submit_error", "value": "לא ניתן לשמור בזמן עריכת זמני חיוג" }
+  { "key": "calltime_editing_submit_error", "value": "לא ניתן לשמור בזמן עריכת זמני חיוג" },
+  { "key": "groups/extensions", "value": "קבוצות/שלוחות" },
+  { "key": "select_new_permission", "value": "בחר הרשאה חדשה" },
+  { "key": "permission_has", "value": "להרשאה זו" },
+  { "key": "related_users", "value": "משתמשים מקושרים" },
+  { "key": "please_replace_it_s", "value":  "אנא בחר הרשאה חדשה במקומה" },
+  { "key": "create_delete_permission_s", "value": "יש להגדיר הרשאה חדשה, אנא צור הרשאה חדשה לפני מחיקה" }
 ]
 
 

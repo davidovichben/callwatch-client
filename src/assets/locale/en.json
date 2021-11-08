@@ -119,6 +119,7 @@
   { "key": "upload_image", "value": "Upload Image" },
   { "key": "user", "value": "User" },
   { "key": "user_settings", "value": "User Settings" },
+  { "key": "user_count", "value": "User Count" },
   { "key": "username", "value": "Username" },
   { "key": "users", "value": "Users" },
   { "key": "values_exist", "value": "Values already exist" },
@@ -215,7 +216,13 @@
   { "key": "timed_reports", "value": "Timed Reports" },
   { "key": "routers", "value": "Routers" },
   { "key": "calls", "value": "Calls" },
-  { "key": "calltime_editing_submit_error", "value": "Can't submit while editing call times" }
+  { "key": "calltime_editing_submit_error", "value": "Can't submit while editing call times" },
+  { "key": "groups/extensions", "value": "groups/extensions" },
+  { "key": "select_new_permission", "value": "Select New Permission" },
+  { "key": "permission_has", "value": "This permission has" },
+  { "key": "related_users", "value": "related users" },
+  { "key": "please_replace_it_s", "value":  "Please choose a different permission" },
+  { "key": "create_delete_permission_s", "value": "A new permission must be assigned, please create one before deleting." }
 ]
 
 

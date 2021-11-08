@@ -29,7 +29,7 @@ const routes: Routes = [
     children: [
       { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
       { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
-      { path: 'switchboards', loadChildren: () => import('./switchboards/switchboards.module').then(m => m.SwitchboardsModule) },
+      { path: 'groups', loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule) },
       { path: '', redirectTo: 'general' }
     ]
   },

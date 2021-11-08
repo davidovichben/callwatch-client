@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -36,7 +36,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
   loadingUnits: boolean;
 
   constructor(private route: ActivatedRoute,
-              private dialog: MatDialog,
+              private router: Router, private dialog: MatDialog,
               public userSession: UserSessionService,
               private unitService: UnitService,
               private notifications: NotificationService,
@@ -50,15 +50,20 @@ export class UnitsComponent implements OnInit, OnDestroy {
       this.activeUnit = this.route.snapshot.data.unit;
     }));
 
-    this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit =>
-    {
+    this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
       const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor.id === unit.id);
       if (activeUnit) {
         activeUnit.name = unit.name;
       }
     }));
+  }
 
-    this.setModules();
+  breadcrumbClicked(ancestor: UnitModel): void {
+    if (ancestor.disabled) {
+      return;
+    }
+
+    this.router.navigate(['/platform', 'units', ancestor.id]);
   }
 
   openFormDialog(): void {
@@ -81,30 +86,30 @@ export class UnitsComponent implements OnInit, OnDestroy {
       }
     }))
   }
-
-  private setModules(): void {
-    const user = this.userSession.getUser();
-    if (user.admin) {
-      return;
-    }
-
-    const permissions = user.permissions;
-    if (permissions === 'root') {
-      return;
-    }
-
-    this.modules = this.modules.filter(module => {
-      return this.checkAllowedModule(module.name)
-    });
-  }
-
-  private checkAllowedModule(moduleName: string) {
-    if (moduleName === 'general') {
-      return true;
-    }
-
-    return this.userSession.hasPermission(moduleName, 'read');
-  }
+  //
+  // private setModules(): void {
+  //   const user = this.userSession.getUser();
+  //   if (user.admin) {
+  //     return;
+  //   }
+  //
+  //   const permissions = user.permissions;
+  //   if (permissions === 'root') {
+  //     return;
+  //   }
+  //
+  //   this.modules = this.modules.filter(module => {
+  //     return this.checkAllowedModule(module.name)
+  //   });
+  // }
+  //
+  // private checkAllowedModule(moduleName: string) {
+  //   if (moduleName === 'general') {
+  //     return true;
+  //   }
+  //
+  //   return this.userSession.hasPermission(moduleName, 'read');
+  // }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

@@ -6,10 +6,13 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { ReassignDialogModule } from './reassign-dialog/reassign-dialog.module';
 
 import { PermissionsComponent } from './permissions.component';
 
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 const routes: Routes = [
   { path: '', component: PermissionsComponent },
@@ -27,8 +30,9 @@ const routes: Routes = [
     MatIconModule,
     MatMenuModule,
     TranslateModule,
-		DataTableModule
+		DataTableModule,
+    ReassignDialogModule
 	],
-  providers: [PermissionService]
+  providers: [PermissionService, TranslatePipe]
 })
 export class PermissionsModule {}

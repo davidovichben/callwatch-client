@@ -11,7 +11,7 @@
 <div id="main">
   <div class="my-5 breadcrumbs">
     <ng-container *ngFor="let ancestor of activeUnit.ancestors; let last = last">
-      <a [routerLink]="['/platform', 'units', ancestor.id]" [ngClass]="{ active: last }">{{ ancestor.name }}</a>
+      <a (click)="breadcrumbClicked(ancestor)" [ngClass]="{ active: last, disabled: ancestor.disabled }">{{ ancestor.name }}</a>
       <mat-icon class="side-chevron" *ngIf="!last">chevron_left</mat-icon>
     </ng-container>
   </div>

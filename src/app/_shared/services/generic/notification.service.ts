@@ -7,8 +7,7 @@ declare const swal: any;
 @Injectable()
 export class NotificationService {
 
-  constructor(private t: TranslatePipe) {
-  }
+  constructor(private t: TranslatePipe) {}
 
   public success(title?: string, text?: string, extraOptions?: object): void {
     title = title ? title : 'הפעולה בוצעה בהצלחה';

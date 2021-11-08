@@ -31,7 +31,7 @@ export const AdminModules = [
 export const UnitModules = [
   { name: 'general', label: 'general' },
   { name: 'users', label: 'users' },
-  { name: 'switchboards', label: 'switchboards' },
+  { name: 'groups', label: 'groups/extensions' },
 ];
 
 export const Locales = [
