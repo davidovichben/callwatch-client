@@ -28,6 +28,7 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
   @Input() required: boolean;
   @Input() placeholder = 'select_unit';
   @Input() multiple = false;
+  @Input() hasError = false;
 
   title: string;
 

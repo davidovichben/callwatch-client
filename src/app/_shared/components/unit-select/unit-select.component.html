@@ -1,4 +1,4 @@
-<div id="selectLabel" #widthElement [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
+<div id="selectLabel" #widthElement [ngClass]="{ 'hasError': hasError, 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
   <div id="selectLabelBorder"></div>
   <div id="selectLabelCover">
     <span id="placeholder" [@placeholder]="selected && (!multiple || selected.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
@@ -33,9 +33,9 @@
 <ng-template #recursiveListTmpl let-list="list">
   <li *ngFor="let unit of list" [@slideToggle]="isOpened ? 'active' : 'inactive'">
     <div class="d-flex align-items-center unit" (click)="unitClicked(unit)">
-      <mat-icon class="arrow pointer" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !unit.hasUnits }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
+      <mat-icon class="side-chevron" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !unit.hasUnits }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
       <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple"></mat-checkbox>
-      <div>{{ unit.name }}</div>
+      <div class="mx-2">{{ unit.name }}</div>
     </div>
     <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.isToggled }">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>

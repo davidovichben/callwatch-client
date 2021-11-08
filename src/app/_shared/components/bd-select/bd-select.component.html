@@ -16,7 +16,7 @@
 		<input (keyup)="filter()" [placeholder]="searchPlaceholder" [(ngModel)]="filterValue" class="w-100" #filterValueEle>
 	</div>
 	<div id="options" [ngStyle]="{ 'maxHeight': optionsHeight }">
-    <bd-option [default]="true" (click)="resetValue($event)" *ngIf="!this.required">--</bd-option>
+    <bd-option [default]="true" (click)="resetValue($event)" *ngIf="!required">--</bd-option>
     <ng-content></ng-content>
   </div>
 </div>
