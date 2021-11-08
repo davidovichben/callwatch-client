@@ -21,7 +21,7 @@ export class UserService extends BaseHttpService {
   getUsers(criteria: DataTableCriteria): Promise<DataTableResponse> {
     const params = this.getDataTableParams(criteria);
 
-    return this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
+    return this.http.post(this.endPoint + '/search', params, this.getTokenRequest(null, true))
       .toPromise()
       .then(response => response as DataTableResponse)
       .catch(() => null);

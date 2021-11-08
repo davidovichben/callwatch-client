@@ -104,19 +104,16 @@
             <mat-form-field>
               <mat-label>{{ 'system_lang_default' | t }}</mat-label>
               <mat-select formControlName="locale" required>
-                <mat-option *ngFor="let locale of locales" [value]="locale.code">{{ locale.key | t }}</mat-option>
+                <mat-option *ngFor="let locale of locales" [value]="locale.code">{{ locale.label }}</mat-option>
               </mat-select>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-6 col-xxl-5">
-            <mat-form-field>
-              <mat-label>{{ 'permission' | t }}</mat-label>
-              <mat-select formControlName="permission" required>
-                <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
-              </mat-select>
-              <mat-error>{{ errorMessages.required | t }}</mat-error>
-            </mat-form-field>
+            <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [required]="true">
+              <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
+            </bd-select>
+            <div class="input-error" *ngIf="userForm.get('permission').errors && form.submitted">{{ errorMessages.required | t }}</div>
           </div>
         </div>
       </section>

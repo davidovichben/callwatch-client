@@ -15,7 +15,6 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 
 import { DataTableComponent } from './data-table.component';
 import { PaginationComponent } from './pagination/pagination.component';
-import { SideFiltersComponent } from './side-filters/side-filters.component';
 
 @NgModule({
   imports: [
@@ -32,9 +31,8 @@ import { SideFiltersComponent } from './side-filters/side-filters.component';
     MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule,
     MatTooltipModule, MatButtonModule,
     PaginationComponent,
-    SideFiltersComponent,
     DataTableComponent,
   ],
-  declarations: [DataTableComponent, PaginationComponent, SideFiltersComponent],
+  declarations: [DataTableComponent, PaginationComponent],
 })
 export class DataTableModule {}

@@ -30,7 +30,7 @@ export class AppInterceptor implements HttpInterceptor {
       return next.handle(authReq);
     }
 
-    this.helpers.setPageSpinner(true);
+    // this.helpers.setPageSpinner(true);
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -43,7 +43,7 @@ export class AppInterceptor implements HttpInterceptor {
         return throwError(error);
       }),
       finalize(() => {
-        this.helpers.setPageSpinner(false);
+        // this.helpers.setPageSpinner(false);
       })
     );
   }
