@@ -22,6 +22,7 @@ export class UsersComponent {
     { label: 'full_name', name: 'name' },
     { label: 'username', name: 'username' },
     { label: 'permission', name: 'permission' },
+    { label: 'unit', name: 'units' },
     { label: 'phone', name: 'phone' },
     { label: 'email', name: 'email' }
   ];

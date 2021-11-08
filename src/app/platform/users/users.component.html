@@ -15,6 +15,7 @@
     <td>{{ item.name }}</td>
     <td>{{ item.username }}</td>
     <td>{{ item.permission }}</td>
+    <td>{{ item.unit }}{{ item.unitCount > 1 ? '...' : '' }}</td>
     <td>{{ item.phone }}</td>
     <td>{{ item.email }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('users')">
