@@ -18,7 +18,7 @@
     </div>
     <div class="row">
       <div class="col-12 col-sm-6">
-        <h4>{{ 'reports' | t }}</h4>
+        <p class="h3">{{ 'reports' | t }}</p>
         <app-select-groups name="reports" [ngModel]="reportSet.reports" [items]="reports" #reportSelect="ngModel" required></app-select-groups>
         <p class="alert alert-danger" [@fade]="form.submitted && reportSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
       </div>

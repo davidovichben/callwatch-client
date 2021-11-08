@@ -24,7 +24,7 @@
     </div>
     <div class="col-12 col-xl-9">
       <section>
-        <p class="h4 mb-3">{{ 'personal_details' | t }}</p>
+        <p class="h3 mb-3">{{ 'personal_details' | t }}</p>
         <div class="d-flex">
           <div class="row">
             <div class="col-12 col-lg-6 col-xxl-5">
@@ -73,7 +73,7 @@
         </div>
       </section>
       <section>
-        <p class="h4 mb-3">{{ 'user_settings' | t }}</p>
+        <p class="h3 mb-3">{{ 'user_settings' | t }}</p>
         <div class="row">
           <div class="col-12 col-lg-6 col-xxl-5">
             <mat-form-field>
@@ -121,7 +121,7 @@
         </div>
       </section>
       <section>
-        <p class="h4 mb-3">{{ 'organization_units' | t }}</p>
+        <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
         <div class="row">
           <div class="col-12 col-lg-6 col-xxl-5">
             <app-unit-select formControlName="units" [units]="units" [placeholder]="'select_units' | t" [multiple]="true" [hasError]="loggedUser.permissions !== 'root'"></app-unit-select>

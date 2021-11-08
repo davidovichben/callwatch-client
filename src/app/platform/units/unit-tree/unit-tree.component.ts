@@ -42,12 +42,18 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
 
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(changedUnit => {
       let units = this.rootUnit.units;
-      changedUnit.ancestors.forEach((ancestor, index) => {
+
+      changedUnit.ancestors.forEach(ancestor => {
+        if (!units) {
+          return;
+        }
+
         const unit = units.find(unit => unit.id === ancestor.id);
         if (unit) {
           units = unit.units;
+
           if (unit.id === changedUnit.id) {
-            unit.name = changedUnit.name
+            unit.name = changedUnit.name;
           }
         }
       });
