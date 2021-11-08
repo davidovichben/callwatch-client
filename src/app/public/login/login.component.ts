@@ -7,6 +7,8 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
 
+import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,6 +16,8 @@ import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
   animations: [Fade]
 })
 export class LoginComponent {
+
+  readonly errorMessages = ErrorMessages;
 
   isSubmitting = false;
 
@@ -30,7 +34,7 @@ export class LoginComponent {
       this.appHttp.login(form.value.username, form.value.password).then(response => {
         if (response) {
           this.localeService.setLocale(response.locale);
-          this.userSession.setUser(response);
+          this.userSession.setUser({ extension: form.value.extension, ...response });
 
           const url = response.isAdmin ? ['/admin'] : ['/platform'];
           this.router.navigate(url);

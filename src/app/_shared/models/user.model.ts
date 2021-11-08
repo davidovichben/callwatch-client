@@ -16,6 +16,7 @@ export class UserModel {
   locale: string;
   unit: string;
   email: string;
+  extension: string;
   units: UnitModel[] | 'root';
 }
 

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
@@ -16,9 +17,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [LoginComponent],
   imports: [
-    CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     TranslateModule
   ],
   providers: [AppHttpService]

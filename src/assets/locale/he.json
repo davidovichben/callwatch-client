@@ -223,7 +223,8 @@
   { "key": "please_replace_it_s", "value":  "אנא בחר הרשאה חדשה במקומה" },
   { "key": "create_delete_permission_s", "value": "יש להגדיר הרשאה חדשה, אנא צור הרשאה חדשה לפני מחיקה" },
   { "key": "action_done_successfully", "value": "הפעולה בוצעה בהצלחה!" },
-  { "key": "error", "value": "שגיאה" }
+  { "key": "error", "value": "שגיאה" },
+  { "key": "extension", "value": "שלוחה" }
 ]
 
 
