@@ -1,0 +1,5 @@
+<mat-form-field (click)="hourInput.select()">
+  <input matInput type="number" value="00" (keyup)="hourChanged()" autocomplete="off" #hourInput>
+  <span>:</span>
+  <input matInput type="number" value="00" (change)="minuteChanged()" autocomplete="off" #minuteInput>
+</mat-form-field>

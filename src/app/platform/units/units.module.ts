@@ -41,13 +41,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [UnitsComponent, UnitTreeComponent],
-	imports: [
-		CommonModule,
-		RouterModule.forChild(routes),
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
     MatIconModule,
     TranslateModule,
     UnitFormModule
-	],
+  ],
+  exports: [
+    UnitTreeComponent
+  ],
   providers: [
     UnitService,
     UnitResolve,

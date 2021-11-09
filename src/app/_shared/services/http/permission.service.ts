@@ -66,5 +66,4 @@ export class PermissionService extends BaseHttpService {
       .then(response => response as PermissionModel[])
       .catch(() => []);
   }
-
 }

@@ -10,6 +10,8 @@ import { UnitSelectComponent } from './unit-select.component';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 @NgModule({
   declarations: [UnitSelectComponent],
   imports: [
@@ -20,6 +22,6 @@ import { UnitService } from 'src/app/_shared/services/http/unit.service';
     MatChipsModule
   ],
   exports: [UnitSelectComponent],
-  providers: [UnitService]
+  providers: [UnitService, TranslatePipe]
 })
 export class UnitSelectModule {}

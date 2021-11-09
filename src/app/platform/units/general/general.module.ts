@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { ReassignDialogModule } from './reassign-dialog/reassign-dialog.module';
 
 import { GeneralComponent } from './general.component';
 
@@ -26,7 +27,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    TranslateModule
+    TranslateModule,
+    ReassignDialogModule
   ]
 })
 export class GeneralModule {}

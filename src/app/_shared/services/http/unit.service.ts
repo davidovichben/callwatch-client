@@ -54,4 +54,16 @@ export class UnitService extends BaseHttpService {
       .then(() => true)
       .catch(() => false);
   }
+
+  deleteUnit(unitId: number, assignedUnitId?: number): Promise<boolean> {
+    const params = {};
+    if (assignedUnitId) {
+      Object.assign(params, { assignedUnitId });
+    }
+
+    return this.http.delete(this.endPoint + '/' + unitId, this.getTokenRequest(params))
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
 }

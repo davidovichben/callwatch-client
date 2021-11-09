@@ -43,7 +43,7 @@ export class PermissionsComponent {
 
   deleteItem(permission: PermissionModel): void {
     if (permission.userCount > 0) {
-      this.openReassignDialog(permission.id, permission.userCount);
+      this.reassignPermission(permission.id, permission.userCount);
       return;
     }
 
@@ -54,10 +54,13 @@ export class PermissionsComponent {
     });
   }
 
-  openReassignDialog(permissionId: number, userCount: number): void {
+  reassignPermission(permissionId: number, userCount: number): void {
     this.permissionService.selectPermissions().then(permissions => {
       const index = permissions.findIndex(permission => permission.id === permissionId);
-      permissions.splice(index, 1);
+      if (index !== -1) {
+        permissions.splice(index, 1);
+      }
+
       if (permissions.length === 0) {
         const msg = this.t.transform('create_delete_permission_s');
         this.notificationService.error(msg);

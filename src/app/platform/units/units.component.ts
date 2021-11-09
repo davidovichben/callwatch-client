@@ -50,6 +50,14 @@ export class UnitsComponent implements OnInit, OnDestroy {
       this.activeUnit = this.route.snapshot.data.unit;
     }));
 
+    this.sub.add(this.unitStateService.refreshTree.subscribe(() => {
+      this.unitService.getUnits().then(units => {
+        if (units) {
+          this.rootUnit.units = units;
+        }
+      });
+    }));
+
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
       const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor.id === unit.id);
       if (activeUnit) {

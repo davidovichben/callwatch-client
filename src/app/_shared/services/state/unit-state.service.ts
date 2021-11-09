@@ -7,5 +7,6 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 export class UnitStateService {
 
+  refreshTree = new Subject<boolean>();
   unitNameChanged = new Subject<UnitModel>();
 }

@@ -4,6 +4,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 import { Placeholder, SlideToggle } from 'src/app/_shared/constants/animations';
 
 @Component({
@@ -26,7 +28,8 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
 
   @Input() units: UnitModel[] = [];
   @Input() required: boolean;
-  @Input() placeholder = 'select_unit';
+  @Input() placeholder;
+  @Input() ignoredUnit: UnitModel;
   @Input() multiple = false;
   @Input() hasError = false;
 
@@ -43,9 +46,12 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
   bottom: number;
   width: number;
 
-  constructor(private elementRef: ElementRef, private unitService: UnitService) {}
+  constructor(private elementRef: ElementRef, private unitService: UnitService,
+              private t: TranslatePipe) {}
 
   ngOnInit() {
+    this.placeholder = this.t.transform('select_unit');
+
     this.filteredUnits = this.units;
     if (this.multiple) {
       this.selected = [];
@@ -56,6 +62,13 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     }
 
     this.title = this.placeholder;
+
+    if (this.ignoredUnit) {
+      const index = this.units.findIndex(unit => unit.id === this.ignoredUnit.id);
+      if (index !== -1) {
+        this.units.splice(index, 1);
+      }
+    }
   }
 
   ngAfterViewInit() {

@@ -19,11 +19,6 @@
 </div>
 <div id="dropdown" #dropdownEle [ngStyle]="{ top: top ? top + 'px' : null, bottom: bottom ? bottom + 'px' : null, width: width + 'px' }"
      [ngClass]="{ 'toggle-up': bottom }" [@slideToggle]="isOpened ? 'active' : 'inactive'">
-<!--  <div id="search" class="flex-between">-->
-<!--    <div id="filterInput">-->
-<!--      <input (keyup)="initFilter(filterValueEle.value)" [placeholder]="'search' | t" class="w-100" #filterValueEle>-->
-<!--    </div>-->
-<!--  </div>-->
   <div id="optionsWrapper">
     <div id="options">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits }"></ng-container>

@@ -31,7 +31,7 @@ export const AdminModules = [
 export const UnitModules = [
   { name: 'general', label: 'general' },
   { name: 'users', label: 'users' },
-  { name: 'groups', label: 'groups/extensions' },
+  { name: 'groups', label: 'groups_extensions' },
 ];
 
 export const Locales = [

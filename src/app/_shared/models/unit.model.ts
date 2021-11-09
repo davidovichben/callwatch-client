@@ -12,4 +12,5 @@ export class UnitModel {
   users?: UserModel[];
   parent?: UnitModel;
   ancestors?: UnitModel[];
+  hasUnits?: boolean;
 }
