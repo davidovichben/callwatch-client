@@ -48,11 +48,11 @@ export class UnitService extends BaseHttpService {
       .catch(() => false);
   }
 
-  transferUnit(unitId: number, parentId: number): Promise<boolean> {
+  transferUnit(unitId: number, parentId: number): Promise<any> {
     return this.http.put(this.endPoint + '/transfer', { unitId, parentId }, this.getTokenRequest())
       .toPromise()
       .then(() => true)
-      .catch(() => false);
+      .catch(response => response);
   }
 
   deleteUnit(unitId: number, assignedUnitId?: number): Promise<boolean> {

@@ -7,7 +7,7 @@
 </div>
 <app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('users')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <div class="data-table-filters">
-    <bd-select [(ngModel)]="dataTable.criteria.filters['permissionId']" (ngModelChange)="fetchItems()" [placeholder]="'select_permission' | t">
+    <bd-select [(ngModel)]="dataTable.criteria.filters['permissionId']" (ngModelChange)="dataTable.loadItems()" [placeholder]="'select_permission' | t">
       <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
     </bd-select>
   </div>
@@ -15,7 +15,7 @@
     <td>{{ item.name }}</td>
     <td>{{ item.username }}</td>
     <td>{{ item.permission }}</td>
-    <td>{{ item.unit }}{{ item.unitCount > 1 ? '...' : '' }}</td>
+    <td>{{ item.unit ? item.unit : 'user_not_assigned_to_unit' | t }}{{ item.unitCount > 1 ? '...' : '' }}</td>
     <td>{{ item.phone }}</td>
     <td>{{ item.email }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('users')">

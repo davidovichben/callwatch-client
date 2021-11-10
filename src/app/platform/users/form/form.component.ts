@@ -20,11 +20,13 @@ import { EmailPattern, PhonePattern } from 'src/app/_shared/constants/patterns';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { ImageTypes, Megabyte } from 'src/app/_shared/constants/general';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.styl']
+  styleUrls: ['./form.component.styl'],
+  animations: [Fade]
 })
 export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 

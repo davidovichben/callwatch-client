@@ -124,6 +124,13 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       unit.units = response;
       unit.isToggled = true;
       this.setCoords();
+
+      if (this.ignoredUnit) {
+        const index = unit.units.findIndex(unit => unit.id === this.ignoredUnit.id);
+        if (index !== -1) {
+          unit.units.splice(index, 1);
+        }
+      }
     });
   }
 

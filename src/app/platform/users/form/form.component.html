@@ -110,10 +110,10 @@
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-6 col-xxl-5">
-            <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [required]="true">
+            <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="userForm.get('permission').errors && form.submitted" [required]="true">
               <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
             </bd-select>
-            <div class="input-error" *ngIf="userForm.get('permission').errors && form.submitted">{{ errorMessages.required | t }}</div>
+            <div class="input-error" [@fade]="userForm.get('permission').errors && form.submitted ? 'active' : 'inactive'">{{ errorMessages.required | t }}</div>
           </div>
         </div>
       </section>
@@ -121,8 +121,7 @@
         <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
         <div class="row">
           <div class="col-12 col-lg-6 col-xxl-5">
-            <app-unit-select formControlName="units" [units]="units" [placeholder]="'select_units' | t" [multiple]="true" [hasError]="loggedUser.permissions !== 'root'"></app-unit-select>
-            <div class="input-error" *ngIf="userForm.get('units').errors && form.submitted">{{ errorMessages.required | t }}</div>
+            <app-unit-select formControlName="units" [units]="units" [placeholder]="'select_units' | t" [multiple]="true"></app-unit-select>
           </div>
         </div>
       </section>
