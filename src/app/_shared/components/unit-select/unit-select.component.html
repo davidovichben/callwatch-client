@@ -1,24 +1,29 @@
-<div id="selectLabel" #widthElement [ngClass]="{ 'hasError': hasError, 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
+<div id="selectLabel" #widthElement [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
   <div id="selectLabelBorder"></div>
   <div id="selectLabelCover">
-    <span id="placeholder" [@placeholder]="selected && (!multiple || selected.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
+    <span id="placeholder" [@placeholder]="hasValue() ? 'active' : 'inactive'">{{ placeholder }}</span>
     <div id="selectedValue" *ngIf="selected">
-      <span *ngIf="!multiple">{{ title }} {{ required ? '* ': '' }}</span>
-      <mat-chip-list *ngIf="multiple">
-        <span class="label-chip" *ngFor="let unit of selected">
-          <span class="mx-2">{{ unit.name }}</span>
-          <i class="la la-times" (click)="selectUnit(unit, false)"></i>
-        </span>
-      </mat-chip-list>
+      <span *ngIf="!multiple">{{ title }}</span>
     </div>
     <div id="buttons">
-      <mat-icon id="resetIcon" (click)="reset($event)" *ngIf="selected?.length > 0">close</mat-icon>
+      <mat-icon id="resetIcon" (click)="reset($event)" *ngIf="hasValue()">close</mat-icon>
       <mat-icon>arrow_drop_down</mat-icon>
     </div>
   </div>
 </div>
+<mat-chip-list *ngIf="multiple">
+  <span class="label-chip" *ngFor="let unit of selected">
+    <span class="mx-2">{{ unit.name }}</span>
+    <i class="la la-times pointer" (click)="selectUnit(unit, false)"></i>
+  </span>
+</mat-chip-list>
 <div id="dropdown" #dropdownEle [ngStyle]="{ top: top ? top + 'px' : null, bottom: bottom ? bottom + 'px' : null, width: width + 'px' }"
      [ngClass]="{ 'toggle-up': bottom }" [@slideToggle]="isOpened ? 'active' : 'inactive'">
+  <div id="search" class="flex-between">
+    <div id="filterInput">
+      <input (keyup)="initFilter(filterValueEle.value)" [placeholder]="'search' | t" class="w-100" #filterValueEle>
+    </div>
+  </div>
   <div id="optionsWrapper">
     <div id="options">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits }"></ng-container>
@@ -28,7 +33,7 @@
 <ng-template #recursiveListTmpl let-list="list">
   <li *ngFor="let unit of list" [@slideToggle]="isOpened ? 'active' : 'inactive'">
     <div class="d-flex align-items-center unit" (click)="unitClicked(unit)">
-      <mat-icon class="side-chevron" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !unit.hasUnits }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
+      <mat-icon class="side-chevron" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !unit.units }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
       <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple"></mat-checkbox>
       <div class="mx-2">{{ unit.name }}</div>
     </div>

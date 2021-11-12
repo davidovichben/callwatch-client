@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, forwardRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -21,17 +21,16 @@ import { Placeholder, SlideToggle } from 'src/app/_shared/constants/animations';
     }
   ]
 })
-export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+export class UnitSelectComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild('dropdownEle') dropdownEle: ElementRef;
   @ViewChild('widthElement') widthElement: ElementRef;
 
   @Input() units: UnitModel[] = [];
-  @Input() required: boolean;
   @Input() placeholder;
   @Input() ignoredUnit: UnitModel;
   @Input() multiple = false;
-  @Input() hasError = false;
+  @Input() toggleUp = false;
 
   title: string;
 
@@ -57,22 +56,24 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       this.selected = [];
     }
 
-    if (this.required) {
-      this.placeholder += '*';
-    }
-
     this.title = this.placeholder;
 
     if (this.ignoredUnit) {
-      const index = this.units.findIndex(unit => unit.id === this.ignoredUnit.id);
-      if (index !== -1) {
-        this.units.splice(index, 1);
-      }
+      this.ignoreUnit(this.units);
     }
   }
 
-  ngAfterViewInit() {
-    this.setCoords();
+  ignoreUnit(units: UnitModel[]): void {
+    units.forEach(unit => {
+      const index = units.findIndex(unit => unit.id === this.ignoredUnit.id);
+      if (index !== -1) {
+        units.splice(index, 1);
+      }
+
+      if (unit.units) {
+        this.ignoreUnit(unit.units)
+      }
+    });
   }
 
   toggleDropdown(): void {
@@ -85,11 +86,9 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
   setCoords(): void {
     setTimeout(() => {
       const parentEle = this.elementRef.nativeElement.getBoundingClientRect();
-      const dropdownEle = this.dropdownEle.nativeElement.getBoundingClientRect();
+      const offsetTop = this.dropdownEle.nativeElement.getBoundingClientRect().height;
 
-      const offsetTop = dropdownEle.height;
-
-      if (window.innerHeight <= parentEle.bottom + offsetTop) {
+      if ((window.innerHeight <= parentEle.bottom + offsetTop) || this.toggleUp) {
         this.bottom = window.innerHeight - parentEle.top - 8;
         this.top = null;
       } else {
@@ -101,7 +100,7 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     }, 0)
   }
 
-  unitClicked(unit): void {
+  unitClicked(unit: UnitModel): void {
     if (this.multiple) {
       this.toggleUnit(unit);
     } else {
@@ -114,30 +113,27 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       event.stopPropagation();
     }
 
-    if (unit.units || unit.isToggled) {
-      unit.isToggled = !unit.isToggled;
-      this.setCoords();
-      return;
-    }
-
-    this.unitService.getUnits(unit.id).then(response => {
-      unit.units = response;
-      unit.isToggled = true;
-      this.setCoords();
-    });
+    unit.isToggled = !unit.isToggled;
+    this.setCoords();
   }
 
   selectUnit(unit: UnitModel, checked?: boolean): void {
     let output;
+
     if (this.multiple) {
       this.checkUnit(checked, unit);
       this.selected = [];
       this.units.forEach(unit => this.setMultipleSelected(unit));
 
+      if (!checked && unit.ancestors) {
+        this.uncheckAncestors(unit);
+      }
+
       output = this.selected.map(unit => unit.id);
     } else {
       this.selected = unit;
       this.isOpened = false;
+      this.resetFilter();
 
       this.title = unit.name;
 
@@ -147,11 +143,26 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     this.propagateChange(output);
   }
 
-  private checkUnit(checked: boolean, unit: UnitModel): void {
+  checkUnit(checked: boolean, unit: UnitModel): void {
     unit.checked = checked;
     if (unit.units) {
       unit.units.forEach(unit => this.checkUnit(checked, unit));
     }
+  }
+
+  uncheckAncestors(unit: UnitModel): void {
+    let units = this.units;
+    unit.ancestors.forEach(ancestor => {
+      const ancestorUnit = units.find(u => u.id === ancestor);
+      const ancestorUnitIndex = this.selected.indexOf(ancestorUnit);
+
+      if (ancestorUnitIndex !== -1) {
+        this.selected.splice(ancestorUnitIndex, 1)
+      }
+
+      ancestorUnit.checked = false
+      units = ancestorUnit.units
+    });
   }
 
   private setMultipleSelected(unit: UnitModel): void {
@@ -173,7 +184,18 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
   initFilter(value: string): void {
     this.filterValue = value;
     this.filteredUnits = [];
+
+    if (!value) {
+      this.resetFilter()
+      return;
+    }
+
     this.filterUnits(this.units);
+  }
+
+  resetFilter(): void {
+    this.filterValue = '';
+    this.filteredUnits = this.units;
   }
 
   private filterUnits(units: UnitModel[]): void {
@@ -200,6 +222,7 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     }
 
     this.title = this.placeholder;
+    this.propagateChange(this.selected);
   }
 
   private matchValues(unit: UnitModel, values: number[]): void {
@@ -210,6 +233,10 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
     if (unit.units) {
       unit.units.forEach(unit => this.matchValues(unit, values));
     }
+  }
+
+  hasValue(): boolean {
+    return this.selected && (!this.multiple || this.selected.length > 0);
   }
 
   private propagateChange = (_: any) => {};
@@ -257,8 +284,7 @@ export class UnitSelectComponent implements OnInit, AfterViewInit, ControlValueA
       if (!inside) {
         this.isOpened = false;
         setTimeout(() => {
-          this.filterValue = '';
-          this.filteredUnits = this.units;
+         this.resetFilter()
         }, 500);
       }
     }

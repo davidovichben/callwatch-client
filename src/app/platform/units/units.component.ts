@@ -75,26 +75,25 @@ export class UnitsComponent implements OnInit, OnDestroy {
   }
 
   openFormDialog(): void {
-    const dialog = this.dialog.open(UnitFormComponent, {
-      width: '600px',
-      data: this.rootUnit.units
-    });
+    this.unitService.getUnitsSelect().then(units => {
+      const dialog = this.dialog.open(UnitFormComponent, {
+        width: '600px',
+        data: units
+      });
 
-    this.sub.add(dialog.afterClosed().subscribe(saved => {
-      if (saved) {
-        this.loadingUnits = true;
-        this.unitService.getUnits().then(response => {
-          if (response) {
-            this.notifications.success();
-            this.rootUnit.units = response;
-          }
-
-          this.loadingUnits = false;
-        })
-      }
-    }))
+      this.sub.add(dialog.afterClosed().subscribe(saved => {
+        if (saved) {
+          this.unitService.getUnits().then(response => {
+            if (response) {
+              this.notifications.success();
+              this.rootUnit.units = response;
+            }
+          })
+        }
+      }))
+    })
   }
-  //
+
   // private setModules(): void {
   //   const user = this.userSession.getUser();
   //   if (user.admin) {

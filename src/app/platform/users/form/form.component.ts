@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,7 +26,7 @@ import { ImageTypes, Megabyte } from 'src/app/_shared/constants/general';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.styl']
 })
-export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FormComponent implements OnInit, OnDestroy {
 
   @ViewChild(UnitSelectComponent) unitSelect: UnitSelectComponent;
 
@@ -72,15 +72,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.user = routeData.user;
     if (this.user) {
       this.userForm.patchValue(this.user);
-    }
-  }
-
-  ngAfterViewInit(): void {
-    if (this.user && this.user.units === 'root') {
-      this.userForm.get('units').patchValue([]);
-      setTimeout(() => {
-        this.unitSelect.checkAll(true);
-      }, 0);
     }
   }
 

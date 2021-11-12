@@ -117,12 +117,11 @@
           </div>
         </div>
       </section>
-      <section>
+      <section *ngIf="!user || user.units !== 'root'">
         <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
         <div class="row">
           <div class="col-12 col-lg-6 col-xxl-5">
-            <app-unit-select formControlName="units" [units]="units" [placeholder]="'select_units' | t" [multiple]="true" [hasError]="loggedUser.permissions !== 'root'"></app-unit-select>
-            <div class="input-error" *ngIf="userForm.get('units').errors && form.submitted">{{ errorMessages.required | t }}</div>
+            <app-unit-select formControlName="units" [units]="units" [toggleUp]="true" [placeholder]="'select_units' | t" [multiple]="true"></app-unit-select>
           </div>
         </div>
       </section>

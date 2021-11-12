@@ -22,7 +22,7 @@ import { PermissionService } from 'src/app/_shared/services/http/permission.serv
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-select.resolve';
-import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
+import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
 import { UserResolve } from 'src/app/_shared/resolves/user.resolve';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
@@ -33,7 +33,7 @@ const routes: Routes = [
     component: FormComponent,
     resolve: {
       permissions: PermissionSelectResolve,
-      units: UnitsResolve
+      units: UnitsSelectResolve
     }
   },
   {
@@ -42,7 +42,7 @@ const routes: Routes = [
     resolve: {
       user: UserResolve,
       permissions: PermissionSelectResolve,
-      units: UnitsResolve
+      units: UnitsSelectResolve
     }
   }
 ];
@@ -69,7 +69,7 @@ const routes: Routes = [
     PermissionService,
     UnitService,
     PermissionSelectResolve,
-    UnitsResolve,
+    UnitsSelectResolve,
     UserResolve,
     TranslatePipe
   ]
