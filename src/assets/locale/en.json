@@ -207,6 +207,7 @@
   { "key": "unique", "value": "Unique" },
   { "key": "schedule_details", "value": "Schedule Details" },
   { "key": "call_times", "value": "Call Times" },
+  { "key": "activity_times", "value": "Activity Times" },
   { "key": "schedule_type", "value": "Schedule Type" },
   { "key": "call_times_not_added", "value": "Call times have not been added" },
   { "key": "schedule_times_missing_error", "value": "Call times must both be filled or all day checked" },
@@ -226,7 +227,9 @@
   { "key": "create_delete_permission_s", "value": "A new permission must be assigned, please create one before deleting." },
   { "key": "action_done_successfully", "value": "Success!" },
   { "key": "error", "value": "Error" },
-  { "key": "extension", "value": "Extension" }
+  { "key": "extension", "value": "Extension" },
+  { "key": "user_not_assigned_to_unit", "value": "User not assigned to a unit" },
+  { "key": "unit_transfer_child_error", "value": "Cannot transfer unit to units under itself." }
 ]
 
 

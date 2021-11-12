@@ -104,9 +104,19 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       if (confirmation.value) {
         this.unitService.transferUnit(transferredUnit.id, destinationUnit.id).then(response => {
           if (response) {
-            this.unitService.getUnits().then(units => {
-              this.rootUnit.units = units;
-            });
+            if (response.error) {
+              if (response.error.errorCode === 1) {
+                const msg = this.t.transform('unit_transfer_child_error');
+                this.notifications.error(msg);
+              }
+            } else {
+              this.unitService.getUnits().then(units => {
+                this.rootUnit.units = units;
+              });
+            }
+
+            console.log(response)
+
           }
         });
       }

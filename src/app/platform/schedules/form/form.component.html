@@ -38,7 +38,7 @@
 </form>
 <form #callTimeFormDirective="ngForm" (ngSubmit)="addCallTime()" [formGroup]="callTimeForm">
   <div class="form-body">
-    <p class="h3 mb-3">{{ 'call_times' | t }}</p>
+    <p class="h3 mb-3">{{ 'activity_times' | t }}</p>
     <div class="row align-items-center">
       <div class="col-12 col-lg-3" *ngIf="typeInput.value !== 'unique'">
         <mat-form-field>

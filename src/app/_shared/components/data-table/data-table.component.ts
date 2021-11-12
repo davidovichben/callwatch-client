@@ -101,14 +101,14 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.paginationData.totalPages = response && response.lastPage ? response.lastPage : 0;
     this.items = response && response.items ? response.items : [];
 
-    this.items.map((item: { id: number, checked: boolean }) => {
-      item.checked = this.criteria.isCheckAll;
-      this.criteria.checkedItems.forEach(checkedItem => {
-        if (checkedItem.id === item.id) {
-          item.checked = !this.criteria.isCheckAll;
-        }
-      });
-    });
+    // this.items.map((item: { id: number, checked: boolean }) => {
+    //   item.checked = this.criteria.isCheckAll;
+    //   this.criteria.checkedItems.forEach(checkedItem => {
+    //     if (checkedItem.id === item.id) {
+    //       item.checked = !this.criteria.isCheckAll;
+    //     }
+    //   });
+    // });
   }
 
   checkSavedItem(key: string): void {

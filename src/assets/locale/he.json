@@ -206,6 +206,7 @@
   { "key": "unique", "value": "מיוחד" },
   { "key": "schedule_details", "value": "פרטי לוח זמנים" },
   { "key": "call_times", "value": "זמני חיוג" },
+  { "key": "activity_times", "value": "זמני פעילות" },
   { "key": "schedule_type", "value": "סוג לוח זמנים" },
   { "key": "call_times_not_added", "value": "טרס נוספו זמני חיוג" },
   { "key": "schedule_times_missing_error", "value": "חובה להזין זמני חיוג או לסמן כל היום" },
@@ -225,7 +226,9 @@
   { "key": "create_delete_permission_s", "value": "יש להגדיר הרשאה חדשה, אנא צור הרשאה חדשה לפני מחיקה" },
   { "key": "action_done_successfully", "value": "הפעולה בוצעה בהצלחה!" },
   { "key": "error", "value": "שגיאה" },
-  { "key": "extension", "value": "שלוחה" }
+  { "key": "extension", "value": "שלוחה" },
+  { "key": "user_not_assigned_to_unit", "value": "המשתמש לא משויך ליחידה" },
+  { "key": "unit_transfer_child_error", "value": "לא ניתן להעביר יחידה ליחידות תחתיה." }
 ]
 
 
