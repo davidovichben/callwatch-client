@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-time-input',
@@ -6,47 +6,61 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./time-input.component.styl']
 })
 export class TimeInputComponent {
+
   @ViewChild('hourInput') hourInput: ElementRef;
   @ViewChild('minuteInput') minuteInput: ElementRef;
 
+  @Input() placeholder: string;
+
   hourTyped = 0;
+  minuteTyped = 0;
 
-  hourChanged(): void {
-    let value = +this.hourInput.nativeElement.value;
+  inputKeyUp(type: string): void {
+    const input = type === 'hours' ? this.hourInput : this.minuteInput;
+    const counter = type === 'hours' ? 'hourTyped' : 'minuteTyped';
+    const maxValue = type === 'hours' ? 23 : 59;
 
-    if (this.hourTyped < 2) {
-      this.hourTyped++;
+    let value = +input.nativeElement.value;
+
+    if (this[counter] > 2) {
+      input.nativeElement.value = input.nativeElement.value.substr(0, 2);
+      this[counter] = 2;
+      return;
     }
 
-    if (this.hourTyped === 1) {
-      this.hourInput.nativeElement.value = '0' + value.toString();
+    if (this[counter] < 2) {
+      this[counter]++;
     }
 
-    if (this.hourTyped === 2) {
-      if (value > 23) {
+    if (this[counter] === 2) {
+      if (value > maxValue) {
         value = 23;
       }
 
       if (value < 0) {
+        console.log('r')
         value = 0;
       }
 
-      this.hourInput.nativeElement.value = value < 10 ? '0' + value.toString() : value.toString();
-      this.minuteInput.nativeElement.select();
+      input.nativeElement.value = value < 10 ? '0' + value.toString() : value.toString();
+      this[counter] = 0;
+
+      if (type === 'hours') {
+        this.minuteInput.nativeElement.select();
+      } else {
+        input.nativeElement.blur();
+      }
     }
   }
 
-  minuteChanged(): void {
-    let value = +this.minuteInput.nativeElement.value;
-    if (value > 59) {
-      value = 59;
-    }
+  inputChanged(type: string): void {
+    const input = type === 'hours' ? this.hourInput : this.minuteInput;
+    const counter = type === 'hours' ? 'hourTyped' : 'minuteTyped';
 
-    if (value < 0) {
-      value = 0;
+    if (this[counter] === 1) {
+      const value = +input.nativeElement.value;
+      input.nativeElement.value = '0' + value.toString();
     }
-
-    this.minuteInput.nativeElement.value = value < 10 ? '0' + value.toString() : value.toString();
   }
 }
 
