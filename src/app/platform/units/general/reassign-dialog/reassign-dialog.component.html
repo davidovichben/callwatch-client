@@ -6,8 +6,7 @@
 <!--  <p class="mt-3 mb-0">{{ 'permission_has' | t }} {{ data.userCount }} {{ 'related_users' | t }}.</p>-->
 <!--  <p class="mb-3">{{ 'please_replace_it_s' | t }}:</p>-->
   <div class="mb-3">
-    <app-unit-select [units]="data.units" [ignoredUnit]="data.replacedUnit" name="unitId" ngModel [required]="true"></app-unit-select>
-    <p class="input-error" [@fade]="form.submitted && form.invalid ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
+    <app-unit-select [units]="data.units" [ignoredUnit]="data.replacedUnit" name="unitId" ngModel></app-unit-select>
   </div>
   <div class="text-center">
     <button class="btn blue-btn" type="submit">{{ 'confirm' | t }}</button>

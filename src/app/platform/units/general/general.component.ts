@@ -70,7 +70,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   reassignUnit(): void {
     if (this.unit.hasUnits) {
-      this.unitService.getUnits().then(units => {
+      this.unitService.getUnitsSelect().then(units => {
         if (units) {
           const dialog = this.dialog.open(ReassignDialogComponent, {
             data: { replacedUnit: this.unit, units },
