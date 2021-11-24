@@ -228,7 +228,7 @@
   { "key": "action_done_successfully", "value": "Success!" },
   { "key": "error", "value": "Error" },
   { "key": "extension", "value": "Extension" },
-  { "key": "user_not_assigned_to_unit", "value": "User not assigned to a unit" },
+  { "key": "user_not_assigned_to_unit", "value": "User not assigned to any unit" },
   { "key": "unit_transfer_child_error", "value": "Cannot transfer unit to units under itself." }
 ]
 

@@ -51,8 +51,8 @@
               <mat-form-field>
                 <mat-label>{{ 'email' | t }}</mat-label>
                 <input matInput class="text-left ltr" type="email" formControlName="email" required>
-                <mat-error *ngIf="userForm.get('username').errors?.required">{{ errorMessages.required | t }}</mat-error>
-                <mat-error *ngIf="userForm.get('username').errors?.pattern">{{ errorMessages.email | t }}</mat-error>
+                <mat-error *ngIf="userForm.get('email').errors?.required">{{ errorMessages.required | t }}</mat-error>
+                <mat-error *ngIf="userForm.get('email').errors?.pattern">{{ errorMessages.email | t }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-12 col-lg-6 col-xxl-5">

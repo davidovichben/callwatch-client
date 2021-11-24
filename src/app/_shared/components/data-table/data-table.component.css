@@ -60,10 +60,6 @@ th {
   font-size: 14px;
 }
 
-th:last-child, ::ng-deep .row-icons {
-  text-align: center;
-}
-
 .sort-container {
   display: flex;
   flex-direction: column;
