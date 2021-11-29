@@ -1,0 +1,7 @@
+<mat-form-field>
+  <mat-label>{{ placeholder }}</mat-label>
+  <mat-icon matPrefix (click)="incrementValue()">add</mat-icon>
+  <input matInput type="number" [value]="value" [required]="required">
+  <mat-icon matSuffix (click)="decrementValue()">remove</mat-icon>
+  <mat-error *ngIf="required">{{ errorMessages.required | t }}</mat-error>
+</mat-form-field>

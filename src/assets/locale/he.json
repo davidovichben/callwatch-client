@@ -181,6 +181,7 @@
   { "key": "switchboard_settings", "value": "הגדרות מרכזיה" },
   { "key": "upload_image", "value": "העלאת תמונה" },
   { "key": "invalid_file_type", "value": "סוג קובץ שגוי" },
+  { "key": "invalid_file_type_detailed", "value": "יש להעלות קובץ מסוג" },
   { "key": "maximum_file_size", "value": "גודל קובץ מקסימלי" },
   { "key": "assigned_data_manager", "value": "מנהל נתונים אחראי" },
   { "key": "minimal_number_of_seconds", "value": "מספר שניות מינימלי" },
@@ -228,8 +229,32 @@
   { "key": "error", "value": "שגיאה" },
   { "key": "extension", "value": "שלוחה" },
   { "key": "user_not_assigned_to_unit", "value": "המשתמש לא משויך ליחידה" },
-  { "key": "unit_transfer_child_error", "value": "לא ניתן להעביר יחידה ליחידות תחתיה." }
+  { "key": "unit_transfer_child_error", "value": "לא ניתן להעביר יחידה ליחידות תחתיה." },
+  { "key": "callbacks", "value": "שיחות חוזרות" },
+  { "key": "callback_name", "value": "שם שיחה חוזרת" },
+  { "key": "schedule", "value": "לוח זמנים" },
+  { "key": "add_callback", "value": "הוסף שיחה חוזרת" },
+  { "key": "edit_callback", "value": "ערוך שיחה חוזרת" },
+  { "key": "request_handling_settings", "value": "הגדרת טיפול בבקשה" },
+  { "key": "texts", "value": "מסרונים" },
+  { "key": "regular_schedule", "value": "לוח זמנים רגיל" },
+  { "key": "unique_schedule", "value": "לוח זמנים מיוחד" },
+  { "key": "request_duration_in_days", "value": "משך בקשה בימים" },
+  { "key": "number_of_call_attempts", "value": "מספר ניסיונות חיוג ללקוח" },
+  { "key": "request_answer_calculation_s", "value": "יעד חזרה לבקשה לחישוב אחוז מענה (בשעות)" },
+  { "key": "call_attempts_intervals", "value": "מספר דקות בין נסיונות חיוג" },
+  { "key": "callback_text_1", "value": "תוכן שליחת מסרון בעת השארת בקשה" },
+  { "key": "callback_text_2", "value": "תוכן שליחת מסרון בעת חזרה ללקוח" },
+  { "key": "callback_text_3", "value": "תוכן שליחת מסרון אחרי מספר ניסיונות חיוג מקסימלי" },
+  { "key": "callback_text_4", "value": "תוכן שליחת מסרון בעת חיוג חוזר של הלקוח וקבלת מענה" },
+  { "key": "callback_text_5", "value": "תוכן שליחת מסרון בעת סגירת בקשה שלא טופלה כלל" },
+  { "key": "callback_text_6", "value": "תוכן שליחת מסרון בהשארת הודעה מחוץ לשעות הפעילות" },
+  { "key": "callback_text_7", "value": "תוכן שליחת מסרון לבקשות שנשארו פתוחות בסוף יום עבודה" },
+  { "key": "enable_dialer_back", "value": "הפעלת חייגן לחזרה ללקוחות" },
+  { "key": "audio_file", "value": "קובץ שמע" },
+  { "key": "callback_mail_representative", "value": "שליחת דוא\"ל לנציג/י הארגון בעת השארת בקשה" }
 ]
+
 
 
 

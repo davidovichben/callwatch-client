@@ -15,6 +15,7 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 
 import { DataTableComponent } from './data-table.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -22,14 +23,14 @@ import { PaginationComponent } from './pagination/pagination.component';
     RouterModule,
     FormsModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatButtonModule,
-    MatSlideToggleModule,
-    TranslateModule, MatIconModule
+    MatSlideToggleModule, MatMenuModule, MatIconModule,
+    TranslateModule,
   ],
   exports: [
     CommonModule,
     FormsModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule,
-    MatTooltipModule, MatButtonModule,
+    MatTooltipModule, MatButtonModule, MatMenuModule, MatIconModule,
     PaginationComponent,
     DataTableComponent,
   ],

@@ -1,0 +1,17 @@
+<div class="d-flex">
+  <mat-form-field>
+    <mat-label>{{ placeholder }}</mat-label>
+    <input matInput type="text" [value]="file ? file.name : null">
+    <mat-icon matSuffix (click)="audioFileInput.click()" *ngIf="!file">upload</mat-icon>
+    <mat-icon matSuffix (click)="resetFile()" *ngIf="file">close</mat-icon>
+  </mat-form-field>
+  <div id="actions" class="ms-2">
+    <mat-icon (click)="audioPlayer.play(); playing = true" *ngIf="file && !playing">play_circle_filled</mat-icon>
+    <mat-icon (click)="audioPlayer.pause(); playing = false" *ngIf="file && playing">pause_circle_filled</mat-icon>
+    <mat-icon (click)="audioPlayer.pause(); audioPlayer.currentTime = 0; playing = false" *ngIf="file && playing">stop_circle</mat-icon>
+    <mat-icon (click)="downloadFile()" *ngIf="file">download</mat-icon>
+  </div>
+  <input type="file" (change)="uploadFile(audioFileInput.files[0])" #audioFileInput>
+  <audio #audioPlayer></audio>
+</div>
+<p class="alert alert-danger" [@fade]="hasTypeError ? 'active' : 'inactive'">{{ 'invalid_file_type_detailed' | t }}: wav</p>

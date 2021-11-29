@@ -17,8 +17,7 @@ export class PinInputComponent implements OnInit, ControlValueAccessor {
 
   numbers: any[];
 
-  private propagateChange = (_: any) => {
-  };
+  private propagateChange = (_: any) => {};
 
   ngOnInit() {
     this.numbers = new Array(this.length).fill('');

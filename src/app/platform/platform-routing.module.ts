@@ -52,6 +52,10 @@ const routes: Routes = [
         loadChildren: () => import('./switchboards/switchboards.module').then(m => m.SwitchboardsModule)
       },
       {
+        path: 'callbacks',
+        loadChildren: () => import('./callbacks/callbacks.module').then(m => m.CallbacksModule)
+      },
+      {
         path: '**',
         redirectTo: ''
       }

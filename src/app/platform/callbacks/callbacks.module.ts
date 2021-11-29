@@ -4,25 +4,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { UniqueDaysComponent } from 'src/app/platform/unique-days/unique-days.component';
+import { CallbacksComponent } from './callbacks.component';
 
-import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.service';
+import { CallbackService } from 'src/app/_shared/services/http/callback.service';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: UniqueDaysComponent
+		component: CallbacksComponent
 	},
 	{ path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) }
 ];
 
 @NgModule({
-	declarations: [UniqueDaysComponent],
+	declarations: [CallbacksComponent],
 	imports: [
 		RouterModule.forChild(routes),
 		DataTableModule,
     TranslateModule
 	],
-	providers: [UniqueDayService]
+	providers: [CallbackService]
 })
-export class UniqueDaysModule {}
+export class CallbacksModule {}
