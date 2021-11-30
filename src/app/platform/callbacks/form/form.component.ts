@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CallbackService } from 'src/app/_shared/services/http/callback.service';
@@ -7,6 +7,7 @@ import { HelpersService } from 'src/app/_shared/services/generic/helpers.service
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { CallbackTextModel, CallbackTextNames } from 'src/app/_shared/models/callback-text.model';
 
 @Component({
 	selector: 'app-form',
@@ -15,6 +16,8 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 export class FormComponent implements OnInit {
 
 	readonly errorMessages = ErrorMessages;
+
+  readonly callbackTextNames = CallbackTextNames;
 
   activeTab = 'general';
 
@@ -25,7 +28,6 @@ export class FormComponent implements OnInit {
   audioFile: File;
 
   schedules: SelectItemModel[] = [];
-  textControlNames = [];
 
 	isSubmitting = false;
 
@@ -36,26 +38,21 @@ export class FormComponent implements OnInit {
 	ngOnInit(): void {
     this.makeForm();
 
-    const textControls = (this.callbackForm.get('texts') as FormGroup).controls;
-    this.textControlNames = Object.keys(textControls);
-
     const routeData = this.route.snapshot.data;
     this.schedules = routeData.schedules;
 
     if (routeData.callback) {
       this.callbackId = routeData.callback.id;
-      this.callbackForm.patchValue(routeData.callback);
+      const data = { ...routeData.callback };
+      delete data.texts;
+      this.callbackForm.patchValue(data);
       if (routeData.callback.file) {
         this.audioFile = this.helpers.base64toFile(routeData.callback.file, routeData.callback.fileName);
       }
 
-      const textControls = (this.callbackForm.get('texts') as FormGroup).controls;
-      Object.keys(textControls).forEach(controlName => {
-        textControls[controlName].value ? textControls[controlName].enable() : null
-      });
+      this.setTextArray(routeData.callback.texts);
     }
 	}
-
   private makeForm(): void {
     this.callbackForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
@@ -69,15 +66,29 @@ export class FormComponent implements OnInit {
       mailCallback: this.fb.control(null),
       file: this.fb.control(null),
       fileName: this.fb.control(null),
-      texts: this.fb.group({
-        messageMaxRetries: this.fb.control({ value: null, disabled: true }),
-        messageCompleted: this.fb.control({ value: null, disabled: true }),
-        messageLeave: this.fb.control({ value: null, disabled: true }),
-        customerReturn: this.fb.control({ value: null, disabled: true }),
-        notHandled: this.fb.control({ value: null, disabled: true }),
-        outOfSchedule: this.fb.control({ value: null, disabled: true }),
-        leftOpen: this.fb.control({ value: null, disabled: true })
-      })
+      texts: this.fb.array([])
+    });
+
+    const textArray = (this.callbackForm.get('texts') as FormArray);
+    this.callbackTextNames.forEach(name => {
+     const group = this.fb.group({
+       name: this.fb.control(name),
+       content: this.fb.control({ value: null, disabled: true }),
+       isActive: this.fb.control(null)
+     });
+
+      textArray.push(group);
+    });
+  }
+
+  private setTextArray(texts: CallbackTextModel[]): void {
+    const textArray = (this.callbackForm.get('texts') as FormArray);
+    textArray.controls.forEach(control => {
+      const text = texts.find(text =>  text.name === control.get('name').value);
+      if (text) {
+        control.patchValue(text);
+        control.get('isActive').value ? control.get('content').enable() : null;
+      }
     });
   }
 
@@ -86,14 +97,9 @@ export class FormComponent implements OnInit {
     this.callbackForm.get('fileName').patchValue(file ? file.name : null);
   }
 
-  setTextDisabledState(controlName: string): void {
-    const control = this.callbackForm.get('texts.' + controlName);
-    if (control.disabled) {
-      control.enable();
-    } else {
-      control.reset();
-      control.disable();
-    }
+  setTextDisabledState(index: number): void {
+    const control = (this.callbackForm.get('texts') as FormArray).at(index).get('content');
+    control.disabled ? control.enable() : control.disable();
   }
 
 	submit(): void {
@@ -101,12 +107,14 @@ export class FormComponent implements OnInit {
       this.toggleInvalidTabs();
     }
 
-
 		if (this.callbackForm.valid && !this.isSubmitting) {
+      const values = this.callbackForm.value;
+      values.texts = this.filterEmptyTexts();
+
 			this.isSubmitting = true;
 
 			if (this.callbackId) {
-				this.callbackService.updateCallback(this.callbackId, this.callbackForm.value).then(response => {
+				this.callbackService.updateCallback(this.callbackId, values).then(response => {
           this.handleServerResponse(response);
         });
 			} else {
@@ -116,6 +124,19 @@ export class FormComponent implements OnInit {
 			}
 		}
 	}
+
+  private filterEmptyTexts(): object[] {
+    const values = [];
+
+    const textArray = (this.callbackForm.get('texts') as FormArray);
+    textArray.getRawValue().forEach(text => {
+      if (text.content) {
+        values.push(text);
+      }
+    });
+
+    return values;
+  }
 
   private toggleInvalidTabs(): void {
     if (this.callbackForm.get('name').invalid) {

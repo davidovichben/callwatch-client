@@ -6,76 +6,78 @@
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
-  <div class="mb-4 tabs">
-    <a class="tab" [ngClass]="{ active: activeTab === 'general' }" (click)="activeTab = 'general'">{{ 'general' | t }}</a>
-    <a class="tab" [ngClass]="{ active: activeTab === 'request' }" (click)="activeTab = 'request'">{{ 'request_handling_settings' | t }}</a>
-    <a class="tab" [ngClass]="{ active: activeTab === 'texts' }" (click)="activeTab = 'texts'">{{ 'texts' | t }}</a>
+  <div class="form-body">
+    <div class="mb-4 tabs">
+      <a class="tab" [ngClass]="{ active: activeTab === 'general' }" (click)="activeTab = 'general'">{{ 'general' | t }}</a>
+      <a class="tab" [ngClass]="{ active: activeTab === 'request' }" (click)="activeTab = 'request'">{{ 'request_handling_settings' | t }}</a>
+      <a class="tab" [ngClass]="{ active: activeTab === 'texts' }" (click)="activeTab = 'texts'">{{ 'texts' | t }}</a>
+    </div>
+    <section [hidden]="activeTab !== 'general'">
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'callback_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'description' | t }}</mat-label>
+            <textarea rows="8" matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+    <section [hidden]="activeTab !== 'request'">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <app-number-input formControlName="requestDuration" [placeholder]="'request_duration_in_days' | t"></app-number-input>
+        </div>
+        <div class="col-12 col-lg-3">
+          <app-number-input formControlName="dialAttempts" [placeholder]="'number_of_call_attempts' | t"></app-number-input>
+        </div>
+      </div>
+      <div class="mb-3">
+        <mat-checkbox formControlName="enableDialer">{{ 'enable_dialer_back' | t }}</mat-checkbox>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'regular_schedule' | t }}</mat-label>
+            <mat-select formControlName="schedule" required>
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let schedule of schedules" [value]="schedule.id">{{ schedule.name }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <app-number-input formControlName="answerCalculation" [placeholder]="'request_answer_calculation_s' | t"></app-number-input>
+        </div>
+        <div class="col-12 col-lg-3">
+          <app-number-input formControlName="dialAttemptIntervals" [placeholder]="'call_attempts_intervals' | t"></app-number-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-flex col-12 col-lg-3">
+          <app-audio-input [placeholder]="'audio_file' | t" [fileTypes]="['wav']" [inputFile]="audioFile" (fileChange)="setFile($event)"></app-audio-input>
+        </div>
+      </div>
+      <div>
+        <mat-checkbox formControlName="mailCallback">{{ 'callback_mail_representative' | t }}</mat-checkbox>
+      </div>
+    </section>
+    <section formArrayName="texts" [hidden]="activeTab !== 'texts'">
+      <div class="d-flex mb-3" *ngFor="let i of callbackForm.get('texts')['controls']; let index = index" [formGroupName]="index">
+        <mat-checkbox class="pt-3" formControlName="isActive" (change)="setTextDisabledState(index)"></mat-checkbox>
+        <mat-form-field class="w-100">
+          <mat-label>{{ ('callback_text_' + (index + 1)) | t }}</mat-label>
+          <input matInput type="text" formControlName="content">
+        </mat-form-field>
+      </div>
+    </section>
   </div>
-  <section [hidden]="activeTab !== 'general'">
-    <div class="row">
-      <div class="col-12 col-lg-3">
-        <mat-form-field class="w-100">
-          <mat-label>{{ 'callback_name' | t }}</mat-label>
-          <input matInput type="text" formControlName="name" required>
-          <mat-error>{{ errorMessages.required | t }}</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-lg-6">
-        <mat-form-field class="w-100">
-          <mat-label>{{ 'description' | t }}</mat-label>
-          <textarea rows="8" matInput formControlName="description"></textarea>
-        </mat-form-field>
-      </div>
-    </div>
-  </section>
-  <section [hidden]="activeTab !== 'request'">
-    <div class="row mb-3">
-      <div class="col-12 col-lg-3">
-        <app-number-input formControlName="requestDuration" [placeholder]="'request_duration_in_days' | t"></app-number-input>
-      </div>
-      <div class="col-12 col-lg-3">
-        <app-number-input formControlName="dialAttempts" [placeholder]="'number_of_call_attempts' | t"></app-number-input>
-      </div>
-    </div>
-    <div class="mb-3">
-      <mat-checkbox formControlName="enableDialer">{{ 'enable_dialer_back' | t }}</mat-checkbox>
-    </div>
-    <div class="row mb-3">
-      <div class="col-12 col-lg-3">
-        <mat-form-field class="w-100">
-          <mat-label>{{ 'regular_schedule' | t }}</mat-label>
-          <mat-select formControlName="schedule" required>
-            <mat-option>--</mat-option>
-            <mat-option *ngFor="let schedule of schedules" [value]="schedule.id">{{ schedule.name }}</mat-option>
-          </mat-select>
-          <mat-error>{{ errorMessages.required | t }}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-12 col-lg-3">
-        <app-number-input formControlName="answerCalculation" [placeholder]="'request_answer_calculation_s' | t"></app-number-input>
-      </div>
-      <div class="col-12 col-lg-3">
-        <app-number-input formControlName="dialAttemptIntervals" [placeholder]="'call_attempts_intervals' | t"></app-number-input>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="d-flex col-12 col-lg-3">
-        <app-audio-input [placeholder]="'audio_file' | t" [fileTypes]="['wav']" [inputFile]="audioFile" (fileChange)="setFile($event)"></app-audio-input>
-      </div>
-    </div>
-    <div>
-      <mat-checkbox formControlName="mailCallback">{{ 'callback_mail_representative' | t }}</mat-checkbox>
-    </div>
-  </section>
-  <section formGroupName="texts" [hidden]="activeTab !== 'texts'">
-    <div class="d-flex mb-3" *ngFor="let controlName of textControlNames; let index = index">
-      <mat-checkbox class="pt-3" [checked]="callbackForm.get('texts.' + controlName).value" (change)="setTextDisabledState(controlName)"></mat-checkbox>
-      <mat-form-field class="w-100">
-        <mat-label>{{ ('callback_text_' + (index + 1)) | t }}</mat-label>
-        <input matInput type="text" [formControlName]="controlName">
-      </mat-form-field>
-    </div>
-  </section>
 </form>
