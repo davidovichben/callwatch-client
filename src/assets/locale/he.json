@@ -270,7 +270,7 @@
   { "key": "edit_router", "value": "ערוך נתב" },
   { "key": "router_name", "value": "שם נתב" },
   { "key": "irregular_timing", "value": "תזמון חריג" },
-  { "key": "numbers_dialed", "value": "מספרים שחויגו" },
+  { "key": "dialed_numbers", "value": "מספרים שחויגו" },
   { "key": "router_admin_code", "value": "קוד ניהול נתב" },
   { "key": "default_selection_seconds", "value": "מספר שניות לבחירת ברירת מחדל" },
   { "key": "router_vip_bypass", "value": "עקיפת נתב למספרי VIP" },

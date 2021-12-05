@@ -19,6 +19,7 @@ import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { RouterResolve } from 'src/app/_shared/resolves/router.resolve';
 import { ScheduleSelectResolve } from 'src/app/_shared/resolves/schedule-select.resolve';
+import { ChipsInputModule } from 'src/app/_shared/components/chips-input/chips-input.module';
 
 const routes: Routes = [
 	{
@@ -51,7 +52,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatDatepickerModule,
     TranslateModule,
-    AudioInputModule
+    AudioInputModule,
+    ChipsInputModule
   ],
 	providers: [
     RouterService,

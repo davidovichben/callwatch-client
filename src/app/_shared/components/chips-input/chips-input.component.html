@@ -1,0 +1,10 @@
+<mat-form-field>
+  <mat-label>{{ placeholder }}</mat-label>
+  <input matInput type="text" (keypress)="addValue($event, input)" #input>
+</mat-form-field>
+<mat-chip-list>
+  <mat-chip *ngFor="let value of values; let index = index">
+    <mat-icon (click)="removeValue(index)">close</mat-icon>
+    <span>{{ value }}</span>
+  </mat-chip>
+</mat-chip-list>

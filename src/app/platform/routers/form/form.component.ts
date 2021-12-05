@@ -46,7 +46,6 @@ export class FormComponent implements OnInit, OnDestroy {
     this.schedules = routeData.schedules;
 
     if (routeData.router) {
-      console.log(routeData.router)
       this.routerModel = routeData.router;
       this.routerForm.patchValue(routeData.router);
     }
@@ -62,7 +61,7 @@ export class FormComponent implements OnInit, OnDestroy {
         irregularTimingActive: this.fb.control({ value: null, disabled: true }),
         irregularTimingFrom: this.fb.control({ value: null, disabled: true }),
         irregularTimingTo: this.fb.control({ value: null, disabled: true }),
-        numbersDialed: this.fb.control(null),
+        dialedNumbers: this.fb.control(null),
         adminCode: this.fb.control(null),
         defaultSelectionDuration: this.fb.control(null),
         vipEnabled: this.fb.control(null),
@@ -78,7 +77,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   private setFormSubscriptions(): void {
     const controlNames = {
-      irregularTimingEnabled: ['hasIrregularTiming', 'irregularTimingFrom', 'irregularTimingTo'],
+      irregularTimingEnabled: ['irregularTimingActive', 'irregularTimingFrom', 'irregularTimingTo'],
       vipEnabled: ['vipDestination'],
       waitingRouterEnabled: ['queuePositionReading', 'queueWaitingTime']
     };

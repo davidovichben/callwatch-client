@@ -271,7 +271,7 @@
   { "key": "edit_router", "value": "Edit Router" },
   { "key": "router_name", "value": "Router name" },
   { "key": "irregular_timing", "value": "Irregular timing" },
-  { "key": "numbers_dialed", "value": "Numbers dialed" },
+  { "key": "dialed_numbers", "value": "Numbers dialed" },
   { "key": "router_admin_code", "value": "Router admin code" },
   { "key": "default_selection_seconds", "value": "Number of seconds to select default" },
   { "key": "router_vip_bypass", "value": "Router bypass for VIP numbers" },
