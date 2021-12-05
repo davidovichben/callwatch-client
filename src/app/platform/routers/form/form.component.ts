@@ -104,6 +104,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
 	submit(): void {
+    console.log(this.routerForm)
 		if (this.routerForm.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
@@ -112,7 +113,7 @@ export class FormComponent implements OnInit, OnDestroy {
         Object.assign(values, this.routerForm.getRawValue()[groupName]);
       })
 
-			if (this.routerModel.id) {
+			if (this.routerModel) {
 				this.routerService.updateRouter(this.routerModel.id, values).then(response => this.handleServerResponse(response));
 			} else {
 				this.routerService.newRouter(values).then(response => this.handleServerResponse(response));

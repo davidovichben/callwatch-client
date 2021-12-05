@@ -12,16 +12,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class ChipsInputComponent implements ControlValueAccessor {
 
   @Input() placeholder: string;
-  @Input() pattern: string;
-  @Input() length: number;
+  @Input() rules: { pattern?: string; length?: number } = {};
 
   regex: RegExp;
 
   values = [];
 
   ngOnInit(): void {
-    if (this.pattern) {
-      this.regex = new RegExp(this.pattern);
+    if (this.rules.pattern) {
+      this.regex = new RegExp(this.rules.pattern);
     }
   }
 
@@ -31,7 +30,7 @@ export class ChipsInputComponent implements ControlValueAccessor {
         event.preventDefault();
       }
 
-      if (this.length && input.value.length > this.length) {
+      if (this.rules.length && input.value.length > this.rules.length) {
         event.preventDefault();
       }
     }
