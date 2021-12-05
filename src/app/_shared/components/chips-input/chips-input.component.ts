@@ -25,6 +25,8 @@ export class ChipsInputComponent implements ControlValueAccessor {
   }
 
   addValue(event: KeyboardEvent, input: HTMLInputElement): void {
+    event.stopPropagation();
+
     if (event.key !== 'Enter') {
       if (this.regex && !this.regex.test(event.key)) {
         event.preventDefault();
