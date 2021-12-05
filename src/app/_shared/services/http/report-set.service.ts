@@ -5,7 +5,6 @@ import { BaseHttpService } from './base-http.service';
 import { UserSessionService } from '../state/user-session.service';
 
 import { ReportSetModel } from 'src/app/_shared/models/report-set.model';
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 
@@ -53,12 +52,5 @@ export class ReportSetService extends BaseHttpService {
       .toPromise()
       .then(() => true)
       .catch(() => false);
-  }
-
-  selectReportSets(): Promise<SelectItemModel[]> {
-    return this.http.get(this.endPoint + '/select', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as SelectItemModel[])
-      .catch(() => []);
   }
 }

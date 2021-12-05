@@ -53,6 +53,7 @@ export class FormComponent implements OnInit {
       this.setTextArray(routeData.callback.texts);
     }
 	}
+
   private makeForm(): void {
     this.callbackForm = this.fb.group({
       name: this.fb.control(null, Validators.required),

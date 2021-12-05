@@ -59,11 +59,4 @@ export class PermissionService extends BaseHttpService {
       .then(() => true)
       .catch(() => false);
   }
-
-  selectPermissions(): Promise<PermissionModel[]> {
-    return this.http.get(this.endPoint + '/select', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as PermissionModel[])
-      .catch(() => []);
-  }
 }

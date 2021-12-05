@@ -6,7 +6,6 @@ import { UserSessionService } from '../state/user-session.service';
 
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { UserModel } from 'src/app/_shared/models/user.model';
 
 @Injectable()
@@ -53,13 +52,6 @@ export class UserService extends BaseHttpService {
       .toPromise()
       .then(() => true)
       .catch(() => false);
-  }
-
-  selectUsers(): Promise<SelectItemModel[]> {
-    return this.http.get(this.endPoint + '/select', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as SelectItemModel[])
-      .catch(() => []);
   }
 
   getPermissions(): Promise<any> {

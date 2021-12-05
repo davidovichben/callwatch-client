@@ -1,0 +1,164 @@
+<form [formGroup]="acdForm" (ngSubmit)="submit()">
+  <div class="form-header">
+    <p class="h1">{{ acd ? ('edit_acd' | t) : ('add_acd' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'acds']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="mb-4 tabs">
+      <a class="tab" [ngClass]="{ active: activeTab === 'general' }" (click)="activeTab = 'general'">{{ 'general' | t }}</a>
+      <a class="tab" [ngClass]="{ active: activeTab === 'switchboard' }" (click)="activeTab = 'switchboard'">{{ 'switchboard_settings' | t }}</a>
+      <a class="tab" [ngClass]="{ active: activeTab === 'extensions' }" (click)="activeTab = 'extensions'">{{ 'associated_extensions' | t }}</a>
+      <a class="tab" [ngClass]="{ active: activeTab === 'callback' }" (click)="activeTab = 'callback'">{{ 'callback' | t }}</a>
+    </div>
+    <section formGroupName="general" [hidden]="activeTab !== 'general'">
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'group_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'group_type' | t }}</mat-label>
+            <mat-select formControlName="type" required>
+              <mat-option *ngFor="let type of types" [value]="type.id">{{ type.name }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <app-unit-select formControlName="unit" [units]="units" [placeholder]="'select_units' | t"></app-unit-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'description' | t }}</mat-label>
+            <textarea rows="8" matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+    <section formGroupName="switchboard" [hidden]="activeTab !== 'switchboard'">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'switchboard' | t }}</mat-label>
+            <mat-select formControlName="switchboard" required>
+              <mat-option *ngFor="let switchboard of switchboards" [value]="switchboard.id">{{ switchboard.name }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'group_number' | t }}</mat-label>
+            <input matInput type="text" formControlName="number" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'hunt_pilot_number' | t }}</mat-label>
+            <input matInput type="text" formControlName="huntPilot">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'secondary_hunt_pilot_number' | t }}</mat-label>
+            <input matInput type="text" formControlName="secondaryHuntPilot">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'queue_full_overflow_number' | t }}</mat-label>
+            <input matInput type="text" formControlName="queueFullOverflow">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'max_wait_time_overflow_number' | t }}</mat-label>
+            <input matInput type="text" formControlName="maxWaitTime">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'no_agent_overflow_number' | t }}</mat-label>
+            <input matInput type="text" formControlName="noAgentOverflow">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'no_answer_redirection' | t }}</mat-label>
+            <input matInput type="text" formControlName="noAnswerRedirection">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'busy_sound_redirection' | t }}</mat-label>
+            <input matInput type="text" formControlName="busyRedirection">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-checkbox formControlName="isBroadcast">{{ 'is_broadcast' | t }}</mat-checkbox>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-checkbox formControlName="hasQueue">{{ 'has_queue' | t }}</mat-checkbox>
+        </div>
+      </div>
+    </section>
+    <section formGroupName="extensions" [hidden]="activeTab !== 'extensions'">
+<!--      <app-select-groups formControlName="extensions"></app-select-groups>-->
+    </section>
+    <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'dialer_profile' | t }}</mat-label>
+            <mat-select formControlName="callback">
+              <mat-option *ngFor="let callback of callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'dialer_ivr' | t }}</mat-label>
+            <mat-select formControlName="router">
+              <mat-option *ngFor="let router of routers" [value]="router.id">{{ router.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
+              <input matInput type="text" formControlName="overflowNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'email' | t }}</mat-label>
+              <input matInput type="email" formControlName="email">
+              <mat-error>{{ errorMessages.email | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'dial_outgoing_tel_line' | t }}</mat-label>
+              <input matInput type="text" formControlName="dialerCallerID">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</form>

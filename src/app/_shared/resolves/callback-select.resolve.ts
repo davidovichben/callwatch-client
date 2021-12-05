@@ -6,11 +6,11 @@ import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
-export class ReportSelectResolve implements Resolve<SelectItemModel[]> {
+export class CallbackSelectResolve implements Resolve<SelectItemModel[]> {
 
   constructor(private genericService: GenericService) {}
 
   resolve() {
-    return this.genericService.select('report').then(response => response as SelectItemModel[]);
+    return this.genericService.select('callback').then(response => response as SelectItemModel[]);
   }
 }

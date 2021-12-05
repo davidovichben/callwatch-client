@@ -9,6 +9,7 @@ import { ReassignDialogModule } from './reassign-dialog/reassign-dialog.module';
 import { PermissionsComponent } from './permissions.component';
 
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -29,6 +30,10 @@ const routes: Routes = [
 		DataTableModule,
     ReassignDialogModule
 	],
-  providers: [PermissionService, TranslatePipe]
+  providers: [
+    PermissionService,
+    GenericService,
+    TranslatePipe
+  ]
 })
 export class PermissionsModule {}

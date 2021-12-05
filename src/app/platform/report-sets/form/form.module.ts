@@ -10,7 +10,7 @@ import { SelectGroupsModule } from 'src/app/_shared/components/select-groups/sel
 import { FormComponent } from './form.component';
 
 import { ReportSetService } from 'src/app/_shared/services/http/report-set.service';
-import { ReportService } from 'src/app/_shared/services/http/report.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { ReportSetResolve } from 'src/app/_shared/resolves/report-set.resolve';
@@ -49,7 +49,7 @@ const routes: Routes = [
 	],
   providers: [
     ReportSetService,
-    ReportService,
+    GenericService,
     UnitService,
     ReportSetResolve,
     ReportSelectResolve,

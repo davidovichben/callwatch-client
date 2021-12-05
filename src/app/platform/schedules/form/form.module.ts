@@ -15,7 +15,7 @@ import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.m
 import { FormComponent } from './form.component';
 
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
-import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { ScheduleResolve } from 'src/app/_shared/resolves/schedule.resolve';
 import { UniqueDaySelectResolve } from 'src/app/_shared/resolves/unique-day-select.resolve';
@@ -26,13 +26,16 @@ const routes: Routes = [
   {
     path: '',
     component: FormComponent,
-    resolve: { uniqueDays: UniqueDaySelectResolve }
+    resolve: {
+      uniqueDays: UniqueDaySelectResolve
+    }
   },
   {
     path: ':id',
     component: FormComponent,
     resolve: {
-      schedule: ScheduleResolve, uniqueDays: UniqueDaySelectResolve
+      schedule: ScheduleResolve,
+      uniqueDays: UniqueDaySelectResolve
     }
   }
 ];
@@ -54,7 +57,7 @@ const routes: Routes = [
   ],
   providers: [
     ScheduleService,
-    UniqueDayService,
+    GenericService,
     ScheduleResolve,
     UniqueDaySelectResolve,
     TranslatePipe

@@ -139,6 +139,9 @@
   { "key": "edit_user_group", "value": "עריכת קבוצת משתמשים" },
   { "key": "group_deleted", "value": "הקבוצה נמחקה" },
   { "key": "group_name", "value": "שם הקבוצה" },
+  { "key": "group_number", "value": "מספר קבוצה" },
+  { "key": "group_type", "value": "סוג קבוצה" },
+  { "key": "add_group", "value": "הוסף קבוצה" },
   { "key": "total_users", "value": "סהכ משתמשים" },
   { "key": "full_name", "value": "שם מלא" },
   { "key": "no_items_to_display", "value": "אין פריטים לתצוגה" },
@@ -231,6 +234,7 @@
   { "key": "user_not_assigned_to_unit", "value": "המשתמש לא משויך ליחידה" },
   { "key": "unit_transfer_child_error", "value": "לא ניתן להעביר יחידה ליחידות תחתיה." },
   { "key": "callbacks", "value": "שיחות חוזרות" },
+  { "key": "callback", "value": "שיחה חוזרת" },
   { "key": "callback_name", "value": "שם שיחה חוזרת" },
   { "key": "schedule", "value": "לוח זמנים" },
   { "key": "add_callback", "value": "הוסף שיחה חוזרת" },
@@ -252,7 +256,11 @@
   { "key": "callback_text_7", "value": "תוכן שליחת מסרון לבקשות שנשארו פתוחות בסוף יום עבודה" },
   { "key": "enable_dialer_back", "value": "הפעלת חייגן לחזרה ללקוחות" },
   { "key": "audio_file", "value": "קובץ שמע" },
-  { "key": "callback_mail_representative", "value": "שליחת דוא\"ל לנציג/י הארגון בעת השארת בקשה" }
+  { "key": "callback_mail_representative", "value": "שליחת דוא\"ל לנציג/י הארגון בעת השארת בקשה" },
+  { "key": "acds", "value": "קבוצות" },
+  { "key": "add_acd", "value": "הוסף קבוצה" },
+  { "key": "edit_acd", "value": "ערוך קבוצה" },
+  { "key": "associated_extensions", "value": "שלוחות משויכות" }
 ]
 
 

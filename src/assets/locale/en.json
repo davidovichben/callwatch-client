@@ -139,6 +139,9 @@
   { "key": "edit_user_group", "value": "Edit User Group" },
   { "key": "group_deleted", "value": "Group deleted" },
   { "key": "group_name", "value": "Group Name" },
+  { "key": "group_number", "value": "Group Type" },
+  { "key": "group_type", "value": "Group Number" },
+  { "key": "add_group", "value": "Add Group" },
   { "key": "total_users", "value": "Total Users" },
   { "key": "full_name", "value": "Full Name" },
   { "key": "no_items_to_display", "value": "No items to display" },
@@ -232,6 +235,7 @@
   { "key": "user_not_assigned_to_unit", "value": "User not assigned to any unit" },
   { "key": "unit_transfer_child_error", "value": "Cannot transfer unit to units under itself." },
   { "key": "callbacks", "value": "Callbacks" },
+  { "key": "callback", "value": "Callback" },
   { "key": "callback_name", "value": "Callback Name" },
   { "key": "schedule", "value": "Schedule" },
   { "key": "add_callback", "value": "Add Callback" },
@@ -253,6 +257,10 @@
   { "key": "callback_text_7", "value": "SMS sent content to requests that stayed opened at end of work day" },
   { "key": "enable_dialer_back", "value": "Enable dialer back to customers" },
   { "key": "audio_file", "value": "Audio file" },
-  { "key": "callback_mail_representative", "value": "Mail organization representatives when leaving request" }
+  { "key": "callback_mail_representative", "value": "Mail organization representatives when leaving request" },
+  { "key": "acds", "value": "ACDs" },
+  { "key": "add_acd", "value": "Add ACD" },
+  { "key": "edit_acd", "value": "Edit ACD" },
+  { "key": "associated_extensions", "value": "Associated Extensions" }
 ]
 

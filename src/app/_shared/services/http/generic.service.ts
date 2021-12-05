@@ -13,45 +13,11 @@ export class GenericService extends BaseHttpService {
     super(userSession);
   }
 
-  selectEntities(companyId: number, type: string): Promise<SelectItemModel[]> {
-    return this.http.get(this.apiUrl + '/select', this.getTokenRequest({ companyId, type }))
+  select(type: string): Promise<SelectItemModel[]> {
+    return this.http.get(this.apiUrl + '/select', this.getTokenRequest({ type }, true))
       .toPromise()
       .then(response => response as SelectItemModel[])
       .catch(() => []);
   }
 
-  getCities(): Promise<SelectItemModel[]> {
-    return this.http.get(this.apiUrl + '/city', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as SelectItemModel[])
-      .catch(() => []);
-  }
-
-  getCountries(): Promise<SelectItemModel[]> {
-    return this.http.get(this.apiUrl + '/country', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as SelectItemModel[])
-      .catch(() => []);
-  }
-
-  getBanks(): Promise<SelectItemModel[]> {
-    return this.http.get(this.apiUrl + '/bank', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as SelectItemModel[])
-      .catch(() => []);
-  }
-
-  getBankBranches(bankId: number): Promise<SelectItemModel[]> {
-    return this.http.get(this.apiUrl + '/bank/' + bankId + '/branch', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as SelectItemModel[])
-      .catch(() => []);
-  }
-
-  getSummary(companyId: number): Promise<object[]> {
-    return this.http.get(this.apiUrl + '/summary', this.getTokenRequest({ companyId }))
-      .toPromise()
-      .then(response => response as object[])
-      .catch(() => []);
-  }
 }

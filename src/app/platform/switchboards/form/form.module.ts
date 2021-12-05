@@ -25,7 +25,9 @@ const routes: Routes = [
 	{
 		path: ':id',
 		component: FormComponent,
-		resolve: { switchboard: SwitchboardResolve }
+		resolve: {
+			switchboard: SwitchboardResolve
+		}
 	}
 ];
 

@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: () => import('./callbacks/callbacks.module').then(m => m.CallbacksModule)
       },
       {
+        path: 'acds',
+        loadChildren: () => import('./acds/acds.module').then(m => m.AcdsModule)
+      },
+      {
         path: '**',
         redirectTo: ''
       }

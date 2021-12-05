@@ -17,7 +17,7 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 import { FormComponent } from './form.component';
 
 import { CallbackService } from 'src/app/_shared/services/http/callback.service';
-import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { CallbackResolve } from 'src/app/_shared/resolves/callback.resolve';
 import { ScheduleSelectResolve } from 'src/app/_shared/resolves/schedule-select.resolve';
@@ -26,12 +26,17 @@ const routes: Routes = [
 	{
 		path: '',
 		component: FormComponent,
-    resolve: { schedules: ScheduleSelectResolve }
+    resolve: {
+      schedules: ScheduleSelectResolve
+    }
 	},
 	{
 		path: ':id',
 		component: FormComponent,
-		resolve: { callback: CallbackResolve, schedules: ScheduleSelectResolve }
+		resolve: {
+      callback: CallbackResolve,
+      schedules: ScheduleSelectResolve
+    }
 	}
 ];
 
@@ -51,6 +56,10 @@ const routes: Routes = [
     NumberInputModule,
     AudioInputModule
   ],
-	providers: [CallbackService, CallbackResolve, ScheduleService, ScheduleSelectResolve]
+	providers: [
+    CallbackService,
+    GenericService,
+    CallbackResolve,
+    ScheduleSelectResolve]
 })
 export class FormModule {}

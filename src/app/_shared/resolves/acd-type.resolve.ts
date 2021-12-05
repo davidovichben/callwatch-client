@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
+
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
-export class CitiesResolve implements Resolve<SelectItemModel[]> {
+export class AcdTypeResolve implements Resolve<SelectItemModel[]> {
 
   constructor(private genericService: GenericService) {}
 
   resolve() {
-    return this.genericService.getCities().then(response => response as SelectItemModel[]);
+    return this.genericService.select('acdType').then(response => response as SelectItemModel[]);
   }
 }

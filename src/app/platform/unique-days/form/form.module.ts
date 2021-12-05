@@ -25,7 +25,9 @@ const routes: Routes = [
 	{
 		path: ':id',
 		component: FormComponent,
-		resolve: { uniqueDay: UniqueDayResolve }
+		resolve: {
+      uniqueDay: UniqueDayResolve
+    }
 	}
 ];
 

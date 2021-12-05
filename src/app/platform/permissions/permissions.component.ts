@@ -7,6 +7,7 @@ import { ReassignDialogComponent } from './reassign-dialog/reassign-dialog.compo
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
@@ -31,6 +32,7 @@ export class PermissionsComponent {
 
   constructor(public userSession: UserSessionService,
               private permissionService: PermissionService,
+              private genericService: GenericService,
               private notificationService: NotificationService,
               private dialog: MatDialog,
               private t: TranslatePipe) {}
@@ -55,7 +57,7 @@ export class PermissionsComponent {
   }
 
   reassignPermission(permissionId: number, userCount: number): void {
-    this.permissionService.selectPermissions().then(permissions => {
+    this.genericService.select('permission').then(permissions => {
       const index = permissions.findIndex(permission => permission.id === permissionId);
       if (index !== -1) {
         permissions.splice(index, 1);
