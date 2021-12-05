@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audio-input.component';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
+import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 
 import { RouterModel } from 'src/app/_shared/models/router.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
@@ -15,13 +16,19 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 	selector: 'app-form',
 	templateUrl: './form.component.html'
 })
-export class FormComponent implements OnInit, OnDestroy {
+export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(AudioInputComponent) audioInput: AudioInputComponent;
 
   readonly sub = new Subscription();
 
 	readonly errorMessages = ErrorMessages;
+
+  readonly toggledControls = {
+    irregularTimingEnabled: ['irregularTimingActive', 'irregularTimingFrom', 'irregularTimingTo'],
+    vipEnabled: ['vipDestination'],
+    waitingRouterEnabled: ['queuePositionReading', 'queueWaitingTime']
+  };
 
   schedules: SelectItemModel[] = [];
 
@@ -36,11 +43,11 @@ export class FormComponent implements OnInit, OnDestroy {
   audioFile: File;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private routerService: RouterService) {}
+              private fb: FormBuilder, private routerService: RouterService,
+              private helpers: HelpersService) {}
 
 	ngOnInit(): void {
     this.makeForm();
-    this.setFormSubscriptions();
 
 		const routeData = this.route.snapshot.data;
     this.schedules = routeData.schedules;
@@ -48,8 +55,17 @@ export class FormComponent implements OnInit, OnDestroy {
     if (routeData.router) {
       this.routerModel = routeData.router;
       this.routerForm.patchValue(routeData.router);
+
+      if (routeData.router.general.queueFile) {
+        this.audioFile = this.helpers.base64toFile(routeData.router.general.queueFile, routeData.router.general.queueFileName);
+      }
     }
 	}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.setToggledControls(), 0);
+    this.setFormSubscriptions();
+  }
 
   private makeForm(): void {
     this.routerForm = this.fb.group({
@@ -75,36 +91,41 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
+  private setToggledControls(): void {
+    Object.keys(this.toggledControls).forEach(toggleName => {
+      this.toggleControls(toggleName);
+    });
+  }
+
   private setFormSubscriptions(): void {
-    const controlNames = {
-      irregularTimingEnabled: ['irregularTimingActive', 'irregularTimingFrom', 'irregularTimingTo'],
-      vipEnabled: ['vipDestination'],
-      waitingRouterEnabled: ['queuePositionReading', 'queueWaitingTime']
-    };
-
-    Object.keys(controlNames).forEach(controlName => {
-      const sub = this.routerForm.get('general.' + controlName).valueChanges.subscribe(value => {
-        controlNames[controlName].forEach(controlName => {
-          const control = this.routerForm.get('general.' + controlName);
-          value ? control.enable() : control.disable();
-        });
-
-        if (controlName === 'hasWaitingRouter') {
-          this.audioInput.disabled = !value;
-        }
+    Object.keys(this.toggledControls).forEach(toggleName => {
+      const sub = this.routerForm.get('general.' + toggleName).valueChanges.subscribe(() => {
+        this.toggleControls(toggleName);
       })
 
       this.sub.add(sub);
     });
   }
 
+  private toggleControls(toggleName: string): void {
+    const toggled = this.routerForm.get('general.' + toggleName).value;
+
+    this.toggledControls[toggleName].forEach(controlName => {
+      const control = this.routerForm.get('general.' + controlName);
+      toggled ? control.enable() : control.disable();
+    });
+
+    if (toggleName === 'waitingRouterEnabled') {
+      this.audioInput.disabled = !toggled;
+    }
+  }
+
   setFile(file?: { bin: string, name: string }): void {
-    this.routerForm.get('queueFile').patchValue(file ? file.bin : null);
-    this.routerForm.get('queueFileName').patchValue(file ? file.name : null);
+    this.routerForm.get('general.queueFile').patchValue(file ? file.bin : null);
+    this.routerForm.get('general.queueFileName').patchValue(file ? file.name : null);
   }
 
 	submit(): void {
-    console.log(this.routerForm)
 		if (this.routerForm.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
