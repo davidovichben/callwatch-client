@@ -24,7 +24,7 @@ export class ChipsInputComponent implements ControlValueAccessor {
     }
   }
 
-  addValue(event: KeyboardEvent, input: HTMLInputElement): void {
+  keyPressed(event: KeyboardEvent, input: HTMLInputElement): void {
     event.stopPropagation();
 
     if (event.key !== 'Enter') {
