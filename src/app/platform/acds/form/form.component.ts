@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { AcdService } from 'src/app/_shared/services/http/acd.service';
 
@@ -14,9 +15,11 @@ import { AcdModel } from 'src/app/_shared/models/acd.model';
 	selector: 'app-form',
 	templateUrl: './form.component.html'
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
 
 	readonly errorMessages = ErrorMessages;
+  readonly uniqueControlNames = ['number', 'huntPilot', 'secondaryHuntPilot'];
+  readonly sub = new Subscription();
 
   types: SelectItemModel[] = [];
   switchboards: SelectItemModel[] = [];
@@ -82,7 +85,17 @@ export class FormComponent implements OnInit {
       })
     })
 
-    this.acdForm.get('switchboard.huntPilot').setAsyncValidators(this.checkUniqueness.bind(this, ['huntPilot']))
+    this.uniqueControlNames.forEach(controlName => {
+      this.acdForm.get('switchboard.' + controlName).setAsyncValidators(this.checkUniqueness.bind(this, [controlName]))
+    })
+
+    this.sub.add(this.acdForm.get('switchboard.switchboard').valueChanges.subscribe(() => this.switchboardChanged()));
+  }
+
+  switchboardChanged(): void {
+    this.uniqueControlNames.forEach(controlName => {
+      this.acdForm.get('switchboard.' + controlName).updateValueAndValidity();
+    })
   }
 
   checkUniqueness(args: object, control: FormControl): Promise<{ exists: boolean }> {
@@ -128,4 +141,8 @@ export class FormComponent implements OnInit {
 
 		this.isSubmitting = false;
 	}
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }

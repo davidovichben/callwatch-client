@@ -260,7 +260,10 @@
   { "key": "acds", "value": "קבוצות" },
   { "key": "add_acd", "value": "הוסף קבוצה" },
   { "key": "edit_acd", "value": "ערוך קבוצה" },
-  { "key": "associated_extensions", "value": "שלוחות משויכות" }
+  { "key": "associated_extensions", "value": "שלוחות משויכות" },
+  { "key": "group_number_uniqueness_error", "value": "שילוב מספר קבוצה ומרכזיה/ קיים במערכת" },
+  { "key": "hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot ומרכזיה קיים במערכת" },
+  { "key": "secondary_hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot משני ומרכזיה קיים במערכת" }
 ]
 
 

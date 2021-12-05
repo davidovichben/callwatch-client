@@ -261,6 +261,9 @@
   { "key": "acds", "value": "ACDs" },
   { "key": "add_acd", "value": "Add ACD" },
   { "key": "edit_acd", "value": "Edit ACD" },
-  { "key": "associated_extensions", "value": "Associated Extensions" }
+  { "key": "associated_extensions", "value": "Associated Extensions" },
+  { "key": "group_number_uniqueness_error", "value": "Group number and switchboard combination must be unique." },
+  { "key": "hunt_uniqueness_error", "value": "Hunt Pilot number and switchboard combination must be unique" },
+  { "key": "secondary_hunt_uniqueness_error", "value": "Secondary Hunt Pilot number and switchboard combination must be unique" }
 ]
 
