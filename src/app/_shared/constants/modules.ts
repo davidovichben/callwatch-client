@@ -21,6 +21,7 @@ export const PlatformModules = [
       { name: 'uniqueDays', label: 'unique_days', isGuarded: true },
       { name: 'switchboards', isGuarded: true },
       { name: 'callbacks', isGuarded: true },
+      { name: 'routers', isGuarded: true },
       { name: 'acds', isGuarded: true }
     ]
   },

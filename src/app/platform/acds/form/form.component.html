@@ -16,14 +16,14 @@
     <section formGroupName="general" [hidden]="activeTab !== 'general'">
       <div class="row">
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'group_name' | t }}</mat-label>
             <input matInput type="text" formControlName="name" required>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'group_type' | t }}</mat-label>
             <mat-select formControlName="type" required>
               <mat-option *ngFor="let type of types" [value]="type.id">{{ type.name }}</mat-option>
@@ -37,7 +37,7 @@
       </div>
       <div class="row">
         <div class="col-12 col-lg-6">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'description' | t }}</mat-label>
             <textarea rows="8" matInput formControlName="description"></textarea>
           </mat-form-field>
@@ -47,7 +47,7 @@
     <section formGroupName="switchboard" [hidden]="activeTab !== 'switchboard'">
       <div class="row mb-3">
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'switchboard' | t }}</mat-label>
             <mat-select formControlName="switchboard" required>
               <mat-option *ngFor="let switchboard of switchboards" [value]="switchboard.id">{{ switchboard.name }}</mat-option>
@@ -58,7 +58,7 @@
       </div>
       <div class="row mb-3">
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'group_number' | t }}</mat-label>
             <input matInput type="text" formControlName="number" required>
             <mat-error *ngIf="acdForm.get('switchboard.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
@@ -66,45 +66,45 @@
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'hunt_pilot_number' | t }}</mat-label>
             <input matInput type="text" formControlName="huntPilot">
             <mat-error>{{ 'hunt_uniqueness_error' | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'secondary_hunt_pilot_number' | t }}</mat-label>
             <input matInput type="text" formControlName="secondaryHuntPilot">
             <mat-error>{{ 'secondary_hunt_uniqueness_error' | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'queue_full_overflow_number' | t }}</mat-label>
             <input matInput type="text" formControlName="queueFullOverflow">
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'max_wait_time_overflow_number' | t }}</mat-label>
             <input matInput type="text" formControlName="maxWaitTime">
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'no_agent_overflow_number' | t }}</mat-label>
             <input matInput type="text" formControlName="noAgentOverflow">
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'no_answer_redirection' | t }}</mat-label>
             <input matInput type="text" formControlName="noAnswerRedirection">
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'busy_sound_redirection' | t }}</mat-label>
             <input matInput type="text" formControlName="busyRedirection">
           </mat-form-field>
@@ -125,7 +125,7 @@
     <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
       <div class="row">
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'dialer_profile' | t }}</mat-label>
             <mat-select formControlName="callback">
               <mat-option *ngFor="let callback of callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
@@ -133,7 +133,7 @@
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+          <mat-form-field>
             <mat-label>{{ 'dialer_ivr' | t }}</mat-label>
             <mat-select formControlName="router">
               <mat-option *ngFor="let router of routers" [value]="router.id">{{ router.name }}</mat-option>
@@ -142,20 +142,20 @@
         </div>
         <div class="row">
           <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+            <mat-form-field>
               <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
               <input matInput type="text" formControlName="overflowNumber">
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+            <mat-form-field>
               <mat-label>{{ 'email' | t }}</mat-label>
               <input matInput type="email" formControlName="email">
               <mat-error>{{ errorMessages.email | t }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+            <mat-form-field>
               <mat-label>{{ 'dial_outgoing_tel_line' | t }}</mat-label>
               <input matInput type="text" formControlName="dialerCallerID">
             </mat-form-field>

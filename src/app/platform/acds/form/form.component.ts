@@ -17,9 +17,10 @@ import { AcdModel } from 'src/app/_shared/models/acd.model';
 })
 export class FormComponent implements OnInit, OnDestroy {
 
+  readonly sub = new Subscription();
+
 	readonly errorMessages = ErrorMessages;
   readonly uniqueControlNames = ['number', 'huntPilot', 'secondaryHuntPilot'];
-  readonly sub = new Subscription();
 
   types: SelectItemModel[] = [];
   switchboards: SelectItemModel[] = [];
@@ -39,6 +40,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
     this.makeForm();
+    this.setFormSubscriptions();
 
     const routeData = this.route.snapshot.data;
     this.types = routeData.types;
@@ -88,8 +90,11 @@ export class FormComponent implements OnInit, OnDestroy {
     this.uniqueControlNames.forEach(controlName => {
       this.acdForm.get('switchboard.' + controlName).setAsyncValidators(this.checkUniqueness.bind(this, [controlName]))
     })
+  }
 
-    this.sub.add(this.acdForm.get('switchboard.switchboard').valueChanges.subscribe(() => this.switchboardChanged()));
+  private setFormSubscriptions(): void {
+    const sub = this.acdForm.get('switchboard.switchboard').valueChanges.subscribe(() => this.switchboardChanged());
+    this.sub.add(sub);
   }
 
   switchboardChanged(): void {
@@ -142,7 +147,7 @@ export class FormComponent implements OnInit, OnDestroy {
 		this.isSubmitting = false;
 	}
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 }

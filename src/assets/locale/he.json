@@ -1,5 +1,6 @@
 [
   { "key": "active", "value": "פעיל" },
+  { "key": "inactive", "value":  "לא פעיל" },
   { "key": "add", "value": "הוספה" },
   { "key": "add_campaign", "value": "הוספת קמפיין" },
   { "key": "add_organization", "value": "הוספת ארגון" },
@@ -38,6 +39,7 @@
   { "key": "first_name", "value": "שם פרטי" },
   { "key": "forgot_password", "value": "שכחת סיסמה" },
   { "key": "friday", "value": "יום שישי" },
+  { "key": "from", "value": "מ-" },
   { "key": "from_hour", "value": "משעה" },
   { "key": "full", "value": "מלאה" },
   { "key": "full_name", "value": "שם מלא" },
@@ -263,7 +265,20 @@
   { "key": "associated_extensions", "value": "שלוחות משויכות" },
   { "key": "group_number_uniqueness_error", "value": "שילוב מספר קבוצה ומרכזיה/ קיים במערכת" },
   { "key": "hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot ומרכזיה קיים במערכת" },
-  { "key": "secondary_hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot משני ומרכזיה קיים במערכת" }
+  { "key": "secondary_hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot משני ומרכזיה קיים במערכת" },
+  { "key": "add_router", "value": "הוסף נתב" },
+  { "key": "edit_router", "value": "ערוך נתב" },
+  { "key": "router_name", "value": "שם נתב" },
+  { "key": "irregular_timing", "value": "תזמון חריג" },
+  { "key": "numbers_dialed", "value": "מספרים שחויגו" },
+  { "key": "router_admin_code", "value": "קוד ניהול נתב" },
+  { "key": "default_selection_seconds", "value": "מספר שניות לבחירת ברירת מחדל" },
+  { "key": "router_vip_bypass", "value": "עקיפת נתב למספרי VIP" },
+  { "key": "router_vip_destination", "value": "יעד להעברת לקוחות VIP" },
+  { "key": "waiting_router", "value": "נתב המתנה" },
+  { "key": "queue_position_reading", "value": "הקראת מיקום בתור" },
+  { "key": "queue_waiting_seconds", "value": "מספר שניות להמתנה בתור" },
+  { "key": "router_queue_file", "value": "קובץ שמע בעת המתנה בתור" }
 ]
 
 

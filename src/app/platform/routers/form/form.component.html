@@ -1,0 +1,126 @@
+<form [formGroup]="routerForm" (ngSubmit)="submit()">
+  <div class="form-header">
+    <p class="h1">{{ routerModel ? ('edit_router' | t) : ('add_router' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'routers']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="mb-4 tabs">
+      <a class="tab" [ngClass]="{ active: activeTab === 'general' }" (click)="activeTab = 'general'">{{ 'general' | t }}</a>
+    </div>
+    <section formGroupName="general" [hidden]="activeTab !== 'general'">
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'router_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-6">
+          <mat-form-field>
+            <mat-label>{{ 'description' | t }}</mat-label>
+            <textarea rows="8" matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'schedule' | t }}</mat-label>
+            <mat-select formControlName="schedule">
+              <mat-option *ngFor="let schedule of schedules" [value]="schedule.id">{{ schedule.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mb-3">
+        <mat-checkbox formControlName="irregularTimingEnabled">{{ 'irregular_timing' | t }}</mat-checkbox>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'active' | t }}</mat-label>
+            <mat-select formControlName="irregularTimingActive">
+              <mat-option [value]="true">{{ 'active' | t }}</mat-option>
+              <mat-option [value]="false">{{ 'inactive' | t }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'from' | t }}</mat-label>
+            <input matInput formControlName="irregularTimingFrom" [matDatepicker]="fromDatePicker" required>
+            <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromDatePicker></mat-datepicker>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'to' | t }}</mat-label>
+            <input matInput formControlName="irregularTimingTo" [matDatepicker]="toDatePicker" required>
+            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #toDatePicker></mat-datepicker>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'numbers_dialed' | t }}</mat-label>
+            <input matInput type="text" formControlName="numbersDialed">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'router_admin_code' | t }}</mat-label>
+            <input matInput type="text" formControlName="adminCode">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'default_selection_seconds' | t }}</mat-label>
+            <input matInput type="number" formControlName="defaultSelectionDuration">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mb-3">
+        <mat-checkbox formControlName="vipEnabled">{{ 'router_vip_bypass' | t }}</mat-checkbox>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'router_vip_destination' | t }}</mat-label>
+            <input matInput type="text" formControlName="vipDestination">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mb-3">
+        <mat-checkbox formControlName="waitingRouterEnabled">{{ 'waiting_router' | t }}</mat-checkbox>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-3 mt-3">
+          <mat-checkbox formControlName="queuePositionReading">{{ 'queue_position_reading' | t }}</mat-checkbox>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'queue_waiting_seconds' | t }}</mat-label>
+            <input matInput type="number" formControlName="queueWaitingTime">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <app-audio-input [placeholder]="'router_queue_file' | t"
+                           [fileTypes]="['wav']"
+                           [inputFile]="audioFile"
+                           [disabled]="true"
+                           (fileChange)="setFile($event)">
+          </app-audio-input>
+        </div>
+      </div>
+    </section>
+  </div>
+</form>

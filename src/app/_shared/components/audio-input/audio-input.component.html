@@ -1,8 +1,8 @@
 <div class="d-flex">
   <mat-form-field>
     <mat-label>{{ placeholder }}</mat-label>
-    <input matInput type="text" [value]="file ? file.name : null">
-    <mat-icon matSuffix (click)="audioFileInput.click()" *ngIf="!file">upload</mat-icon>
+    <input matInput type="text" [value]="file ? file.name : null" [disabled]="disabled">
+    <mat-icon matSuffix (click)="audioFileInput.click()" *ngIf="!file && !disabled">upload</mat-icon>
     <mat-icon matSuffix (click)="resetFile()" *ngIf="file">close</mat-icon>
   </mat-form-field>
   <div id="actions" class="ms-2">

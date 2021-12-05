@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: () => import('./callbacks/callbacks.module').then(m => m.CallbacksModule)
       },
       {
+        path: 'routers',
+        loadChildren: () => import('./routers/routers.module').then(m => m.RoutersModule)
+      },
+      {
         path: 'acds',
         loadChildren: () => import('./acds/acds.module').then(m => m.AcdsModule)
       },

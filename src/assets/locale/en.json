@@ -1,5 +1,6 @@
 [
   { "key": "active", "value": "Active" },
+  { "key": "inactive", "value":  "Inactive" },
   { "key": "add", "value": "Add" },
   { "key": "add_campaign", "value": "Add Campaign" },
   { "key": "add_organization", "value": "Add Organization" },
@@ -202,6 +203,7 @@
   { "key": "add_unique_day", "value": "Add Unique Day" },
   { "key": "unique_day_name", "value": "Unique Day Name" },
   { "key": "select_unique_day", "value": "Select Unique Day" },
+  { "key": "from", "value": "From" },
   { "key": "from_date", "value": "From Date" },
   { "key": "to_date", "value": "To Date" },
   { "key": "from_hour", "value": "From Hour" },
@@ -264,6 +266,19 @@
   { "key": "associated_extensions", "value": "Associated Extensions" },
   { "key": "group_number_uniqueness_error", "value": "Group number and switchboard combination must be unique." },
   { "key": "hunt_uniqueness_error", "value": "Hunt Pilot number and switchboard combination must be unique" },
-  { "key": "secondary_hunt_uniqueness_error", "value": "Secondary Hunt Pilot number and switchboard combination must be unique" }
+  { "key": "secondary_hunt_uniqueness_error", "value": "Secondary Hunt Pilot number and switchboard combination must be unique" },
+  { "key": "add_router", "value": "Add Router" },
+  { "key": "edit_router", "value": "Edit Router" },
+  { "key": "router_name", "value": "Router name" },
+  { "key": "irregular_timing", "value": "Irregular timing" },
+  { "key": "numbers_dialed", "value": "Numbers dialed" },
+  { "key": "router_admin_code", "value": "Router admin code" },
+  { "key": "default_selection_seconds", "value": "Number of seconds to select default" },
+  { "key": "router_vip_bypass", "value": "Router bypass for VIP numbers" },
+  { "key": "router_vip_destination", "value": "Destination to transfer VIP numbers" },
+  { "key": "waiting_router", "value": "Waiting router" },
+  { "key": "queue_position_reading", "value": "Queue position reading" },
+  { "key": "queue_waiting_seconds", "value": "Number of seconds to wait in queue" },
+  { "key": "router_queue_file", "value": "Audio file while waiting in queue" }
 ]
 

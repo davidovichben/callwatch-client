@@ -17,6 +17,7 @@ export class AudioInputComponent implements AfterViewInit {
   @Input() placeholder: string;
   @Input() fileTypes;
   @Input() inputFile: File;
+  @Input() disabled = false;
 
   @Output() fileChange = new EventEmitter();
 
