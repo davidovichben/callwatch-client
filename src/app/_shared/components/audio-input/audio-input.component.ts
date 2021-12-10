@@ -29,7 +29,7 @@ export class AudioInputComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.inputFile) {
-      this.uploadFile(this.inputFile);
+      setTimeout(() => this.uploadFile(this.inputFile), 0);
     }
   }
 

@@ -266,9 +266,13 @@
   { "key": "group_number_uniqueness_error", "value": "שילוב מספר קבוצה ומרכזיה/ קיים במערכת" },
   { "key": "hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot ומרכזיה קיים במערכת" },
   { "key": "secondary_hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot משני ומרכזיה קיים במערכת" },
+  { "key": "message", "value": "הודעה" },
+  { "key": "router", "value": "נתב" },
   { "key": "add_router", "value": "הוסף נתב" },
   { "key": "edit_router", "value": "ערוך נתב" },
+  { "key": "select_router", "value": "בחר נתב" },
   { "key": "router_name", "value": "שם נתב" },
+  { "key": "timing", "value": "תזמון" },
   { "key": "irregular_timing", "value": "תזמון חריג" },
   { "key": "dialed_numbers", "value": "מספרים שחויגו" },
   { "key": "router_admin_code", "value": "קוד ניהול נתב" },
@@ -278,7 +282,17 @@
   { "key": "waiting_router", "value": "נתב המתנה" },
   { "key": "queue_position_reading", "value": "הקראת מיקום בתור" },
   { "key": "queue_waiting_seconds", "value": "מספר שניות להמתנה בתור" },
-  { "key": "router_queue_file", "value": "קובץ שמע בעת המתנה בתור" }
+  { "key": "router_queue_file", "value": "קובץ שמע בעת המתנה בתור" },
+  { "key": "active_hours_message_loading", "value": "טעינת הודעות בשעות הפעילות" },
+  { "key": "inactive_hours_message_loading", "value": "טעינת הודעות לא בשעות הפעילות" },
+  { "key": "active_hours_routing", "value": "ניתוב בשעות הפעילות" },
+  { "key": "inactive_hours_routing", "value": "ניתוב לא בשעות הפעילות" },
+  { "key": "tags", "value": "תגיות" },
+  { "key": "none", "value": "ללא" },
+  { "key": "select_language", "value": "בחר שפה" },
+  { "key": "message_activity", "value": "פעילות הודעה" },
+  { "key": "timed", "value": "מתוזמן" },
+  { "key": "activity_type_error", "value": "יש לבחור סוג פעילות" }
 ]
 
 

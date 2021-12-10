@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audio-input.component';
+import { MessagesComponent } from 'src/app/platform/routers/form/messages/messages.component';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
@@ -11,6 +12,7 @@ import { HelpersService } from 'src/app/_shared/services/generic/helpers.service
 import { RouterModel } from 'src/app/_shared/models/router.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { RouterMessageModel } from 'src/app/_shared/models/router-message.model';
 
 @Component({
 	selector: 'app-form',
@@ -19,10 +21,19 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(AudioInputComponent) audioInput: AudioInputComponent;
+  @ViewChildren(MessagesComponent) messageComponents: QueryList<MessagesComponent>;
 
   readonly sub = new Subscription();
 
 	readonly errorMessages = ErrorMessages;
+
+  readonly tabs = [
+    { label: 'general', value: 'general' },
+    { label: 'active_hours_message_loading', value: 'activeMessages' },
+    { label: 'inactive_hours_message_loading', value: 'inactiveMessages' },
+    { label: 'active_hours_routing', value: 'activeRouting' },
+    { label: 'inactive_hours_routing', value: 'inactiveRouting' }
+  ];
 
   readonly toggledControls = {
     irregularTimingEnabled: ['irregularTimingActive', 'irregularTimingFrom', 'irregularTimingTo'],
@@ -32,15 +43,19 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   schedules: SelectItemModel[] = [];
 
-  activeTab = 'general';
+  messages: {
+    active: RouterMessageModel[],
+    inactive: RouterMessageModel[]
+  }
+
+  activeTab = 'activeMessages';
+
+  audioFile: File;
 
   routerForm: FormGroup;
-
 	routerModel: RouterModel;
 
 	isSubmitting = false;
-
-  audioFile: File;
 
   constructor(private router: Router, private route: ActivatedRoute,
               private fb: FormBuilder, private routerService: RouterService,
@@ -59,6 +74,8 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       if (routeData.router.general.queueFile) {
         this.audioFile = this.helpers.base64toFile(routeData.router.general.queueFile, routeData.router.general.queueFileName);
       }
+
+      this.messages = routeData.router.messages;
     }
 	}
 
@@ -71,6 +88,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.routerForm = this.fb.group({
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
+        tags: this.fb.control(null),
         description: this.fb.control(null),
         schedule: this.fb.control(null),
         irregularTimingEnabled: this.fb.control(null),
@@ -126,12 +144,24 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 	submit(): void {
+    const values: any = {};
+    values.messages = [];
+    this.messageComponents.forEach(component => {
+      values.messages.push(...component.messages);
+    })
+
+    console.log(values)
 		if (this.routerForm.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
-      const values = {};
+      const values: any = {};
       Object.keys(this.routerForm.value).forEach(groupName => {
         Object.assign(values, this.routerForm.getRawValue()[groupName]);
+      })
+
+      values.messages = [];
+      this.messageComponents.forEach(component => {
+        values.messages.push(...component.messages);
       })
 
 			if (this.routerModel) {
@@ -144,7 +174,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	private handleServerResponse(response: boolean): void {
 		if (response) {
-			this.router.navigate(['/platform', 'routers']);
+			// this.router.navigate(['/platform', 'routers']);
 		}
 
 		this.isSubmitting = false;

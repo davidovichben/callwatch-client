@@ -1,0 +1,34 @@
+@import '~src/assets/variables';
+
+.message
+  display: flex
+  align-items: center
+  padding: 10px
+  background-color: LightGreyColor
+  border-radius: 12px
+
+  > *
+    margin: 0 10px
+
+  .drag-icon
+    cursor: grab
+
+  mat-form-field
+    height: 60px
+
+  app-audio-input
+    width: initial
+    flex-grow: 1
+
+  .icon-container
+    display: flex
+    align-items: center
+    flex-direction: column
+    width: 100px
+
+  p
+    margin: 0
+    font-size: 12px
+
+  mat-slide-toggle
+    margin: 0 40px !important

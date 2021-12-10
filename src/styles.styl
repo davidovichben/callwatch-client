@@ -109,6 +109,9 @@ button:focus
 .white-text
   color: #fff
 
+.dark-grey-text
+  color: DarkGreyColor
+
 .grey-text
   color: GreyColor
 
@@ -117,6 +120,9 @@ button:focus
 
 .red-text
   color: RedColor
+
+.green-text
+  color: GreenColor
 
 .f-12
   font-size: 12px
@@ -131,16 +137,16 @@ button:focus
   font-size: 20px
 
 .w-100p
-  width: 100px
+  width: 100px !important
 
 .w-200p
-  width: 200px
+  width: 200px !important
 
 .w-250p
-  width: 250px
+  width: 250px !important
 
 .w-300p
-  width: 300px
+  width: 300px !important
 
 .pointer
   cursor: pointer
@@ -277,8 +283,8 @@ button:focus
   border-bottom: 1px solid rgba(0, 0, 0, 0.31)
 
   .tab
-    width: 150px
-    padding: 5px 0
+    min-width: 120px
+    padding: 5px 20px
     cursor: pointer
     color: LightBlackColor
     text-align: center
@@ -417,6 +423,20 @@ textarea.mat-input-element
   .mat-icon
     margin-bottom: 2px;
 
+.cdk-drag-preview
+  box-sizing: border-box
+  border-radius: 4px
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12)
+
+
+.cdk-drag-placeholder
+  opacity: 0
+
+
+.cdk-drag-animating
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
 
 /*--- Bootstrap ---*/
 
