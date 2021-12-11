@@ -292,7 +292,14 @@
   { "key": "select_language", "value": "בחר שפה" },
   { "key": "message_activity", "value": "פעילות הודעה" },
   { "key": "timed", "value": "מתוזמן" },
-  { "key": "activity_type_error", "value": "יש לבחור סוג פעילות" }
+  { "key": "activity_type_error", "value": "יש לבחור סוג פעילות" },
+  { "key": "add_key", "value": "הוסף מקש" },
+  { "key": "key_number", "value": "מספר מקש" },
+  { "key": "default", "value": "ברירת מחדל" },
+  { "key": "activity", "value": "פעילות" },
+  { "key": "data_documenting", "value": "תיעוד נתונים" },
+  { "key": "sms_content", "value": "מלל מסרון" },
+  { "key": "external_name", "value": "שם השירות" }
 ]
 
 

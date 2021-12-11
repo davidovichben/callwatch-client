@@ -1,18 +1,17 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { RouterMessageModel, RouterMessageTypes } from 'src/app/_shared/models/router-message.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { MessageTimingComponent } from './message-timing/message-timing.component';
+import { TimingDialogComponent } from 'src/app/platform/routers/form/timing-dialog/timing-dialog.component';
 
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
+import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { Langs } from 'src/app/_shared/constants/general';
 
 @Component({
@@ -26,31 +25,29 @@ export class MessagesComponent implements OnDestroy {
   readonly langs = Langs;
   readonly messageTypes = RouterMessageTypes;
 
-  @Input() type: string;
-  @Input() routers: SelectItemModel[];
-  @Input() schedules: SelectItemModel[];
-
-  @Input() messages = [];
-
-  @Output() messageDeleted = new EventEmitter();
+  @Input() category: string;
 
   activeLang;
 
+  formArray: FormArray;
+
   constructor(private dialog: MatDialog, private locale: LocaleService,
+              private fb: FormBuilder,
               private scheduleService: ScheduleService,
               private helpers: HelpersService,
-              private t: TranslatePipe) {}
+              public formService: RouterFormService) {}
 
   ngOnInit(): void {
+    this.formArray = (this.formService.routerForm.get('messages.' + this.category) as FormArray);
+
     this.activeLang = this.locale.getLocale();
-    if (this.messages) {
+    if (this.formService.messages) {
       this.setMessagesFiles();
     }
   }
 
   private setMessagesFiles(): void {
-    const messagesWithFiles = this.messages.filter(message => message.contentType === 'message' && Object.keys(message.files).length > 0);
-    console.log(messagesWithFiles)
+    const messagesWithFiles = this.formArray.value.filter(message => message.type === 'message' && Object.keys(message.files).length > 0);
     messagesWithFiles.forEach(message => {
       this.langs.forEach(iteratedLang => {
         const lang = iteratedLang.value;
@@ -61,16 +58,19 @@ export class MessagesComponent implements OnDestroy {
     });
   }
 
-  setFile(index: number, file?: { bin: string, name: string }): void {
-    this.messages[index].files[this.activeLang] = file;
+  setFile(message: FormGroup, file?: { bin: string, name: string }): void {
+    const value = message.get('files').value;
+    message[this.activeLang] = file;
+
+    message.get('files').patchValue(value);
   }
 
-  openActivityDialog(message: RouterMessageModel): void {
-    const dialog = this.dialog.open(MessageTimingComponent, {
+  openActivityDialog(message: FormGroup): void {
+    const dialog = this.dialog.open(TimingDialogComponent, {
       width: '800px',
       data: {
-        schedules: this.schedules,
-        message: message
+        schedules: this.formService.schedules,
+        values: message.value
       }
     })
 
@@ -78,14 +78,14 @@ export class MessagesComponent implements OnDestroy {
       if (timing) {
         if (timing.type === 'schedule') {
           this.scheduleService.getSchedule(timing.schedule).then(schedule => {
-            message.timingType = timing.type;
-            message.schedule = timing.schedule;
+            message.get('timingType').patchValue(timing.type);
+            message.get('schedule').patchValue(timing.schedule);
             this.calculateMessageOnline('', '');
           });
         } else {
-          message.timingType = timing.type;
-          message.startDateTime = timing.startDateTime;
-          message.endDateTime = timing.endDateTime;
+          message.get('timingType').patchValue(timing.type);
+          message.get('startDateTime').patchValue(timing.startDateTime);
+          message.get('endDateTime').patchValue(timing.endDateTime);
           this.calculateMessageOnline('', '');
         }
       }
@@ -99,15 +99,29 @@ export class MessagesComponent implements OnDestroy {
   }
 
   dropMessage(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.messages, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.formArray.controls, event.previousIndex, event.currentIndex);
   }
 
   newMessage(): void {
-    this.messages.push(new RouterMessageModel(this.type));
+    const message = this.fb.group({
+      category: this.fb.control(this.category),
+      type: this.fb.control(null),
+      description: this.fb.control(null),
+      tags: this.fb.control(null),
+      files: this.fb.control({}),
+      router: this.fb.control(null),
+      timingType: this.fb.control(null),
+      schedule: this.fb.control(null),
+      startDateTime: this.fb.control(null),
+      endDateTime: this.fb.control(null),
+      isActive: this.fb.control(true)
+    });
+
+    this.formArray.push(message);
   }
 
   deleteMessage(index: number): void {
-    this.messages.splice(index, 1);
+    this.formArray.removeAt(index);
   }
 
   ngOnDestroy(): void {

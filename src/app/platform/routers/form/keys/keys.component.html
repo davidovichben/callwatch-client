@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-between mb-5">
+  <div>
+    <button mat-flat-button type="button" class="mt-3 btn blue-btn" (click)="newKey()" *ngIf="formArray.length < types.length">{{ 'add_key' | t }}</button>
+  </div>
+  <mat-form-field class="w-200p">
+    <mat-label>{{ 'select_language' | t  }}</mat-label>
+    <mat-select [value]="activeLang" (valueChange)="activeLang = $event">
+      <mat-option *ngFor="let lang of langs" [value]="lang.value">{{ lang.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<ng-container [formGroup]="formService.routerForm.get('keys')">
+  <ng-container [formArrayName]="category">
+    <div class="key" *ngFor="let key of formArray['controls']; let index = index" [formGroupName]="index">
+        <div class="text-center">
+          <p>{{ 'default' | t }}</p>
+          <mat-radio-button [value]="key.value.isDefault" (change)="setDefault(key)"></mat-radio-button>
+        </div>
+      <div class="text-center">
+        <p>{{ 'key_number' | t }}</p>
+        <p>{{ key.get('type').value }}</p>
+      </div>
+      <mat-form-field class="mx-3 w-200p">
+        <mat-select [placeholder]="'activity' | t" formControlName="activityType" (ngModelChange)="setActivityName(key.value, $event)">
+          <mat-option [value]="type.id" *ngFor="let type of formService.keyActivityTypes">{{ type.name | t }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="flex-grow-1">
+        <ng-container [ngSwitch]="key.get('activityTypeName').value">
+          <bd-select [placeholder]="'select_group_extension' | t" formControlName="activityValue" *ngSwitchCase="'call_transfer'">
+            <!--        <bd-option [value]="lang.value" *ngFor="let lang of langs">{{ lang.label }}</bd-option>-->
+          </bd-select>
+          <ng-container *ngSwitchCase="'audio_message'">
+            <!--        <app-audio-input [placeholder]="'audio_file' | t" [inputFile]="key.get('files')[lang.value].value" (fileChange)="setFile(key, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>-->
+          </ng-container>
+          <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
+            <mat-select [placeholder]="'select_language' | t" formControlName="activityValue">
+              <mat-option [value]="lang.value" *ngFor="let lang of langs">{{ lang.label }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'sms'">
+            <input matInput [placeholder]="'sms_content' | t" formControlName="activityValue">
+          </mat-form-field>
+          <bd-select [placeholder]="'select_router' | t" formControlName="router" *ngSwitchCase="'router_transfer'">
+            <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
+          </bd-select>
+          <mat-form-field *ngSwitchCase="'external_service'">
+            <input matInput [placeholder]="'service_name' | t" formControlName="activityValue">
+          </mat-form-field>
+        </ng-container>
+      </div>
+      <mat-form-field class="mx-3 w-200p">
+        <mat-select [placeholder]="'data_documenting' | t" formControlName="documenting"></mat-select>
+      </mat-form-field>
+        <div class="text-center pointer" (click)="openActivityDialog(key)">
+          <p class="mb-1 bold">{{ 'timing' | t }}</p>
+          <mat-icon [ngClass]="{ 'green-text': key.get('timingType').value }">watch_later</mat-icon>
+          <p>{{ key.get('timingType').value ? (key.get('timingType').value  | t) : ('none' | t) }}</p>
+        </div>
+      <div class="text-center icon-container">
+        <p class="mb-1 bold">{{ 'status' | t }}</p>
+        <mat-icon [ngClass]="{ 'green-text': key.get('isActive').value, 'red-text': !key.get('isActive').value }">power_settings_new</mat-icon>
+        <p [ngClass]="{ 'green-text': key.get('isActive').value, 'red-text': !key.get('isActive').value }">{{ key.get('isActive').value ? ('active' | t) : ('inactive' | t) }}</p>
+      </div>
+      <div class="text-center">
+        <mat-slide-toggle formControlName="isActive"></mat-slide-toggle>
+      </div>
+      <mat-icon class="pointer dark-grey-text" (click)="deleteKey(index)">delete</mat-icon>
+    </div>
+  </ng-container>
+</ng-container>

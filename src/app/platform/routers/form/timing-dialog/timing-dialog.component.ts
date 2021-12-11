@@ -5,24 +5,22 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Fade } from 'src/app/_shared/constants/animations';
-import { RouterMessageModel } from 'src/app/_shared/models/router-message.model';
 
 @Component({
-  selector: 'app-message-timing',
-  templateUrl: './message-timing.component.html',
+  selector: 'app-timing-dialog',
+  templateUrl: './timing-dialog.component.html',
   animations: [Fade]
 })
-export class MessageTimingComponent {
+export class TimingDialogComponent {
 
   readonly errorMessages = ErrorMessages;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { message?: RouterMessageModel, schedules: SelectItemModel[] },
-              private dialogRef: MatDialogRef<MessageTimingComponent>) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { values?: any, schedules: SelectItemModel[] },
+              private dialogRef: MatDialogRef<TimingDialogComponent>) {}
 
   submit(form: NgForm): void {
     if (form.valid) {
       this.dialogRef.close(form.value);
     }
   }
-
 }

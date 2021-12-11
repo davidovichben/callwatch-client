@@ -1,7 +1,7 @@
 export class RouterMessageModel {
   id: number;
+  category: string;
   type: string;
-  contentType: string;
   router?: number;
   description?: string;
   tags?: string[];
@@ -12,9 +12,9 @@ export class RouterMessageModel {
   schedule: number;
   isActive: boolean;
 
-  constructor(type: string) {
-    this.type = type;
-    this.contentType = 'message';
+  constructor(category: string) {
+    this.category = category;
+    this.type = 'message';
     this.isActive = true;
     this.files = {};
   }

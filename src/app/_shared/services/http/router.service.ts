@@ -7,6 +7,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { RouterModel } from 'src/app/_shared/models/router.model';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
 export class RouterService extends BaseHttpService {
@@ -53,4 +54,11 @@ export class RouterService extends BaseHttpService {
 			.then(() => true)
 			.catch(() => false);
 	}
+
+  getKeyActivityTypes(): Promise<SelectItemModel[]> {
+    return this.http.get(this.endPoint + '/keyActivityTypes', this.getTokenRequest())
+      .toPromise()
+      .then(response => response as SelectItemModel[])
+      .catch(() => []);
+  }
 }

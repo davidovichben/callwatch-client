@@ -6,43 +6,45 @@
     </mat-select>
   </mat-form-field>
 </div>
-<div (cdkDropListDropped)="dropMessage($event)" cdkDropList>
-  <div class="message" *ngFor="let message of messages; let index = index" cdkDrag>
-    <mat-icon id="dragIcon" class="dark-grey-text">drag_indicator</mat-icon>
-    <mat-form-field class="w-100p">
-      <mat-label>{{ 'type' | t }}</mat-label>
-      <mat-select [(ngModel)]="message.contentType">
-        <mat-option [value]="type" *ngFor="let type of messageTypes">{{ type | t }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <ng-container *ngIf="message.contentType === 'router'">
-      <mat-form-field class="w-200p">
-        <mat-label>{{ 'select_router' | t }}</mat-label>
-        <mat-select [(ngModel)]="message.router">
-          <mat-option *ngFor="let router of routers" [value]="router.id">{{ router.name }}</mat-option>
+<div [formGroup]="formService.routerForm.get('messages')" (cdkDropListDropped)="dropMessage($event)" cdkDropList>
+  <ng-container [formArrayName]="category">
+    <div class="message" *ngFor="let message of formArray['controls']; let index = index" [formGroupName]="index" cdkDrag>
+      <mat-icon id="dragIcon" class="dark-grey-text">drag_indicator</mat-icon>
+      <mat-form-field class="w-100p">
+        <mat-label>{{ 'type' | t }}</mat-label>
+        <mat-select formControlName="type">
+          <mat-option [value]="type" *ngFor="let type of messageTypes">{{ type | t }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="flex-grow-1">
-        <mat-label>{{ 'description' | t }}</mat-label>
-        <input matInput [(ngModel)]="message.description">
-      </mat-form-field>
-    </ng-container>
-    <ng-container *ngIf="message.contentType === 'message'">
-      <app-chips-input class="w-300p" [placeholder]="'tags' | t" [(ngModel)]="message.tags"></app-chips-input>
-      <app-audio-input [placeholder]="'audio_file' | t" [inputFile]="message.files[lang.value]" [hidden]="activeLang !== lang.value" (fileChange)="setFile(index, $event)" *ngFor="let lang of langs"></app-audio-input>
-      <div class="icon-container pointer" (click)="openActivityDialog(message)">
-        <p class="mb-1 bold">{{ 'timing' | t }}</p>
-        <mat-icon [ngClass]="{ 'green-text': message.timingType }">watch_later</mat-icon>
-        <p>{{ message.timingType ? (message.timingType | t) : ('none' | t) }}</p>
-      </div>
-      <div class="icon-container">
-        <p class="mb-1 bold">{{ 'status' | t }}</p>
-        <mat-icon [ngClass]="{ 'green-text': message.isActive, 'red-text': !message.isActive }">power_settings_new</mat-icon>
-        <p [ngClass]="{ 'green-text': message.isActive, 'red-text': !message.isActive }">{{ message.isActive ? ('active' | t) : ('inactive' | t) }}</p>
-      </div>
-    </ng-container>
-    <mat-slide-toggle [(ngModel)]="message.isActive"></mat-slide-toggle>
-    <mat-icon class="pointer dark-grey-text" (click)="deleteMessage(index)">delete</mat-icon>
-  </div>
+      <ng-container *ngIf="message.get('type').value === 'router'">
+        <mat-form-field class="w-200p">
+          <mat-label>{{ 'select_router' | t }}</mat-label>
+          <mat-select formControlName="router">
+            <mat-option *ngFor="let router of formService.routers" [value]="router.id">{{ router.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="flex-grow-1">
+          <mat-label>{{ 'description' | t }}</mat-label>
+          <input matInput formControlName="description">
+        </mat-form-field>
+      </ng-container>
+      <ng-container *ngIf="message.get('type').value === 'message'">
+        <app-chips-input class="w-300p" [placeholder]="'tags' | t" formControlName="tags"></app-chips-input>
+        <app-audio-input [placeholder]="'audio_file' | t" [inputFile]="message.get('files').value[lang.value]" (fileChange)="setFile(message, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+        <div class="icon-container pointer" (click)="openActivityDialog(message)">
+          <p class="mb-1 bold">{{ 'timing' | t }}</p>
+          <mat-icon [ngClass]="{ 'green-text': message.get('timingType').value }">watch_later</mat-icon>
+          <p>{{ message.get('timingType').value ? (message.get('timingType').value | t) : ('none' | t) }}</p>
+        </div>
+        <div class="icon-container">
+          <p class="mb-1 bold">{{ 'status' | t }}</p>
+          <mat-icon [ngClass]="{ 'green-text': message.get('isActive').value, 'red-text': !message.get('isActive').value }">power_settings_new</mat-icon>
+          <p [ngClass]="{ 'green-text': message.get('isActive').value, 'red-text': !message.get('isActive').value }">{{ message.get('isActive').value ? ('active' | t) : ('inactive' | t) }}</p>
+        </div>
+      </ng-container>
+      <mat-slide-toggle formControlName="isActive"></mat-slide-toggle>
+      <mat-icon class="pointer dark-grey-text" (click)="deleteMessage(index)">delete</mat-icon>
+    </div>
+  </ng-container>
 </div>
 <button mat-flat-button type="button" class="mt-3 btn blue-btn" (click)="newMessage()">{{ 'add' | t }}</button>

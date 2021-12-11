@@ -2,31 +2,30 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { AudioInputModule } from 'src/app/_shared/components/audio-input/audio-input.module';
+import { GeneralModule } from 'src/app/platform/routers/form/general/general.module';
+import { MessagesModule } from './messages/messages.module';
+import { KeysModule } from 'src/app/platform/routers/form/keys/keys.module';
 
 import { FormComponent } from './form.component';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
 import { RouterResolve } from 'src/app/_shared/resolves/router.resolve';
 import { ScheduleSelectResolve } from 'src/app/_shared/resolves/schedule-select.resolve';
-import { ChipsInputModule } from 'src/app/_shared/components/chips-input/chips-input.module';
-import { MessagesModule } from './messages/messages.module';
+import { RouterActivityTypeResolve } from 'src/app/_shared/resolves/router-activity-type.resolve';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: FormComponent,
     resolve: {
+      keyActivityTypes: RouterActivityTypeResolve,
       schedules: ScheduleSelectResolve
     }
 	},
@@ -35,6 +34,7 @@ const routes: Routes = [
 		component: FormComponent,
 		resolve: {
       router: RouterResolve,
+      keyActivityTypes: RouterActivityTypeResolve,
       schedules: ScheduleSelectResolve
     }
 	}
@@ -42,26 +42,23 @@ const routes: Routes = [
 
 @NgModule({
 	declarations: [FormComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    TranslateModule,
-    AudioInputModule,
-    ChipsInputModule,
-    MessagesModule
-  ],
+		MatButtonModule,
+		TranslateModule,
+    GeneralModule,
+		MessagesModule,
+		KeysModule
+	],
 	providers: [
     RouterService,
     GenericService,
+    RouterFormService,
     RouterResolve,
-    ScheduleSelectResolve
+    ScheduleSelectResolve,
+    RouterActivityTypeResolve
   ]
 })
 export class FormModule {}

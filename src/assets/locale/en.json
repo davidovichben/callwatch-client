@@ -293,5 +293,12 @@
   { "key": "select_language", "value": "Select Language" },
   { "key": "message_activity", "value": "Message Activity" },
   { "key": "timed", "value": "Timed" },
-  { "key": "activity_type_error", "value": "Choose an activity type" }
+  { "key": "activity_type_error", "value": "Choose an activity type" },
+  { "key": "add_key", "value": "Add Key" },
+  { "key": "key_number", "value": "Key Number" },
+  { "key": "default", "value": "Default" },
+  { "key": "activity", "value": "Activity" },
+  { "key": "data_documenting", "value": "Data Documenting" },
+  { "key": "sms_content", "value": "SMS Content" },
+  { "key": "external_name", "value": "Service Name" }
 ]
