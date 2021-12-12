@@ -19,7 +19,6 @@ import { RouterFormService } from 'src/app/_shared/services/state/router-form.se
 import { RouterResolve } from 'src/app/_shared/resolves/router.resolve';
 import { ScheduleSelectResolve } from 'src/app/_shared/resolves/schedule-select.resolve';
 import { RouterActivityTypeResolve } from 'src/app/_shared/resolves/router-activity-type.resolve';
-import { AcdSelectResolve } from 'src/app/_shared/resolves/acd-select.resolve';
 import { RouterSelectResolve } from 'src/app/_shared/resolves/router-select.resolve';
 
 const routes: Routes = [
@@ -29,7 +28,6 @@ const routes: Routes = [
     resolve: {
       keyActivityTypes: RouterActivityTypeResolve,
       schedules: ScheduleSelectResolve,
-      acds: AcdSelectResolve,
       routers: RouterSelectResolve
     }
 	},
@@ -40,7 +38,6 @@ const routes: Routes = [
       router: RouterResolve,
       keyActivityTypes: RouterActivityTypeResolve,
       schedules: ScheduleSelectResolve,
-      acds: AcdSelectResolve,
       routers: RouterSelectResolve
     }
 	}
@@ -65,7 +62,6 @@ const routes: Routes = [
     RouterResolve,
     ScheduleSelectResolve,
     RouterActivityTypeResolve,
-    AcdSelectResolve,
     RouterSelectResolve
   ]
 })

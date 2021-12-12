@@ -302,7 +302,12 @@
   { "key": "sms_content", "value": "מלל מסרון" },
   { "key": "external_name", "value": "שם השירות" },
   { "key": "add_line", "value": "הוסף שורה" },
-  { "key": "select_key", "value": "בחר מקש" }
+  { "key": "select_key", "value": "בחר מקש" },
+  { "key": "select_condition", "value": "בחר תנאי" },
+  { "key": "condition", "value": "תנאי" },
+  { "key": "destination", "value": "יעד" },
+  { "key": "existing", "value": "מתקיים" },
+  { "key": "else", "value": "אחרת" }
 ]
 
 

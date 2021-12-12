@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Form, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { ScheduleService } from 'src/app/_shared/services/http/schedule.service'
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
-import { RouterKeyTypes } from 'src/app/_shared/models/router-key.model';
+import { RouterKeyConditions, RouterKeyTypes } from 'src/app/_shared/models/router-key.model';
 import { Langs } from 'src/app/_shared/constants/general';
 
 @Component({
@@ -22,6 +22,7 @@ export class KeysComponent implements OnInit, OnDestroy {
 
   readonly sub = new Subscription();
   readonly types = RouterKeyTypes;
+  readonly conditions = RouterKeyConditions;
   readonly langs = Langs;
 
   @Input() category: string;
@@ -80,8 +81,8 @@ export class KeysComponent implements OnInit, OnDestroy {
     key.get('activityTypeName').patchValue(type.name);
   }
 
-  addKeyGroup(type: string): FormGroup {
-    return this.fb.group({
+  addKeyGroup(type: string, conditionResult?: string, isFirstCondition?: boolean): FormGroup {
+    const group =  this.fb.group({
       category: this.fb.control(this.category),
       type: this.fb.control(type),
       activityType: this.fb.control(null),
@@ -97,8 +98,39 @@ export class KeysComponent implements OnInit, OnDestroy {
       isActive: this.fb.control(true),
       isDefault: this.fb.control(false),
       isOnline: this.fb.control(true),
-      callTimes: this.fb.control(null)
+      conditionResult: this.fb.control(conditionResult ?? null),
+      isFirstCondition: this.fb.control(isFirstCondition ?? null)
     });
+
+    this.sub.add(group.get('activityTypeName').valueChanges.subscribe(value => {
+      if (value) {
+        this.activityChanged(value, type, group);
+      }
+    }));
+
+    return group;
+  }
+
+  private activityChanged(value: string, type: string, group: FormGroup): void {
+    const prevValue = group.value.activityTypeName;
+    const arr = (this.formGroup.get(type) as FormArray);
+
+    if (prevValue === 'condition') {
+      const controls = arr.controls.filter(control => !control.get('conditionResult').value);
+      arr.clear();
+      controls.forEach(control => arr.push(control));
+    }
+
+    if (value === 'condition') {
+      let index = arr.controls.indexOf(group);
+
+      ['true', 'false'].forEach(value => {
+        index++;
+
+        const group = this.addKeyGroup(type, value, true);
+        arr.insert(index, group);
+      })
+    }
   }
 
   newKey(type: string): void {
@@ -118,6 +150,16 @@ export class KeysComponent implements OnInit, OnDestroy {
     if (arr.length === 0) {
       this.formGroup.removeControl(type);
       this.setUnusedTypes();
+    }
+  }
+
+  addAction(type: string, index: number): void {
+    const arr = (this.formGroup.get(type) as FormArray);
+    const conditionResult = arr.at(index).value.conditionResult;
+    if (conditionResult) {
+      arr.insert(index + 1, this.addKeyGroup(type, conditionResult));
+    } else {
+      arr.push(this.addKeyGroup(type));
     }
   }
 
@@ -194,10 +236,6 @@ export class KeysComponent implements OnInit, OnDestroy {
 
   private setUnusedTypes(): void {
     this.unusedTypes = this.types.filter(type => !this.getKeys().includes(type));
-  }
-
-  addAction(type: string): void {
-    (this.formGroup.get(type) as FormArray).push(this.addKeyGroup(type));
   }
 
   ngOnDestroy(): void {

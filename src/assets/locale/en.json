@@ -303,5 +303,10 @@
   { "key": "sms_content", "value": "SMS Content" },
   { "key": "external_name", "value": "Service Name" },
   { "key": "add_line", "value": "Add Line" },
-  { "key": "select_key", "value": "Select Key" }
+  { "key": "select_key", "value": "Select Key" },
+  { "key": "select_condition", "value": "Select Condition" },
+  { "key": "condition", "value": "Condition" },
+  { "key": "destination", "value": "Destination" },
+  { "key": "existing", "value": "Existing" },
+  { "key": "else", "value": "else" }
 ]
