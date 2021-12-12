@@ -307,7 +307,9 @@
   { "key": "condition", "value": "תנאי" },
   { "key": "destination", "value": "יעד" },
   { "key": "existing", "value": "מתקיים" },
-  { "key": "else", "value": "אחרת" }
+  { "key": "else", "value": "אחרת" },
+  { "key": "select_schedule", "value": "בחר לוח זמנים" },
+  { "key": "kosher_number", "value": "מספר כשר" }
 ]
 
 

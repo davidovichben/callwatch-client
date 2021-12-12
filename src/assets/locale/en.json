@@ -308,5 +308,7 @@
   { "key": "condition", "value": "Condition" },
   { "key": "destination", "value": "Destination" },
   { "key": "existing", "value": "Existing" },
-  { "key": "else", "value": "else" }
+  { "key": "else", "value": "Else" },
+  { "key": "select_schedule", "value": "Select Schedule" },
+  { "key": "kosher_number", "value": "Kosher Number" }
 ]
