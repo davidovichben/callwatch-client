@@ -225,6 +225,7 @@
   { "key": "calls", "value": "שיחות" },
   { "key": "calltime_editing_submit_error", "value": "לא ניתן לשמור בזמן עריכת זמני חיוג" },
   { "key": "groups_extensions", "value": "קבוצות/שלוחות" },
+  { "key": "select_group_extension", "value": "בחר קבוצה/שלוחה" },
   { "key": "select_new_permission", "value": "בחר הרשאה חדשה" },
   { "key": "permission_has", "value": "להרשאה זו" },
   { "key": "related_users", "value": "משתמשים מקושרים" },
@@ -299,7 +300,9 @@
   { "key": "activity", "value": "פעילות" },
   { "key": "data_documenting", "value": "תיעוד נתונים" },
   { "key": "sms_content", "value": "מלל מסרון" },
-  { "key": "external_name", "value": "שם השירות" }
+  { "key": "external_name", "value": "שם השירות" },
+  { "key": "add_line", "value": "הוסף שורה" },
+  { "key": "select_key", "value": "בחר מקש" }
 ]
 
 

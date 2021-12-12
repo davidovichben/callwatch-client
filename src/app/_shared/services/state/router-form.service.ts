@@ -16,18 +16,9 @@ export class RouterFormService {
   schedules: SelectItemModel[] = [];
   routers: SelectItemModel[] = [];
   keyActivityTypes: SelectItemModel[] = [];
+  acds: SelectItemModel[] = [];
 
   router: RouterModel;
-
-  messages: {
-    active: RouterMessageModel[],
-    inactive: RouterMessageModel[]
-  }
-
-  keys: {
-    active: RouterKeyModel[],
-    inactive: RouterKeyModel[]
-  }
 
   makeForm(): void {
     this.routerForm = this.fb.group({
@@ -37,8 +28,8 @@ export class RouterFormService {
         inactive: this.fb.array([])
       }),
       keys: this.fb.group({
-        active: this.fb.array([]),
-        inactive: this.fb.array([])
+        active: this.fb.group({}),
+        inactive: this.fb.group({})
       }),
     });
   }

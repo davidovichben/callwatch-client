@@ -12,13 +12,13 @@
   <section [hidden]="activeTab !== 'general'">
     <app-general></app-general>
   </section>
-<!--  <section [hidden]="activeTab !== 'activeMessages'">-->
-<!--    <app-messages [formArray]="routerForm.get('messages.active')"></app-messages>-->
-<!--  </section>-->
-<!--  <section [hidden]="activeTab !== 'inactiveMessages'">-->
-<!--    <app-messages [formArray]="routerForm.get('messages.inactive')"></app-messages>-->
-<!--  </section>-->
-  <section [formGroup]="formService.routerForm.get('keys')" [hidden]="activeTab !== 'activeRouting'">
+  <section [hidden]="activeTab !== 'activeMessages'">
+    <app-messages [category]="'active'"></app-messages>
+  </section>
+  <section [hidden]="activeTab !== 'inactiveMessages'">
+    <app-messages [category]="'inactive'"></app-messages>
+  </section>
+  <section [hidden]="activeTab !== 'activeRouting'">
     <app-keys [category]="'active'"></app-keys>
   </section>
   <section [hidden]="activeTab !== 'inactiveRouting'">

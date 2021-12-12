@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { RouterMessageModel, RouterMessageTypes } from 'src/app/_shared/models/router-message.model';
+import { RouterMessageTypes } from 'src/app/_shared/models/router-message.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -41,18 +41,21 @@ export class MessagesComponent implements OnDestroy {
     this.formArray = (this.formService.routerForm.get('messages.' + this.category) as FormArray);
 
     this.activeLang = this.locale.getLocale();
-    if (this.formService.messages) {
-      this.setMessagesFiles();
+    if (this.formService.router && this.formArray.length > 0) {
+      this.setFiles();
     }
   }
 
-  private setMessagesFiles(): void {
-    const messagesWithFiles = this.formArray.value.filter(message => message.type === 'message' && Object.keys(message.files).length > 0);
+  private setFiles(): void {
+    const messagesWithFiles = this.formArray.controls.filter(message => message.get('type').value === 'message' && message.get('files').value.length > 0);
     messagesWithFiles.forEach(message => {
       this.langs.forEach(iteratedLang => {
         const lang = iteratedLang.value;
-        if (message.files[lang]) {
-          message.files[lang] = this.helpers.base64toFile(message.files[lang].bin, message.files[lang].name);
+        if (message.get('files').value[lang]) {
+          const value = message.get('files').value;
+          value[lang] = this.helpers.base64toFile(value[lang].bin, value[lang].name);
+
+          message.get('files').patchValue(value);
         }
       })
     });
@@ -114,7 +117,9 @@ export class MessagesComponent implements OnDestroy {
       schedule: this.fb.control(null),
       startDateTime: this.fb.control(null),
       endDateTime: this.fb.control(null),
-      isActive: this.fb.control(true)
+      isActive: this.fb.control(true),
+      isOnline: this.fb.control(true),
+      callTimes: this.fb.control(null)
     });
 
     this.formArray.push(message);

@@ -19,7 +19,7 @@ import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { AcdResolve } from 'src/app/_shared/resolves/acd.resolve';
-import { AcdTypeResolve } from 'src/app/_shared/resolves/acd-type.resolve';
+import { AcdTypeSelectResolve } from 'src/app/_shared/resolves/acd-type-select.resolve';
 import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
 import { SwitchboardSelectResolve } from 'src/app/_shared/resolves/switchboard-select.resolve';
 import { CallbackSelectResolve } from 'src/app/_shared/resolves/callback-select.resolve';
@@ -29,7 +29,7 @@ const routes: Routes = [
 		path: '',
 		component: FormComponent,
     resolve: {
-      types: AcdTypeResolve,
+      types: AcdTypeSelectResolve,
       switchboards: SwitchboardSelectResolve,
       units: UnitsSelectResolve,
       callbacks: CallbackSelectResolve
@@ -40,7 +40,7 @@ const routes: Routes = [
 		component: FormComponent,
 		resolve: {
       acd: AcdResolve,
-      types: AcdTypeResolve,
+      types: AcdTypeSelectResolve,
       switchboards: SwitchboardSelectResolve,
       units: UnitsSelectResolve,
       callbacks: CallbackSelectResolve
@@ -68,7 +68,7 @@ const routes: Routes = [
     UnitService,
     GenericService,
     AcdResolve,
-    AcdTypeResolve,
+    AcdTypeSelectResolve,
     SwitchboardSelectResolve,
     UnitsSelectResolve,
     CallbackSelectResolve

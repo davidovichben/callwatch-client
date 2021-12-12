@@ -19,7 +19,7 @@ export class FormComponent implements OnInit {
     { label: 'inactive_hours_routing', value: 'inactiveRouting', formGroup: 'keys.inactive' }
   ];
 
-  activeTab = 'general';
+  activeTab = 'activeRouting';
 
   isSubmitting = false;
 
@@ -32,39 +32,41 @@ export class FormComponent implements OnInit {
     this.formService.schedules = routeData.schedules;
     this.formService.routers = routeData.routers;
     this.formService.keyActivityTypes = routeData.keyActivityTypes;
+    this.formService.acds = routeData.acds;
 
     if (routeData.router) {
       this.formService.router = routeData.router;
-      this.formService.messages = routeData.router.messages;
-      this.formService.keys = routeData.router.keys;
+
+      this.formService.routerForm.get('general').patchValue(routeData.router);
+      this.formService.routerForm.get('messages').patchValue(routeData.messages);
+      this.formService.routerForm.get('keys').patchValue(routeData.keys);
     }
 
     this.formService.makeForm();
 	}
 
 	submit(): void {
-    const values: any = {};
+    const form = this.formService.routerForm;
 
-    this.formService.routerForm.markAllAsTouched();
-    if (!this.formService.routerForm.valid) {
+    form.markAllAsTouched();
+    if (!form.valid) {
       this.toggleInvalidTabs();
     }
-    //
-    // console.log(values)
-		// if (this.routerForm.valid && !this.isSubmitting) {
-		// 	this.isSubmitting = true;
-    //
-    //   const values: any = {};
-    //   Object.keys(this.routerForm.value).forEach(groupName => {
-    //     Object.assign(values, this.routerForm.getRawValue()[groupName]);
-    //   })
-    //
-		// 	if (this.formService.router) {
-		// 		this.routerService.updateRouter(this.formService.router.id, values).then(response => this.handleServerResponse(response));
-		// 	} else {
-		// 		this.routerService.newRouter(values).then(response => this.handleServerResponse(response));
-		// 	}
-		// }
+
+		if (form.valid && !this.isSubmitting) {
+			this.isSubmitting = true;
+
+      const values: any = {};
+      Object.keys(form.value).forEach(groupName => {
+        Object.assign(values, form.getRawValue()[groupName]);
+      })
+
+			if (this.formService.router) {
+				this.routerService.updateRouter(this.formService.router.id, values).then(response => this.handleServerResponse(response));
+			} else {
+				this.routerService.newRouter(values).then(response => this.handleServerResponse(response));
+			}
+		}
 	}
 
   private toggleInvalidTabs(): void {

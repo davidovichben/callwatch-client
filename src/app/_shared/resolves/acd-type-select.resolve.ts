@@ -6,7 +6,7 @@ import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
-export class AcdTypeResolve implements Resolve<SelectItemModel[]> {
+export class AcdTypeSelectResolve implements Resolve<SelectItemModel[]> {
 
   constructor(private genericService: GenericService) {}
 

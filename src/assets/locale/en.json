@@ -226,6 +226,7 @@
   { "key": "calls", "value": "Calls" },
   { "key": "calltime_editing_submit_error", "value": "Can't submit while editing call times" },
   { "key": "groups_extensions", "value": "Groups/Extensions" },
+  { "key": "select_group_extension", "value": "Select Group/Extension" },
   { "key": "select_new_permission", "value": "Select New Permission" },
   { "key": "permission_has", "value": "This permission has" },
   { "key": "related_users", "value": "related users" },
@@ -300,5 +301,7 @@
   { "key": "activity", "value": "Activity" },
   { "key": "data_documenting", "value": "Data Documenting" },
   { "key": "sms_content", "value": "SMS Content" },
-  { "key": "external_name", "value": "Service Name" }
+  { "key": "external_name", "value": "Service Name" },
+  { "key": "add_line", "value": "Add Line" },
+  { "key": "select_key", "value": "Select Key" }
 ]

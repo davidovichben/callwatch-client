@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable()
 export class HelpersService {
@@ -45,4 +46,24 @@ export class HelpersService {
       ...arr.slice(index)
     ];
   }
+
+  // Time formatted as hh:mm
+
+  // isTimeBetween(time: string, startTime: string, endTime: string): boolean {
+  //   const hours = +time.substr(0, 2);
+  //   const startHours = +startTime.substr(0, 2);
+  //   const endHours = +endTime.substr(0, 2);
+  //   if (hours > startHours && hours < endHours) {
+  //     return true;
+  //   }
+  //
+  //   if (hours < startHours || hours > endHours) {
+  //     return false;
+  //   }
+  //
+  //   let a = 16 <= hour && hour <= 17
+  //   let b = 0 <= minute && minute <= 30
+  //
+  //   return a && b;
+  // }
 }

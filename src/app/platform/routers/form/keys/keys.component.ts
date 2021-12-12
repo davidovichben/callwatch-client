@@ -10,7 +10,7 @@ import { ScheduleService } from 'src/app/_shared/services/http/schedule.service'
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
-import { RouterKeyModel, RouterKeyTypes } from 'src/app/_shared/models/router-key.model';
+import { RouterKeyTypes } from 'src/app/_shared/models/router-key.model';
 import { Langs } from 'src/app/_shared/constants/general';
 
 @Component({
@@ -27,8 +27,9 @@ export class KeysComponent implements OnInit, OnDestroy {
   @Input() category: string;
 
   activeLang;
+  unusedTypes = [];
 
-  formArray: FormArray;
+  formGroup: FormGroup;
 
   constructor(private dialog: MatDialog, private helpers: HelpersService,
               private fb: FormBuilder,
@@ -37,37 +38,46 @@ export class KeysComponent implements OnInit, OnDestroy {
               public formService: RouterFormService) {}
 
   ngOnInit(): void {
-    this.formArray = (this.formService.routerForm.get('keys.' + this.category) as FormArray);
-    if (this.formArray.length === 0) {
+    this.formGroup = (this.formService.routerForm.get('keys.' + this.category) as FormGroup);
+    if (this.getKeysLength() === 0) {
       this.types.slice(0, 3).forEach(type => {
-        this.formArray.push(this.addKeyGroup(type));
+        const arr = this.fb.array([this.addKeyGroup(type)]);
+        this.formGroup.addControl(type, arr);
       });
+    } else {
+      this.setFiles();
     }
 
+    this.setUnusedTypes();
     this.activeLang = this.locale.getLocale();
   }
 
-  // ngOnInit(): void {
-  //   if (this.messages) {
-  //     this.setMessagesFiles();
-  //   }
-  // }
-  //
-  // private setMessagesFiles(): void {
-  //   const messagesWithFiles = this.messages.filter(message => message.contentType === 'message' && Object.keys(message.files).length > 0);
-  //   messagesWithFiles.forEach(message => {
-  //     this.langs.forEach(iteratedLang => {
-  //       const lang = iteratedLang.value;
-  //       if (message.files[lang]) {
-  //         message.files[lang] = this.helpers.base64toFile(message.files[lang].bin, message.files[lang].name);
-  //       }
-  //     })
-  //   });
-  // }
+  getKeys(): string[] {
+    return Object.keys(this.formGroup.controls);
+  }
 
-  setActivityName(key: RouterKeyModel, activityTypeId: number): void {
+  getKeysLength(): number {
+    return Object.keys(this.formGroup.controls).length;
+  }
+
+  private setFiles(): void {
+    // const keysWithFiles = this.formArray.controls.filter(key => key.get('activityType').value === 'audio_message' && key.get('files').value.length > 0);
+    // keysWithFiles.forEach(key => {
+    //   this.langs.forEach(iteratedLang => {
+    //     const lang = iteratedLang.value;
+    //     if (key.get('files').value[lang]) {
+    //       const value = key.get('files').value;
+    //       value[lang] = this.helpers.base64toFile(value[lang].bin, value[lang].name);
+    //
+    //       key.get('files').patchValue(value);
+    //     }
+    //   })
+    // });
+  }
+
+  setActivityName(key: FormGroup, activityTypeId: number): void {
     const type = this.formService.keyActivityTypes.find(type => type.id === activityTypeId);
-    key.activityTypeName = type.name;
+    key.get('activityTypeName').patchValue(type.name);
   }
 
   addKeyGroup(type: string): FormGroup {
@@ -85,28 +95,36 @@ export class KeysComponent implements OnInit, OnDestroy {
       startDateTime: this.fb.control(null),
       endDateTime: this.fb.control(null),
       isActive: this.fb.control(true),
-      isDefault: this.fb.control(false)
+      isDefault: this.fb.control(false),
+      isOnline: this.fb.control(true),
+      callTimes: this.fb.control(null)
     });
   }
 
-  newKey(): void {
-    const existingTypes = this.formArray.value.map(key => key.type);
-    let missingKeyIndex = this.types.slice(0, this.formArray.length).findIndex(type => existingTypes.indexOf(type) === -1);
-    if (missingKeyIndex !== -1) {
-      const type = this.types[missingKeyIndex];
-      this.formArray.setValue(this.helpers.insertAt(this.formArray.value, missingKeyIndex, this.addKeyGroup(type)));
-    } else {
-      const type = this.types[this.formArray.length];
-      this.formArray.push(this.addKeyGroup(type));
+  newKey(type: string): void {
+    if (!type) {
+      return;
+    }
+
+    const arr = this.fb.array([this.addKeyGroup(type)]);
+    this.formGroup.addControl(type, arr);
+
+    this.setUnusedTypes();
+  }
+
+  deleteAction(type: string, index: number): void {
+    const arr = (this.formGroup.get(type) as FormArray);
+    arr.removeAt(index);
+    if (arr.length === 0) {
+      this.formGroup.removeControl(type);
+      this.setUnusedTypes();
     }
   }
 
-  deleteKey(index: number): void {
-    this.formArray.removeAt(index);
-  }
-
   setDefault(group: FormGroup): void {
-    this.formArray.controls.forEach(control => control.get('isDefault').patchValue(false));
+    this.getKeys().forEach(key => {
+      (this.formGroup.get(key) as FormArray).at(0).patchValue(false);
+    })
     group.get('isDefault').patchValue(true);
   }
 
@@ -117,12 +135,12 @@ export class KeysComponent implements OnInit, OnDestroy {
     key.get('files').patchValue(value);
   }
 
-  openActivityDialog(key: FormGroup): void {
+  openActivityDialog(formGroup: FormGroup): void {
     const dialog = this.dialog.open(TimingDialogComponent, {
       width: '800px',
       data: {
         schedules: this.formService.schedules,
-        values: key.value
+        values: formGroup.value
       }
     })
 
@@ -130,15 +148,19 @@ export class KeysComponent implements OnInit, OnDestroy {
       if (timing) {
         if (timing.type === 'schedule') {
           this.scheduleService.getSchedule(timing.schedule).then(schedule => {
-            key.get('timingType').patchValue(timing.type);
-            key.get('schedule').patchValue(timing.schedule);
-            this.calculateMessageOnline('', '');
+            formGroup.get('timingType').patchValue(timing.type);
+            formGroup.get('schedule').patchValue(timing.schedule);
+
+            // const activeCallTimes = schedule.callTimes.filter(callTime => callTime.isActive);
+            // formGroup.get('callTimes').patchValue(activeCallTimes);
+            // this.checkOnline(formGroup);
           });
         } else {
-          key.get('timingType').patchValue(timing.type);
-          key.get('startDateTime').patchValue(timing.startDateTime);
-          key.get('endDateTime').patchValue(timing.endDateTime);
-          this.calculateMessageOnline('', '');
+          formGroup.get('timingType').patchValue(timing.type);
+          formGroup.get('startDateTime').patchValue(timing.startDateTime);
+          formGroup.get('endDateTime').patchValue(timing.endDateTime);
+
+          // this.checkOnline(formGroup);
         }
       }
     });
@@ -146,8 +168,36 @@ export class KeysComponent implements OnInit, OnDestroy {
     this.sub.add(sub);
   }
 
-  private calculateMessageOnline(a: string, b: string): void {
+  checkOnline(formGroup: FormGroup): void {
+    if (!formGroup.get('isActive').value) {
+      formGroup.get('isOnline').patchValue(false);
+      return;
+    }
+    //
+    // const now = moment();
+    // let isOnline = false;
+    //
+    // console.log(now.weekday())
+    //
+    // switch (formGroup.get('timingType').value) {
+    //   case 'schedule':
+    //     formGroup.get('callTimes').value.forEach(callTime => {
+    //       isOnline = now.weekday() !== callTime.dayNumber;
+    //     })
+    //     break;
+    //   case 'timed':
+    //
+    // }
+    //
+    // formGroup.get('isOnline').patchValue(isOnline);
+  }
 
+  private setUnusedTypes(): void {
+    this.unusedTypes = this.types.filter(type => !this.getKeys().includes(type));
+  }
+
+  addAction(type: string): void {
+    (this.formGroup.get(type) as FormArray).push(this.addKeyGroup(type));
   }
 
   ngOnDestroy(): void {

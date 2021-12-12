@@ -1,6 +1,14 @@
-<div class="d-flex justify-content-between mb-5">
-  <div>
-    <button mat-flat-button type="button" class="mt-3 btn blue-btn" (click)="newKey()" *ngIf="formArray.length < types.length">{{ 'add_key' | t }}</button>
+<div class="d-flex justify-content-between mb-3">
+  <div class="d-flex align-items-center">
+    <ng-container *ngIf="getKeysLength() < types.length">
+      <button mat-flat-button type="button" class="ms-3 mb-4 btn blue-btn" (click)="newKey(newKeySelect.value)">{{ 'add_key' | t }}</button>
+      <mat-form-field class="w-200p">
+        <mat-label>{{ 'select_key' | t  }}</mat-label>
+        <mat-select #newKeySelect>
+          <mat-option *ngFor="let type of unusedTypes" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
   </div>
   <mat-form-field class="w-200p">
     <mat-label>{{ 'select_language' | t  }}</mat-label>
@@ -9,42 +17,47 @@
     </mat-select>
   </mat-form-field>
 </div>
-<ng-container [formGroup]="formService.routerForm.get('keys')">
-  <ng-container [formArrayName]="category">
-    <div class="key" *ngFor="let key of formArray['controls']; let index = index" [formGroupName]="index">
-        <div class="text-center">
-          <p>{{ 'default' | t }}</p>
-          <mat-radio-button [value]="key.value.isDefault" (change)="setDefault(key)"></mat-radio-button>
-        </div>
-      <div class="text-center">
+<ng-container [formGroup]="formService.routerForm.get('keys.' + category)">
+  <div class="key" [formArrayName]="type" *ngFor="let type of getKeys()">
+    <div class="key-action" *ngFor="let action of formGroup.get(type)['controls']; let index = index" [formGroupName]="index">
+      <div class="w-200p" *ngIf="index > 0">
+
+      </div>
+      <div class="text-center" *ngIf="index === 0">
+        <p>{{ 'default' | t }}</p>
+        <mat-radio-button [value]="action.value.isDefault" (change)="setDefault(action)"></mat-radio-button>
+      </div>
+      <div class="text-center" *ngIf="index === 0">
         <p>{{ 'key_number' | t }}</p>
-        <p>{{ key.get('type').value }}</p>
+        <p>{{ action.get('type').value }}</p>
       </div>
       <mat-form-field class="mx-3 w-200p">
-        <mat-select [placeholder]="'activity' | t" formControlName="activityType" (ngModelChange)="setActivityName(key.value, $event)">
+        <mat-select [placeholder]="'activity' | t" formControlName="activityType" (ngModelChange)="setActivityName(action, $event)">
           <mat-option [value]="type.id" *ngFor="let type of formService.keyActivityTypes">{{ type.name | t }}</mat-option>
         </mat-select>
       </mat-form-field>
       <div class="flex-grow-1">
-        <ng-container [ngSwitch]="key.get('activityTypeName').value">
-          <bd-select [placeholder]="'select_group_extension' | t" formControlName="activityValue" *ngSwitchCase="'call_transfer'">
-            <!--        <bd-option [value]="lang.value" *ngFor="let lang of langs">{{ lang.label }}</bd-option>-->
-          </bd-select>
+        <ng-container [ngSwitch]="action.get('activityTypeName').value">
+          <ng-container *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
+            <bd-select [placeholder]="'select_group_extension' | t" formControlName="activityValue">
+              <bd-option [value]="acd.id" *ngFor="let acd of formService.acds">{{ acd.name }}</bd-option>
+            </bd-select>
+          </ng-container>
           <ng-container *ngSwitchCase="'audio_message'">
-            <!--        <app-audio-input [placeholder]="'audio_file' | t" [inputFile]="key.get('files')[lang.value].value" (fileChange)="setFile(key, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>-->
+            <app-audio-input [placeholder]="'audio_file' | t" [inputFile]="action.get('files').value[lang.value]" (fileChange)="setFile(action, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
           </ng-container>
           <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
             <mat-select [placeholder]="'select_language' | t" formControlName="activityValue">
               <mat-option [value]="lang.value" *ngFor="let lang of langs">{{ lang.label }}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field *ngSwitchCase="'sms'">
+          <mat-form-field  class="w-100" *ngSwitchCase="'sms'">
             <input matInput [placeholder]="'sms_content' | t" formControlName="activityValue">
           </mat-form-field>
           <bd-select [placeholder]="'select_router' | t" formControlName="router" *ngSwitchCase="'router_transfer'">
             <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
           </bd-select>
-          <mat-form-field *ngSwitchCase="'external_service'">
+          <mat-form-field class="w-100" *ngSwitchCase="'external_service'">
             <input matInput [placeholder]="'service_name' | t" formControlName="activityValue">
           </mat-form-field>
         </ng-container>
@@ -52,20 +65,26 @@
       <mat-form-field class="mx-3 w-200p">
         <mat-select [placeholder]="'data_documenting' | t" formControlName="documenting"></mat-select>
       </mat-form-field>
-        <div class="text-center pointer" (click)="openActivityDialog(key)">
+        <div class="text-center pointer" (click)="openActivityDialog(action)">
           <p class="mb-1 bold">{{ 'timing' | t }}</p>
-          <mat-icon [ngClass]="{ 'green-text': key.get('timingType').value }">watch_later</mat-icon>
-          <p>{{ key.get('timingType').value ? (key.get('timingType').value  | t) : ('none' | t) }}</p>
+          <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>
+          <p>{{ action.get('timingType').value ? (action.get('timingType').value  | t) : ('none' | t) }}</p>
         </div>
       <div class="text-center icon-container">
         <p class="mb-1 bold">{{ 'status' | t }}</p>
-        <mat-icon [ngClass]="{ 'green-text': key.get('isActive').value, 'red-text': !key.get('isActive').value }">power_settings_new</mat-icon>
-        <p [ngClass]="{ 'green-text': key.get('isActive').value, 'red-text': !key.get('isActive').value }">{{ key.get('isActive').value ? ('active' | t) : ('inactive' | t) }}</p>
+        <mat-icon [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">power_settings_new</mat-icon>
+        <p [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">{{ action.get('isOnline').value ? ('active' | t) : ('inactive' | t) }}</p>
       </div>
       <div class="text-center">
-        <mat-slide-toggle formControlName="isActive"></mat-slide-toggle>
+        <p class="mb-1 bold">{{ 'add_line' | t }}</p>
+        <button mat-flat-button class="green-btn" (click)="addAction(type)">
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
-      <mat-icon class="pointer dark-grey-text" (click)="deleteKey(index)">delete</mat-icon>
+      <div class="text-center">
+        <mat-slide-toggle formControlName="isActive" (ngModelChange)="checkOnline(action)"></mat-slide-toggle>
+      </div>
+      <mat-icon class="pointer dark-grey-text" (click)="deleteAction(type, index)">delete</mat-icon>
     </div>
-  </ng-container>
+  </div>
 </ng-container>

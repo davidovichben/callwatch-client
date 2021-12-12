@@ -20,8 +20,7 @@
         <mat-form-field class="w-100">
           <input matInput [ngModel]="data.values.startDateTime" name="startDateTime" [disabled]="form.value.type !== 'timed'" [required]="form.value.type === 'timed'" [ngxMatDatetimePicker]="fromPicker" [placeholder]="'from' | t">
           <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #fromPicker>
-          </ngx-mat-datetime-picker>
+          <ngx-mat-datetime-picker #fromPicker></ngx-mat-datetime-picker>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
@@ -29,8 +28,7 @@
         <mat-form-field class="w-100">
           <input matInput [ngModel]="data.values.endDateTime" name="endDateTime" [disabled]="form.value.type !== 'timed'" [required]="form.value.type === 'timed'" [ngxMatDatetimePicker]="toPicker" [placeholder]="'to' | t">
           <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #toPicker>
-          </ngx-mat-datetime-picker>
+          <ngx-mat-datetime-picker #toPicker></ngx-mat-datetime-picker>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
