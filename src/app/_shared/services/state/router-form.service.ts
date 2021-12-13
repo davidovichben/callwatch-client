@@ -31,9 +31,8 @@ export class RouterFormService {
     });
   }
 
-  // reset(): void {
-  //   this.router = {};
-  //   this.messages = {};
-  //   this.keys = {};
-  // }
+  reset(): void {
+    this.routerForm.reset();
+    this.router = null;
+  }
 }

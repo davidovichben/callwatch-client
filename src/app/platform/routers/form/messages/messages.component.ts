@@ -79,26 +79,11 @@ export class MessagesComponent implements OnDestroy {
 
     const sub = dialog.afterClosed().subscribe(timing => {
       if (timing) {
-        if (timing.type === 'schedule') {
-          this.scheduleService.getSchedule(timing.schedule).then(schedule => {
-            message.get('timingType').patchValue(timing.type);
-            message.get('schedule').patchValue(timing.schedule);
-            this.calculateMessageOnline('', '');
-          });
-        } else {
-          message.get('timingType').patchValue(timing.type);
-          message.get('startDateTime').patchValue(timing.startDateTime);
-          message.get('endDateTime').patchValue(timing.endDateTime);
-          this.calculateMessageOnline('', '');
-        }
+        message.patchValue(timing);
       }
     });
 
     this.sub.add(sub);
-  }
-
-  private calculateMessageOnline(startDateTime: string, endDateTime: string): void {
-
   }
 
   dropMessage(event: CdkDragDrop<string[]>): void {

@@ -30,7 +30,7 @@
       </div>
       <div class="text-center" *ngIf="index === 0">
         <p>{{ 'key_number' | t }}</p>
-        <p>{{ action.get('type').value }}</p>
+        <p>{{ type }}</p>
       </div>
       <mat-form-field class="mx-3 w-200p">
         <mat-label>{{ 'activity' | t }}</mat-label>
@@ -73,7 +73,7 @@
                 <mat-option [value]="condition" *ngFor="let condition of conditions">{{ condition | t }}</mat-option>
               </mat-select>
             </mat-form-field>
-            <bd-select class="w-200p" [placeholder]="'select_schedule' | t" formControlName="activityValueId" *ngIf="action.get('activityValue').value === 'schedule'">
+            <bd-select class="w-200p" [placeholder]="'select_schedule' | t" formControlName="scheduleCondition" *ngIf="action.get('activityValue').value === 'schedule'">
               <bd-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</bd-option>
             </bd-select>
           </div>

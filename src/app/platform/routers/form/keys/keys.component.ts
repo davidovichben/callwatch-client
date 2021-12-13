@@ -40,14 +40,7 @@ export class KeysComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formGroup = (this.formService.routerForm.get('keys.' + this.category) as FormGroup);
-    if (this.getKeysLength() === 0) {
-      this.types.slice(0, 3).forEach(type => {
-        const arr = this.fb.array([this.addKeyGroup(type)]);
-        this.formGroup.addControl(type, arr);
-      });
-    } else {
-      this.setFiles();
-    }
+    this.setKeys();
 
     this.setUnusedTypes();
     this.activeLang = this.locale.getLocale();
@@ -84,10 +77,9 @@ export class KeysComponent implements OnInit, OnDestroy {
   addKeyGroup(type: string, conditionResult?: string, isFirstCondition?: boolean): FormGroup {
     const group =  this.fb.group({
       category: this.fb.control(this.category),
-      type: this.fb.control(type),
       activityType: this.fb.control(null),
       activityValue: this.fb.control(null),
-      activityValueId: this.fb.control(null),
+      scheduleCondition: this.fb.control(null),
       activityTypeName: this.fb.control(null),
       files: this.fb.control({}),
       router: this.fb.control(null),
@@ -189,22 +181,7 @@ export class KeysComponent implements OnInit, OnDestroy {
 
     const sub = dialog.afterClosed().subscribe(timing => {
       if (timing) {
-        if (timing.type === 'schedule') {
-          this.scheduleService.getSchedule(timing.schedule).then(schedule => {
-            formGroup.get('timingType').patchValue(timing.type);
-            formGroup.get('schedule').patchValue(timing.schedule);
-
-            // const activeCallTimes = schedule.callTimes.filter(callTime => callTime.isActive);
-            // formGroup.get('callTimes').patchValue(activeCallTimes);
-            // this.checkOnline(formGroup);
-          });
-        } else {
-          formGroup.get('timingType').patchValue(timing.type);
-          formGroup.get('startDateTime').patchValue(timing.startDateTime);
-          formGroup.get('endDateTime').patchValue(timing.endDateTime);
-
-          // this.checkOnline(formGroup);
-        }
+        formGroup.patchValue(timing);
       }
     });
 
@@ -216,23 +193,36 @@ export class KeysComponent implements OnInit, OnDestroy {
       formGroup.get('isOnline').patchValue(false);
       return;
     }
-    //
-    // const now = moment();
-    // let isOnline = false;
-    //
-    // console.log(now.weekday())
-    //
-    // switch (formGroup.get('timingType').value) {
-    //   case 'schedule':
-    //     formGroup.get('callTimes').value.forEach(callTime => {
-    //       isOnline = now.weekday() !== callTime.dayNumber;
-    //     })
-    //     break;
-    //   case 'timed':
-    //
-    // }
-    //
-    // formGroup.get('isOnline').patchValue(isOnline);
+  }
+
+  private setKeys(): void {
+    const existingKeys = this.formService.router?.keys[this.category];
+    if (existingKeys && Object.keys(existingKeys).length > 0) {
+      Object.keys(existingKeys).forEach(type => {
+        const actions = [];
+        let conditionResult = null;
+        existingKeys[type].forEach(action => {
+          const group = this.addKeyGroup(type);
+          group.patchValue(action);
+
+          if (action.conditionResult && action.conditionResult != conditionResult) {
+            conditionResult = action.conditionResult;
+            group.get('isFirstCondition').patchValue(true);
+          }
+
+          actions.push(group);
+        });
+
+        this.formGroup.addControl(type, this.fb.array(actions));
+      })
+
+      this.setFiles();
+    } else {
+      this.types.slice(0, 3).forEach(type => {
+        const arr = this.fb.array([this.addKeyGroup(type)]);
+        this.formGroup.addControl(type, arr);
+      });
+    }
   }
 
   private setUnusedTypes(): void {

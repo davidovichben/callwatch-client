@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
 
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-form',
 	templateUrl: './form.component.html'
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
 
   readonly tabs = [
     { label: 'general', value: 'general', formGroup: 'general' },
@@ -19,7 +20,7 @@ export class FormComponent implements OnInit {
     { label: 'inactive_hours_routing', value: 'inactiveRouting', formGroup: 'keys.inactive' }
   ];
 
-  activeTab = 'activeRouting';
+  activeTab = 'general';
 
   isSubmitting = false;
 
@@ -28,20 +29,17 @@ export class FormComponent implements OnInit {
               public formService: RouterFormService) {}
 
 	ngOnInit(): void {
-		const routeData = this.route.snapshot.data;
+    this.formService.makeForm();
+
+    const routeData = this.route.snapshot.data;
     this.formService.schedules = routeData.schedules;
     this.formService.routers = routeData.routers;
     this.formService.keyActivityTypes = routeData.keyActivityTypes;
 
     if (routeData.router) {
       this.formService.router = routeData.router;
-
-      this.formService.routerForm.get('general').patchValue(routeData.router);
-      this.formService.routerForm.get('messages').patchValue(routeData.messages);
-      this.formService.routerForm.get('keys').patchValue(routeData.keys);
+      this.formService.routerForm.patchValue(this.router);
     }
-
-    this.formService.makeForm();
 	}
 
 	submit(): void {
@@ -55,10 +53,11 @@ export class FormComponent implements OnInit {
 		if (form.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
-      const values: any = {};
-      Object.keys(form.value).forEach(groupName => {
-        Object.assign(values, form.getRawValue()[groupName]);
-      })
+      const values = {
+        ...(form.get('general') as FormGroup).getRawValue(),
+        messages: form.value.messages,
+        keys: form.value.keys
+      };
 
 			if (this.formService.router) {
 				this.routerService.updateRouter(this.formService.router.id, values).then(response => this.handleServerResponse(response));
@@ -80,9 +79,13 @@ export class FormComponent implements OnInit {
 
 	private handleServerResponse(response: boolean): void {
 		if (response) {
-			// this.router.navigate(['/platform', 'routers']);
+			this.router.navigate(['/platform', 'routers']);
 		}
 
 		this.isSubmitting = false;
 	}
+
+  ngOnDestroy(): void {
+    this.formService.reset();
+  }
 }
