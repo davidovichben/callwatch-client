@@ -22,7 +22,8 @@ export const PlatformModules = [
       { name: 'switchboards', isGuarded: true },
       { name: 'callbacks', isGuarded: true },
       { name: 'routers', isGuarded: true },
-      { name: 'acds', isGuarded: true }
+      { name: 'acds', isGuarded: true },
+      { name: 'extensions', isGuarded: true }
     ]
   },
 ];

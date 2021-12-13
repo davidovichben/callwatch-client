@@ -15,24 +15,16 @@ import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-se
 import { FormComponent } from './form.component';
 
 import { AcdService } from 'src/app/_shared/services/http/acd.service';
-import { UnitService } from 'src/app/_shared/services/http/unit.service';
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { AcdResolve } from 'src/app/_shared/resolves/acd.resolve';
-import { AcdTypeSelectResolve } from 'src/app/_shared/resolves/acd-type-select.resolve';
-import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
-import { SwitchboardSelectResolve } from 'src/app/_shared/resolves/switchboard-select.resolve';
-import { CallbackSelectResolve } from 'src/app/_shared/resolves/callback-select.resolve';
+import { AcdFormSelectResolve } from 'src/app/_shared/resolves/acd-form-select.resolve';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: FormComponent,
     resolve: {
-      types: AcdTypeSelectResolve,
-      switchboards: SwitchboardSelectResolve,
-      units: UnitsSelectResolve,
-      callbacks: CallbackSelectResolve
+      selects: AcdFormSelectResolve
     }
   },
 	{
@@ -40,10 +32,7 @@ const routes: Routes = [
 		component: FormComponent,
 		resolve: {
       acd: AcdResolve,
-      types: AcdTypeSelectResolve,
-      switchboards: SwitchboardSelectResolve,
-      units: UnitsSelectResolve,
-      callbacks: CallbackSelectResolve
+      selects: AcdFormSelectResolve
     }
 	}
 ];
@@ -65,13 +54,8 @@ const routes: Routes = [
   ],
 	providers: [
     AcdService,
-    UnitService,
-    GenericService,
     AcdResolve,
-    AcdTypeSelectResolve,
-    SwitchboardSelectResolve,
-    UnitsSelectResolve,
-    CallbackSelectResolve
+    AcdFormSelectResolve
   ]
 })
 export class FormModule {}

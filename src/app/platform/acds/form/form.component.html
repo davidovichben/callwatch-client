@@ -1,38 +1,57 @@
-<form [formGroup]="acdForm" (ngSubmit)="submit()">
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
   <div class="form-header">
-    <p class="h1">{{ acd ? ('edit_acd' | t) : ('add_acd' | t) }}</p>
+    <p class="h1" *ngIf="formType === 'acd'">{{ model ? ('edit_acd' | t) : ('add_acd' | t) }}</p>
+    <p class="h1" *ngIf="formType === 'extension'">{{ model ? ('edit_extension' | t) : ('add_extension' | t) }}</p>
     <div>
-      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'acds']">{{ 'cancel' | t }}</button>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', tableUrl]">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">
     <div class="mb-4 tabs">
       <a class="tab" [ngClass]="{ active: activeTab === 'general' }" (click)="activeTab = 'general'">{{ 'general' | t }}</a>
-      <a class="tab" [ngClass]="{ active: activeTab === 'switchboard' }" (click)="activeTab = 'switchboard'">{{ 'switchboard_settings' | t }}</a>
-      <a class="tab" [ngClass]="{ active: activeTab === 'extensions' }" (click)="activeTab = 'extensions'">{{ 'associated_extensions' | t }}</a>
+      <a class="tab" [ngClass]="{ active: activeTab === 'switchboard' }" (click)="activeTab = 'switchboard'" *ngIf="formType === 'acd'">{{ 'switchboard_settings' | t }}</a>
+      <a class="tab" [ngClass]="{ active: activeTab === 'associated' }" (click)="activeTab = 'associated'">{{ formType === 'acd' ? ('associated_extensions' | t) : ('associated_groups' | t) }}</a>
       <a class="tab" [ngClass]="{ active: activeTab === 'callback' }" (click)="activeTab = 'callback'">{{ 'callback' | t }}</a>
     </div>
     <section formGroupName="general" [hidden]="activeTab !== 'general'">
       <div class="row">
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-lg-3" [ngClass]="{ 'mt-3': formType === 'extension', 'pt-1': formType === 'extension' }">
           <mat-form-field>
-            <mat-label>{{ 'group_name' | t }}</mat-label>
+            <mat-label>{{ formType === 'acd' ? ('group_name' | t) : ('extension_name' | t) }}</mat-label>
             <input matInput type="text" formControlName="name" required>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
+        <div class="col-12 col-lg-3" formGroupName="dialNumbers" *ngIf="formType === 'extension'">
+          <p class="mb-0 f-14">{{ 'dial_numbers' | t }}</p>
+          <div class="d-flex">
+            <mat-form-field class="w-50 ps-1">
+              <mat-label>{{ 'from' | t }}</mat-label>
+              <input matInput type="number" formControlName="from" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-50 pe-1">
+              <mat-label>{{ 'until' | t }}</mat-label>
+              <input matInput type="number" formControlName="to" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <p class="alert alert-danger" [@fade]="formGroup.get('general.dialNumbers').errors ? 'active' : 'inactive'">{{ errorMessages.greaterThan | t }}</p>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-12 col-lg-3">
           <mat-form-field>
-            <mat-label>{{ 'group_type' | t }}</mat-label>
+            <mat-label>{{ formType === 'acd' ? ('group_type' | t) : ('extension_type' | t) }}</mat-label>
             <mat-select formControlName="type" required>
-              <mat-option *ngFor="let type of types" [value]="type.id">{{ type.name }}</mat-option>
+              <mat-option *ngFor="let type of selects.types" [value]="type.id">{{ type.name }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <app-unit-select formControlName="unit" [units]="units" [placeholder]="'select_units' | t"></app-unit-select>
+          <app-unit-select formControlName="unit" [units]="selects.units" [placeholder]="'select_units' | t"></app-unit-select>
         </div>
       </div>
       <div class="row">
@@ -50,7 +69,7 @@
           <mat-form-field>
             <mat-label>{{ 'switchboard' | t }}</mat-label>
             <mat-select formControlName="switchboard" required>
-              <mat-option *ngFor="let switchboard of switchboards" [value]="switchboard.id">{{ switchboard.name }}</mat-option>
+              <mat-option *ngFor="let switchboard of selects.switchboards" [value]="switchboard.id">{{ switchboard.name }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
@@ -61,8 +80,8 @@
           <mat-form-field>
             <mat-label>{{ 'group_number' | t }}</mat-label>
             <input matInput type="text" formControlName="number" required>
-            <mat-error *ngIf="acdForm.get('switchboard.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
-            <mat-error *ngIf="acdForm.get('switchboard.number').errors?.exists">{{ 'group_number_uniqueness_error' | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('switchboard.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('switchboard.number').errors?.exists">{{ 'group_number_uniqueness_error' | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
@@ -119,8 +138,8 @@
         </div>
       </div>
     </section>
-    <section formGroupName="extensions" [hidden]="activeTab !== 'extensions'">
-<!--      <app-select-groups formControlName="extensions"></app-select-groups>-->
+    <section [hidden]="activeTab !== 'associated'">
+      <app-select-groups formControlName="associated" [items]="formType === 'extension' ? selects.acds : selects.extensions"></app-select-groups>
     </section>
     <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
       <div class="row">
@@ -128,7 +147,7 @@
           <mat-form-field>
             <mat-label>{{ 'dialer_profile' | t }}</mat-label>
             <mat-select formControlName="callback">
-              <mat-option *ngFor="let callback of callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
+              <mat-option *ngFor="let callback of selects.callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -136,7 +155,7 @@
           <mat-form-field>
             <mat-label>{{ 'dialer_ivr' | t }}</mat-label>
             <mat-select formControlName="router">
-              <mat-option *ngFor="let router of routers" [value]="router.id">{{ router.name }}</mat-option>
+              <mat-option *ngFor="let router of selects.routers" [value]="router.id">{{ router.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

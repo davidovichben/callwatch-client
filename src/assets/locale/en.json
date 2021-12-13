@@ -93,6 +93,7 @@
   { "key": "phone_error", "value": "Incorrect phone number." },
   { "key": "percent_error", "value": "Insert a number between 0 and 100" },
   { "key": "number_error", "value": "Insert a number only." },
+  { "key": "greater_than_error", "value": "Number from is greater than number to" },
   { "key": "saturday", "value": "Saturday" },
   { "key": "save", "value": "Save" },
   { "key": "schedule_description", "value": "Schedule Description" },
@@ -265,6 +266,7 @@
   { "key": "add_acd", "value": "Add ACD" },
   { "key": "edit_acd", "value": "Edit ACD" },
   { "key": "associated_extensions", "value": "Associated Extensions" },
+  { "key": "associated_groups", "value": "Associated Groups" },
   { "key": "group_number_uniqueness_error", "value": "Group number and switchboard combination must be unique." },
   { "key": "hunt_uniqueness_error", "value": "Hunt Pilot number and switchboard combination must be unique" },
   { "key": "secondary_hunt_uniqueness_error", "value": "Secondary Hunt Pilot number and switchboard combination must be unique" },
@@ -310,5 +312,12 @@
   { "key": "existing", "value": "Existing" },
   { "key": "else", "value": "Else" },
   { "key": "select_schedule", "value": "Select Schedule" },
-  { "key": "kosher_number", "value": "Kosher Number" }
+  { "key": "kosher_number", "value": "Kosher Number" },
+  { "key": "extensions", "value": "Extensions" },
+  { "key": "extension_name", "value": "Extension Name" },
+  { "key": "extension_type", "value": "Extension Type" },
+  { "key": "add_extension", "value": "Add Extension" },
+  { "key": "edit_extension", "value": "Edit Extension" },
+  { "key": "dial_numbers", "value": "Dial Numbers" },
+  { "key": "until", "value": "Until" }
 ]

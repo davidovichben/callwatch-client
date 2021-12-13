@@ -1,6 +1,6 @@
 <mat-form-field>
   <input matInput type="search" [placeholder]="'search' | t" (keyup)="search(searchKeyword.value)" #searchKeyword>
-  <i matSuffix class="la la-times pointer" (click)="resetSearch(searchKeyword)"></i>
+  <mat-icon matSuffix class="pointer" (click)="resetSearch(searchKeyword)">close</mat-icon>
 </mat-form-field>
 <div class="d-flex">
   <div>

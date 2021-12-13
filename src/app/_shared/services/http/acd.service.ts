@@ -61,4 +61,12 @@ export class AcdService extends BaseHttpService {
       .then(response => response)
       .catch(() => false);
   }
+
+  formSelects(): Promise<object> {
+    return this.http.get(this.endPoint + '/formSelect', this.getTokenRequest())
+      .toPromise()
+      .then(response => response)
+      .catch(() => null);
+  }
+
 }

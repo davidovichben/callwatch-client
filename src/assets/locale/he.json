@@ -92,6 +92,7 @@
   { "key": "phone_error", "value": "מספר הטלפון אינו תקין." },
   { "key": "percent_error", "value": "הזן מספר בין 0 ל-100." },
   { "key": "number_error", "value": "הזן מספרים בלבד." },
+  { "key": "greater_than_error", "value": "המספר עד קטן ממספר מ-" },
   { "key": "saturday", "value": "יום שבת" },
   { "key": "save", "value": "שמור" },
   { "key": "schedule_description", "value": "תיאור לוח זמנים" },
@@ -264,6 +265,7 @@
   { "key": "add_acd", "value": "הוסף קבוצה" },
   { "key": "edit_acd", "value": "ערוך קבוצה" },
   { "key": "associated_extensions", "value": "שלוחות משויכות" },
+  { "key": "associated_groups", "value": "קבוצות משויכות" },
   { "key": "group_number_uniqueness_error", "value": "שילוב מספר קבוצה ומרכזיה/ קיים במערכת" },
   { "key": "hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot ומרכזיה קיים במערכת" },
   { "key": "secondary_hunt_uniqueness_error", "value": "שילוב מספר Hunt Pilot משני ומרכזיה קיים במערכת" },
@@ -309,7 +311,14 @@
   { "key": "existing", "value": "מתקיים" },
   { "key": "else", "value": "אחרת" },
   { "key": "select_schedule", "value": "בחר לוח זמנים" },
-  { "key": "kosher_number", "value": "מספר כשר" }
+  { "key": "kosher_number", "value": "מספר כשר" },
+  { "key": "extensions", "value": "שלוחות" },
+  { "key": "extension_name", "value": "שם שלוחה" },
+  { "key": "extension_type", "value": "סוג שלוחה" },
+  { "key": "add_extension", "value": "הוסף שלוחה" },
+  { "key": "edit_extension", "value": "ערוך שלוחה" },
+  { "key": "dial_numbers", "value": "מספרי חיוג" },
+  { "key": "until", "value": "עד" }
 ]
 
 

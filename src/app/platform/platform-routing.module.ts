@@ -64,6 +64,10 @@ const routes: Routes = [
         loadChildren: () => import('./acds/acds.module').then(m => m.AcdsModule)
       },
       {
+        path: 'extensions',
+        loadChildren: () => import('./extensions/extensions.module').then(m => m.ExtensionsModule)
+      },
+      {
         path: '**',
         redirectTo: ''
       }

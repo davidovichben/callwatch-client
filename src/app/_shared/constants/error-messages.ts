@@ -3,5 +3,6 @@ export const ErrorMessages = {
   percent: 'percent_error',
   email: 'email_error',
   phone: 'phone_error',
-  number: 'number_error'
+  number: 'number_error',
+  greaterThan: 'greater_than_error'
 };

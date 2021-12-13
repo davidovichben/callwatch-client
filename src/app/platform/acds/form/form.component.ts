@@ -6,14 +6,15 @@ import { Subscription } from 'rxjs';
 import { AcdService } from 'src/app/_shared/services/http/acd.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { EmailPattern } from 'src/app/_shared/constants/patterns';
 import { AcdModel } from 'src/app/_shared/models/acd.model';
+import { ExtensionModel } from 'src/app/_shared/models/extension.model';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
 	selector: 'app-form',
-	templateUrl: './form.component.html'
+	templateUrl: './form.component.html',
+  animations: [Fade]
 })
 export class FormComponent implements OnInit, OnDestroy {
 
@@ -22,16 +23,23 @@ export class FormComponent implements OnInit, OnDestroy {
 	readonly errorMessages = ErrorMessages;
   readonly uniqueControlNames = ['number', 'huntPilot', 'secondaryHuntPilot'];
 
-  types: SelectItemModel[] = [];
-  switchboards: SelectItemModel[] = [];
-  units: UnitModel[] = [];
-  callbacks: SelectItemModel[] = [];
-  routers: SelectItemModel[] = [];
+  formType: 'acd' | 'extension';
+  tableUrl: 'acds' | 'extensions';
+
+  selects = {
+    acds: [],
+    extensions: [],
+    types: [],
+    units: [],
+    callbacks: [],
+    switchboards: [],
+    routers: []
+  };
 
   activeTab = 'general';
 
-  acdForm: FormGroup;
-  acd: AcdModel;
+  formGroup: FormGroup;
+  model: AcdModel | ExtensionModel;
 
 	isSubmitting = false;
 
@@ -39,23 +47,22 @@ export class FormComponent implements OnInit, OnDestroy {
         private fb: FormBuilder, private acdService: AcdService) {}
 
 	ngOnInit(): void {
+    this.formType = this.router.url.includes('extension') ? 'extension' : 'acd';
+    this.tableUrl = this.formType === 'extension' ? 'extensions' : 'acds';
+
     this.makeForm();
     this.setFormSubscriptions();
 
     const routeData = this.route.snapshot.data;
-    this.types = routeData.types;
-    this.units = routeData.units;
-    this.switchboards = routeData.switchboards;
-    this.callbacks = routeData.callbacks;
-
+    this.selects = routeData.selects;
     if (routeData.acd) {
-      this.acd = routeData.acd;
-      this.acdForm.patchValue(routeData.acd);
+      this.model = this.formType === 'acd' ? routeData.acd : routeData.extension;
+      this.formGroup.patchValue(routeData.acd);
     }
 	}
 
   private makeForm(): void {
-    this.acdForm = this.fb.group({
+    this.formGroup = this.fb.group({
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
         type: this.fb.control(null, Validators.required),
@@ -75,9 +82,7 @@ export class FormComponent implements OnInit, OnDestroy {
         isBroadcast: this.fb.control(null),
         hasQueue: this.fb.control(null)
       }),
-      extensions: this.fb.group({
-        extensions: this.fb.control(null)
-      }),
+      associated: this.fb.control(null),
       callback: this.fb.group({
         callback: this.fb.control(null),
         router: this.fb.control(null),
@@ -87,29 +92,50 @@ export class FormComponent implements OnInit, OnDestroy {
       })
     })
 
+    if (this.formType === 'extension') {
+      this.addDialNumbers();
+    }
+
     this.uniqueControlNames.forEach(controlName => {
-      this.acdForm.get('switchboard.' + controlName).setAsyncValidators(this.checkUniqueness.bind(this, [controlName]))
+      this.formGroup.get('switchboard.' + controlName).setAsyncValidators(this.checkUniqueness.bind(this, [controlName]))
     })
   }
 
+  private addDialNumbers(): void {
+    const group = this.fb.group({
+        from: this.fb.control(null, Validators.required),
+        to: this.fb.control(null, Validators.required)
+      }, {
+        validator: (group: FormGroup) => {
+          if (group.value.to && group.value.from > group.value.to) {
+            return { range: true }
+          }
+
+          return null;
+        }}
+    );
+
+    (this.formGroup.get('general') as FormGroup).addControl('dialNumbers', group);
+  }
+
   private setFormSubscriptions(): void {
-    const sub = this.acdForm.get('switchboard.switchboard').valueChanges.subscribe(() => this.switchboardChanged());
+    const sub = this.formGroup.get('switchboard.switchboard').valueChanges.subscribe(() => this.switchboardChanged());
     this.sub.add(sub);
   }
 
   switchboardChanged(): void {
     this.uniqueControlNames.forEach(controlName => {
-      this.acdForm.get('switchboard.' + controlName).updateValueAndValidity();
+      this.formGroup.get('switchboard.' + controlName).updateValueAndValidity();
     })
   }
 
   checkUniqueness(args: object, control: FormControl): Promise<{ exists: boolean }> {
-    const switchboardId = this.acdForm.get('switchboard.switchboard').value;
+    const switchboardId = this.formGroup.get('switchboard.switchboard').value;
     if (!switchboardId) {
       return Promise.resolve(null);
     }
 
-    if (this.acd && this.acd[args['type']] === control.value) {
+    if (this.model && this.model[args['type']] === control.value) {
       return Promise.resolve(null);
     }
 
@@ -123,16 +149,16 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
 	submit(): void {
-		if (this.acdForm.valid && !this.isSubmitting) {
+		if (this.formGroup.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
       const values = {};
-      Object.keys(this.acdForm.value).forEach(groupName => {
-        Object.assign(values, this.acdForm.value[groupName]);
+      Object.keys(this.formGroup.value).forEach(groupName => {
+        Object.assign(values, this.formGroup.value[groupName]);
       })
 
-			if (this.acd) {
-				this.acdService.updateAcd(this.acd.id, values).then(response => this.handleServerResponse(response));
+			if (this.model) {
+				this.acdService.updateAcd(this.model.id, values).then(response => this.handleServerResponse(response));
 			} else {
 				this.acdService.newAcd(values).then(response => this.handleServerResponse(response));
 			}
@@ -141,7 +167,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
 	private handleServerResponse(response: boolean): void {
 		if (response) {
-			this.router.navigate(['/platform', 'acds']);
+			this.router.navigate(['/platform', this.tableUrl]);
 		}
 
 		this.isSubmitting = false;
