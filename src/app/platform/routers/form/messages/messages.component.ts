@@ -1,89 +1,39 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { RouterMessageTypes } from 'src/app/_shared/models/router-message.model';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-
-import { TimingDialogComponent } from 'src/app/platform/routers/form/timing-dialog/timing-dialog.component';
 
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
-import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
-
-import { Langs } from 'src/app/_shared/constants/general';
+import { SharedComponent } from 'src/app/platform/routers/form/shared/shared.component';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.styl']
+  styleUrls: ['./messages.component.styl', '../shared/shared.component.styl']
 })
-export class MessagesComponent implements OnDestroy {
+export class MessagesComponent extends SharedComponent {
 
-  readonly sub = new Subscription();
-  readonly langs = Langs;
   readonly messageTypes = RouterMessageTypes;
-
-  @Input() category: string;
-
-  activeLang;
 
   formArray: FormArray;
 
-  constructor(private dialog: MatDialog, private locale: LocaleService,
-              private fb: FormBuilder,
-              private scheduleService: ScheduleService,
-              private helpers: HelpersService,
-              public formService: RouterFormService) {}
+  constructor(dialog: MatDialog, helpers: HelpersService,
+              formService: RouterFormService, private locale: LocaleService,
+              private fb: FormBuilder) {
+    super(dialog, formService, helpers);
+  }
 
   ngOnInit(): void {
     this.formArray = (this.formService.routerForm.get('messages.' + this.category) as FormArray);
 
     this.activeLang = this.locale.getLocale();
     if (this.formService.router && this.formArray.length > 0) {
-      this.setFiles();
+      const groupsWithFiles = this.formArray.controls.filter(key => key.get('type').value === 'message' && key.get('files').value.length > 0);
+      this.setFiles(groupsWithFiles as FormGroup[]);
     }
-  }
-
-  private setFiles(): void {
-    const messagesWithFiles = this.formArray.controls.filter(message => message.get('type').value === 'message' && message.get('files').value.length > 0);
-    messagesWithFiles.forEach(message => {
-      this.langs.forEach(iteratedLang => {
-        const lang = iteratedLang.value;
-        if (message.get('files').value[lang]) {
-          const value = message.get('files').value;
-          value[lang] = this.helpers.base64toFile(value[lang].bin, value[lang].name);
-
-          message.get('files').patchValue(value);
-        }
-      })
-    });
-  }
-
-  setFile(message: FormGroup, file?: { bin: string, name: string }): void {
-    const value = message.get('files').value;
-    message[this.activeLang] = file;
-
-    message.get('files').patchValue(value);
-  }
-
-  openActivityDialog(message: FormGroup): void {
-    const dialog = this.dialog.open(TimingDialogComponent, {
-      width: '800px',
-      data: {
-        schedules: this.formService.schedules,
-        values: message.value
-      }
-    })
-
-    const sub = dialog.afterClosed().subscribe(timing => {
-      if (timing) {
-        message.patchValue(timing);
-      }
-    });
-
-    this.sub.add(sub);
   }
 
   dropMessage(event: CdkDragDrop<string[]>): void {
@@ -112,9 +62,5 @@ export class MessagesComponent implements OnDestroy {
 
   deleteMessage(index: number): void {
     this.formArray.removeAt(index);
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 }

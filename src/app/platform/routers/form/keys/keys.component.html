@@ -18,7 +18,7 @@
   </mat-form-field>
 </div>
 <ng-container [formGroup]="formService.routerForm.get('keys.' + category)">
-  <div class="key" [formArrayName]="type" *ngFor="let type of getKeys()">
+  <div class="group" [formArrayName]="type" *ngFor="let type of getKeys()">
     <div class="key-action" *ngFor="let action of formGroup.get(type)['controls']; let index = index" [formGroupName]="index">
       <div class="text-start w-200p" *ngIf="index > 0">
         <span class="f-12 green-text" *ngIf="action.get('conditionResult').value === 'true'">{{ 'existing' | t }}</span>

@@ -1,42 +1,34 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 
-import { TimingDialogComponent } from 'src/app/platform/routers/form/timing-dialog/timing-dialog.component';
+import { SharedComponent } from 'src/app/platform/routers/form/shared/shared.component';
 
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
-import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
 import { RouterKeyConditions, RouterKeyTypes } from 'src/app/_shared/models/router-key.model';
-import { Langs } from 'src/app/_shared/constants/general';
 
 @Component({
   selector: 'app-keys',
   templateUrl: './keys.component.html',
-  styleUrls: ['./keys.component.styl']
+  styleUrls: ['./keys.component.styl', '../shared/shared.component.styl']
 })
-export class KeysComponent implements OnInit, OnDestroy {
+export class KeysComponent extends SharedComponent implements OnInit, OnDestroy {
 
-  readonly sub = new Subscription();
   readonly types = RouterKeyTypes;
   readonly conditions = RouterKeyConditions;
-  readonly langs = Langs;
 
-  @Input() category: string;
-
-  activeLang;
   unusedTypes = [];
 
   formGroup: FormGroup;
 
-  constructor(private dialog: MatDialog, private helpers: HelpersService,
-              private fb: FormBuilder,
-              private scheduleService: ScheduleService,
-              private locale: LocaleService,
-              public formService: RouterFormService) {}
+  constructor(dialog: MatDialog, formService: RouterFormService,
+              helpers: HelpersService, private fb: FormBuilder,
+              private locale: LocaleService) {
+    super(dialog, formService, helpers);
+  }
 
   ngOnInit(): void {
     this.formGroup = (this.formService.routerForm.get('keys.' + this.category) as FormGroup);
@@ -44,34 +36,6 @@ export class KeysComponent implements OnInit, OnDestroy {
 
     this.setUnusedTypes();
     this.activeLang = this.locale.getLocale();
-  }
-
-  getKeys(): string[] {
-    return Object.keys(this.formGroup.controls);
-  }
-
-  getKeysLength(): number {
-    return Object.keys(this.formGroup.controls).length;
-  }
-
-  private setFiles(): void {
-    // const keysWithFiles = this.formArray.controls.filter(key => key.get('activityType').value === 'audio_message' && key.get('files').value.length > 0);
-    // keysWithFiles.forEach(key => {
-    //   this.langs.forEach(iteratedLang => {
-    //     const lang = iteratedLang.value;
-    //     if (key.get('files').value[lang]) {
-    //       const value = key.get('files').value;
-    //       value[lang] = this.helpers.base64toFile(value[lang].bin, value[lang].name);
-    //
-    //       key.get('files').patchValue(value);
-    //     }
-    //   })
-    // });
-  }
-
-  setActivityName(key: FormGroup, activityTypeId: number): void {
-    const type = this.formService.keyActivityTypes.find(type => type.id === activityTypeId);
-    key.get('activityTypeName').patchValue(type.name);
   }
 
   addKeyGroup(type: string, conditionResult?: string, isFirstCondition?: boolean): FormGroup {
@@ -163,60 +127,23 @@ export class KeysComponent implements OnInit, OnDestroy {
     group.get('isDefault').patchValue(true);
   }
 
-  setFile(key: FormGroup, file?: { bin: string, name: string }): void {
-    const value = key.get('files').value;
-    value[this.activeLang] = file;
-
-    key.get('files').patchValue(value);
+  getKeys(): string[] {
+    return Object.keys(this.formGroup.controls);
   }
 
-  openActivityDialog(formGroup: FormGroup): void {
-    const dialog = this.dialog.open(TimingDialogComponent, {
-      width: '800px',
-      data: {
-        schedules: this.formService.schedules,
-        values: formGroup.value
-      }
-    })
-
-    const sub = dialog.afterClosed().subscribe(timing => {
-      if (timing) {
-        formGroup.patchValue(timing);
-      }
-    });
-
-    this.sub.add(sub);
+  getKeysLength(): number {
+    return Object.keys(this.formGroup.controls).length;
   }
 
-  checkOnline(formGroup: FormGroup): void {
-    if (!formGroup.get('isActive').value) {
-      formGroup.get('isOnline').patchValue(false);
-      return;
-    }
+  setActivityName(key: FormGroup, activityTypeId: number): void {
+    const type = this.formService.keyActivityTypes.find(type => type.id === activityTypeId);
+    key.get('activityTypeName').patchValue(type.name);
   }
 
   private setKeys(): void {
     const existingKeys = this.formService.router?.keys[this.category];
     if (existingKeys && Object.keys(existingKeys).length > 0) {
-      Object.keys(existingKeys).forEach(type => {
-        const actions = [];
-        let conditionResult = null;
-        existingKeys[type].forEach(action => {
-          const group = this.addKeyGroup(type);
-          group.patchValue(action);
-
-          if (action.conditionResult && action.conditionResult != conditionResult) {
-            conditionResult = action.conditionResult;
-            group.get('isFirstCondition').patchValue(true);
-          }
-
-          actions.push(group);
-        });
-
-        this.formGroup.addControl(type, this.fb.array(actions));
-      })
-
-      this.setFiles();
+      this.setExistingKeys(existingKeys);
     } else {
       this.types.slice(0, 3).forEach(type => {
         const arr = this.fb.array([this.addKeyGroup(type)]);
@@ -225,11 +152,39 @@ export class KeysComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setUnusedTypes(): void {
-    this.unusedTypes = this.types.filter(type => !this.getKeys().includes(type));
+  // Patching value, setting first condition and setting files if exist
+
+  private setExistingKeys(existingKeys: object): void {
+    const actionsWithFiles = [];
+
+    Object.keys(existingKeys).forEach(type => {
+      const actions = [];
+      let conditionResult = null;
+      existingKeys[type].forEach(action => {
+        const group = this.addKeyGroup(type);
+        group.patchValue(action);
+
+        if (action.conditionResult && action.conditionResult != conditionResult) {
+          conditionResult = action.conditionResult;
+          group.get('isFirstCondition').patchValue(true);
+        }
+
+        if (action.activityTypeName === 'audio_message') {
+          actionsWithFiles.push(action);
+        }
+
+        actions.push(group);
+      });
+
+      this.formGroup.addControl(type, this.fb.array(actions));
+    })
+
+    if (actionsWithFiles.length > 0) {
+      this.setFiles(actionsWithFiles);
+    }
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+  private setUnusedTypes(): void {
+    this.unusedTypes = this.types.filter(type => !this.getKeys().includes(type));
   }
 }

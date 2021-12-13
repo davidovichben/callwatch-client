@@ -11,7 +11,7 @@
 </div>
 <div [formGroup]="formService.routerForm.get('messages')" (cdkDropListDropped)="dropMessage($event)" cdkDropList>
   <ng-container [formArrayName]="category">
-    <div class="message" *ngFor="let message of formArray['controls']; let index = index" [formGroupName]="index" cdkDrag>
+    <div class="group" *ngFor="let message of formArray['controls']; let index = index" [formGroupName]="index" cdkDrag>
       <mat-icon id="dragIcon" class="dark-grey-text">drag_indicator</mat-icon>
       <mat-form-field class="w-100p">
         <mat-label>{{ 'type' | t }}</mat-label>

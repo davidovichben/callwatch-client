@@ -19,8 +19,6 @@ import { TimingDialogModule } from 'src/app/platform/routers/form/timing-dialog/
 
 import { MessagesComponent } from './messages.component';
 
-import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
-
 @NgModule({
   declarations: [MessagesComponent],
   exports: [MessagesComponent],
@@ -41,7 +39,6 @@ import { ScheduleService } from 'src/app/_shared/services/http/schedule.service'
     AudioInputModule,
     ChipsInputModule,
     TimingDialogModule
-  ],
-  providers: [ScheduleService]
+  ]
 })
 export class MessagesModule {}

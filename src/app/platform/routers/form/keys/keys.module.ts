@@ -16,8 +16,6 @@ import { AudioInputModule } from 'src/app/_shared/components/audio-input/audio-i
 
 import { KeysComponent } from './keys.component';
 
-import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
-
 @NgModule({
   declarations: [KeysComponent],
   exports: [KeysComponent],
@@ -35,7 +33,6 @@ import { ScheduleService } from 'src/app/_shared/services/http/schedule.service'
     TimingDialogModule,
     BdSelectModule,
     AudioInputModule
-  ],
-  providers: [ScheduleService]
+  ]
 })
 export class KeysModule {}
