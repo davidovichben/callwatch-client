@@ -16,7 +16,7 @@ export class ExtensionsComponent {
 
   readonly columns = [
     { label: 'extension_name', name: 'name' },
-    { label: 'dial_numbers', name: 'dialNumber' },
+    // { label: 'dial_numbers', name: 'dialNumber' },
     { label: 'extension_type', name: 'type' },
     { label: 'unit', name: 'unit' }
   ];
