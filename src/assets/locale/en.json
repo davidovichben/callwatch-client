@@ -319,7 +319,10 @@
   { "key": "add_extension", "value": "Add Extension" },
   { "key": "edit_extension", "value": "Edit Extension" },
   { "key": "dial_numbers", "value": "Dial Numbers" },
+  { "key": "dial_number", "value": "Dial Number" },
   { "key": "until", "value": "Until" },
   { "key": "upload_audio_file", "value": "Upload Audio File" },
-  { "key": "download_file", "value": "Download File" }
+  { "key": "download_file", "value": "Download File" },
+  { "key": "dial_numbers_exist", "value": "Dial numbers exist for this switchboard" },
+  { "key": "dial_number_exist", "value": "Dial number exist for this switchboard" }
 ]

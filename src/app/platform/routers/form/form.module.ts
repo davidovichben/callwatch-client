@@ -13,7 +13,7 @@ import { KeysModule } from 'src/app/platform/routers/form/keys/keys.module';
 import { FormComponent } from './form.component';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
 import { RouterResolve } from 'src/app/_shared/resolves/router.resolve';
@@ -57,7 +57,7 @@ const routes: Routes = [
 	],
 	providers: [
     RouterService,
-    GenericService,
+    SelectService,
     RouterFormService,
     RouterResolve,
     ScheduleSelectResolve,

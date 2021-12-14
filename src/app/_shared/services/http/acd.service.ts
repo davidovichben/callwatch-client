@@ -7,7 +7,6 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { AcdModel } from 'src/app/_shared/models/acd.model';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
 export class AcdService extends BaseHttpService {
@@ -61,12 +60,4 @@ export class AcdService extends BaseHttpService {
       .then(response => response)
       .catch(() => false);
   }
-
-  formSelects(): Promise<object> {
-    return this.http.get(this.endPoint + '/formSelect', this.getTokenRequest())
-      .toPromise()
-      .then(response => response)
-      .catch(() => null);
-  }
-
 }

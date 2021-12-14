@@ -18,7 +18,7 @@ import { FormComponent } from 'src/app/platform/users/form/form.component';
 import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-select.resolve';
@@ -66,7 +66,7 @@ const routes: Routes = [
   ],
   providers: [
     UserService,
-    GenericService,
+    SelectService,
     UnitService,
     PermissionSelectResolve,
     UnitsSelectResolve,

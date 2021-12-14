@@ -13,7 +13,7 @@ const routes: Routes = [
     path: '',
     component: ExtensionsComponent
   },
-  { path: 'form', loadChildren: () => import('../acds/form/form.module').then(m => m.FormModule) }
+  { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) }
 ];
 
 @NgModule({

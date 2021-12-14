@@ -15,6 +15,7 @@ import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-se
 import { FormComponent } from './form.component';
 
 import { AcdService } from 'src/app/_shared/services/http/acd.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { AcdResolve } from 'src/app/_shared/resolves/acd.resolve';
 import { AcdFormSelectResolve } from 'src/app/_shared/resolves/acd-form-select.resolve';
@@ -54,6 +55,7 @@ const routes: Routes = [
   ],
 	providers: [
     AcdService,
+    SelectService,
     AcdResolve,
     AcdFormSelectResolve
   ]

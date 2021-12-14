@@ -4,5 +4,6 @@ export const ErrorMessages = {
   email: 'email_error',
   phone: 'phone_error',
   number: 'number_error',
-  greaterThan: 'greater_than_error'
+  greaterThan: 'greater_than_error',
+  exists: 'values_exist_error'
 };

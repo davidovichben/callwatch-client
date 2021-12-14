@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
 import { Fade } from 'src/app/_shared/constants/animations';
 
 import * as FileSaver from 'file-saver';
@@ -32,13 +32,16 @@ export class AudioInputComponent implements AfterViewInit {
     seconds: 0
   }
 
+  loadedUnlistener: () => void;
+  timeUnlistener: () => void;
+
   file: any;
 
   playing = false;
 
   hasTypeError = false;
 
-  constructor(private t: TranslatePipe) {}
+  constructor(private t: TranslatePipe, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     if (!this.placeholder) {
@@ -51,12 +54,14 @@ export class AudioInputComponent implements AfterViewInit {
       setTimeout(() => this.uploadFile(this.inputFile), 0);
     }
 
-    this.audioPlayer.nativeElement.addEventListener('loadedmetadata', () => {
+    this.loadedUnlistener = this.renderer.listen(this.audioPlayer.nativeElement, 'loadedmetadata', () => {
       this.setTime('duration');
       this.setTime('currentTime');
     });
 
-    this.audioPlayer.nativeElement.addEventListener('timeupdate', () => this.setTime('currentTime'));
+    this.timeUnlistener = this.renderer.listen(this.audioPlayer.nativeElement, 'timeupdate', () => {
+      this.setTime('currentTime');
+    });
   }
 
   private setTime(timeType: 'duration' | 'currentTime'): void {
@@ -106,7 +111,7 @@ export class AudioInputComponent implements AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.audioPlayer.nativeElement.removeEventListener('loadedmetadata');
-    this.audioPlayer.nativeElement.removeEventListener('timeupdate');
+    this.loadedUnlistener();
+    this.timeUnlistener()
   }
 }

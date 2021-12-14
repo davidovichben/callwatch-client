@@ -1,1 +1,116 @@
-<p>form works!</p>
+<form [formGroup]="extensionForm" (ngSubmit)="submit()">
+  <div class="form-header">
+    <p class="h1">{{ extension ? ('edit_extension' | t) : ('add_extension' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'extensions']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="mb-4 tabs">
+      <a class="tab" [ngClass]="{ active: activeTab === tab.value }" (click)="activeTab = tab.value" *ngFor="let tab of tabs">{{ tab.label | t }}</a>
+    </div>
+    <section formGroupName="general" [hidden]="activeTab !== 'general'">
+      <div class="row">
+        <div class="col-12 col-lg-3" [ngClass]="{ 'mt-3': !extension, 'pt-1': !extension }">
+          <mat-form-field>
+            <mat-label>{{ 'extension_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3" formGroupName="dialNumbers" *ngIf="!extension">
+          <p class="mb-0 f-14">{{ 'dial_numbers' | t }}</p>
+          <div class="d-flex">
+            <mat-form-field class="w-50 ps-1">
+              <mat-label>{{ 'from' | t }}</mat-label>
+              <input matInput type="number" formControlName="from" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-50 pe-1">
+              <mat-label>{{ 'until' | t }}</mat-label>
+              <input matInput type="number" formControlName="to" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <p class="alert alert-danger" [@fade]="extensionForm.get('general.dialNumbers').errors?.range ? 'active' : 'inactive'">{{ errorMessages.greaterThan | t }}</p>
+          <p class="alert alert-danger" [@fade]="extensionForm.get('general.dialNumbers').errors?.exists ? 'active' : 'inactive'">{{ 'dial_numbers_exist' | t }}.</p>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'dial_number' | t }}</mat-label>
+            <input matInput type="number" formControlName="dialNumber" required>
+            <mat-error *ngIf="extensionForm.get('general.dialNumber').errors?.required">{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+          <p class="alert alert-danger" [@fade]="extensionForm.get('general.dialNumber').errors?.exists ? 'active' : 'inactive'">{{ 'dial_number_exist' | t }}.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'extension_type' | t }}</mat-label>
+            <mat-select formControlName="type" required>
+              <mat-option *ngFor="let type of selects.types" [value]="type.id">{{ type.name }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <app-unit-select formControlName="unit" [units]="selects.units" [placeholder]="'select_units' | t"></app-unit-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <mat-form-field>
+            <mat-label>{{ 'description' | t }}</mat-label>
+            <textarea rows="8" matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+    <section [hidden]="activeTab !== 'acds'">
+      <app-select-groups formControlName="acds" [items]="selects.acds"></app-select-groups>
+    </section>
+    <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'dialer_profile' | t }}</mat-label>
+            <mat-select formControlName="callback">
+              <mat-option *ngFor="let callback of selects.callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'dialer_ivr' | t }}</mat-label>
+            <mat-select formControlName="router">
+              <mat-option *ngFor="let router of selects.routers" [value]="router.id">{{ router.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <mat-form-field>
+              <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
+              <input matInput type="text" formControlName="overflowNumber">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3">
+            <mat-form-field>
+              <mat-label>{{ 'email' | t }}</mat-label>
+              <input matInput type="email" formControlName="email">
+              <mat-error>{{ errorMessages.email | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3">
+            <mat-form-field>
+              <mat-label>{{ 'dial_outgoing_tel_line' | t }}</mat-label>
+              <input matInput type="text" formControlName="dialerCallerID">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</form>

@@ -318,9 +318,12 @@
   { "key": "add_extension", "value": "הוסף שלוחה" },
   { "key": "edit_extension", "value": "ערוך שלוחה" },
   { "key": "dial_numbers", "value": "מספרי חיוג" },
+  { "key": "dial_number", "value": "מספר חיוג" },
   { "key": "until", "value": "עד" },
   { "key": "upload_audio_file", "value": "העלה קובץ אודיו" },
-  { "key": "download_file", "value": "הורד קובץ" }
+  { "key": "download_file", "value": "הורד קובץ" },
+  { "key": "dial_numbers_exist", "value": "מספרי חיוג קיימים במרכזיה" },
+  { "key": "dial_number_exist", "value": "מספר חיוג קיים במרכזיה" }
 ]
 
 
