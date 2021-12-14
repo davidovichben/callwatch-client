@@ -1,0 +1,19 @@
+<form (ngSubmit)="submit(form)" #form="ngForm">
+  <div class="mb-3 text-center text-md-start">
+    <button class="btn blue-btn ms-3" type="submit" *ngIf="userSession.hasPermission('units', 'update')">{{ 'save' | t }}</button>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-3">
+      <bd-select [ngModel]="unit.switchboard" name="switchboard" [placeholder]="'select_switchboard' | t">
+        <bd-option [value]="switchboard.id" *ngFor="let switchboard of selects.switchboards">{{ switchboard.name }}</bd-option>
+      </bd-select>
+    </div>
+    <div class="col-12 col-lg-3">
+      <bd-select [ngModel]="unit.router" name="router" [placeholder]="'select_router' | t">
+        <bd-option [value]="router.id" *ngFor="let router of selects.routers">{{ router.name }}</bd-option>
+      </bd-select>
+    </div>
+  </div>
+  <app-select-groups [ngModel]="unit.extensions" name="extensions" [items]="selects.extensions" [placeholderKeyword]="'extensions'"></app-select-groups>
+  <app-select-groups [ngModel]="unit.acds" name="acds" [items]="selects.acds" [placeholderKeyword]="'groups'"></app-select-groups>
+</form>

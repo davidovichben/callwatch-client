@@ -5,6 +5,10 @@ export class UnitModel {
   name?: string;
   admin?: string;
   externalID?: string;
+  switchboard: number;
+  router: number;
+  extensions: number[];
+  acds: number[];
   disabled?: boolean;
   checked?: boolean;
   toggled?: boolean;
@@ -13,4 +17,8 @@ export class UnitModel {
   parent?: UnitModel;
   ancestors?: UnitModel[];
   hasUnits?: boolean;
+
+  isRoot(): boolean {
+    return this.id === 'root';
+  }
 }

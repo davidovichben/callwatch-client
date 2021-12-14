@@ -73,4 +73,18 @@ export class UnitService extends BaseHttpService {
       .then(() => true)
       .catch(() => false);
   }
+
+  getExtensionGroup(unitId: number): Promise<UnitModel> {
+    return this.http.get(this.endPoint + '/' + unitId + '/extensionGroup', this.getTokenRequest())
+      .toPromise()
+      .then(response => response as UnitModel)
+      .catch(() => null);
+  }
+
+  updateExtensionGroup(unitId: number, values: object): Promise<boolean> {
+    return this.http.put(this.endPoint + '/' + unitId + '/extensionGroup', values, this.getTokenRequest())
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
 }

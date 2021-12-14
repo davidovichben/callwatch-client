@@ -324,5 +324,12 @@
   { "key": "upload_audio_file", "value": "Upload Audio File" },
   { "key": "download_file", "value": "Download File" },
   { "key": "dial_numbers_exist", "value": "Dial numbers exist for this switchboard" },
-  { "key": "dial_number_exist", "value": "Dial number exist for this switchboard" }
+  { "key": "dial_number_exist", "value": "Dial number exist for this switchboard" },
+  { "key": "select_groups", "value": "Select Groups" },
+  { "key": "select_extensions", "value": "Select Extensions" },
+  { "key": "select_switchboard", "value": "Select Switchboard" },
+  { "key": "selected_extensions", "value": "Selected Extensions" },
+  { "key": "selected_groups", "value": "Selected Groups" },
+  { "key": "available_extensions", "value": "Available Extensions" },
+  { "key": "available_groups", "value": "Available Groups" }
 ]

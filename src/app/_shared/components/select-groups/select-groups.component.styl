@@ -1,17 +1,32 @@
+@import '~src/assets/variables';
+
 mat-form-field
   width: 250px !important
 
   mat-icon
-    color: #aeaeae
+    color: DarkGreyColor
 
-ul
-  height: 200px
-  width: 250px
-  padding: 10px 20px
-  overflow: auto
-  background-color: #fff
-  border: 1px solid #aeaeae
+.group
+  position: relative
+
+  .placeholder
+    position: absolute
+    top: -8px
+    margin: 0 8px
+    padding: 0 5px
+    font-size: 12px
+    background-color: #fff
+    color: BlueColor
+
+  ul
+    height: 200px
+    width: 250px
+    padding: 10px 20px
+    overflow: auto
+    background-color: #fff
+    border: 1px solid DarkGreyColor
 
 button
   min-width: 30px
-  font-size: 12px/
+  font-size: 12px
+

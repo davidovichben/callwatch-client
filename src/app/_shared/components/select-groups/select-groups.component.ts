@@ -18,6 +18,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 export class SelectGroupsComponent implements OnInit, ControlValueAccessor {
 
   @Input() items: SelectItemModel[];
+  @Input() placeholderKeyword: string;
 
   filteredItems = [];
   selectedItems = [];

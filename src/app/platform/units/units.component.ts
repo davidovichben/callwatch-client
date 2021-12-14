@@ -29,7 +29,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
   readonly sub = new Subscription();
 
-  modules = UnitModules;
+  modules;
 
   activeUnit: UnitModel;
 
@@ -48,6 +48,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
     this.sub.add(this.route.params.subscribe(() => {
       this.activeUnit = this.route.snapshot.data.unit;
+      this.modules = this.activeUnit.id === 'root' ? UnitModules.slice(0, 2) : UnitModules;
     }));
 
     this.sub.add(this.unitStateService.refreshTree.subscribe(() => {

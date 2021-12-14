@@ -323,7 +323,14 @@
   { "key": "upload_audio_file", "value": "העלה קובץ אודיו" },
   { "key": "download_file", "value": "הורד קובץ" },
   { "key": "dial_numbers_exist", "value": "מספרי חיוג קיימים במרכזיה" },
-  { "key": "dial_number_exist", "value": "מספר חיוג קיים במרכזיה" }
+  { "key": "dial_number_exist", "value": "מספר חיוג קיים במרכזיה" },
+  { "key": "select_groups", "value": "בחר קבוצות" },
+  { "key": "select_extensions", "value": "בחר שלוחות" },
+  { "key": "select_switchboard", "value": "בחר מרכזיה" },
+  { "key": "selected_extensions", "value": "שלוחות שנבחרו" },
+  { "key": "selected_groups", "value": "קבוצות שנבחרו" },
+  { "key": "available_extensions", "value": "שלוחות זמינות" },
+  { "key": "available_groups", "value": "קבוצות זמינות" }
 ]
 
 
