@@ -54,8 +54,8 @@ export class ExtensionService extends BaseHttpService {
 			.catch(() => false);
 	}
 
-  checkDialNumbersUnique(from: number, to: number, unitId: number): Promise<any> {
-    const values = { from, to, unitId };
+  checkDialNumbersUnique(from: number, to: number, unit: number): Promise<any> {
+    const values = { from, to, unit };
     return this.http.get(this.endPoint + '/dialNumbersExist', this.getTokenRequest(values, true))
       .toPromise()
       .then(response => response as { exists: boolean })
