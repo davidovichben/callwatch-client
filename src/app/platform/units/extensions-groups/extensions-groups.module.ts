@@ -10,7 +10,7 @@ import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.m
 
 import { ExtensionsGroupsComponent } from './extensions-groups.component';
 
-import { UnitService } from 'src/app/_shared/services/http/unit.service';
+import { ExtensionGroupService } from 'src/app/_shared/services/http/extension-group.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { ExtensionGroupFormSelectResolve } from 'src/app/_shared/resolves/extension-group-form-select.resolve';
@@ -39,7 +39,7 @@ const routes: Routes = [
     SelectGroupsModule
   ],
   providers: [
-    UnitService,
+    ExtensionGroupService,
     SelectService,
     ExtensionGroupResolve,
     ExtensionGroupFormSelectResolve
