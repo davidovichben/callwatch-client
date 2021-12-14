@@ -45,7 +45,7 @@ export class ExtensionsGroupsComponent implements OnInit {
   }
 
   private setUnit(): void {
-    this.extensionGroup = this.route.snapshot.data.unit;
+    this.extensionGroup = this.route.snapshot.data.extensionGroup;
     const unitId = this.parentRoute.snapshot.params.id;
     if (unitId === 'root') {
       this.router.navigate(['/platform', 'units']);
