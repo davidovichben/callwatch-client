@@ -13,16 +13,16 @@ import { ExtensionsGroupsComponent } from './extensions-groups.component';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
-import { GroupExtensionFormSelectResolve } from 'src/app/_shared/resolves/group-extension-form-select.resolve';
-import { UnitGroupExtensionResolve } from 'src/app/_shared/resolves/unit-group-extension.resolve';
+import { ExtensionGroupFormSelectResolve } from 'src/app/_shared/resolves/extension-group-form-select.resolve';
+import { ExtensionGroupResolve } from 'src/app/_shared/resolves/extension-group.resolve';
 
 const routes: Routes = [
   {
     path: '',
     component: ExtensionsGroupsComponent,
     resolve: {
-      unit: UnitGroupExtensionResolve,
-      selects: GroupExtensionFormSelectResolve
+      extensionGroup: ExtensionGroupResolve,
+      selects: ExtensionGroupFormSelectResolve
     }
   }
 ];
@@ -41,8 +41,8 @@ const routes: Routes = [
   providers: [
     UnitService,
     SelectService,
-    UnitGroupExtensionResolve,
-    GroupExtensionFormSelectResolve
+    ExtensionGroupResolve,
+    ExtensionGroupFormSelectResolve
   ]
 })
 export class ExtensionsGroupsModule {}

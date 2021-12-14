@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
-import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
-import { UnitModel } from 'src/app/_shared/models/unit.model';
-import { NgForm } from '@angular/forms';
+import { ExtensionGroupService } from 'src/app/_shared/services/http/extension-group.service';
+
+import { ExtensionGroupModel } from 'src/app/_shared/models/extension-group.model';
 
 @Component({
   selector: 'app-extensions-groups',
@@ -26,14 +27,15 @@ export class ExtensionsGroupsComponent implements OnInit {
     acds: []
   }
 
-  unit: UnitModel;
+  extensionGroup: ExtensionGroupModel;
+  unitId: number;
 
   isSubmitting = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
               public userSession: UserSessionService,
               private notificationService: NotificationService,
-              private unitService: UnitService) {}
+              private extensionGroupService: ExtensionGroupService) {}
 
   ngOnInit(): void {
     this.parentRoute = this.route.parent.parent;
@@ -43,18 +45,20 @@ export class ExtensionsGroupsComponent implements OnInit {
   }
 
   private setUnit(): void {
-    this.unit = this.route.snapshot.data.unit;
-    this.unit.id = +this.parentRoute.snapshot.params.id;
-    if (this.unit.id === 'root') {
+    this.extensionGroup = this.route.snapshot.data.unit;
+    const unitId = this.parentRoute.snapshot.params.id;
+    if (unitId === 'root') {
       this.router.navigate(['/platform', 'units']);
       return;
     }
+
+    this.unitId = +unitId;
   }
 
   submit(form: NgForm): void {
     if (form.valid && !this.isSubmitting) {
       this.isSubmitting = true;
-      this.unitService.updateExtensionGroup(this.unit.id, form.value).then(response => {
+      this.extensionGroupService.updateExtensionGroup(this.unitId, form.value).then(response => {
         if (response) {
           this.notificationService.success();
         }

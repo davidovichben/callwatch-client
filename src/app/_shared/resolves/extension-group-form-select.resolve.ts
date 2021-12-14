@@ -4,7 +4,7 @@ import { Resolve } from '@angular/router';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 @Injectable()
-export class GroupExtensionFormSelectResolve implements Resolve<object> {
+export class ExtensionGroupFormSelectResolve implements Resolve<object> {
 
   constructor(private selectService: SelectService) {}
 

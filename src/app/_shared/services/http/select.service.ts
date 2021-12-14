@@ -30,7 +30,7 @@ export class SelectService extends BaseHttpService {
   }
 
   groupExtensionForm(): Promise<object> {
-    return this.http.get(this.endPoint + '/groupExtension', this.getTokenRequest())
+    return this.http.get(this.endPoint + '/extensionGroup', this.getTokenRequest())
       .toPromise()
       .then(response => response)
       .catch(() => null);
