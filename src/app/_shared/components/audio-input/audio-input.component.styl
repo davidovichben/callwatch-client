@@ -1,16 +1,25 @@
-:host
-  width: 100%
+@import '~src/assets/variables';
 
-mat-form-field
-  pointer-events: none
+#player
+  display: flex
+  align-items: center
+  justify-content: space-between
+  width: 220px
+  padding: 10px
+  border-radius: 40px
+  background-color: #e0e0e0
 
-.mat-icon
-  cursor: pointer
-  pointer-events: all
+  .mat-icon
+    cursor: pointer
 
-#actions
-  width: 30%
-  padding-top: 15px
+  #times
+    direction: ltr
 
-  mat-icon
-    margin: 0 5px
+  #placeholder
+    color: BlueColor
+
+#fileName
+  direction: ltr
+  text-align: center
+  color: BlueColor
+  font-size: 12px

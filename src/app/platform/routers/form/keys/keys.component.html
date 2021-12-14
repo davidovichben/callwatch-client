@@ -47,7 +47,7 @@
             </mat-form-field>
           </ng-container>
           <ng-container *ngSwitchCase="'audio_message'">
-            <app-audio-input [placeholder]="'audio_file' | t" [inputFile]="action.get('files').value[lang.value]" (fileChange)="setFile(action, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+            <app-audio-input [inputFile]="action.get('files').value[lang.value]" (fileChange)="setFile(action, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
           </ng-container>
           <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
             <mat-label>{{ 'select_language' | t }}</mat-label>
