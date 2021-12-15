@@ -15,7 +15,6 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 export class ChipsInputComponent implements ControlValueAccessor {
 
   @Input() placeholder: string;
-  @Input() rules: { pattern?: string; length?: number } = {};
   @Input() type: string;
 
   isListToggled = false;
