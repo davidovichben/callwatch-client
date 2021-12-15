@@ -1,8 +1,73 @@
-mat-chip-list
-  margin-top: -10px
+:host
+  position: relative
+  display: block
+  width: 100%
 
-  mat-icon
-    height: 18px
-    width: 18px
-    margin: 0 4px
-    font-size: 18px
+#chipContainer
+  position: relative
+  display: flex
+  flex-wrap: wrap
+  padding: 7px 5px
+  border-radius: 6px
+  border: 1px solid #afafaf
+  background-color: #fff
+
+  #placeholder
+    position: absolute
+    top: -10px
+    font-size: 12px
+    margin: 0 5px
+    background-color: #fff
+
+  .chip
+    display: flex
+    align-items: center
+    justify-content: space-between
+    min-width: 70px
+    margin: 3px 5px
+    padding: 3px 6px
+    border-radius: 6px
+    background-color: #afafaf
+    color: #fff
+
+    > mat-icon, > span
+      font-size: 14px
+
+    > mat-icon
+      height: 14px
+      width: 14px
+
+#suggestedTags
+  position: absolute
+  width: 100%
+  z-index: 999999
+  border: 1px solid #afafaf
+  background-color: #fff
+
+  #searchContainer
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin: 8px
+    margin-bottom: 0
+    padding: 6px
+    border: 1px solid #afafaf
+    border-radius: 6px
+
+  input
+    border: none
+    outline: none
+    font-size: 14px
+
+  #suggestedTagsList
+    max-height: 160px
+    overflow-y: auto
+
+    .suggested-tag
+      padding: 8px
+      color: #005073
+      cursor: pointer
+
+    .suggested-tag:hover
+      color: #fff
+      background-color: #005073

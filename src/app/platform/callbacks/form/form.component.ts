@@ -19,6 +19,12 @@ export class FormComponent implements OnInit {
 
   readonly callbackTextNames = CallbackTextNames;
 
+  readonly tabs = [
+    { label: 'general', value: 'general' },
+    { label: 'request_handling_settings', value: 'request' },
+    { label: 'texts', value: 'texts' }
+  ];
+
   activeTab = 'general';
 
 	callbackForm: FormGroup;

@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+
+import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
 import { ChipsInputComponent } from './chips-input.component';
 
@@ -12,10 +11,8 @@ import { ChipsInputComponent } from './chips-input.component';
 	exports: [ChipsInputComponent],
 	imports: [
 		CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
 	]
 })
 export class ChipsInputModule {}

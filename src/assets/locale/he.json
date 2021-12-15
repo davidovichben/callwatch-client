@@ -330,7 +330,9 @@
   { "key": "selected_extensions", "value": "שלוחות שנבחרו" },
   { "key": "selected_groups", "value": "קבוצות שנבחרו" },
   { "key": "available_extensions", "value": "שלוחות זמינות" },
-  { "key": "available_groups", "value": "קבוצות זמינות" }
+  { "key": "available_groups", "value": "קבוצות זמינות" },
+  { "key": "type_a_tag", "value": "הקלד תגית..." },
+  { "key": "no_tags_found", "value": "לא נמצאו תגיות" }
 ]
 
 
