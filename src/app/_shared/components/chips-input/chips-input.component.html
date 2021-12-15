@@ -1,17 +1,17 @@
-<div id="chipContainer" (click)="listToggled = !listToggled; $event.stopPropagation()">
-  <p id="placeholder">{{ placeholder }}</p>
+<div id="chipContainer" (click)="openList($event)">
+  <p id="placeholder">{{ placeholder ?? ('tags' | t) }}</p>
   <div class="chip" *ngFor="let tag of selectedTags; let index = index">
-    <span>{{ tag }}</span>
+    <span>{{ tag.name }}</span>
     <mat-icon class="me-1" (click)="removeTag(index)">close</mat-icon>
   </div>
 </div>
 <div id="suggestedTags" *ngIf="listToggled">
   <div id="searchContainer">
-    <input type="text" [placeholder]="'type_a_tag' | t">
+    <input type="text" [placeholder]="'type_a_tag' | t" (change)="onSearchType(searchInput.value)" #searchInput>
     <mat-icon>search</mat-icon>
   </div>
   <div id="suggestedTagsList">
-    <div *ngFor="let tag of suggestedTags; let index = index" class="suggested-tag" (click)="addTag(tag, index)">{{ tag }}</div>
+    <div *ngFor="let tag of suggestedTags; let index = index" class="suggested-tag" (click)="addTag(tag, index)">{{ tag.name }}</div>
     <p class="my-1 text-center" *ngIf="suggestedTags.length === 0">{{ 'no_tags_found' | t }}.</p>
   </div>
 </div>

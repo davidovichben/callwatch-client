@@ -6,6 +6,8 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 
 import { ChipsInputComponent } from './chips-input.component';
 
+import { TagService } from 'src/app/_shared/services/http/tag.service';
+
 @NgModule({
 	declarations: [ChipsInputComponent],
 	exports: [ChipsInputComponent],
@@ -13,6 +15,7 @@ import { ChipsInputComponent } from './chips-input.component';
 		CommonModule,
     MatIconModule,
     TranslateModule
-	]
+	],
+  providers: [TagService]
 })
 export class ChipsInputModule {}

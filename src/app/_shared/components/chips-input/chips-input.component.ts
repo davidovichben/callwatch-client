@@ -1,6 +1,8 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { TagService } from 'src/app/_shared/services/http/tag.service';
+
 @Component({
   selector: 'app-chips-input',
   templateUrl: './chips-input.component.html',
@@ -11,8 +13,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class ChipsInputComponent implements ControlValueAccessor {
 
-  @Input() placeholder: string = 'תגיות';
+  @Input() placeholder: string;
   @Input() rules: { pattern?: string; length?: number } = {};
+  @Input() type: string;
 
   regex: RegExp;
 
@@ -20,6 +23,8 @@ export class ChipsInputComponent implements ControlValueAccessor {
 
   selectedTags = [];
   suggestedTags = [];
+
+  constructor(private tagService: TagService) {}
 
   ngOnInit(): void {
     if (this.rules.pattern) {
@@ -31,6 +36,8 @@ export class ChipsInputComponent implements ControlValueAccessor {
     this.suggestedTags.splice(index, 1);
     this.selectedTags.push(tag);
     this.listToggled = false;
+
+    this.propagateChange(this.selectedTags);
   }
 
   removeTag(index: number): void {
@@ -38,26 +45,20 @@ export class ChipsInputComponent implements ControlValueAccessor {
     this.propagateChange(this.selectedTags);
   }
 
-  // keyPressed(event: KeyboardEvent, input: HTMLInputElement): void {
-  //   if (event.key !== 'Enter') {
-  //     if (this.regex && !this.regex.test(event.key)) {
-  //       event.preventDefault();
-  //     }
-  //
-  //     if (this.rules.length && input.value.length > this.rules.length) {
-  //       event.preventDefault();
-  //     }
-  //   }
-  //
-  //   if (event.key === 'Enter' && input.value) {
-  //     event.preventDefault();
-  //
-  //     this.values.push(input.value);
-  //     this.propagateChange(this.values);
-  //
-  //     input.value = '';
-  //   }
-  // }
+  openList(event: MouseEvent): void {
+    event.stopPropagation();
+    this.listToggled = !this.listToggled;
+
+    if (this.suggestedTags.length === 0) {
+      this.tagService.getTags(this.type).then(tags => {
+        this.suggestedTags = tags;
+      });
+    }
+  }
+
+  onSearchType(keyword: string): void {
+    console.log(keyword)
+  }
 
   writeValue(tags: any[]): void {
     if (tags) {
