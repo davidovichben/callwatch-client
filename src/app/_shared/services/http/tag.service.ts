@@ -15,8 +15,13 @@ export class TagService extends BaseHttpService {
     super(userSession);
   }
 
-  getTags(type: string): Promise<SelectItemModel[]> {
-    return this.http.get(this.endPoint, this.getTokenRequest({ type }, true))
+  getTags(type: string, existingTags: number[], keyword?: string): Promise<SelectItemModel[]> {
+    const values = { type, existingTags: JSON.stringify(existingTags) }
+    if (keyword) {
+      Object.assign(values, { keyword });
+    }
+
+    return this.http.get(this.endPoint, this.getTokenRequest(values, true))
       .toPromise()
       .then(response => response as SelectItemModel[])
       .catch(() => []);

@@ -2,6 +2,7 @@ import { Component, HostListener, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { TagService } from 'src/app/_shared/services/http/tag.service';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
   selector: 'app-chips-input',
@@ -17,52 +18,79 @@ export class ChipsInputComponent implements ControlValueAccessor {
   @Input() rules: { pattern?: string; length?: number } = {};
   @Input() type: string;
 
-  regex: RegExp;
-
-  listToggled = false;
+  isListToggled = false;
+  isLoading = false;
 
   selectedTags = [];
   suggestedTags = [];
 
+  unmatchedKeyword: string;
+
   constructor(private tagService: TagService) {}
 
-  ngOnInit(): void {
-    if (this.rules.pattern) {
-      this.regex = new RegExp(this.rules.pattern);
+  addTag(tag: SelectItemModel, index?: number): void {
+    if (index) {
+      this.suggestedTags.splice(index, 1);
     }
-  }
 
-  addTag(tag: string, index: number): void {
-    this.suggestedTags.splice(index, 1);
     this.selectedTags.push(tag);
-    this.listToggled = false;
+    this.isListToggled = false;
 
-    this.propagateChange(this.selectedTags);
+    this.propagateChange(this.selectedTags.map(tag => tag.id));
   }
 
-  removeTag(index: number): void {
+  removeTag(index: number, event: MouseEvent): void {
+    event.stopPropagation();
+
     this.selectedTags.splice(index, 1);
-    this.propagateChange(this.selectedTags);
+    this.propagateChange(this.selectedTags.map(tag => tag.id));
+  }
+
+  createTag(): void {
+    if (!this.isLoading && this.unmatchedKeyword) {
+      this.isLoading = true;
+
+      this.tagService.newTag(this.type, this.unmatchedKeyword).then(tag => {
+        if (tag) {
+          this.addTag(tag);
+          this.unmatchedKeyword = null;
+        }
+
+        this.isLoading = false;
+      })
+    }
   }
 
   openList(event: MouseEvent): void {
     event.stopPropagation();
-    this.listToggled = !this.listToggled;
+    this.isListToggled = !this.isListToggled;
 
-    if (this.suggestedTags.length === 0) {
-      this.tagService.getTags(this.type).then(tags => {
+    this.loadTags();
+  }
+
+  loadTags(keyword?: string): void {
+    if (!this.isLoading) {
+      this.isLoading = true;
+
+      const existingTagIds = this.selectedTags.map(tag => tag.id);
+      this.tagService.getTags(this.type, existingTagIds, keyword).then(tags => {
         this.suggestedTags = tags;
+
+        if (keyword && !tags.find(tag => tag.name === keyword) && !this.selectedTags.find(tag => tag.name === keyword)) {
+          this.unmatchedKeyword = keyword;
+        } else {
+          this.unmatchedKeyword = null;
+        }
+
+        this.isLoading = false;
       });
     }
   }
 
-  onSearchType(keyword: string): void {
-    console.log(keyword)
-  }
-
-  writeValue(tags: any[]): void {
-    if (tags) {
-      this.selectedTags = tags;
+  writeValue(tagIds: number[]): void {
+    if (tagIds) {
+      this.loadTags();
+      this.selectedTags = this.suggestedTags.filter(tag => tagIds.includes(tag.id));
     }
   }
 
@@ -82,7 +110,7 @@ export class ChipsInputComponent implements ControlValueAccessor {
 
   @HostListener('document:click')
   documentClicked() {
-    if (!this.listToggled) {
+    if (!this.isListToggled) {
       return;
     }
 
@@ -93,6 +121,6 @@ export class ChipsInputComponent implements ControlValueAccessor {
       }
     })
 
-    this.listToggled = !isOutside;
+    this.isListToggled = !isOutside;
   }
 }

@@ -39,6 +39,7 @@
     > mat-icon
       height: 14px
       width: 14px
+      cursor: pointer
 
 #suggestedTags
   position: absolute
@@ -64,6 +65,7 @@
 
   #suggestedTagsList
     max-height: 160px
+    min-height: 40px
     overflow-y: auto
 
     .suggested-tag
@@ -74,3 +76,17 @@
     .suggested-tag:hover
       color: #fff
       background-color: #005073
+
+    .loader
+      margin: 10px 5px
+      font-size: 2px
+
+  #createTag
+    display: inline-flex
+    align-items: center
+    margin: 0 6px 5px 6px
+    padding: 4px 8px
+    background-color: #dbe0e6
+    color: #112344
+    border-radius: 5px
+    cursor: pointer

@@ -333,5 +333,6 @@
   { "key": "available_extensions", "value": "Available Extensions" },
   { "key": "available_groups", "value": "Available Groups" },
   { "key": "type_a_tag", "value": "Type a tag..." },
-  { "key": "no_tags_found", "value": "No tags found" }
+  { "key": "no_tags_found", "value": "No tags found" },
+  { "key": "create_tag", "value": "Create Tag" }
 ]
