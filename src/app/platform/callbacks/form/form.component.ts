@@ -7,7 +7,7 @@ import { HelpersService } from 'src/app/_shared/services/generic/helpers.service
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-import { CallbackTextModel, CallbackTextNames } from 'src/app/_shared/models/callback-text.model';
+import { CallbackTextModel, CallbackTextTypes } from 'src/app/_shared/models/callback-text.model';
 
 @Component({
 	selector: 'app-form',
@@ -17,7 +17,7 @@ export class FormComponent implements OnInit {
 
 	readonly errorMessages = ErrorMessages;
 
-  readonly callbackTextNames = CallbackTextNames;
+  readonly callbackTextTypes = CallbackTextTypes;
 
   readonly tabs = [
     { label: 'general', value: 'general' },
@@ -77,9 +77,9 @@ export class FormComponent implements OnInit {
     });
 
     const textArray = (this.callbackForm.get('texts') as FormArray);
-    this.callbackTextNames.forEach(name => {
+    this.callbackTextTypes.forEach(type => {
      const group = this.fb.group({
-       name: this.fb.control(name),
+       type: this.fb.control(type),
        content: this.fb.control({ value: null, disabled: true }),
        isActive: this.fb.control(null)
      });
@@ -91,7 +91,7 @@ export class FormComponent implements OnInit {
   private setTextArray(texts: CallbackTextModel[]): void {
     const textArray = (this.callbackForm.get('texts') as FormArray);
     textArray.controls.forEach(control => {
-      const text = texts.find(text =>  text.name === control.get('name').value);
+      const text = texts.find(text => text.type === control.get('type').value);
       if (text) {
         control.patchValue(text);
         control.get('isActive').value ? control.get('content').enable() : null;
@@ -146,7 +146,7 @@ export class FormComponent implements OnInit {
   }
 
   private toggleInvalidTabs(): void {
-    if (this.callbackForm.get('name').invalid) {
+    if (this.callbackForm.get('type').invalid) {
       this.activeTab = 'general';
       return;
     }

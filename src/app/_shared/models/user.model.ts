@@ -20,4 +20,4 @@ export class UserModel {
   units: UnitModel[] | 'root';
 }
 
-export const AuthTypes = ['ldap', 'kerberus'];
+export const AuthTypes = ['ldap', 'kerberos'];
