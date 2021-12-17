@@ -41,7 +41,7 @@ export class MessagesComponent extends SharedComponent {
         const group = this.getMessageGroup;
         group.patchValue(message);
         this.checkOnline(group);
-        this.formArray.push(message);
+        this.formArray.push(group);
       });
     }
   }

@@ -108,7 +108,16 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   deleteAction(type: string, index: number): void {
     const arr = (this.formGroup.get(type) as FormArray);
+    const activityType = arr.at(index).value.activityTypeName;
+
     arr.removeAt(index);
+
+    if (activityType === 'condition') {
+      while (arr.at(index).value.conditionResult) {
+        arr.removeAt(index);
+      }
+    }
+
     if (arr.length === 0) {
       this.formGroup.removeControl(type);
       this.setUnusedTypes();
@@ -127,8 +136,9 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   setDefault(group: FormGroup): void {
     this.getKeys().forEach(key => {
-      (this.formGroup.get(key) as FormArray).at(0).patchValue(false);
+      (this.formGroup.get(key) as FormArray).at(0).get('isDefault').patchValue(false);
     })
+
     group.get('isDefault').patchValue(true);
   }
 
@@ -160,8 +170,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
   // Patching value, setting first condition and setting files if exist
 
   private setExistingKeys(existingKeys: object): void {
-    const actionsWithFiles = [];
-
     Object.keys(existingKeys).forEach(type => {
       const actions = [];
       let conditionResult = null;
@@ -172,10 +180,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
         if (action.conditionResult && action.conditionResult != conditionResult) {
           conditionResult = action.conditionResult;
           group.get('isFirstCondition').patchValue(true);
-        }
-
-        if (action.activityTypeName === 'audio_message') {
-          actionsWithFiles.push(action);
         }
 
         actions.push(group);
