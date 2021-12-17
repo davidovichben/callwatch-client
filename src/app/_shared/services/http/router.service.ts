@@ -61,4 +61,11 @@ export class RouterService extends BaseHttpService {
       .then(response => response as SelectItemModel[])
       .catch(() => []);
   }
+
+  duplicateRouter(routerId: number): Promise<any> {
+    return this.http.post(this.endPoint + '/' + routerId + '/duplicate', {}, this.getTokenRequest())
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
 }

@@ -1,8 +1,12 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
+
+import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 import { Fade } from 'src/app/_shared/constants/animations';
 
 import * as FileSaver from 'file-saver';
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 @Component({
   selector: 'app-audio-input',
@@ -17,7 +21,7 @@ export class AudioInputComponent implements AfterViewInit {
 
   @Input() placeholder: string;
   @Input() fileTypes;
-  @Input() inputFile: File;
+  @Input() inputFile: { bin: string, name: string };
   @Input() disabled = false;
 
   @Output() fileChange = new EventEmitter();
@@ -41,7 +45,8 @@ export class AudioInputComponent implements AfterViewInit {
 
   hasTypeError = false;
 
-  constructor(private t: TranslatePipe, private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private t: TranslatePipe,
+              private helpers: HelpersService) {}
 
   ngOnInit(): void {
     if (!this.placeholder) {
@@ -51,7 +56,8 @@ export class AudioInputComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.inputFile) {
-      setTimeout(() => this.uploadFile(this.inputFile), 0);
+      const file = this.helpers.base64toFile(this.inputFile.bin, this.inputFile.name);
+      setTimeout(() => this.readFile(file), 0);
     }
 
     this.loadedUnlistener = this.renderer.listen(this.audioPlayer.nativeElement, 'loadedmetadata', () => {
@@ -86,10 +92,17 @@ export class AudioInputComponent implements AfterViewInit {
 
     this.hasTypeError = false;
 
+    this.readFile(file, true);
+  }
+
+  private readFile(file: File, emit?: boolean): void {
     const reader = new FileReader();
     reader.onload = (() => {
       this.audioPlayer.nativeElement.src = reader.result;
-      this.fileChange.emit({ bin: reader.result, name: file.name });
+
+      if (emit) {
+        this.fileChange.emit({ bin: reader.result, name: file.name });
+      }
     });
 
     reader.readAsDataURL(file);

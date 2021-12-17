@@ -8,7 +8,6 @@ import { TimingDialogComponent } from 'src/app/platform/routers/form/timing-dial
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
 import { Langs } from 'src/app/_shared/constants/general';
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 
 @Component({
   selector: 'app-shared',
@@ -23,22 +22,7 @@ export abstract class SharedComponent implements OnDestroy {
 
   activeLang: string;
 
-  protected constructor(private dialog: MatDialog, public formService: RouterFormService,
-                        private helpers: HelpersService) {}
-
-  protected setFiles(groupsWithFiles: FormGroup[]): void {
-    groupsWithFiles.forEach(group => {
-      this.langs.forEach(iteratedLang => {
-        const lang = iteratedLang.value;
-        if (group.get('files').value[lang]) {
-          const value = group.get('files').value;
-          value[lang] = this.helpers.base64toFile(value[lang].bin, value[lang].name);
-
-          group.get('files').patchValue(value);
-        }
-      })
-    });
-  }
+  protected constructor(private dialog: MatDialog, public formService: RouterFormService) {}
 
   setFile(group: FormGroup, file?: { bin: string, name: string }): void {
     const value = group.get('files').value;

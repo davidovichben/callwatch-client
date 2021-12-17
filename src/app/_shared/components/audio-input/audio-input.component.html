@@ -1,4 +1,4 @@
-<div id="player">
+<div class="player">
   <ng-container *ngIf="!file">
     <span id="placeholder">{{ placeholder }}</span>
     <mat-icon (click)="audioFileInput.click()" *ngIf="!disabled">upload</mat-icon>
@@ -16,14 +16,14 @@
       </div>
     </mat-menu>
     <span id="times">{{ currentTime.minutes }}:{{ currentTime.seconds }} / {{ duration.minutes }}:{{ duration.seconds }}</span>
-    <div class="d-flex">
-      <mat-icon (click)="audioPlayer.play(); playing = true" *ngIf="file && !playing">play_circle_filled</mat-icon>
-      <mat-icon (click)="audioPlayer.pause(); playing = false" *ngIf="file && playing">pause_circle_filled</mat-icon>
-      <mat-icon (click)="audioPlayer.pause(); audioPlayer.currentTime = 0; playing = false" *ngIf="file && playing">stop_circle</mat-icon>
+    <div class="d-flex" *ngIf="file">
+      <mat-icon (click)="audioPlayer.pause(); audioPlayer.currentTime = 0; playing = false">stop_circle</mat-icon>
+      <mat-icon (click)="audioPlayer.play(); playing = true" *ngIf="!playing">play_circle_filled</mat-icon>
+      <mat-icon (click)="audioPlayer.pause(); playing = false" *ngIf="playing">pause_circle_filled</mat-icon>
     </div>
   </ng-container>
   <input type="file" (change)="uploadFile(audioFileInput.files[0])" #audioFileInput>
   <audio #audioPlayer></audio>
 </div>
-<p id="fileName" *ngIf="file">{{ file.name.length < 25 ? file.name : file.name.substr(0, 25) + '...' }}</p>
+<p class="file-name" *ngIf="file">{{ file.name.length < 25 ? file.name : file.name.substr(0, 25) + '...' }}</p>
 <p class="alert alert-danger" [@fade]="hasTypeError ? 'active' : 'inactive'">{{ 'invalid_file_type_detailed' | t }}: wav</p>

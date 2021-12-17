@@ -86,10 +86,11 @@ export class ChipsInputComponent implements ControlValueAccessor {
     }
   }
 
-  writeValue(tagIds: number[]): void {
+  writeValue(tagIds?: number[]): void {
     if (tagIds) {
-      this.loadTags();
-      this.selectedTags = this.suggestedTags.filter(tag => tagIds.includes(tag.id));
+      this.tagService.getTags(this.type, []).then(tags => {
+        this.selectedTags = tags.filter(tag => tagIds.includes(tag.id));
+      });
     }
   }
 

@@ -49,7 +49,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
     this.makeForm();
-    this.setFormSubscriptions();
 
     const routeData = this.route.snapshot.data;
     this.selects = routeData.selects;
@@ -94,17 +93,6 @@ export class FormComponent implements OnInit, OnDestroy {
     })
   }
 
-  private setFormSubscriptions(): void {
-    const sub = this.acdForm.get('switchboard.switchboard').valueChanges.subscribe(() => this.switchboardChanged());
-    this.sub.add(sub);
-  }
-
-  switchboardChanged(): void {
-    this.uniqueControlNames.forEach(controlName => {
-      this.acdForm.get('switchboard.' + controlName).updateValueAndValidity();
-    })
-  }
-
   checkUniqueness(args: object, control: FormControl): Promise<{ exists: boolean }> {
     const switchboardId = this.acdForm.get('switchboard.switchboard').value;
     if (!switchboardId) {
@@ -132,10 +120,12 @@ export class FormComponent implements OnInit, OnDestroy {
 		if (this.acdForm.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
-      const values = {};
-      Object.keys(this.acdForm.value).forEach(groupName => {
-        Object.assign(values, this.acdForm.value[groupName]);
-      })
+      const values = {
+        ...this.acdForm.value.general,
+        ...this.acdForm.value.switchboard,
+        ...this.acdForm.value.callback,
+        extensions: this.acdForm.get('extensions')
+      };
 
 			if (this.acd) {
 				this.acdService.updateAcd(this.acd.id, values).then(response => this.handleServerResponse(response));

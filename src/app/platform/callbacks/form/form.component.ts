@@ -64,13 +64,13 @@ export class FormComponent implements OnInit {
     this.callbackForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
       description: this.fb.control(null),
-      requestDuration: this.fb.control(null),
-      dialAttempts: this.fb.control(null),
-      enableDialer: this.fb.control(null),
+      requestDuration: this.fb.control(0),
+      dialAttempts: this.fb.control(0),
+      enableDialer: this.fb.control(false),
       schedule: this.fb.control(null, Validators.required),
-      answerCalculation: this.fb.control(null),
-      dialAttemptIntervals: this.fb.control(null),
-      mailCallback: this.fb.control(null),
+      answerCalculation: this.fb.control(0),
+      dialAttemptIntervals: this.fb.control(0),
+      mailCallback: this.fb.control(false),
       file: this.fb.control(null),
       fileName: this.fb.control(null),
       texts: this.fb.array([])
@@ -146,7 +146,7 @@ export class FormComponent implements OnInit {
   }
 
   private toggleInvalidTabs(): void {
-    if (this.callbackForm.get('type').invalid) {
+    if (this.callbackForm.get('name').invalid) {
       this.activeTab = 'general';
       return;
     }

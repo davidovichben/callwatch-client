@@ -6,7 +6,7 @@
   </div>
 </div>
 <div>
-  <div class="mb-4 tabs">
+  <div class="tabs">
     <a class="tab" [ngClass]="{ active: activeTab === tab.value }" (click)="activeTab = tab.value" *ngFor="let tab of tabs">{{ tab.label | t }}</a>
   </div>
   <section [hidden]="activeTab !== 'general'">

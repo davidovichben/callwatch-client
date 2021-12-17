@@ -10,15 +10,15 @@
     <section>
       <p class="h3 mb-3">{{ 'switchboard_details' | t }}</p>
       <div class="row">
-        <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
             <mat-label>{{ 'switchboard_name' | t }}</mat-label>
             <input matInput type="text" formControlName="name" required>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
-        <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
             <mat-label>{{ 'switchboard_type' | t }}</mat-label>
             <mat-select formControlName="type" (valueChange)="toggleAxi($event)" required>
               <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
@@ -26,15 +26,15 @@
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
-        <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
             <mat-label>{{ 'net_address' | t }}</mat-label>
             <input matInput type="text" formControlName="netAddress" required>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
-        <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
             <mat-label>{{ 'assigned_data_manager' | t }}</mat-label>
             <mat-select formControlName="dataManager">
               <mat-option>--</mat-option>
@@ -42,8 +42,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-12 col-lg-3">
-          <mat-form-field class="w-100">
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
             <mat-label>{{ 'minimal_number_of_seconds' | t }}</mat-label>
             <input matInput type="number" min="0" formControlName="minimalSeconds" required>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
@@ -59,22 +59,22 @@
       </div>
       <div *ngIf="activeTab === 'cti'" formGroupName="cti">
         <div class="row">
-          <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
               <mat-label>{{ 'cti_username' | t }}</mat-label>
               <input matInput type="text" formControlName="username" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
               <mat-label>{{ 'cti_password' | t }}</mat-label>
               <input matInput type="text" formControlName="password" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
               <mat-label>{{ 'cti_daily_update_time' | t }}</mat-label>
               <input matInput type="time" formControlName="dailyUpdateAt" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
@@ -92,22 +92,22 @@
       </div>
       <div *ngIf="activeTab === 'axl'" formGroupName="axl">
         <div class="row">
-          <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
               <mat-label>{{ 'axl_address' | t }}</mat-label>
               <input matInput type="text" formControlName="address" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
               <mat-label>{{ 'axl_username' | t }}</mat-label>
               <input matInput type="text" formControlName="username" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-3">
-            <mat-form-field class="w-100">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
               <mat-label>{{ 'axl_password' | t }}</mat-label>
               <input matInput type="text" formControlName="password" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
@@ -117,7 +117,7 @@
         <div class="row">
           <div class="col-12 col-lg-3">
             <mat-checkbox (change)="toggleServiceNumber($event.checked, 'axl')" [checked]="switchboardForm.get('axl.number').value">{{ 'axl_enable_services' | t }}</mat-checkbox>
-            <mat-form-field class="w-100">
+            <mat-form-field>
               <input matInput type="text" formControlName="number" [required]="!switchboardForm.get('axl.number').disabled">
             </mat-form-field>
           </div>

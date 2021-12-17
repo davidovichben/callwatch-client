@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -6,7 +6,10 @@ import { SharedComponent } from 'src/app/platform/routers/form/shared/shared.com
 
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { RouterKeyConditions, RouterKeyTypes } from 'src/app/_shared/models/router-key.model';
 
@@ -25,9 +28,10 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
   formGroup: FormGroup;
 
   constructor(dialog: MatDialog, formService: RouterFormService,
-              helpers: HelpersService, private fb: FormBuilder,
-              private locale: LocaleService) {
-    super(dialog, formService, helpers);
+              private fb: FormBuilder, private locale: LocaleService,
+              private t: TranslatePipe,
+              private notificationService: NotificationService) {
+    super(dialog, formService);
   }
 
   ngOnInit(): void {
@@ -92,6 +96,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   newKey(type: string): void {
     if (!type) {
+      this.notificationService.error(this.t.transform('please_select_key'))
       return;
     }
 
@@ -178,10 +183,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
       this.formGroup.addControl(type, this.fb.array(actions));
     })
-
-    if (actionsWithFiles.length > 0) {
-      this.setFiles(actionsWithFiles);
-    }
   }
 
   private setUnusedTypes(): void {

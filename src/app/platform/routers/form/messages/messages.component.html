@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between mb-3">
   <div>
-    <button mat-flat-button type="button" class="mt-3 btn blue-btn" (click)="newMessage()">{{ 'add' | t }}</button>
+    <button mat-flat-button type="button" class="mt-3 btn blue-btn" (click)="pushMessage()">{{ 'add' | t }}</button>
   </div>
   <mat-form-field class="w-200p">
     <mat-label>{{ 'select_language' | t  }}</mat-label>
@@ -12,7 +12,7 @@
 <div [formGroup]="formService.routerForm.get('messages')" (cdkDropListDropped)="dropMessage($event)" cdkDropList>
   <ng-container [formArrayName]="category">
     <div class="group" *ngFor="let message of formArray['controls']; let index = index" [formGroupName]="index" cdkDrag>
-      <mat-icon id="dragIcon" class="dark-grey-text">drag_indicator</mat-icon>
+      <mat-icon class="dark-grey-text drag-icon">drag_indicator</mat-icon>
       <mat-form-field class="w-100p">
         <mat-label>{{ 'type' | t }}</mat-label>
         <mat-select formControlName="type">
@@ -33,7 +33,9 @@
       </ng-container>
       <ng-container *ngIf="message.get('type').value === 'message'">
         <app-chips-input class="w-300p" [type]="'routerMessage'" formControlName="tags"></app-chips-input>
-        <app-audio-input [inputFile]="message.get('files').value[lang.value]" (fileChange)="setFile(message, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+        <div class="flex-grow-1">
+          <app-audio-input [inputFile]="message.get('files').value[lang.value]" (fileChange)="setFile(message, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+        </div>
         <div class="icon-container pointer" (click)="openActivityDialog(message)">
           <p class="mb-1 bold">{{ 'timing' | t }}</p>
           <mat-icon [ngClass]="{ 'green-text': message.get('timingType').value }">watch_later</mat-icon>
@@ -45,7 +47,7 @@
           <p [ngClass]="{ 'green-text': message.get('isOnline').value, 'red-text': !message.get('isOnline').value }">{{ message.get('isOnline').value ? ('active' | t) : ('inactive' | t) }}</p>
         </div>
       </ng-container>
-      <mat-slide-toggle formControlName="isActive" (ngModelChange)="!$event ? message.get('isOnline').patchValue(false) : null"></mat-slide-toggle>
+      <mat-slide-toggle formControlName="isActive" (ngModelChange)="message.get('isOnline').patchValue($event)"></mat-slide-toggle>
       <mat-icon class="pointer dark-grey-text" (click)="deleteMessage(index)">delete</mat-icon>
     </div>
   </ng-container>

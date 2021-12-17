@@ -29,6 +29,23 @@
       </mat-form-field>
     </div>
   </div>
+  <div class="row mb-3">
+    <div class="col-12 col-lg-3">
+      <app-chips-input formControlName="dialedNumbers" [type]="'routerNumber'" [placeholder]="'dialed_numbers' | t"></app-chips-input>
+    </div>
+    <div class="col-12 col-lg-3">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'router_admin_code' | t }}</mat-label>
+        <input matInput type="text" formControlName="adminCode">
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-lg-3">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'default_selection_seconds' | t }}</mat-label>
+        <input matInput type="number" formControlName="defaultSelectionDuration">
+      </mat-form-field>
+    </div>
+  </div>
   <div class="mb-3">
     <mat-checkbox formControlName="irregularTimingEnabled">{{ 'irregular_timing' | t }}</mat-checkbox>
   </div>
@@ -58,23 +75,6 @@
         <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #toDatePicker></mat-datepicker>
         <mat-error>{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <app-chips-input formControlName="dialedNumbers" [type]="'routerNumber'" [placeholder]="'dialed_numbers' | t"></app-chips-input>
-    </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'router_admin_code' | t }}</mat-label>
-        <input matInput type="text" formControlName="adminCode">
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'default_selection_seconds' | t }}</mat-label>
-        <input matInput type="number" formControlName="defaultSelectionDuration">
       </mat-form-field>
     </div>
   </div>

@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="form-body">
-    <div class="mb-4 tabs">
+    <div class="tabs">
       <a class="tab" [ngClass]="{ active: activeTab === tab.value }" (click)="activeTab = tab.value" *ngFor="let tab of tabs">{{ tab.label | t }}</a>
     </div>
     <section formGroupName="general" [hidden]="activeTab !== 'general'">
@@ -77,6 +77,7 @@
           <mat-form-field>
             <mat-label>{{ 'dialer_profile' | t }}</mat-label>
             <mat-select formControlName="callback">
+              <mat-option>-------</mat-option>
               <mat-option *ngFor="let callback of selects.callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -85,6 +86,7 @@
           <mat-form-field>
             <mat-label>{{ 'dialer_ivr' | t }}</mat-label>
             <mat-select formControlName="router">
+              <mat-option>-------</mat-option>
               <mat-option *ngFor="let router of selects.routers" [value]="router.id">{{ router.name }}</mat-option>
             </mat-select>
           </mat-form-field>

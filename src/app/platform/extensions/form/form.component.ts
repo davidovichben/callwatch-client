@@ -123,10 +123,11 @@ export class FormComponent implements OnInit, OnDestroy {
     if (this.extensionForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
-      const values = {};
-      Object.keys(this.extensionForm.value).forEach(groupName => {
-        Object.assign(values, this.extensionForm.value[groupName]);
-      })
+      const values = {
+        ...this.extensionForm.value.general,
+        ...this.extensionForm.value.callback,
+        acds: this.extensionForm.value.acds
+      };
 
       if (this.extension) {
         this.extensionService.updateExtension(this.extension.id, values).then(response => this.handleServerResponse(response));

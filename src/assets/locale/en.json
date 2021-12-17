@@ -334,5 +334,7 @@
   { "key": "available_groups", "value": "Available Groups" },
   { "key": "type_a_tag", "value": "Type a tag..." },
   { "key": "no_tags_found", "value": "No tags found" },
-  { "key": "create_tag", "value": "Create Tag" }
+  { "key": "please_select_key", "value": "Please select a key." },
+  { "key": "duplicate_router", "value": "Duplicate router" },
+  { "key": "delete_router", "value": "Delete router" }
 ]

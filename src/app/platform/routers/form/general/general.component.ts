@@ -45,7 +45,7 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
         this.audioFile = this.helpers.base64toFile(router.queueFile, router.queueFileName);
       }
 
-      this.routerForm.patchValue(this.formService.router);
+      this.formService.routerForm.get('general').patchValue(router.general);
     }
   }
 
@@ -107,8 +107,8 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setFile(file?: { bin: string, name: string }): void {
-    this.routerForm.get('general.queueFile').patchValue(file ? file.bin : null);
-    this.routerForm.get('general.queueFileName').patchValue(file ? file.name : null);
+    this.routerForm.get('queueFile').patchValue(file ? file.bin : null);
+    this.routerForm.get('queueFileName').patchValue(file ? file.name : null);
   }
 
   ngOnDestroy(): void {

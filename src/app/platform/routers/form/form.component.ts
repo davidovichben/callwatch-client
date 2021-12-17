@@ -38,7 +38,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
     if (routeData.router) {
       this.formService.router = routeData.router;
-      this.formService.routerForm.patchValue(this.router);
     }
 	}
 

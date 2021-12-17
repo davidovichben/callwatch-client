@@ -1,11 +1,14 @@
 @import '~src/assets/variables';
 
-#player
+:host
+  display: block
+  min-width: 220px
+  max-width: 280px
+
+.player
   display: flex
   align-items: center
   justify-content: space-between
-  min-width: 220px
-  max-width: 280px
   padding: 10px
   border-radius: 40px
   background-color: #e0e0e0
@@ -19,8 +22,9 @@
   #placeholder
     color: BlueColor
 
-#fileName
+.file-name
   direction: ltr
+  margin: 0
   text-align: center
   color: BlueColor
   font-size: 12px

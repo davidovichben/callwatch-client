@@ -333,7 +333,11 @@
   { "key": "available_groups", "value": "קבוצות זמינות" },
   { "key": "type_a_tag", "value": "הקלד תגית..." },
   { "key": "no_tags_found", "value": "לא נמצאו תגיות" },
-  { "key": "create_tag", "value": "יצירת תגית" }
+  { "key": "create_tag", "value": "יצירת תגית" },
+  { "key": "please_select_key", "value": "אנא בחר מקש." },
+  { "key": "duplicate", "value": "שכפל" },
+  { "key": "duplicate_router", "value": "שכפל נתב" },
+  { "key": "delete_router", "value": "מחק נתב" }
 ]
 
 
