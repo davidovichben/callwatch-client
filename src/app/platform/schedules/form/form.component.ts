@@ -67,7 +67,7 @@ export class FormComponent {
       day: this.fb.control(null, Validators.required),
       startTime: this.fb.control(null, Validators.required),
       endTime: this.fb.control(null, Validators.required),
-      allDay: this.fb.control(false)
+      allDay: this.fb.control(null)
     });
   }
 

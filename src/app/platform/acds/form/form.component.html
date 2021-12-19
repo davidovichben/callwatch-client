@@ -1,4 +1,4 @@
-<form [formGroup]="acdForm" (ngSubmit)="submit()">
+<form [formGroup]="acdForm" (ngSubmit)="submit()" #form="ngForm">
   <div class="form-header">
     <p class="h1">{{ acd ? ('edit_acd' | t) : ('add_acd' | t) }}</p>
     <div>
@@ -29,7 +29,8 @@
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
-          <app-unit-select formControlName="unit" [units]="selects.units" [placeholder]="'select_units' | t"></app-unit-select>
+          <app-unit-select formControlName="unit" [units]="selects.units" [placeholder]="'select_units' | t" [required]="true"></app-unit-select>
+          <mat-error *ngIf="acdForm.get('general.unit').invalid && form.submitted">{{ errorMessages.required | t }}</mat-error>
         </div>
       </div>
       <div class="row">

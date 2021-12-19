@@ -57,7 +57,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       startDateTime: this.fb.control(null),
       endDateTime: this.fb.control(null),
       isActive: this.fb.control(true),
-      isDefault: this.fb.control(false),
+      isDefault: this.fb.control(null),
       isOnline: this.fb.control(true),
       conditionResult: this.fb.control(conditionResult ?? null),
       isFirstCondition: this.fb.control(isFirstCondition ?? null)
@@ -159,11 +159,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     const existingKeys = this.formService.router?.keys[this.category];
     if (existingKeys && Object.keys(existingKeys).length > 0) {
       this.setExistingKeys(existingKeys);
-    } else {
-      this.types.slice(0, 3).forEach(type => {
-        const arr = this.fb.array([this.addKeyGroup(type)]);
-        this.formGroup.addControl(type, arr);
-      });
     }
   }
 

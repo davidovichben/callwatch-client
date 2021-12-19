@@ -1,7 +1,7 @@
 <div id="selectLabel" #widthElement [ngClass]="{ 'opened': isOpened, 'selected' : selected }" (click)="toggleDropdown()">
   <div id="selectLabelBorder"></div>
   <div id="selectLabelCover">
-    <span id="placeholder" [@placeholder]="hasValue() ? 'active' : 'inactive'">{{ placeholder }}</span>
+    <span id="placeholder" [@placeholder]="hasValue() ? 'active' : 'inactive'">{{ placeholder + (required ? '*' : '') }}</span>
     <div id="selectedValue" *ngIf="selected">
       <span *ngIf="!multiple">{{ title }}</span>
     </div>

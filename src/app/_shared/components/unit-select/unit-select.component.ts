@@ -31,6 +31,7 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
   @Input() ignoredUnit: UnitModel;
   @Input() multiple = false;
   @Input() toggleUp = false;
+  @Input() required = false;
 
   title: string;
 

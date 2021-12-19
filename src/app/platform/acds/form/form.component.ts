@@ -75,14 +75,14 @@ export class FormComponent implements OnInit, OnDestroy {
         noAgentOverflow: this.fb.control(null),
         noAnswerRedirection: this.fb.control(null),
         busyRedirection: this.fb.control(null),
-        isBroadcast: this.fb.control(false),
-        hasQueue: this.fb.control(false)
+        isBroadcast: this.fb.control(null),
+        hasQueue: this.fb.control(null)
       }),
       extensions: this.fb.control(null),
       callback: this.fb.group({
         callback: this.fb.control(null),
         router: this.fb.control(null),
-        overflowNumber: this.fb.control(0),
+        overflowNumber: this.fb.control(null),
         email: this.fb.control(null, Validators.pattern(EmailPattern)),
         dialerCallerID: this.fb.control(null)
       })
@@ -124,7 +124,7 @@ export class FormComponent implements OnInit, OnDestroy {
         ...this.acdForm.value.general,
         ...this.acdForm.value.switchboard,
         ...this.acdForm.value.callback,
-        extensions: this.acdForm.get('extensions')
+        extensions: this.acdForm.value.extensions
       };
 
 			if (this.acd) {
