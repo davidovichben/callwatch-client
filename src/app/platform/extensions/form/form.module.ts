@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { SelectGroupsModule } from 'src/app/_shared/components/select-groups/select-groups.module';
+import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 
 import { FormComponent } from './form.component';
@@ -51,7 +51,7 @@ const routes: Routes = [
     MatCheckboxModule,
     TranslateModule,
     UnitSelectModule,
-    SelectGroupsModule
+    DualGroupsSelectModule
   ],
   providers: [
     ExtensionService,

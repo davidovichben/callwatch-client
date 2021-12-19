@@ -4,21 +4,21 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
-  selector: 'app-select-groups',
-  templateUrl: './select-groups.component.html',
-  styleUrls: ['./select-groups.component.styl'],
+  selector: 'app-dual-groups-select',
+  templateUrl: './dual-groups-select.component.html',
+  styleUrls: ['./dual-groups-select.component.styl'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => SelectGroupsComponent),
+      useExisting: forwardRef(() => DualGroupsSelectComponent),
     }
   ]
 })
-export class SelectGroupsComponent implements OnInit, ControlValueAccessor {
+export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() items: SelectItemModel[];
-  @Input() placeholderKeyword: string;
+  @Input() placeholder = 'items';
 
   filteredItems = [];
   selectedItems = [];
@@ -29,11 +29,11 @@ export class SelectGroupsComponent implements OnInit, ControlValueAccessor {
 
   addItems(): void {
     const existingItems = this.selectedItems.map(item => item.id);
-    const addedItems = this.filteredItems.filter(item => item.checked && existingItems.indexOf(item.id) === -1);
+    const addedItems = this.filteredItems.filter(item => item.selected && existingItems.indexOf(item.id) === -1);
 
     addedItems.forEach(item => {
       const newItem = { ...item };
-      newItem.checked = false;
+      newItem.selected = false;
       this.selectedItems.push(newItem);
     });
 
@@ -41,12 +41,13 @@ export class SelectGroupsComponent implements OnInit, ControlValueAccessor {
   }
 
   removeItems(): void {
-    this.selectedItems.forEach((selectedItem, index) => {
-      if (selectedItem.checked) {
-        this.selectedItems.splice(index, 1);
-        this.filteredItems.find(item => item.id === selectedItem.id).checked = false;
+    this.selectedItems.forEach(selectedItem => {
+      if (selectedItem.selected) {
+        this.filteredItems.find(item => item.id === selectedItem.id).selected = false;
       }
     });
+
+    this.selectedItems = this.selectedItems.filter(item => !item.selected);
 
     this.propagateChange(this.selectedItems.map(item => item.id));
   }
@@ -71,7 +72,7 @@ export class SelectGroupsComponent implements OnInit, ControlValueAccessor {
       return values.indexOf(item.id) !== -1;
     })
 
-    selectedItems.forEach(item => item.checked = true);
+    selectedItems.forEach(item => item.selected = true);
 
     this.addItems();
   }

@@ -106,7 +106,7 @@
       </div>
     </section>
     <section [hidden]="activeTab !== 'extensions'">
-      <app-select-groups formControlName="extensions" [items]="selects.extensions"></app-select-groups>
+      <app-dual-groups-select formControlName="extensions" [placeholder]="'groups'" [items]="selects.extensions"></app-dual-groups-select>
     </section>
     <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
       <div class="row">

@@ -14,6 +14,6 @@
       </bd-select>
     </div>
   </div>
-  <app-select-groups [ngModel]="extensionGroup.extensions" name="extensions" [items]="selects.extensions" [placeholderKeyword]="'extensions'"></app-select-groups>
-  <app-select-groups [ngModel]="extensionGroup.acds" name="acds" [items]="selects.acds" [placeholderKeyword]="'groups'"></app-select-groups>
+  <app-dual-groups-select [ngModel]="extensionGroup.extensions" name="extensions" [items]="selects.extensions" [placeholder]="'extensions'"></app-dual-groups-select>
+  <app-dual-groups-select [ngModel]="extensionGroup.acds" name="acds" [items]="selects.acds" [placeholder]="'groups'"></app-dual-groups-select>
 </form>

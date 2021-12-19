@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-12 col-sm-6">
         <p class="h3">{{ 'reports' | t }}</p>
-        <app-select-groups name="reports" [ngModel]="reportSet.reports" [items]="reports" #reportSelect="ngModel" required></app-select-groups>
+        <app-dual-groups-select name="reports" [ngModel]="reportSet.reports" [items]="reports" #reportSelect="ngModel" required></app-dual-groups-select>
         <p class="alert alert-danger" [@fade]="form.submitted && reportSelect.errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
       </div>
     </div>

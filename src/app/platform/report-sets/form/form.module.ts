@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { SelectGroupsModule } from 'src/app/_shared/components/select-groups/select-groups.module';
+import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
 
 import { FormComponent } from './form.component';
 
@@ -45,7 +45,7 @@ const routes: Routes = [
 		MatFormFieldModule,
 		MatInputModule,
 		TranslateModule,
-		SelectGroupsModule
+		DualGroupsSelectModule
 	],
   providers: [
     ReportSetService,
