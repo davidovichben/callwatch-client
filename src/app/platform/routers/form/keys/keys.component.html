@@ -72,7 +72,7 @@
               <mat-option [value]="condition" *ngFor="let condition of conditions">{{ condition | t }}</mat-option>
             </mat-select>
           </mat-form-field>
-          <bd-select class="w-200p" [placeholder]="'select_schedule' | t" formControlName="scheduleCondition" *ngIf="action.get('activityValue').value === 'schedule'">
+          <bd-select class="w-200p" [placeholder]="'select_schedule' | t" formControlName="conditionSchedule" *ngIf="action.get('activityValue').value === 'schedule'">
             <bd-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</bd-option>
           </bd-select>
         </div>

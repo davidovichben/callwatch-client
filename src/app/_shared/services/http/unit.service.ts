@@ -55,17 +55,10 @@ export class UnitService extends BaseHttpService {
       .catch(() => false);
   }
 
-  transferUnit(unitId: number, parentId: number): Promise<any> {
-    return this.http.put(this.endPoint + '/transfer', { unitId, parentId }, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(response => response);
-  }
-
-  deleteUnit(unitId: number, assignedUnitId?: number): Promise<boolean> {
+  deleteUnit(unitId: number, assignedUnit?: number): Promise<boolean> {
     const params = {};
-    if (assignedUnitId) {
-      Object.assign(params, { assignedUnitId });
+    if (assignedUnit) {
+      Object.assign(params, { assignedUnit });
     }
 
     return this.http.delete(this.endPoint + '/' + unitId, this.getTokenRequest(params))
@@ -73,4 +66,11 @@ export class UnitService extends BaseHttpService {
       .then(() => true)
       .catch(() => false);
   }
+  transferUnit(unit: number, parent: number): Promise<any> {
+    return this.http.put(this.endPoint + '/' + unit + '/transfer', { parent }, this.getTokenRequest())
+      .toPromise()
+      .then(() => true)
+      .catch(response => response);
+  }
+
 }

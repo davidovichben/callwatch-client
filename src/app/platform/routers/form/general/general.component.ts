@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audio-input.component';
 
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 
@@ -27,12 +26,11 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
     waitingRouterEnabled: ['queuePositionReading', 'queueWaitingTime']
   };
 
-  audioFile: File;
+  audioFile: { bin: string, name: string };
 
   routerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, public formService: RouterFormService,
-              private helpers: HelpersService) {}
+  constructor(private fb: FormBuilder, public formService: RouterFormService) {}
 
   ngOnInit(): void {
     this.makeForm();
@@ -41,8 +39,8 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const router = this.formService.router;
     if (router) {
-      if (router.queueFile) {
-        this.audioFile = this.helpers.base64toFile(router.queueFile, router.queueFileName);
+      if (router.general.queueFile) {
+        this.audioFile = { bin: router.general.queueFile, name: router.general.queueFileName };
       }
 
       this.formService.routerForm.get('general').patchValue(router.general);

@@ -54,8 +54,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
       const values = {
         ...(form.get('general') as FormGroup).getRawValue(),
-        messages: form.value.messages,
-        keys: form.value.keys
+        messages: { ...form.value.messages },
+        keys: { ...form.value.keys }
       };
 
 			if (this.formService.router) {

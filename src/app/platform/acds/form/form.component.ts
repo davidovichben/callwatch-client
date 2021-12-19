@@ -75,14 +75,14 @@ export class FormComponent implements OnInit, OnDestroy {
         noAgentOverflow: this.fb.control(null),
         noAnswerRedirection: this.fb.control(null),
         busyRedirection: this.fb.control(null),
-        isBroadcast: this.fb.control(null),
-        hasQueue: this.fb.control(null)
+        isBroadcast: this.fb.control(false),
+        hasQueue: this.fb.control(false)
       }),
       extensions: this.fb.control(null),
       callback: this.fb.group({
         callback: this.fb.control(null),
         router: this.fb.control(null),
-        overflowNumber: this.fb.control(null),
+        overflowNumber: this.fb.control(0),
         email: this.fb.control(null, Validators.pattern(EmailPattern)),
         dialerCallerID: this.fb.control(null)
       })
@@ -94,7 +94,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   checkUniqueness(args: object, control: FormControl): Promise<{ exists: boolean }> {
-    const switchboardId = this.acdForm.get('switchboard.switchboard').value;
+    const switchboardId = this.acdForm.get('general.unit').value;
     if (!switchboardId) {
       return Promise.resolve(null);
     }

@@ -47,7 +47,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       category: this.fb.control(this.category),
       activityType: this.fb.control(null),
       activityValue: this.fb.control(null),
-      scheduleCondition: this.fb.control(null),
+      conditionSchedule: this.fb.control(null),
       activityTypeName: this.fb.control(null),
       files: this.fb.control({}),
       router: this.fb.control(null),
@@ -82,7 +82,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       controls.forEach(control => arr.push(control));
     }
 
-    if (value === 'condition') {
+    if (arr && value === 'condition') {
       let index = arr.controls.indexOf(group);
 
       ['true', 'false'].forEach(value => {
@@ -113,7 +113,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     arr.removeAt(index);
 
     if (activityType === 'condition') {
-      while (arr.at(index).value.conditionResult) {
+      while (arr.at(index) && arr.at(index).value.conditionResult) {
         arr.removeAt(index);
       }
     }

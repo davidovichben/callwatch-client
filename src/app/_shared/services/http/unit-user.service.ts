@@ -20,15 +20,15 @@ export class UnitUserService extends BaseHttpService {
       .catch(() => null);
   }
 
-  newUser(unitId: number, userId: number): Promise<any> {
-    return this.http.post(this.endPoint + '/' + unitId + '/user', { userId }, this.getTokenRequest())
+  newUser(unitId: number, user: number): Promise<any> {
+    return this.http.post(this.endPoint + '/' + unitId + '/user', { user }, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(response => response);
   }
 
-  deleteUser(unitId: number, userId: number): Promise<boolean> {
-    return this.http.delete(this.endPoint + '/' + unitId + '/user', this.getTokenRequest({ userId }))
+  deleteUser(unitId: number, user: number): Promise<boolean> {
+    return this.http.delete(this.endPoint + '/' + unitId + '/user', this.getTokenRequest({ user }))
       .toPromise()
       .then(() => true)
       .catch(() => false);

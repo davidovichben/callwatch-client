@@ -62,18 +62,18 @@
     <div class="col-12 col-lg-3">
       <mat-form-field class="w-100">
         <mat-label>{{ 'from' | t }}</mat-label>
-        <input matInput formControlName="irregularTimingFrom" [matDatepicker]="fromDatePicker" required>
+        <input matInput formControlName="irregularTimingFrom" [ngxMatDatetimePicker]="fromDatePicker" required>
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #fromDatePicker></mat-datepicker>
+        <ngx-mat-datetime-picker #fromDatePicker></ngx-mat-datetime-picker>
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
     </div>
     <div class="col-12 col-lg-3">
       <mat-form-field class="w-100">
         <mat-label>{{ 'to' | t }}</mat-label>
-        <input matInput formControlName="irregularTimingTo" [matDatepicker]="toDatePicker" required>
+        <input matInput formControlName="irregularTimingTo" [ngxMatDatetimePicker]="toDatePicker" required>
         <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #toDatePicker></mat-datepicker>
+        <ngx-mat-datetime-picker [showSeconds]="false" #toDatePicker></ngx-mat-datetime-picker>
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
     </div>

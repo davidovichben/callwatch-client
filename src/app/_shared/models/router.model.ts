@@ -6,7 +6,7 @@ export class RouterModel {
 	name: string;
   queueFile: string;
   queueFileName: string;
-  general: object;
+  general: any;
   messages: RouterMessageModel[];
   keys: RouterKeyModel[];
 }
