@@ -1,0 +1,24 @@
+<div class="chip-container" (click)="openList($event)">
+  <p class="placeholder">{{ placeholder ?? ('tags' | t) }}</p>
+  <div class="chip" *ngFor="let tag of selectedTags; let index = index">
+    <span>{{ tag.name }}</span>
+    <mat-icon class="me-1" (click)="removeTag(index, $event)">close</mat-icon>
+  </div>
+</div>
+<div id="suggestedTags" *ngIf="isListToggled">
+  <div class="search-container">
+    <input type="text" [placeholder]="'type_a_tag' | t" (keyup)="loadTags(searchInput.value)" #searchInput>
+    <mat-icon (click)="loadTags(searchInput.value)">search</mat-icon>
+  </div>
+  <div class="suggested-tags-list">
+    <ng-container *ngIf="!isLoading">
+      <div *ngFor="let tag of suggestedTags; let index = index" class="suggested-tag" (click)="addTag(tag, index)">{{ tag.name }}</div>
+      <p class="my-1 text-center" *ngIf="suggestedTags.length === 0">{{ 'no_tags_found' | t }}.</p>
+    </ng-container>
+    <div class="loader" *ngIf="isLoading"></div>
+  </div>
+  <div class="create-tag" (click)="createTag()" *ngIf="unmatchedKeyword && !isLoading">
+    <mat-icon class="ms-1">add_circle</mat-icon>
+    <span>{{ 'create_tag' | t }} "{{ unmatchedKeyword }}"</span>
+  </div>
+</div>

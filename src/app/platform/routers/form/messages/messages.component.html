@@ -32,7 +32,7 @@
         </mat-form-field>
       </ng-container>
       <ng-container *ngIf="message.get('type').value === 'message'">
-        <app-chips-input class="w-300p" [type]="'routerMessage'" formControlName="tags"></app-chips-input>
+        <app-tags-input class="w-300p" [type]="'routerMessage'" formControlName="tags"></app-tags-input>
         <div class="flex-grow-1">
           <app-audio-input [inputFile]="message.get('files').value[lang.value]" (fileChange)="setFile(message, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
         </div>

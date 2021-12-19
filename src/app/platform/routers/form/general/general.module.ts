@@ -6,11 +6,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { ChipsInputModule } from 'src/app/_shared/components/chips-input/chips-input.module';
+import { TagsInputModule } from 'src/app/_shared/components/tags-input/tags-input.module';
 import { AudioInputModule } from 'src/app/_shared/components/audio-input/audio-input.module';
+import { ChipsInputModule } from 'src/app/_shared/components/chips-input/chips-input.module';
 
 import { GeneralComponent } from './general.component';
 
@@ -25,10 +28,12 @@ import { GeneralComponent } from './general.component';
     MatSelectModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatChipsModule,
+    MatIconModule,
     NgxMatDatetimePickerModule, NgxMatTimepickerModule,
     TranslateModule,
-    ChipsInputModule,
-    AudioInputModule,
+    TagsInputModule,
+    AudioInputModule, ChipsInputModule,
   ]
 })
 export class GeneralModule {}

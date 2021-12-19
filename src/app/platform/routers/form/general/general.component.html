@@ -8,7 +8,7 @@
       </mat-form-field>
     </div>
     <div class="col-12 col-lg-3">
-      <app-chips-input [placeholder]="'tags' | t" [type]="'router'" formControlName="tags"></app-chips-input>
+      <app-tags-input [placeholder]="'tags' | t" [type]="'router'" formControlName="tags"></app-tags-input>
     </div>
   </div>
   <div class="row">
@@ -31,7 +31,7 @@
   </div>
   <div class="row mb-3">
     <div class="col-12 col-lg-3">
-      <app-chips-input formControlName="dialedNumbers" [type]="'routerNumber'" [placeholder]="'dialed_numbers' | t"></app-chips-input>
+      <app-chips-input formControlName="dialedNumbers" [rules]="{ pattern: '[0-9]', 'length': 15 }" [placeholder]="'dialed_numbers' | t"></app-chips-input>
     </div>
     <div class="col-12 col-lg-3">
       <mat-form-field class="w-100">

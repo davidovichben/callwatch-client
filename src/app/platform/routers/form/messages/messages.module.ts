@@ -14,7 +14,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { AudioInputModule } from 'src/app/_shared/components/audio-input/audio-input.module';
-import { ChipsInputModule } from 'src/app/_shared/components/chips-input/chips-input.module';
+import { TagsInputModule } from 'src/app/_shared/components/tags-input/tags-input.module';
 import { TimingDialogModule } from 'src/app/platform/routers/form/timing-dialog/timing-dialog.module';
 
 import { MessagesComponent } from './messages.component';
@@ -37,7 +37,7 @@ import { MessagesComponent } from './messages.component';
     DragDropModule,
     TranslateModule,
     AudioInputModule,
-    ChipsInputModule,
+    TagsInputModule,
     TimingDialogModule
   ]
 })
