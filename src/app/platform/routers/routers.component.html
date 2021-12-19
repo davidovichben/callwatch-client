@@ -10,6 +10,7 @@
 <app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('routers')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <tr *ngFor="let item of dataTable.items">
     <td>{{ item.name }}</td>
+    <td>{{ item.schedule }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('routers')">
       <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
       <mat-menu #menu="matMenu">

@@ -6,7 +6,7 @@ export class CallbackTextModel {
 }
 
 export const CallbackTextTypes = [
-  'messageMaxRetries', 'messageCompleted', 'messageLeave',
-  'customerReturn', 'notHandled', 'outOfSchedule', 'leftOpen'
+  'message_max_retries', 'message_completed', 'message_leave',
+  'customer_return', 'not_handled', 'out_of_schedule', 'left_open'
 ];
 

@@ -10,22 +10,22 @@ export class UserSessionService {
   userUpdated: Subject<boolean> = new Subject();
 
   isLoggedIn(): boolean {
-    return !!sessionStorage.getItem('user');
+    return !!localStorage.getItem('user');
   }
 
   setUser(user: UserModel): void {
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
     this.loginChange.next(true);
   }
 
   unsetUser(): void {
-    sessionStorage.removeItem('user');
+    localStorage.removeItem('user');
     this.loginChange.next(false);
   }
 
   getUser(): any {
-    if (sessionStorage.getItem('user')) {
-      return JSON.parse(sessionStorage.getItem('user'));
+    if (localStorage.getItem('user')) {
+      return JSON.parse(localStorage.getItem('user'));
     }
 
     return null;
@@ -40,8 +40,8 @@ export class UserSessionService {
   }
 
   getToken(): string {
-    if (sessionStorage.getItem('user')) {
-      return JSON.parse(sessionStorage.getItem('user')).token;
+    if (localStorage.getItem('user')) {
+      return JSON.parse(localStorage.getItem('user')).token;
     }
 
     return null;

@@ -19,7 +19,8 @@ export class RoutersComponent {
 	@ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
 	readonly columns = [
-		{ name: 'name', label: 'name' }
+		{ name: 'name', label: 'name' },
+    { name: 'schedule', label: 'schedule' }
 	];
 
 	constructor(private notification: NotificationService,

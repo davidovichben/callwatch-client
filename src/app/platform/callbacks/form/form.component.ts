@@ -31,15 +31,14 @@ export class FormComponent implements OnInit {
 
   callbackId: number;
 
-  audioFile: File;
+  audioFile: { bin: string, name: string };
 
   schedules: SelectItemModel[] = [];
 
 	isSubmitting = false;
 
 	constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private callbackService: CallbackService,
-              private helpers: HelpersService) {}
+              private fb: FormBuilder, private callbackService: CallbackService) {}
 
 	ngOnInit(): void {
     this.makeForm();
@@ -52,8 +51,9 @@ export class FormComponent implements OnInit {
       const data = { ...routeData.callback };
       delete data.texts;
       this.callbackForm.patchValue(data);
-      if (routeData.callback.file) {
-        this.audioFile = this.helpers.base64toFile(routeData.callback.file, routeData.callback.fileName);
+
+      if (data.file) {
+        this.audioFile = { bin: data.file, name: data.fileName };
       }
 
       this.setTextArray(routeData.callback.texts);
