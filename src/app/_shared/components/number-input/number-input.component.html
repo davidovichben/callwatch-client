@@ -1,7 +1,13 @@
-<mat-form-field>
-  <mat-label>{{ placeholder }}</mat-label>
-  <mat-icon matPrefix (click)="incrementValue()">add</mat-icon>
-  <input matInput type="number" [value]="value" [required]="required">
-  <mat-icon matSuffix (click)="decrementValue()">remove</mat-icon>
-  <mat-error *ngIf="required">{{ errorMessages.required | t }}</mat-error>
-</mat-form-field>
+<div class="form-field">
+  <span class="placeholder">{{ placeholder }}</span>
+  <div class="d-flex">
+    <div class="icon-container">
+      <mat-icon (click)="incrementValue()">add</mat-icon>
+    </div>
+    <input type="number" [value]="value" [required]="required">
+    <div class="icon-container">
+      <mat-icon (click)="decrementValue()">remove</mat-icon>
+    </div>
+    <mat-error *ngIf="required">{{ errorMessages.required | t }}</mat-error>
+  </div>
+</div>

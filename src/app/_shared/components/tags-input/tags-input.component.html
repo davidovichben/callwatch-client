@@ -1,4 +1,4 @@
-<div class="chip-container" (click)="openList($event)">
+<div class="form-field" (click)="openList($event)">
   <p class="placeholder">{{ placeholder ?? ('tags' | t) }}</p>
   <div class="chip" *ngFor="let tag of selectedTags; let index = index">
     <span>{{ tag.name }}</span>

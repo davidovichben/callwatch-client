@@ -1,10 +1,27 @@
-mat-icon
-  cursor: pointer
-  color: #707070
+@import '~src/assets/variables';
+
+.form-field
+  padding: 0
+
+  .placeholder
+    top: -25px
+    font-size: initial
+
+  .icon-container
+    display: flex
+    align-items: center
+    padding: 0 7px
+    border: 1px solid MaterialGrey !important
+    border-radius: 5px
+
+    mat-icon
+      cursor: pointer
+      color: #707070
 
 input
-  margin-bottom: 2px
-  padding: 0 4px
+  height: 43px
+  flex-grow: 1
+  padding: 0 8px
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button

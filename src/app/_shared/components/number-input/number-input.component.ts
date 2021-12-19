@@ -5,7 +5,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.styl'],
+  styleUrls: ['../_shared/form-field.styl', './number-input.component.styl'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: NumberInputComponent, multi: true }
   ]
