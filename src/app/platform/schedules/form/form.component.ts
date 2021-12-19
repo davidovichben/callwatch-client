@@ -26,6 +26,7 @@ export class FormComponent {
   readonly errorMessages = ErrorMessages;
 
   uniqueDays: SelectItemModel[] = [];
+  uniqueSchedules: SelectItemModel[] = [];
 
   scheduleForm: FormGroup;
   callTimeForm: FormGroup;
@@ -44,8 +45,9 @@ export class FormComponent {
     this.setForms();
 
     const routeData = this.route.snapshot.data;
-
+    this.uniqueSchedules = routeData.uniqueSchedules;
     this.uniqueDays = routeData.uniqueDays;
+
     if (routeData.schedule) {
       this.scheduleId = routeData.schedule.id;
       this.scheduleForm.patchValue(routeData.schedule);
@@ -57,7 +59,8 @@ export class FormComponent {
     this.scheduleForm = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control('regular', Validators.required),
-      description: this.fb.control(null)
+      description: this.fb.control(null),
+      uniqueSchedule: this.fb.control(null)
     });
 
     this.callTimeForm = this.fb.group({
@@ -70,6 +73,10 @@ export class FormComponent {
 
   typeChanged(selectedValue: string): void {
     const currentValue = this.scheduleForm.get('type').value;
+
+    if (selectedValue === 'unique') {
+      this.scheduleForm.get('uniqueSchedule').reset();
+    }
 
     if (currentValue !== selectedValue && this.callTimes.length > 0) {
       const msg = this.t.transform('schedule_type_changed_warning');

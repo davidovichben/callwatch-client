@@ -15,8 +15,13 @@ export class SelectService extends BaseHttpService {
     super(userSession);
   }
 
-  select(type: string): Promise<SelectItemModel[]> {
-    return this.http.get(this.endPoint, this.getTokenRequest({ type }, true))
+  select(resource: string, params?: object): Promise<SelectItemModel[]> {
+    const values = { resource };
+    if (params) {
+      Object.assign(values, { ...params })
+    }
+
+    return this.http.get(this.endPoint, this.getTokenRequest(values, true))
       .toPromise()
       .then(response => response as SelectItemModel[])
       .catch(() => []);

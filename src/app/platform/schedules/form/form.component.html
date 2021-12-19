@@ -25,6 +25,14 @@
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
+      <div class="col-12 col-lg-3" *ngIf="scheduleForm.get('type').value === 'regular'">
+        <mat-form-field>
+          <mat-label>{{ 'unique_schedule' | t }}</mat-label>
+          <mat-select formControlName="uniqueSchedule" (valueChange)="typeChanged($event)">
+            <mat-option *ngFor="let schedule of uniqueSchedules" [value]="schedule.id">{{ schedule.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
     <div class="row">
       <div class="col-12 col-lg-6">

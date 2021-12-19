@@ -21,13 +21,15 @@ import { ScheduleResolve } from 'src/app/_shared/resolves/schedule.resolve';
 import { UniqueDaySelectResolve } from 'src/app/_shared/resolves/unique-day-select.resolve';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+import { UniqueScheduleSelectResolve } from 'src/app/_shared/resolves/unique-schedules-select.resolve';
 
 const routes: Routes = [
   {
     path: '',
     component: FormComponent,
     resolve: {
-      uniqueDays: UniqueDaySelectResolve
+      uniqueDays: UniqueDaySelectResolve,
+      uniqueSchedules: UniqueScheduleSelectResolve
     }
   },
   {
@@ -35,7 +37,8 @@ const routes: Routes = [
     component: FormComponent,
     resolve: {
       schedule: ScheduleResolve,
-      uniqueDays: UniqueDaySelectResolve
+      uniqueDays: UniqueDaySelectResolve,
+      uniqueSchedules: UniqueScheduleSelectResolve
     }
   }
 ];
@@ -60,6 +63,7 @@ const routes: Routes = [
     SelectService,
     ScheduleResolve,
     UniqueDaySelectResolve,
+    UniqueScheduleSelectResolve,
     TranslatePipe
   ]
 })
