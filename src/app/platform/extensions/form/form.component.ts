@@ -172,6 +172,10 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private toggleInvalidTabs(): void {
+    if (this.extensionForm.get(this.activeTab).invalid) {
+      return;
+    }
+
     this.tabs.forEach(tab => {
       if (this.extensionForm.get(tab.value).invalid) {
         this.activeTab = tab.value;

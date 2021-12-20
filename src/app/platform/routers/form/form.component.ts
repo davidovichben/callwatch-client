@@ -68,6 +68,10 @@ export class FormComponent implements OnInit, OnDestroy {
 
   private toggleInvalidTabs(): void {
     const form = this.formService.routerForm;
+    if (form.get(this.activeTab).invalid) {
+      return;
+    }
+
     this.tabs.forEach(tab => {
       if (form.get(tab.formGroup).invalid) {
         this.activeTab = tab.value;
