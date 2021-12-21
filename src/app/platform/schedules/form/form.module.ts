@@ -16,6 +16,7 @@ import { FormComponent } from './form.component';
 
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
+import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.service';
 
 import { ScheduleResolve } from 'src/app/_shared/resolves/schedule.resolve';
 import { UniqueDaySelectResolve } from 'src/app/_shared/resolves/unique-day-select.resolve';
@@ -61,6 +62,7 @@ const routes: Routes = [
   providers: [
     ScheduleService,
     SelectService,
+    UniqueDayService,
     ScheduleResolve,
     UniqueDaySelectResolve,
     UniqueScheduleSelectResolve,

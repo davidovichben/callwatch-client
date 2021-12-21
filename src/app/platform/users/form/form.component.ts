@@ -187,8 +187,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
   private handleServerResponse(response: any): void {
     if (response) {
-      if (this.user && this.user.id === this.userSession.getUser().id) {
-        this.userSession.updateUser('avatar', response.avatar);
+      if (this.user && this.user.id === this.userSession.getUserId()) {
+        this.userSession.updateUser('avatar', response.resource.avatar);
       }
 
       this.router.navigate(['/platform', 'users'])

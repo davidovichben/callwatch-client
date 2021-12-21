@@ -3,7 +3,7 @@
 </div>
 <div id="menu">
   <div id="modules">
-    <ng-container *ngFor="let module of modules">
+    <div class="module-container" *ngFor="let module of modules">
       <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule }" *ngIf="!module.subModules">
         <figure>
           <mat-icon inline>{{ module.icon }}</mat-icon>
@@ -25,7 +25,7 @@
            [routerLink]="['/', menuType, subModule.name]"
            class="sidebar-item">{{ subModule.label ? (subModule.label | t) : (subModule.name | t) }}</a>
       </div>
-    </ng-container>
+    </div>
   </div>
 </div>
 <div id="toggleSidebar" class="px-3 sidebar-item" [ngClass]="{ 'justify-content-end': toggleState === 'opened', 'justify-content-center': toggleState === 'closed' }">
