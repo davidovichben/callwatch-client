@@ -340,7 +340,8 @@
   { "key": "please_select_key", "value": "אנא בחר מקש." },
   { "key": "duplicate", "value": "שכפל" },
   { "key": "duplicate_router", "value": "שכפל נתב" },
-  { "key": "delete_router", "value": "מחק נתב" }
+  { "key": "delete_router", "value": "מחק נתב" },
+  { "key": "press_enter_to_insert", "value": "הקש Enter להוספה" }
 ]
 
 
