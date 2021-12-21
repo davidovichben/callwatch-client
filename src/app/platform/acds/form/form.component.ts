@@ -80,7 +80,7 @@ export class FormComponent implements OnInit, OnDestroy {
       }),
       extensions: this.fb.control(null),
       callback: this.fb.group({
-        callback: this.fb.control(null),
+        callback: this.fb.control(null, Validators.required),
         router: this.fb.control(null),
         overflowNumber: this.fb.control(null),
         email: this.fb.control(null, Validators.pattern(EmailPattern)),
@@ -94,16 +94,16 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   checkUniqueness(args: object, control: FormControl): Promise<{ exists: boolean }> {
-    const switchboardId = this.acdForm.get('general.unit').value;
-    if (!switchboardId) {
+    const unitId = this.acdForm.get('general.unit').value;
+    if (!unitId) {
       return Promise.resolve(null);
     }
 
-    if (this.acd && this.acd[args['type']] === control.value) {
+    if (this.acd && this.acd['switchboard'][args[0]] === control.value) {
       return Promise.resolve(null);
     }
 
-    return this.acdService.checkExists(switchboardId, args[0], control.value).then(response => {
+    return this.acdService.checkExists(unitId, args[0], control.value).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }

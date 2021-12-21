@@ -9,6 +9,7 @@ import { FormModule } from './form/form.module';
 import { UsersComponent } from './users.component';
 
 import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { UnitUsersResolve } from 'src/app/_shared/resolves/unit-users.resolve';
 import { UserSelectResolve } from 'src/app/_shared/resolves/user-select.resolve';
@@ -33,6 +34,11 @@ const routes: Routes = [
     TranslateModule,
     FormModule
   ],
-  providers: [UnitUserService, UserSelectResolve, UnitUsersResolve]
+  providers: [
+    SelectService,
+    UnitUserService,
+    UserSelectResolve,
+    UnitUsersResolve
+  ]
 })
 export class UsersModule {}

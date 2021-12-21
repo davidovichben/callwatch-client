@@ -10,7 +10,9 @@
 </div>
 <div id="main">
   <div class="my-5 breadcrumbs">
-    <ng-container *ngFor="let ancestor of activeUnit.ancestors; let last = last">
+    <a (click)="breadcrumbClicked(rootUnit)" [ngClass]="{ active: activeUnit.id === 'root' }">{{ rootUnit.name }}</a>
+    <ng-container *ngFor="let ancestor of activeUnit.ancestors; let first = first; let last = last">
+      <mat-icon class="side-chevron" *ngIf="first">chevron_left</mat-icon>
       <a (click)="breadcrumbClicked(ancestor)" [ngClass]="{ active: last, disabled: ancestor.disabled }">{{ ancestor.name }}</a>
       <mat-icon class="side-chevron" *ngIf="!last">chevron_left</mat-icon>
     </ng-container>

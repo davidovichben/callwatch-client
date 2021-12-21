@@ -46,4 +46,11 @@ export class UniqueDayService extends BaseHttpService {
 			.then(() => true)
 			.catch(() => false);
 	}
+
+  selectUniqueDay(): Promise<UniqueDayModel[]> {
+    return this.http.get(this.endPoint + '/select', this.getTokenRequest())
+      .toPromise()
+      .then(response => response as UniqueDayModel[])
+      .catch(() => []);
+  }
 }

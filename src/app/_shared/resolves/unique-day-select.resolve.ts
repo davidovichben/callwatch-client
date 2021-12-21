@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 
-import { SelectService } from 'src/app/_shared/services/http/select.service';
+import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.service';
 
-import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { UniqueDayModel } from 'src/app/_shared/models/unique-day.model';
 
 @Injectable()
-export class UniqueDaySelectResolve implements Resolve<SelectItemModel[]> {
+export class UniqueDaySelectResolve implements Resolve<UniqueDayModel[]> {
 
-  constructor(private selectService: SelectService) {}
+  constructor(private uniqueDayService: UniqueDayService) {}
 
   resolve() {
-    return this.selectService.select('uniqueDay').then(response => response as SelectItemModel[]);
+    return this.uniqueDayService.selectUniqueDay().then(response => response as UniqueDayModel[]);
   }
 }

@@ -31,6 +31,15 @@ export class UserSessionService {
     return null;
   }
 
+  getUserId(): any {
+    const user = this.getUser();
+    if (this.getUser()) {
+      return user.id;
+    }
+
+    return null;
+  }
+
   updateUser(property: string, value: any): void {
     const user = this.getUser();
     user[property] = value;
