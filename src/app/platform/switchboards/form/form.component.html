@@ -86,6 +86,8 @@
             <mat-checkbox (change)="toggleServiceNumber($event.checked, 'cti')" [checked]="switchboardForm.get('cti.number').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
             <mat-form-field class="w-100">
               <input matInput type="text" formControlName="number" [required]="!switchboardForm.get('cti.number').disabled">
+              <mat-error *ngIf="switchboardForm.get('cti.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="switchboardForm.get('cti.number').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -119,6 +121,8 @@
             <mat-checkbox (change)="toggleServiceNumber($event.checked, 'axl')" [checked]="switchboardForm.get('axl.number').value">{{ 'axl_enable_services' | t }}</mat-checkbox>
             <mat-form-field>
               <input matInput type="text" formControlName="number" [required]="!switchboardForm.get('axl.number').disabled">
+              <mat-error *ngIf="switchboardForm.get('axl.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="switchboardForm.get('axl.number').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>

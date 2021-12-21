@@ -174,7 +174,7 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
     this.unfiltered = false;
 
     this.options.forEach(option => {
-      const filtered = option.label.indexOf(filterValue) === -1;
+      const filtered = option.label.toLowerCase().indexOf(filterValue) === -1;
       option.toggleDisplay(filtered);
     });
 	}
