@@ -157,7 +157,7 @@ export class FormComponent implements OnInit, OnDestroy {
     if (!unitId || !control.value) {
       return Promise.resolve(null);
     }
-
+    
     if (control.value === this.extension.general.dialNumber) {
       return Promise.resolve(null);
     }

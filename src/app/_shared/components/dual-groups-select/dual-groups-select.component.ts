@@ -52,7 +52,9 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     this.propagateChange(this.selectedItems.map(item => item.id));
   }
 
-  search(keyword: string): void {
+  search(keyword: string, event: KeyboardEvent): void {
+    event.preventDefault();
+
     this.filteredItems = this.items.filter(item => item.name.indexOf(keyword) !== -1);
   }
 
