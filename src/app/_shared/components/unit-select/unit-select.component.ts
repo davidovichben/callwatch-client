@@ -151,7 +151,7 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  selectUnitById(unitId: number, units): void {
+  selectUnitById(unitId: number, units: UnitModel[]): void {
     units.forEach(unit => {
       if (unit.id == unitId) {
         this.selected = unit;
