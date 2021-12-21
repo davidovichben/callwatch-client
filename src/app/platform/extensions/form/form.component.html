@@ -80,6 +80,7 @@
             <mat-select formControlName="callback" required>
               <mat-option *ngFor="let callback of selects.callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
             </mat-select>
+            <mat-error>{{ errorMessages.required }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
@@ -91,26 +92,27 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="row">
-          <div class="col-12 col-lg-3">
-            <mat-form-field>
-              <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
-              <input matInput type="text" formControlName="overflowNumber">
-            </mat-form-field>
-          </div>
-          <div class="col-12 col-lg-3">
-            <mat-form-field>
-              <mat-label>{{ 'email' | t }}</mat-label>
-              <input matInput type="email" formControlName="email">
-              <mat-error>{{ errorMessages.email | t }}</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-12 col-lg-3">
-            <mat-form-field>
-              <mat-label>{{ 'dial_outgoing_tel_line' | t }}</mat-label>
-              <input matInput type="text" formControlName="dialerCallerID">
-            </mat-form-field>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
+            <input matInput type="text" formControlName="overflowNumber" required>
+            <mat-error>{{ errorMessages.required }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'email' | t }}</mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error>{{ errorMessages.email | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'dial_outgoing_tel_line' | t }}</mat-label>
+            <input matInput type="text" formControlName="dialerCallerID">
+          </mat-form-field>
         </div>
       </div>
     </section>
