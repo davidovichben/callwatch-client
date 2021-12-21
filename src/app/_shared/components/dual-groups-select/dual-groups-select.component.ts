@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
@@ -17,50 +17,87 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 })
 export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
+  @ViewChild('selectedSearch') selectedSearch: ElementRef;
+
   @Input() items: SelectItemModel[];
   @Input() placeholder = 'items';
 
-  filteredItems = [];
-  selectedItems = [];
+  availableItems = [];
+
+  selectedItems = {
+    all: [],
+    filtered: []
+  };
 
   ngOnInit() {
-    this.filteredItems = this.items;
+    this.availableItems = this.items;
   }
 
   addItems(): void {
-    const existingItems = this.selectedItems.map(item => item.id);
-    const addedItems = this.filteredItems.filter(item => item.selected && existingItems.indexOf(item.id) === -1);
+    const existingItems = this.selectedItems.all.map(item => item.id);
+    const addedItems = this.availableItems.filter(item => item.selected && existingItems.indexOf(item.id) === -1);
 
     addedItems.forEach(item => {
       const newItem = { ...item };
       newItem.selected = false;
-      this.selectedItems.push(newItem);
+      this.selectedItems.all.push(newItem);
     });
 
-    this.propagateChange(this.selectedItems.map(item => item.id));
+    this.setSelectedItems();
+
+    this.propagateChange(this.selectedItems.all.map(item => item.id));
   }
 
   removeItems(): void {
-    this.selectedItems.forEach(selectedItem => {
+    this.selectedItems.all.forEach(selectedItem => {
       if (selectedItem.selected) {
-        this.filteredItems.find(item => item.id === selectedItem.id).selected = false;
+        this.availableItems.find(item => item.id === selectedItem.id).selected = false;
       }
     });
 
-    this.selectedItems = this.selectedItems.filter(item => !item.selected);
+    this.selectedItems.all = this.selectedItems.all.filter(item => !item.selected);
 
-    this.propagateChange(this.selectedItems.map(item => item.id));
+    this.setSelectedItems();
+
+    this.propagateChange(this.selectedItems.all.map(item => item.id));
   }
 
-  search(keyword: string, event: KeyboardEvent): void {
-    event.preventDefault();
+  private setSelectedItems(): void {
+    this.selectedItems.filtered = this.selectedItems.all;
 
-    this.filteredItems = this.items.filter(item => item.name.indexOf(keyword) !== -1);
+    const searchValue = this.selectedSearch.nativeElement.value;
+    if (searchValue) {
+      this.search(searchValue, 'selectedItems');
+    }
   }
 
-  resetSearch(keywordEle: HTMLInputElement): void {
+  search(keyword: string, type: string, event?: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.cancelBubble = true;
+      event.returnValue = false;
+
+      if (event.stopPropagation) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    }
+
+    const items = type === 'available' ? this.items : this.selectedItems.all;
+    if (type === 'available') {
+      this.availableItems = items.filter(item => item.name.indexOf(keyword) !== -1);
+    } else {
+      this.selectedItems.filtered = items.filter(item => item.name.indexOf(keyword) !== -1);
+    }
+  }
+
+  resetSearch(keywordEle: HTMLInputElement, type: string): void {
     keywordEle.value = null;
-    this.filteredItems = this.items;
+
+    if (type === 'available') {
+      this.availableItems = this.items;
+    } else {
+      this.selectedItems.filtered = this.selectedItems.all;
+    }
   }
 
   private propagateChange = (_: any) => {};
@@ -70,7 +107,7 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
       return;
     }
 
-    const selectedItems = this.filteredItems.filter(item => {
+    const selectedItems = this.availableItems.filter(item => {
       return values.indexOf(item.id) !== -1;
     })
 

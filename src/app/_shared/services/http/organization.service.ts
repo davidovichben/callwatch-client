@@ -34,15 +34,15 @@ export class OrganizationService extends BaseHttpService {
       .catch(() => null);
   }
 
-  newOrganization(data: FormData): Promise<boolean> {
-    return this.http.post(this.endPoint, data, this.getTokenRequest())
+  newOrganization(values: object): Promise<boolean> {
+    return this.http.post(this.endPoint, values, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);
   }
 
-  updateOrganization(organizationId: number, data: FormData): Promise<boolean> {
-    return this.http.post(this.endPoint + '/' + organizationId, data, this.getTokenRequest())
+  updateOrganization(organizationId: number, values: object): Promise<boolean> {
+    return this.http.put(this.endPoint + '/' + organizationId, values, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);

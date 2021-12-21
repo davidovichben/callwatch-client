@@ -1,30 +1,34 @@
-<mat-form-field>
-  <input matInput type="search" [placeholder]="'search' | t" (keyup)="search(searchKeyword.value, $event)" #searchKeyword>
-  <mat-icon matSuffix class="pointer" (click)="resetSearch(searchKeyword)">close</mat-icon>
-</mat-form-field>
-<div class="d-flex">
-  <div class="ms-3 group">
-    <p *ngIf="placeholder" class="placeholder">{{ ('available_' + placeholder) | t }}</p>
-    <ul class="mb-3">
-      <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of filteredItems">
-        {{ item.name }}
-      </li>
-    </ul>
-    <button type="button" mat-flat-button class="btn blue-btn" (click)="addItems()">
-      <span>{{ 'add' | t }}</span>
-      <mat-icon class="side-chevron">arrow_left</mat-icon>
-    </button>
+<div class="ms-3 group">
+  <p *ngIf="placeholder" class="placeholder">{{ ('available_' + placeholder) | t }}</p>
+  <div class="search-container">
+    <input matInput type="text" [placeholder]="'search' | t" (keyup)="search(availableSearch.value, 'available', $event)" #availableSearch>
+    <mat-icon matSuffix (click)="search(availableSearch.value, 'available')">search</mat-icon>
+    <mat-icon matSuffix (click)="resetSearch(availableSearch, 'available')" *ngIf="availableSearch.value">close</mat-icon>
   </div>
-  <div class="me-3 group">
-    <p *ngIf="placeholder" class="placeholder">{{ ('selected_' + placeholder) | t }}</p>
-    <ul class="mb-3">
-      <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of selectedItems">
-        {{ item.name }}
-      </li>
-    </ul>
-    <button type="button" mat-flat-button class="btn blue-btn" (click)="removeItems()">
-      <mat-icon class="side-chevron">arrow_right</mat-icon>
-      <span>{{ 'remove' | t }}</span>
-    </button>
+  <ul class="mb-3">
+    <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of availableItems">
+      {{ item.name }}
+    </li>
+  </ul>
+</div>
+<div class="controls">
+  <div class="mb-3">
+    <mat-icon class="side-chevron"  (click)="addItems()">arrow_left</mat-icon>
   </div>
+  <div>
+    <mat-icon class="side-chevron" (click)="removeItems()">arrow_right</mat-icon>
+  </div>
+</div>
+<div class="me-3 group">
+  <p *ngIf="placeholder" class="placeholder">{{ ('selected_' + placeholder) | t }}</p>
+  <div class="search-container">
+    <input matInput type="text" [placeholder]="'search' | t" (keyup)="search(selectedSearch.value, 'selected', $event)" #selectedSearch>
+    <mat-icon matSuffix (click)="search(selectedSearch.value, 'selected')">search</mat-icon>
+    <mat-icon matSuffix (click)="resetSearch(selectedSearch, 'selected')">close</mat-icon>
+  </div>
+  <ul class="mb-3">
+    <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of selectedItems.filtered">
+      {{ item.name }}
+    </li>
+  </ul>
 </div>

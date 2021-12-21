@@ -12,20 +12,18 @@ import { NgForm } from '@angular/forms';
 })
 export class FormComponent  {
 
-  file: File;
+  isSubmitting = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public organization: OrganizationModel,
               private dialogRef: MatDialogRef<FormComponent>,
               private organizationService: OrganizationService) {}
 
   submit(form: NgForm): void {
-    if (form.valid) {
+    if (form.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+
       const formData = new FormData();
       formData.append('organization', JSON.stringify(form.value));
-
-      if (this.file) {
-        formData.append('logo', this.file);
-      }
 
       if (this.organization.id) {
         this.organizationService.updateOrganization(this.organization.id, formData).then(response => this.handleServerResponse(response));
@@ -39,5 +37,7 @@ export class FormComponent  {
     if (response) {
       this.dialogRef.close(true);
     }
+
+    this.isSubmitting = false;
   }
 }

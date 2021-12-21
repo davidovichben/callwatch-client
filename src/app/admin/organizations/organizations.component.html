@@ -12,7 +12,7 @@
     <td>
       <span (click)="enterOrganization(item.id)" class="link">{{ item.name }}</span>
     </td>
-    <td>{{ item.isActive ? 'active' | t : 'inactive' | t }}</td>
+    <td>{{ item.isActive ? ('active' | t) : ('inactive' | t) }}</td>
     <td class="row-icons">
       <i class="la la-pencil" (click)="openDialog(item)"></i>
 <!--      <i class="la la-trash" (click)="deleteOrganization(item)"></i>-->

@@ -1,9 +1,9 @@
-<form [formGroup]="acdForm" (ngSubmit)="submit()" #form="ngForm">
+<form [formGroup]="acdForm" #form="ngForm">
   <div class="form-header">
     <p class="h1">{{ acd ? ('edit_acd' | t) : ('add_acd' | t) }}</p>
     <div>
       <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'acds']">{{ 'cancel' | t }}</button>
-      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+      <button type="button" class="btn blue-btn" (ngSubmit)="submit()">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">

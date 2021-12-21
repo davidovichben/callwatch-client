@@ -11,6 +11,11 @@ const routes: Routes = [
     canLoad: [LoggedInGuard]
   },
   {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
+    canLoad: [LoggedInGuard]
+  },
+  {
     path: '',
     loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
     canLoad: [GuestGuard]
