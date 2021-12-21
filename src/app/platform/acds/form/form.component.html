@@ -114,7 +114,7 @@
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'dialer_profile' | t }}</mat-label>
-            <mat-select formControlName="callback">
+            <mat-select formControlName="callback" required>
               <mat-option *ngFor="let callback of selects.callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
             </mat-select>
           </mat-form-field>
