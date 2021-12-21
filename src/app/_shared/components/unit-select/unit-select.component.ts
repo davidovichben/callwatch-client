@@ -151,6 +151,20 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  selectUnitById(unitId: number, units): void {
+    units.forEach(unit => {
+      if (unit.id == unitId) {
+        this.selected = unit;
+        this.title = unit.name;
+        return;
+      }
+
+      if (unit.units) {
+        this.selectUnitById(unitId, unit.units)
+      }
+    })
+  }
+
   uncheckAncestors(unit: UnitModel): void {
     let units = this.units;
     unit.ancestors.forEach(ancestor => {
@@ -254,7 +268,7 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
       this.selected = [];
       this.units.forEach(unit => this.setMultipleSelected(unit));
     } else {
-      this.selected = value;
+      this.selectUnitById(value, this.units)
     }
   }
 
