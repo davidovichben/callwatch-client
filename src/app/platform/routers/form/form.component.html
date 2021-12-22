@@ -5,7 +5,7 @@
     <button type="submit" class="btn blue-btn" (click)="submit()">{{ 'save' | t }}</button>
   </div>
 </div>
-<div>
+<div class="form-body">
   <div class="tabs">
     <a class="tab" [ngClass]="{ active: activeTab === tab.value }" (click)="activeTab = tab.value" *ngFor="let tab of tabs">{{ tab.label | t }}</a>
   </div>

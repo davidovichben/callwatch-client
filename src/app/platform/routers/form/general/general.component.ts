@@ -7,6 +7,7 @@ import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audi
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
+import { isDateGreaterOrEqual } from 'src/app/_shared/constants/validators';
 
 @Component({
   selector: 'app-general',
@@ -98,6 +99,12 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       const control = this.routerForm.get(controlName);
       toggled ? control.enable() : control.disable();
     });
+
+    if (toggleName === 'irregularTimingEnabled') {
+      const minControl = this.formService.routerForm.get('general.irregularTimingFrom');
+      const validators = isDateGreaterOrEqual.bind(this, { minControl, unitOfTime: 'seconds' });
+      this.formService.routerForm.get('general.irregularTimingTo').setValidators(validators);
+    }
 
     if (toggleName === 'waitingRouterEnabled') {
       this.audioInput.disabled = !toggled;

@@ -52,7 +52,8 @@ export class FormComponent implements OnInit, OnDestroy {
       description: this.fb.control(null)
     })
 
-    const validators = [Validators.required, isDateGreaterOrEqual.bind(this, this.uniqueDayForm.get('startDate'))];
+    const minControl = this.uniqueDayForm.get('startDate');
+    const validators = [Validators.required, isDateGreaterOrEqual.bind(this, { minControl })];
     this.uniqueDayForm.get('endDate').setValidators(validators);
   }
 

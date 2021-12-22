@@ -25,5 +25,7 @@
   <input type="file" (change)="uploadFile(audioFileInput.files[0])" #audioFileInput>
   <audio #audioPlayer></audio>
 </div>
-<p class="file-name" *ngIf="file">{{ file.name.length < 25 ? file.name : file.name.substr(0, 25) + '...' }}</p>
+<p class="file-name">
+  <ng-container *ngIf="file">{{ file.name.length < 25 ? file.name : file.name.substr(0, 25) + '...' }}</ng-container>
+</p>
 <p class="mt-3 alert alert-danger" [@fade]="hasTypeError ? 'active' : 'inactive'">{{ 'invalid_file_type_detailed' | t }}: wav</p>
