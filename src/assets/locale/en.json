@@ -344,5 +344,5 @@
   { "key": "delete_router", "value": "Delete router" },
   { "key": "press_enter_to_insert", "value": "Press Enter to insert" },
   { "key": "unit_has_related_units", "value": "This unit has related units" },
-  { "key": "reassign_related_units", "value": "Please select a unit to witch they will be assigned" }
+  { "key": "reassign_related_units", "value": "Please select a unit to which they will be assigned" }
 ]
