@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { SharedComponent } from 'src/app/platform/routers/form/shared/shared.component';
 
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 

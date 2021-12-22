@@ -94,7 +94,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   deleteUnit(assignedUnitId?: number): void {
-    this.unitService.deleteUnit(this.unit.id, assignedUnitId).then(response => {
+    this.unitService.deleteUnit(this.unit.id, assignedUnitId).then(() => {
       this.notifications.success();
       this.router.navigate(['/platform', 'units', 'root']);
       this.unitStateService.refreshTree.next();
