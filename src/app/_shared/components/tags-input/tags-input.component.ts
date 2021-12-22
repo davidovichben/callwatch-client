@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { TagService } from 'src/app/_shared/services/http/tag.service';
@@ -16,6 +16,8 @@ export class TagsInputComponent implements ControlValueAccessor {
 
   @Input() placeholder: string;
   @Input() type: string;
+
+  @ViewChild('searchInput') searchInput: ElementRef;
 
   isListToggled = false;
   isLoading = false;
@@ -76,7 +78,7 @@ export class TagsInputComponent implements ControlValueAccessor {
         this.suggestedTags = tags;
 
         if (keyword && !tags.find(tag => tag.name === keyword) && !this.selectedTags.find(tag => tag.name === keyword)) {
-          this.unmatchedKeyword = keyword;
+          setTimeout(() => this.unmatchedKeyword = this.searchInput.nativeElement.value, 0)
         } else {
           this.unmatchedKeyword = null;
         }

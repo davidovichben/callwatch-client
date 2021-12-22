@@ -3,8 +3,8 @@
   <i class="la la-times" mat-dialog-close></i>
 </div>
 <form #form="ngForm" class="mt-3" (ngSubmit)="submit(form)">
-<!--  <p class="mt-3 mb-0">{{ 'permission_has' | t }} {{ data.userCount }} {{ 'related_users' | t }}.</p>-->
-<!--  <p class="mb-3">{{ 'please_replace_it_s' | t }}:</p>-->
+    <p class="mt-3 mb-0">{{ 'unit_has_related_units' | t }}.</p>
+    <p class="mb-3">{{ 'reassign_related_units' | t }}:</p>
   <div class="mb-3">
     <app-unit-select [units]="data.units" [ignoredUnit]="data.replacedUnit" name="unitId" ngModel></app-unit-select>
   </div>
