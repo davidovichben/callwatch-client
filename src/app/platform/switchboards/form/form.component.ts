@@ -54,7 +54,7 @@ export class FormComponent implements OnInit {
       type: this.fb.control(null, Validators.required),
       netAddress: this.fb.control(null, Validators.required),
       dataManager: this.fb.control(null),
-      minimalSeconds: this.fb.control(null, Validators.required),
+      minimalSeconds: this.fb.control(null, [Validators.required, Validators.pattern(NumberPattern)]),
       cti: this.fb.group({
         username: this.fb.control(null, Validators.required),
         password: this.fb.control(null, Validators.required),

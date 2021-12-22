@@ -4,12 +4,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -27,6 +26,7 @@ import { LoggedInGuard } from 'src/app/_shared/guards/logged-in.guard';
 import { GuestGuard } from 'src/app/_shared/guards/guest.guard';
 
 import { AppInterceptor } from 'src/app/_shared/interceptors/app.interceptor';
+import { DateAdapterConfig } from 'src/app/_shared/constants/date-adapter-options';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -56,8 +56,7 @@ const appearance: MatFormFieldDefaultOptions = {
     { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
     { provide: MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true, strict: false } },
-    { provide: MAT_DATE_LOCALE, useValue: 'he-IL' }
+    ...DateAdapterConfig
   ],
   bootstrap: [AppComponent]
 })
