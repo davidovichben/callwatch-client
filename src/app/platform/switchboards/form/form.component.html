@@ -46,7 +46,8 @@
           <mat-form-field>
             <mat-label>{{ 'minimal_number_of_seconds' | t }}</mat-label>
             <input matInput type="number" min="0" formControlName="minimalSeconds" required>
-            <mat-error>{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="switchboardForm.get('minimalSeconds').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="switchboardForm.get('minimalSeconds').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
       </div>

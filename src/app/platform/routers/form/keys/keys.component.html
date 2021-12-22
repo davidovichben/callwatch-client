@@ -1,8 +1,10 @@
 <div class="d-flex justify-content-between mb-3">
-  <div class="d-flex align-items-center">
+  <div class="d-flex">
     <ng-container *ngIf="getKeysLength() < types.length">
-      <button mat-flat-button type="button" class="ms-3 mb-4 btn blue-btn" (click)="newKey(newKeySelect.value)">{{ 'add_key' | t }}</button>
-      <mat-form-field class="w-200p">
+      <div>
+        <button mat-flat-button type="button" class="ms-3 mb-4 btn blue-btn" (click)="newKey(newKeySelect.value)">{{ 'add_key' | t }}</button>
+      </div>
+      <mat-form-field id="selectKey" class="w-200p">
         <mat-label>{{ 'select_key' | t  }}</mat-label>
         <mat-select #newKeySelect>
           <mat-option *ngFor="let type of unusedTypes" [value]="type">{{ type }}</mat-option>
@@ -81,26 +83,30 @@
 <!--        <mat-label>{{ 'data_documenting' | t }}</mat-label>-->
 <!--        <mat-select formControlName="documenting"></mat-select>-->
 <!--      </mat-form-field>-->
-        <div class="text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
-          <p class="mb-1 bold">{{ 'timing' | t }}</p>
-          <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>
-          <p>{{ action.get('timingType').value ? (action.get('timingType').value  | t) : ('none' | t) }}</p>
-        </div>
+      <div class="text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
+        <p class="mb-1 bold">{{ 'timing' | t }}</p>
+        <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>
+        <p>{{ action.get('timingType').value ? (action.get('timingType').value  | t) : ('none' | t) }}</p>
+      </div>
       <div class="text-center icon-container" *ngIf="index === 0">
         <p class="mb-1 bold">{{ 'status' | t }}</p>
         <mat-icon [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">power_settings_new</mat-icon>
         <p [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">{{ action.get('isOnline').value ? ('active' | t) : ('inactive' | t) }}</p>
       </div>
-      <div class="text-center" *ngIf="index === 0 || action.get('isFirstCondition').value">
-        <p class="mb-1 bold">{{ 'add_line' | t }}</p>
-        <button mat-flat-button class="green-btn" (click)="addAction(type, index)">
-          <mat-icon>add</mat-icon>
-        </button>
+      <div class="flex-between w-300p">
+        <div class="text-center" *ngIf="index === 0 || action.get('isFirstCondition').value">
+          <p class="mb-1 bold">{{ 'add_line' | t }}</p>
+          <button mat-flat-button class="green-btn" (click)="addAction(type, index)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div class="text-center" *ngIf="index === 0">
+          <mat-slide-toggle formControlName="isActive" (ngModelChange)="action.get('isOnline').patchValue($event)"></mat-slide-toggle>
+        </div>
+        <div class="delete-container">
+          <mat-icon class="pointer dark-grey-text" (click)="deleteAction(type, index)" *ngIf="!action.get('isFirstCondition').value">delete</mat-icon>
+        </div>
       </div>
-      <div class="text-center" *ngIf="index === 0">
-        <mat-slide-toggle formControlName="isActive" (ngModelChange)="checkOnline(action)"></mat-slide-toggle>
-      </div>
-      <mat-icon class="pointer dark-grey-text" (click)="deleteAction(type, index)" *ngIf="!action.get('isFirstCondition').value">delete</mat-icon>
     </div>
   </div>
 </ng-container>

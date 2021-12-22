@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import * as moment from 'moment';
 
 @Injectable()
 export class HelpersService {
@@ -46,6 +45,8 @@ export class HelpersService {
       ...arr.slice(index)
     ];
   }
+
+
 
   // Time formatted as hh:mm
 

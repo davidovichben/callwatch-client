@@ -107,21 +107,33 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
   }
 
   deleteAction(type: string, index: number): void {
-    const arr = (this.formGroup.get(type) as FormArray);
-    const activityType = arr.at(index).value.activityTypeName;
+    this.notificationService.warning().then(confirmation => {
+      if (confirmation.value) {
 
-    arr.removeAt(index);
+        if (index === 0) {
+          this.formGroup.removeControl(type);
+          this.setUnusedTypes();
+          return;
+        }
 
-    if (activityType === 'condition') {
-      while (arr.at(index) && arr.at(index).value.conditionResult) {
+        const arr = (this.formGroup.get(type) as FormArray);
+        const activityType = arr.at(index).value.activityTypeName;
+
         arr.removeAt(index);
-      }
-    }
 
-    if (arr.length === 0) {
-      this.formGroup.removeControl(type);
-      this.setUnusedTypes();
-    }
+        if (activityType === 'condition') {
+          while (arr.at(index) && arr.at(index).value.conditionResult) {
+            arr.removeAt(index);
+          }
+        }
+
+        if (arr.length === 0 || index === 0) {
+          this.formGroup.removeControl(type);
+          this.setUnusedTypes();
+        }
+
+      }
+    })
   }
 
   addAction(type: string, index: number): void {
