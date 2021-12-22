@@ -14,6 +14,6 @@ export const isDateGreaterOrEqual = (args: { minControl: FormControl, unitOfTime
   const minValue = moment(args.minControl.value).utc();
   const maxValue = moment(control.value).utc();
   const greater = maxValue.diff(minValue, args.unitOfTime) >= 0;
-  
+
   return !greater ? { range: true } : null;
 }
