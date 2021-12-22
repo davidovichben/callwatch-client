@@ -74,7 +74,8 @@
         <input matInput formControlName="irregularTimingTo" [ngxMatDatetimePicker]="toDatePicker" required>
         <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker [showSeconds]="false" #toDatePicker></ngx-mat-datetime-picker>
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
+        <mat-error *ngIf="routerForm.get('irregularTimingTo').errors?.required">{{ errorMessages.required | t }}</mat-error>
+        <mat-error *ngIf="routerForm.get('irregularTimingTo').errors?.range">{{ errorMessages.dateRange | t }}</mat-error>
       </mat-form-field>
     </div>
   </div>
