@@ -343,7 +343,9 @@
   { "key": "duplicate", "value": "שכפל" },
   { "key": "duplicate_router", "value": "שכפל נתב" },
   { "key": "delete_router", "value": "מחק נתב" },
-  { "key": "press_enter_to_insert", "value": "הקש Enter להוספה" }
+  { "key": "press_enter_to_insert", "value": "הקש Enter להוספה" },
+  { "key": "unit_has_related_units", "value": "ליחידה זו מקושרות יחידות נוספות" },
+  { "key": "reassign_related_units", "value": "אנא בחר יחידה חדשה אליה יקושרו" }
 ]
 
 

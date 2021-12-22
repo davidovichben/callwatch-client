@@ -342,5 +342,7 @@
   { "key": "please_select_key", "value": "Please select a key." },
   { "key": "duplicate_router", "value": "Duplicate router" },
   { "key": "delete_router", "value": "Delete router" },
-  { "key": "press_enter_to_insert", "value": "Press Enter to insert" }
+  { "key": "press_enter_to_insert", "value": "Press Enter to insert" },
+  { "key": "unit_has_related_units", "value": "This unit has related units" },
+  { "key": "reassign_related_units", "value": "Please select a unit to witch they will be assigned" }
 ]
