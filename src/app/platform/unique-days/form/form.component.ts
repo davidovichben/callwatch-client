@@ -84,7 +84,7 @@ export class FormComponent implements OnInit, OnDestroy {
 		if (this.formGroup.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
-      if (this.uniqueDay.id) {
+      if (this.uniqueDay) {
         this.uniqueDayService.updateUniqueDay(this.uniqueDay.id, this.formGroup.value).then(response => this.handleServerResponse(response));
 			} else {
 				this.uniqueDayService.newUniqueDay(this.formGroup.value).then(response => this.handleServerResponse(response));
@@ -95,9 +95,9 @@ export class FormComponent implements OnInit, OnDestroy {
 	private handleServerResponse(response: boolean): void {
 		if (response) {
 			this.router.navigate(['/platform', 'uniqueDays']);
-		}
-
-		this.isSubmitting = false;
+    } else {
+      this.isSubmitting = false;
+    }
 	}
 
   ngOnDestroy(): void {

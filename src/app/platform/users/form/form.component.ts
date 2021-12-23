@@ -188,9 +188,9 @@ export class FormComponent implements OnInit, OnDestroy {
       }
 
       this.router.navigate(['/platform', 'users'])
+    } else {
+      this.isSubmitting = false;
     }
-
-    this.isSubmitting = false;
   }
 
   ngOnDestroy() {

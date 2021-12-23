@@ -159,8 +159,8 @@ export class FormComponent implements OnInit {
 	private handleServerResponse(response: boolean): void {
 		if (response) {
 			this.router.navigate(['/platform', 'callbacks']);
-		}
-
-		this.isSubmitting = false;
+		} else {
+      this.isSubmitting = false;
+    }
 	}
 }

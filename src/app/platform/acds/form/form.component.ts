@@ -151,9 +151,9 @@ export class FormComponent implements OnInit, OnDestroy {
 	private handleServerResponse(response: boolean): void {
 		if (response) {
 			this.router.navigate(['/platform', 'acds']);
-		}
-
-		this.isSubmitting = false;
+		} else {
+      this.isSubmitting = false;
+    }
 	}
 
   ngOnDestroy(): void {

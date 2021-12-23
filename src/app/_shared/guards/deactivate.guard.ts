@@ -14,7 +14,8 @@ export class DeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
   constructor(private notificationService: NotificationService) {}
 
   canDeactivate(component) {
-    if (!component.formGroup || !component.formGroup.dirty) {
+    console.log(component.isSubmitting)
+    if (component.isSubmitting || !component.formGroup || !component.formGroup.dirty) {
       return true;
     }
 
