@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
@@ -24,7 +23,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [PermissionsComponent],
 	imports: [
-		CommonModule,
     RouterModule.forChild(routes),
     TranslateModule,
 		DataTableModule,

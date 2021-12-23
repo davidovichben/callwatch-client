@@ -350,7 +350,10 @@
   { "key": "form_data_lost_error", "value": "המידע שהוזן לא ישמר, המשך?" },
   { "key": "warning", "value": "אזהרה" },
   { "key": "enter_organization", "value": "הכנס לארגון" },
-  { "key": "back_to_organizations", "value": "בחזרה לארגונים" }
+  { "key": "back_to_organizations", "value": "בחזרה לארגונים" },
+  { "key": "audit_log", "value": "Audit Log" },
+  { "key": "ip_address", "value": "כתובת IP" },
+  { "key": "action", "value": "פעולה" }
 ]
 
 

@@ -349,5 +349,8 @@
   { "key": "form_data_lost_error", "value": "Input data will not be saved, continue?" },
   { "key": "warning", "value": "Warning" },
   { "key": "enter_organization", "value": "Enter Organization" },
-  { "key": "back_to_organizations", "value": "Back to organizations" }
+  { "key": "back_to_organizations", "value": "Back to organizations" },
+  { "key": "audit_log", "value": "Audit Log" },
+  { "key": "ip_address", "value": "IP Address" },
+  { "key": "action", "value": "Action" }
 ]

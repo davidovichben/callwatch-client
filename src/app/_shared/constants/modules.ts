@@ -11,6 +11,7 @@ export const PlatformModules = [
     ]
   },
   { name: 'users', icon: 'group', isGuarded: true },
+  // { name: 'auditLog', label: 'audit_log', icon: 'group', isGuarded: true },
   {
     name: 'settings',
     icon: 'settings',
