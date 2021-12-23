@@ -24,6 +24,8 @@ import { UniqueDaySelectResolve } from 'src/app/_shared/resolves/unique-day-sele
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 import { UniqueScheduleSelectResolve } from 'src/app/_shared/resolves/unique-schedules-select.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -31,7 +33,8 @@ const routes: Routes = [
     resolve: {
       uniqueDays: UniqueDaySelectResolve,
       uniqueSchedules: UniqueScheduleSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   },
   {
     path: ':id',
@@ -40,7 +43,8 @@ const routes: Routes = [
       schedule: ScheduleResolve,
       uniqueDays: UniqueDaySelectResolve,
       uniqueSchedules: UniqueScheduleSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   }
 ];
 
@@ -66,7 +70,8 @@ const routes: Routes = [
     ScheduleResolve,
     UniqueDaySelectResolve,
     UniqueScheduleSelectResolve,
-    TranslatePipe
+    TranslatePipe,
+    DeactivateGuard
   ]
 })
 export class FormModule {}

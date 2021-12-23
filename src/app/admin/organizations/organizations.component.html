@@ -1,21 +1,30 @@
-<div class="mb-5 flex-between">
+<div class="mb-3 flex-between">
   <h1>{{ 'organizations' | t }}</h1>
   <div>
-    <button class="btn blue-btn" (click)="openDialog()">
-      <i class="las la-plus"></i>
+    <button class="btn blue-btn" routerLink="./form">
+      <i class="la la-plus ms-1"></i>
       <span>{{ 'add_organization' | t }}</span>
     </button>
   </div>
 </div>
-<app-data-table [columns]="columns" (fetchItems)="fetchItems()">
+<app-data-table [columns]="columns" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <tr *ngFor="let item of dataTable.items">
     <td>
-      <span (click)="enterOrganization(item.id)" class="link">{{ item.name }}</span>
+      <span>{{ item.name }}</span>
     </td>
     <td>{{ item.isActive ? ('active' | t) : ('inactive' | t) }}</td>
     <td class="row-icons">
-      <i class="la la-pencil" (click)="openDialog(item)"></i>
-<!--      <i class="la la-trash" (click)="deleteOrganization(item)"></i>-->
+      <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item class="row-action" (click)="enterOrganization(item)">
+          <mat-icon>login</mat-icon>
+          <span>{{ 'enter_organization' | t }}</span>
+        </button>
+        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item.id]">
+          <mat-icon>edit</mat-icon>
+          <span>{{ 'edit' | t }}</span>
+        </button>
+      </mat-menu>
     </td>
   </tr>
 </app-data-table>

@@ -17,18 +17,22 @@ import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.se
 
 import { SwitchboardResolve } from 'src/app/_shared/resolves/switchboard.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
 	{
 		path: '',
-		component: FormComponent
+		component: FormComponent,
+    canDeactivate: [DeactivateGuard]
 	},
 	{
 		path: ':id',
 		component: FormComponent,
 		resolve: {
 			switchboard: SwitchboardResolve
-		}
-	}
+		},
+    canDeactivate: [DeactivateGuard]
+  }
 ];
 
 @NgModule({
@@ -45,6 +49,6 @@ const routes: Routes = [
     MatIconModule,
     TranslateModule
   ],
-	providers: [SwitchboardService, SwitchboardResolve]
+	providers: [SwitchboardService, SwitchboardResolve, DeactivateGuard]
 })
 export class FormModule {}

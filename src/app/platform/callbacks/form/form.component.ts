@@ -27,7 +27,7 @@ export class FormComponent implements OnInit {
 
   activeTab = 'general';
 
-	callbackForm: FormGroup;
+	formGroup: FormGroup;
 
   callbackId: number;
 
@@ -50,7 +50,7 @@ export class FormComponent implements OnInit {
       this.callbackId = routeData.callback.id;
       const data = { ...routeData.callback };
       delete data.texts;
-      this.callbackForm.patchValue(data);
+      this.formGroup.patchValue(data);
 
       if (data.file) {
         this.audioFile = { bin: data.file, name: data.fileName };
@@ -61,7 +61,7 @@ export class FormComponent implements OnInit {
 	}
 
   private makeForm(): void {
-    this.callbackForm = this.fb.group({
+    this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       description: this.fb.control(null),
       requestDuration: this.fb.control(null),
@@ -76,7 +76,7 @@ export class FormComponent implements OnInit {
       texts: this.fb.array([])
     });
 
-    const textArray = (this.callbackForm.get('texts') as FormArray);
+    const textArray = (this.formGroup.get('texts') as FormArray);
     this.callbackTextTypes.forEach(type => {
      const group = this.fb.group({
        type: this.fb.control(type),
@@ -89,7 +89,7 @@ export class FormComponent implements OnInit {
   }
 
   private setTextArray(texts: CallbackTextModel[]): void {
-    const textArray = (this.callbackForm.get('texts') as FormArray);
+    const textArray = (this.formGroup.get('texts') as FormArray);
     textArray.controls.forEach(control => {
       const text = texts.find(text => text.type === control.get('type').value);
       if (text) {
@@ -100,22 +100,22 @@ export class FormComponent implements OnInit {
   }
 
   setFile(file?: { bin: string, name: string }): void {
-    this.callbackForm.get('file').patchValue(file ? file.bin : null);
-    this.callbackForm.get('fileName').patchValue(file ? file.name : null);
+    this.formGroup.get('file').patchValue(file ? file.bin : null);
+    this.formGroup.get('fileName').patchValue(file ? file.name : null);
   }
 
   setTextDisabledState(index: number): void {
-    const control = (this.callbackForm.get('texts') as FormArray).at(index).get('content');
+    const control = (this.formGroup.get('texts') as FormArray).at(index).get('content');
     control.disabled ? control.enable() : control.disable();
   }
 
 	submit(): void {
-    if (this.callbackForm.invalid) {
+    if (this.formGroup.invalid) {
       this.toggleInvalidTabs();
     }
 
-		if (this.callbackForm.valid && !this.isSubmitting) {
-      const values = this.callbackForm.value;
+		if (this.formGroup.valid && !this.isSubmitting) {
+      const values = this.formGroup.value;
       values.texts = this.filterEmptyTexts();
 
 			this.isSubmitting = true;
@@ -125,7 +125,7 @@ export class FormComponent implements OnInit {
           this.handleServerResponse(response);
         });
 			} else {
-				this.callbackService.newCallback(this.callbackForm.value).then(response => {
+				this.callbackService.newCallback(this.formGroup.value).then(response => {
           this.handleServerResponse(response);
         });
 			}
@@ -135,7 +135,7 @@ export class FormComponent implements OnInit {
   private filterEmptyTexts(): object[] {
     const values = [];
 
-    const textArray = (this.callbackForm.get('texts') as FormArray);
+    const textArray = (this.formGroup.get('texts') as FormArray);
     textArray.getRawValue().forEach(text => {
       if (text.content) {
         values.push(text);
@@ -146,12 +146,12 @@ export class FormComponent implements OnInit {
   }
 
   private toggleInvalidTabs(): void {
-    if (this.callbackForm.get('name').invalid) {
+    if (this.formGroup.get('name').invalid) {
       this.activeTab = 'general';
       return;
     }
 
-    if (this.callbackForm.get('schedule').invalid) {
+    if (this.formGroup.get('schedule').invalid) {
       this.activeTab = 'request';
     }
   }

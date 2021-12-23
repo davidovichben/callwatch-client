@@ -76,11 +76,18 @@ export class NotificationService {
     return swal.fire(options);
   }
 
+  public deactivateWarning(): Promise<boolean> {
+    const text = this.t.transform('form_data_lost_error');
+    return this.warning(this.t.transform('warning'), text).then(confirmation => {
+      return confirmation.value;
+    });
+  }
+
   public authorizationError(): void {
     return this.error(this.t.transform('authorization_error'));
   }
 
   public serverError(): void {
-    return this.error('שגיאת שרת, נסה שנית או צור קשר.');
+    return this.error(this.t.transform('server_error'));
   }
 }

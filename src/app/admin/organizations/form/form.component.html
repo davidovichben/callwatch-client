@@ -1,17 +1,22 @@
-<!--<div class="dialog-header">-->
-<!--  <span>{{ organization ? organization.name : 'add_organization' | t }}</span>-->
-<!--  <i class="la la-times" mat-dialog-close></i>-->
-<!--</div>-->
-<!--<form (ngSubmit)="submit(form)" class="d-flex flex-column" #form="ngForm">-->
-<!--  <mat-form-field class="mb-3">-->
-<!--    <mat-label>{{ 'organization_name' | t }}</mat-label>-->
-<!--    <input matInput type="text" name="name" [ngModel]="organization.name">-->
-<!--  </mat-form-field>-->
-<!--  <div class="mb-3">-->
-<!--    <mat-checkbox name="isActive" [ngModel]="organization.isActive">{{ 'active' | t }}</mat-checkbox>-->
-<!--  </div>-->
-<!--  <div>-->
-<!--&lt;!&ndash;    <button mat-flat-button class="btn grey-btn ms-3" type="button" mat-dialog-close>{{ 'cancel' | t }}</button>&ndash;&gt;-->
-<!--&lt;!&ndash;    <button mat-flat-button class="btn blue-btn" type="submit">{{ 'confirm' | t }}</button>&ndash;&gt;-->
-<!--  </div>-->
-<!--</form>-->
+<form #form="ngForm" (ngSubmit)="submit(form)">
+  <div class="form-header">
+    <p class="h1">{{ organization.id ? ('edit_organization' | t) : ('add_organization' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/admin', 'organizations']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3 mb-3">
+        <mat-form-field>
+          <mat-label>{{ 'organization_name' | t }}</mat-label>
+          <input matInput type="text" name="name" [ngModel]="organization.name">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3 pt-3">
+        <mat-slide-toggle name="isActive" [ngModel]="organization.isActive">{{ 'active' | t }}</mat-slide-toggle>
+      </div>
+    </div>
+  </div>
+</form>

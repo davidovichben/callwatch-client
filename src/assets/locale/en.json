@@ -4,6 +4,7 @@
   { "key": "add", "value": "Add" },
   { "key": "add_campaign", "value": "Add Campaign" },
   { "key": "add_organization", "value": "Add Organization" },
+  { "key": "edit_organization", "value": "Edit Organization" },
   { "key": "add_permission", "value": "Add Permission" },
   { "key": "edit_permission", "value": "Edit Permission" },
   { "key": "add_schedule", "value": "Add Schedule" },
@@ -344,5 +345,9 @@
   { "key": "delete_router", "value": "Delete router" },
   { "key": "press_enter_to_insert", "value": "Press Enter to insert" },
   { "key": "unit_has_related_units", "value": "This unit has related units" },
-  { "key": "reassign_related_units", "value": "Please select a unit to witch they will be assigned" }
+  { "key": "reassign_related_units", "value": "Please select a unit to which they will be assigned" },
+  { "key": "form_data_lost_error", "value": "Input data will not be saved, continue?" },
+  { "key": "warning", "value": "Warning" },
+  { "key": "enter_organization", "value": "Enter Organization" },
+  { "key": "back_to_organizations", "value": "Back to organizations" }
 ]

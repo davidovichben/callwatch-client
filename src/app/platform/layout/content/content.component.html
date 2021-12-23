@@ -1,6 +1,6 @@
 <header [ngClass]="{ 'flex-between': isAdminViewing, 'flex-end': !isAdminViewing }">
   <div *ngIf="isAdminViewing">
-    <a [routerLink]="['/', 'admin', 'organizations']">{{ 'back_to_organizations' | t }}</a>
+    <a [routerLink]="['/admin', 'organizations']">{{ 'back_to_organizations' | t }}</a>
   </div>
   <div class="d-flex align-items-center px-3">
     <mat-icon class="user-default-avatar" *ngIf="!user.avatar">account_circle</mat-icon>

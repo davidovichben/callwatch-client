@@ -22,6 +22,8 @@ import { RouterActivityTypeResolve } from 'src/app/_shared/resolves/router-activ
 import { RouterSelectResolve } from 'src/app/_shared/resolves/router-select.resolve';
 import { AcdSelectResolve } from 'src/app/_shared/resolves/acd-select.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
 	{
 		path: '',
@@ -31,7 +33,8 @@ const routes: Routes = [
       schedules: ScheduleSelectResolve,
       routers: RouterSelectResolve,
       acds: AcdSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
 	},
 	{
 		path: ':id',
@@ -42,8 +45,9 @@ const routes: Routes = [
       schedules: ScheduleSelectResolve,
       routers: RouterSelectResolve,
       acds: AcdSelectResolve
-    }
-	}
+    },
+    canDeactivate: [DeactivateGuard]
+  }
 ];
 
 @NgModule({
@@ -66,7 +70,8 @@ const routes: Routes = [
     ScheduleSelectResolve,
     RouterActivityTypeResolve,
     RouterSelectResolve,
-    AcdSelectResolve
+    AcdSelectResolve,
+    DeactivateGuard
   ]
 })
 export class FormModule {}

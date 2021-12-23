@@ -17,17 +17,22 @@ import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.servi
 
 import { UniqueDayResolve } from 'src/app/_shared/resolves/unique-day.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+import { TimeInputModule } from 'src/app/_shared/components/time-input/time-input.module';
+
 const routes: Routes = [
 	{
 		path: '',
-		component: FormComponent
-	},
+		component: FormComponent,
+    canDeactivate: [DeactivateGuard]
+  },
 	{
 		path: ':id',
 		component: FormComponent,
 		resolve: {
       uniqueDay: UniqueDayResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
 	}
 ];
 
@@ -43,8 +48,9 @@ const routes: Routes = [
     MatButtonModule,
     MatDatepickerModule,
     TranslateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    TimeInputModule
   ],
-	providers: [UniqueDayService, UniqueDayResolve]
+	providers: [UniqueDayService, UniqueDayResolve, DeactivateGuard]
 })
 export class FormModule {}

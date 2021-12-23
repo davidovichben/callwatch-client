@@ -18,11 +18,11 @@ export class FormComponent implements OnInit {
 
   readonly types = SwitchboardTypes;
 
-  managers = ['A', 'B'];
+  managers = [];
 
   switchboardId: number;
 
-  switchboardForm: FormGroup;
+  formGroup: FormGroup;
 
   activeTab = 'cti';
 
@@ -37,10 +37,10 @@ export class FormComponent implements OnInit {
     const routeData = this.route.snapshot.data;
     if (routeData.switchboard) {
       this.switchboardId = routeData.switchboard.id;
-      this.switchboardForm.patchValue(routeData.switchboard);
+      this.formGroup.patchValue(routeData.switchboard);
 
       ['cti', 'axl'].forEach(service => {
-        const number = this.switchboardForm.get(service + '.number').value;
+        const number = this.formGroup.get(service + '.number').value;
         if (number) {
           this.toggleServiceNumber(true, service);
         }
@@ -49,7 +49,7 @@ export class FormComponent implements OnInit {
   }
 
   private setForm(): void {
-    this.switchboardForm = this.fb.group({
+    this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control(null, Validators.required),
       netAddress: this.fb.control(null, Validators.required),
@@ -73,18 +73,18 @@ export class FormComponent implements OnInit {
   toggleAxi(value: string): void {
     const validators = value === 'CISCO' ? [Validators.required] : [];
     ['address', 'username', 'password'].forEach(control => {
-      this.switchboardForm.get('axl.' + control).setValidators(validators);
-      this.switchboardForm.get('axl.' + control).updateValueAndValidity();
+      this.formGroup.get('axl.' + control).setValidators(validators);
+      this.formGroup.get('axl.' + control).updateValueAndValidity();
     });
 
     if (value !== 'CISCO') {
-      this.switchboardForm.get('axl').reset();
+      this.formGroup.get('axl').reset();
       this.activeTab = 'cti';
     }
   }
 
   toggleServiceNumber(isChecked: boolean, service: string): void {
-    const control = this.switchboardForm.get(service + '.number');
+    const control = this.formGroup.get(service + '.number');
     if (isChecked) {
       control.setValidators([Validators.required, Validators.pattern(NumberPattern)]);
       control.enable();
@@ -101,26 +101,26 @@ export class FormComponent implements OnInit {
     ['cti', 'axl'].forEach(tab => {
       const oppositeTab = tab === 'cti' ? 'axl' : 'cti';
 
-      if (this.activeTab === tab && this.switchboardForm.get(tab).valid && this.switchboardForm.get(oppositeTab).invalid) {
+      if (this.activeTab === tab && this.formGroup.get(tab).valid && this.formGroup.get(oppositeTab).invalid) {
         this.activeTab = oppositeTab;
       }
     });
   }
 
 	submit(): void {
-    if (this.switchboardForm.get('type').value === 'CISCO') {
+    if (this.formGroup.get('type').value === 'CISCO') {
       this.toggleInvalidTabs();
     }
 
-		if (this.switchboardForm.valid && !this.isSubmitting) {
+		if (this.formGroup.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
 			if (this.switchboardId) {
-				this.switchboardService.updateSwitchboard(this.switchboardId, this.switchboardForm.value).then(response => {
+				this.switchboardService.updateSwitchboard(this.switchboardId, this.formGroup.value).then(response => {
           this.handleServerResponse(response);
         });
 			} else {
-				this.switchboardService.newSwitchboard(this.switchboardForm.value).then(response => {
+				this.switchboardService.newSwitchboard(this.formGroup.value).then(response => {
           this.handleServerResponse(response);
         });
 			}

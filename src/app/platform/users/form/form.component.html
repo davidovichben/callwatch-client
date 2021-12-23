@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" #form="ngForm" [formGroup]="userForm">
+<form (ngSubmit)="submit()" #form="ngForm" [formGroup]="formGroup">
   <div class="form-header">
     <p class="h1">{{ user ? ('edit_user' | t) : ('add_user' | t) }}</p>
     <div>
@@ -9,9 +9,9 @@
   <div class="form-body row g-0">
     <div class="col-12 col-xl-3 text-center">
       <div id="avatarUpload" class="container">
-        <mat-icon class="user-default-avatar" *ngIf="!userForm.get('avatar').value">account_circle</mat-icon>
-        <img class="user-avatar" [src]="userForm.get('avatar').value" *ngIf="userForm.get('avatar').value">
-        <div class="overlay" *ngIf="userForm.get('avatar').value">
+        <mat-icon class="user-default-avatar" *ngIf="!formGroup.get('avatar').value">account_circle</mat-icon>
+        <img class="user-avatar" [src]="formGroup.get('avatar').value" *ngIf="formGroup.get('avatar').value">
+        <div class="overlay" *ngIf="formGroup.get('avatar').value">
           <mat-icon class="pointer" (click)="deleteAvatar()">delete</mat-icon>
         </div>
       </div>
@@ -51,8 +51,8 @@
               <mat-form-field>
                 <mat-label>{{ 'email' | t }}</mat-label>
                 <input matInput class="text-left ltr" type="email" formControlName="email" required>
-                <mat-error *ngIf="userForm.get('email').errors?.required">{{ errorMessages.required | t }}</mat-error>
-                <mat-error *ngIf="userForm.get('email').errors?.pattern">{{ errorMessages.email | t }}</mat-error>
+                <mat-error *ngIf="formGroup.get('email').errors?.required">{{ errorMessages.required | t }}</mat-error>
+                <mat-error *ngIf="formGroup.get('email').errors?.pattern">{{ errorMessages.email | t }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-12 col-lg-6 col-xxl-5">
@@ -88,8 +88,8 @@
             <mat-form-field>
               <mat-label>{{ 'username' | t }}</mat-label>
               <input matInput type="text" formControlName="username" required>
-              <mat-error *ngIf="userForm.get('username').errors?.required">{{ errorMessages.required | t }}</mat-error>
-              <mat-error *ngIf="userForm.get('username').errors?.exists">{{ 'username_exists' | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('username').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('username').errors?.exists">{{ 'username_exists' | t }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-6 col-xxl-5">
@@ -110,10 +110,10 @@
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-6 col-xxl-5">
-            <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="userForm.get('permission').errors && form.submitted" [required]="true">
+            <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="formGroup.get('permission').errors && form.submitted" [required]="true">
               <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
             </bd-select>
-            <div class="input-error" [@fade]="userForm.get('permission').errors && form.submitted ? 'active' : 'inactive'">{{ errorMessages.required | t }}</div>
+            <div class="input-error" [@fade]="formGroup.get('permission').errors && form.submitted ? 'active' : 'inactive'">{{ errorMessages.required | t }}</div>
           </div>
         </div>
       </section>

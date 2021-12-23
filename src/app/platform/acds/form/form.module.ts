@@ -20,13 +20,16 @@ import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { AcdResolve } from 'src/app/_shared/resolves/acd.resolve';
 import { AcdFormSelectResolve } from 'src/app/_shared/resolves/acd-form-select.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
 	{
 		path: '',
 		component: FormComponent,
     resolve: {
       selects: AcdFormSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   },
 	{
 		path: ':id',
@@ -34,8 +37,9 @@ const routes: Routes = [
 		resolve: {
       acd: AcdResolve,
       selects: AcdFormSelectResolve
-    }
-	}
+    },
+    canDeactivate: [DeactivateGuard]
+  }
 ];
 
 @NgModule({
@@ -57,7 +61,8 @@ const routes: Routes = [
     AcdService,
     SelectService,
     AcdResolve,
-    AcdFormSelectResolve
+    AcdFormSelectResolve,
+    DeactivateGuard
   ]
 })
 export class FormModule {}

@@ -44,7 +44,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   loggedUser: UserModel;
 
-  userForm: FormGroup;
+  formGroup: FormGroup;
 
   user: UserModel;
   permissions: SelectItemModel[] = [];
@@ -52,14 +52,10 @@ export class FormComponent implements OnInit, OnDestroy {
 
   isSubmitting = false;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private fb: FormBuilder,
-              private userService: UserService,
-              public userSession: UserSessionService,
-              private notifications: NotificationService,
-              private t: TranslatePipe) {}
+  constructor(private route: ActivatedRoute, private router: Router,
+              private dialog: MatDialog, private fb: FormBuilder,
+              private userService: UserService, public userSession: UserSessionService,
+              private notifications: NotificationService, private t: TranslatePipe) {}
 
   ngOnInit(): void {
     this.loggedUser = this.userSession.getUser();
@@ -73,12 +69,12 @@ export class FormComponent implements OnInit, OnDestroy {
 
     this.user = routeData.user;
     if (this.user) {
-      this.userForm.patchValue(this.user);
+      this.formGroup.patchValue(this.user);
     }
   }
 
   private setForm(): void {
-    this.userForm = this.fb.group({
+    this.formGroup = this.fb.group({
       firstName: this.fb.control(null, Validators.required),
       lastName: this.fb.control(null, Validators.required),
       workNumber: this.fb.control(null),
@@ -99,7 +95,7 @@ export class FormComponent implements OnInit, OnDestroy {
   uploadAvatar(file: File): void {
     const reader = new FileReader();
     reader.onload = (event => {
-      this.userForm.get('avatar').patchValue(event.target.result);
+      this.formGroup.get('avatar').patchValue(event.target.result);
     });
 
     this.avatarErrors.type = false;
@@ -121,7 +117,7 @@ export class FormComponent implements OnInit, OnDestroy {
   deleteAvatar(): void {
     this.notifications.warning().then(confirmation => {
       if (confirmation.value) {
-        this.userForm.get('avatar').reset();
+        this.formGroup.get('avatar').reset();
       }
     });
   }
@@ -132,7 +128,7 @@ export class FormComponent implements OnInit, OnDestroy {
     });
 
     this.sub.add(dialog.afterClosed().subscribe(password => {
-      this.userForm.get('password').patchValue(password);
+      this.formGroup.get('password').patchValue(password);
     }));
   }
 
@@ -152,14 +148,14 @@ export class FormComponent implements OnInit, OnDestroy {
 
   submit(): void {
     if (!this.user) {
-      this.userForm.get('password').setValidators(Validators.required);
-      this.userForm.get('password').updateValueAndValidity();
+      this.formGroup.get('password').setValidators(Validators.required);
+      this.formGroup.get('password').updateValueAndValidity();
     }
 
-    if (this.userForm.valid && !this.isSubmitting) {
+    if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
-      const values = this.userForm.value;
+      const values = this.formGroup.value;
       if (values.units.indexOf('root') !== -1) {
         values.units = 'root';
       }

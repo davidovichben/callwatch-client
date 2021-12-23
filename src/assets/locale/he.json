@@ -4,6 +4,7 @@
   { "key": "add", "value": "הוספה" },
   { "key": "add_campaign", "value": "הוספת קמפיין" },
   { "key": "add_organization", "value": "הוספת ארגון" },
+  { "key": "edit_organization", "value": "עריכת ארגון" },
   { "key": "add_permission", "value": "הוספת הרשאה" },
   { "key": "edit_permission", "value": "עריכת הרשאה" },
   { "key": "add_unit", "value": "הוספת יחידה" },
@@ -345,7 +346,11 @@
   { "key": "delete_router", "value": "מחק נתב" },
   { "key": "press_enter_to_insert", "value": "הקש Enter להוספה" },
   { "key": "unit_has_related_units", "value": "ליחידה זו מקושרות יחידות נוספות" },
-  { "key": "reassign_related_units", "value": "אנא בחר יחידה חדשה אליה יקושרו" }
+  { "key": "reassign_related_units", "value": "אנא בחר יחידה חדשה אליה יקושרו" },
+  { "key": "form_data_lost_error", "value": "המידע שהוזן לא ישמר, המשך?" },
+  { "key": "warning", "value": "אזהרה" },
+  { "key": "enter_organization", "value": "הכנס לארגון" },
+  { "key": "back_to_organizations", "value": "בחזרה לארגונים" }
 ]
 
 

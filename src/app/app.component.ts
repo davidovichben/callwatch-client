@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { NavigationStart, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, ChildActivationStart } from '@angular/router';
 
 import { Fade } from 'src/app/_shared/constants/animations';
 
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
 
   private listenRouterEvents(): void {
     this.router.events.forEach(event => {
-      if (event instanceof NavigationStart) {
+      if (event instanceof ChildActivationStart) {
         this.isLoading = true;
       }
 

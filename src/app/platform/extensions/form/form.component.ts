@@ -37,7 +37,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   activeTab = 'general';
 
-  extensionForm: FormGroup;
+  formGroup: FormGroup;
   extension: ExtensionModel;
 
   isSubmitting = false;
@@ -56,7 +56,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
     if (this.extension) {
       this.addDialNumber();
-      this.extensionForm.patchValue(this.extension);
+      this.formGroup.patchValue(this.extension);
     } else {
       this.addDialNumbers();
     }
@@ -65,7 +65,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private makeForm(): void {
-    this.extensionForm = this.fb.group({
+    this.formGroup = this.fb.group({
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
         type: this.fb.control(null, Validators.required),
@@ -84,9 +84,9 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private setFormSubscriptions(): void {
-    const sub = this.extensionForm.get('general.unit').valueChanges.subscribe(() => {
+    const sub = this.formGroup.get('general.unit').valueChanges.subscribe(() => {
       const controlName = this.extension ? 'dialNumber' : 'dialNumbers';
-      this.extensionForm.get('general.' + controlName).updateValueAndValidity();
+      this.formGroup.get('general.' + controlName).updateValueAndValidity();
     });
 
     this.sub.add(sub);
@@ -107,26 +107,26 @@ export class FormComponent implements OnInit, OnDestroy {
         asyncValidator: this.checkDialNumbersExist.bind(this)
     });
 
-    (this.extensionForm.get('general') as FormGroup).addControl('dialNumbers', group);
+    (this.formGroup.get('general') as FormGroup).addControl('dialNumbers', group);
   }
 
   private addDialNumber(): void {
     const control = this.fb.control(null, null, this.checkDialNumberExist.bind(this));
-    (this.extensionForm.get('general') as FormGroup).addControl('dialNumber', control);
+    (this.formGroup.get('general') as FormGroup).addControl('dialNumber', control);
   }
 
   submit(): void {
-    if (!this.extensionForm.valid) {
+    if (!this.formGroup.valid) {
       this.toggleInvalidTabs();
     }
 
-    if (this.extensionForm.valid && !this.isSubmitting) {
+    if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
       const values = {
-        ...this.extensionForm.value.general,
-        ...this.extensionForm.value.callback,
-        acds: this.extensionForm.value.acds
+        ...this.formGroup.value.general,
+        ...this.formGroup.value.callback,
+        acds: this.formGroup.value.acds
       };
 
       if (this.extension) {
@@ -138,7 +138,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private checkDialNumbersExist(group: FormGroup): Promise<object> {
-    const unitId = this.extensionForm.get('general.unit').value;
+    const unitId = this.formGroup.get('general.unit').value;
     if (!unitId || !group.value.from || !group.value.to) {
       return Promise.resolve(null);
     }
@@ -153,7 +153,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private checkDialNumberExist(control: FormControl): Promise<object> {
-    const unitId = this.extensionForm.get('general.unit').value;
+    const unitId = this.formGroup.get('general.unit').value;
     if (!unitId || !control.value) {
       return Promise.resolve(null);
     }
@@ -172,12 +172,12 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private toggleInvalidTabs(): void {
-    if (this.extensionForm.get(this.activeTab).invalid) {
+    if (this.formGroup.get(this.activeTab).invalid) {
       return;
     }
 
     this.tabs.forEach(tab => {
-      if (this.extensionForm.get(tab.value).invalid) {
+      if (this.formGroup.get(tab.value).invalid) {
         this.activeTab = tab.value;
         return;
       }

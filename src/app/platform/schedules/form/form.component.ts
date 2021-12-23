@@ -28,7 +28,8 @@ export class FormComponent {
   uniqueDays: SelectItemModel[] = [];
   uniqueSchedules: SelectItemModel[] = [];
 
-  scheduleForm: FormGroup;
+  formGroup: FormGroup;
+
   callTimeForm: FormGroup;
 
   scheduleId: number;
@@ -50,13 +51,13 @@ export class FormComponent {
 
     if (routeData.schedule) {
       this.scheduleId = routeData.schedule.id;
-      this.scheduleForm.patchValue(routeData.schedule);
+      this.formGroup.patchValue(routeData.schedule);
       this.callTimes = routeData.schedule.callTimes;
     }
   }
 
   private setForms(): void {
-    this.scheduleForm = this.fb.group({
+    this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control('regular', Validators.required),
       description: this.fb.control(null),
@@ -72,10 +73,10 @@ export class FormComponent {
   }
 
   typeChanged(selectedValue: string): void {
-    const currentValue = this.scheduleForm.get('type').value;
+    const currentValue = this.formGroup.get('type').value;
 
     if (selectedValue === 'unique') {
-      this.scheduleForm.get('uniqueSchedule').reset();
+      this.formGroup.get('uniqueSchedule').reset();
     }
 
     if (currentValue !== selectedValue && this.callTimes.length > 0) {
@@ -85,7 +86,7 @@ export class FormComponent {
           this.callTimes = [];
           this.callTimeForm.get('day').reset();
         } else {
-          setTimeout(() => this.scheduleForm.get('type').patchValue(currentValue), 0);
+          setTimeout(() => this.formGroup.get('type').patchValue(currentValue), 0);
         }
       })
     } else {
@@ -162,7 +163,7 @@ export class FormComponent {
   }
 
   submit(): void {
-    if (this.scheduleForm.valid && !this.isSubmitting) {
+    if (this.formGroup.valid && !this.isSubmitting) {
       const editing = this.callTimes.find(callTime => callTime.editing);
       if (editing) {
         const msg = this.t.transform('calltime_editing_submit_error');
@@ -172,7 +173,7 @@ export class FormComponent {
 
       this.isSubmitting = true;
 
-      const values = { ...this.scheduleForm.value };
+      const values = { ...this.formGroup.value };
       values.callTimes = [...this.callTimes];
       if (values.type === 'unique') {
         const callTimes = [];

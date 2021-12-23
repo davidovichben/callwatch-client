@@ -63,6 +63,13 @@ export class UserSessionService {
     this.setUser(user);
   }
 
+  setOrganization(organizationName: string): void {
+    const user = this.getUser();
+    user.organization = organizationName;
+
+    this.setUser(user);
+  }
+
   hasPermission(module: string, action: string): boolean {
     const user = this.getUser();
 

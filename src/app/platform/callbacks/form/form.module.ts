@@ -22,21 +22,25 @@ import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { CallbackResolve } from 'src/app/_shared/resolves/callback.resolve';
 import { ScheduleSelectResolve } from 'src/app/_shared/resolves/schedule-select.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
 	{
 		path: '',
 		component: FormComponent,
     resolve: {
       schedules: ScheduleSelectResolve
-    }
-	},
+    },
+    canDeactivate: [DeactivateGuard]
+  },
 	{
 		path: ':id',
 		component: FormComponent,
 		resolve: {
       callback: CallbackResolve,
       schedules: ScheduleSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
 	}
 ];
 
@@ -60,6 +64,8 @@ const routes: Routes = [
     CallbackService,
     SelectService,
     CallbackResolve,
-    ScheduleSelectResolve]
+    ScheduleSelectResolve,
+    DeactivateGuard
+  ]
 })
 export class FormModule {}

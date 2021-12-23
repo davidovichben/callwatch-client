@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="switchboardForm">
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
   <div class="form-header">
     <p class="h1">{{ switchboardId ? ('edit_switchboard' | t) : ('add_switchboard' | t) }}</p>
     <div>
@@ -46,8 +46,8 @@
           <mat-form-field>
             <mat-label>{{ 'minimal_number_of_seconds' | t }}</mat-label>
             <input matInput type="number" min="0" formControlName="minimalSeconds" required>
-            <mat-error *ngIf="switchboardForm.get('minimalSeconds').errors?.required">{{ errorMessages.required | t }}</mat-error>
-            <mat-error *ngIf="switchboardForm.get('minimalSeconds').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('minimalSeconds').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('minimalSeconds').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -56,7 +56,7 @@
       <p class="h3 mb-3">{{ 'switchboard_settings' | t }}</p>
       <div class="mb-4 tabs">
         <div class="tab" [ngClass]="{ active: activeTab === 'cti' }" (click)="activeTab = 'cti'">CTI</div>
-        <div class="tab" [ngClass]="{ active: activeTab === 'axl' }" (click)="activeTab = 'axl'" *ngIf="switchboardForm.get('type').value === 'CISCO'">AXL & CDR</div>
+        <div class="tab" [ngClass]="{ active: activeTab === 'axl' }" (click)="activeTab = 'axl'" *ngIf="formGroup.get('type').value === 'CISCO'">AXL & CDR</div>
       </div>
       <div *ngIf="activeTab === 'cti'" formGroupName="cti">
         <div class="row">
@@ -84,11 +84,11 @@
         </div>
         <div class="row">
           <div class="col-12 col-lg-3">
-            <mat-checkbox (change)="toggleServiceNumber($event.checked, 'cti')" [checked]="switchboardForm.get('cti.number').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
+            <mat-checkbox (change)="toggleServiceNumber($event.checked, 'cti')" [checked]="formGroup.get('cti.number').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
             <mat-form-field class="w-100">
-              <input matInput type="text" formControlName="number" [required]="!switchboardForm.get('cti.number').disabled">
-              <mat-error *ngIf="switchboardForm.get('cti.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
-              <mat-error *ngIf="switchboardForm.get('cti.number').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
+              <input matInput type="text" formControlName="number" [required]="!formGroup.get('cti.number').disabled">
+              <mat-error *ngIf="formGroup.get('cti.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('cti.number').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -119,11 +119,11 @@
         </div>
         <div class="row">
           <div class="col-12 col-lg-3">
-            <mat-checkbox (change)="toggleServiceNumber($event.checked, 'axl')" [checked]="switchboardForm.get('axl.number').value">{{ 'axl_enable_services' | t }}</mat-checkbox>
+            <mat-checkbox (change)="toggleServiceNumber($event.checked, 'axl')" [checked]="formGroup.get('axl.number').value">{{ 'axl_enable_services' | t }}</mat-checkbox>
             <mat-form-field>
-              <input matInput type="text" formControlName="number" [required]="!switchboardForm.get('axl.number').disabled">
-              <mat-error *ngIf="switchboardForm.get('axl.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
-              <mat-error *ngIf="switchboardForm.get('axl.number').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
+              <input matInput type="text" formControlName="number" [required]="!formGroup.get('axl.number').disabled">
+              <mat-error *ngIf="formGroup.get('axl.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('axl.number').errors?.pattern">{{ errorMessages.number | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>

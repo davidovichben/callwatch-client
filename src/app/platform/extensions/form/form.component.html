@@ -1,4 +1,4 @@
-<form [formGroup]="extensionForm" #form="ngForm">
+<form [formGroup]="formGroup" #form="ngForm">
   <div class="form-header">
     <p class="h1">{{ extension ? ('edit_extension' | t) : ('add_extension' | t) }}</p>
     <div>
@@ -33,16 +33,16 @@
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
-          <p class="alert alert-danger" [@fade]="extensionForm.get('general.dialNumbers').errors?.range ? 'active' : 'inactive'">{{ errorMessages.greaterThan | t }}</p>
-          <p class="alert alert-danger" [@fade]="extensionForm.get('general.dialNumbers').errors?.exists ? 'active' : 'inactive'">{{ 'dial_numbers_exist' | t }}.</p>
+          <p class="alert alert-danger" [@fade]="formGroup.get('general.dialNumbers').errors?.range ? 'active' : 'inactive'">{{ errorMessages.greaterThan | t }}</p>
+          <p class="alert alert-danger" [@fade]="formGroup.get('general.dialNumbers').errors?.exists ? 'active' : 'inactive'">{{ 'dial_numbers_exist' | t }}.</p>
         </div>
         <div class="col-12 col-lg-3" *ngIf="extension">
           <mat-form-field>
             <mat-label>{{ 'dial_number' | t }}</mat-label>
             <input matInput type="number" formControlName="dialNumber" required>
-            <mat-error *ngIf="extensionForm.get('general.dialNumber').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('general.dialNumber').errors?.required">{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
-          <p class="alert alert-danger" [@fade]="extensionForm.get('general.dialNumber').errors?.exists ? 'active' : 'inactive'">{{ 'dial_number_exist' | t }}.</p>
+          <p class="alert alert-danger" [@fade]="formGroup.get('general.dialNumber').errors?.exists ? 'active' : 'inactive'">{{ 'dial_number_exist' | t }}.</p>
         </div>
       </div>
       <div class="row">
@@ -57,7 +57,7 @@
         </div>
         <div class="col-12 col-lg-3">
           <app-unit-select formControlName="unit" [units]="selects.units" [placeholder]="'select_units' | t" [required]="true"></app-unit-select>
-          <mat-error *ngIf="extensionForm.get('general.unit').invalid && form.submitted">{{ errorMessages.required | t }}</mat-error>
+          <mat-error *ngIf="formGroup.get('general.unit').invalid && form.submitted">{{ errorMessages.required | t }}</mat-error>
         </div>
       </div>
       <div class="row">

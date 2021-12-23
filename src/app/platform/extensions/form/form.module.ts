@@ -20,13 +20,16 @@ import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { AcdFormSelectResolve } from 'src/app/_shared/resolves/acd-form-select.resolve';
 import { ExtensionResolve } from 'src/app/_shared/resolves/extension.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
   {
     path: '',
     component: FormComponent,
     resolve: {
       selects: AcdFormSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   },
   {
     path: ':id',
@@ -34,7 +37,8 @@ const routes: Routes = [
     resolve: {
       extension: ExtensionResolve,
       selects: AcdFormSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   }
 ];
 
@@ -57,7 +61,8 @@ const routes: Routes = [
     ExtensionService,
     SelectService,
     ExtensionResolve,
-    AcdFormSelectResolve
+    AcdFormSelectResolve,
+    DeactivateGuard
   ]
 })
 export class FormModule {}

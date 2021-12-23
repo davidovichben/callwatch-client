@@ -22,6 +22,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
   activeTab = 'general';
 
+  formGroup: FormGroup;
+
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -30,6 +32,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
     this.formService.makeForm();
+
+    this.formGroup = this.formService.routerForm;
 
     const routeData = this.route.snapshot.data;
     this.formService.schedules = routeData.schedules;

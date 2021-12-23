@@ -39,13 +39,13 @@ export class FormComponent implements OnInit, OnDestroy {
 
   activeTab = 'general';
 
-  acdForm: FormGroup;
+  formGroup: FormGroup;
   acd: AcdModel;
 
 	isSubmitting = false;
 
 	constructor(private router: Router, private route: ActivatedRoute,
-        private fb: FormBuilder, private acdService: AcdService) {}
+              private fb: FormBuilder, private acdService: AcdService) {}
 
 	ngOnInit(): void {
     this.makeForm();
@@ -54,12 +54,12 @@ export class FormComponent implements OnInit, OnDestroy {
     this.selects = routeData.selects;
     if (routeData.acd) {
       this.acd = routeData.acd;
-      this.acdForm.patchValue(this.acd);
+      this.formGroup.patchValue(this.acd);
     }
 	}
 
   private makeForm(): void {
-    this.acdForm = this.fb.group({
+    this.formGroup = this.fb.group({
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
         type: this.fb.control(null, Validators.required),
@@ -89,12 +89,12 @@ export class FormComponent implements OnInit, OnDestroy {
     })
 
     this.uniqueControlNames.forEach(controlName => {
-      this.acdForm.get('switchboard.' + controlName).setAsyncValidators(this.checkUniqueness.bind(this, [controlName]))
+      this.formGroup.get('switchboard.' + controlName).setAsyncValidators(this.checkUniqueness.bind(this, [controlName]))
     })
   }
 
   checkUniqueness(args: object, control: FormControl): Promise<{ exists: boolean }> {
-    const unitId = this.acdForm.get('general.unit').value;
+    const unitId = this.formGroup.get('general.unit').value;
     if (!unitId) {
       return Promise.resolve(null);
     }
@@ -113,18 +113,18 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
 	submit(): void {
-    if (!this.acdForm.valid) {
+    if (!this.formGroup.valid) {
       this.toggleInvalidTabs();
     }
 
-		if (this.acdForm.valid && !this.isSubmitting) {
+		if (this.formGroup.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
       const values = {
-        ...this.acdForm.value.general,
-        ...this.acdForm.value.switchboard,
-        ...this.acdForm.value.callback,
-        extensions: this.acdForm.value.extensions
+        ...this.formGroup.value.general,
+        ...this.formGroup.value.switchboard,
+        ...this.formGroup.value.callback,
+        extensions: this.formGroup.value.extensions
       };
 
 			if (this.acd) {
@@ -136,12 +136,12 @@ export class FormComponent implements OnInit, OnDestroy {
 	}
 
   private toggleInvalidTabs(): void {
-    if (this.acdForm.get(this.activeTab).invalid) {
+    if (this.formGroup.get(this.activeTab).invalid) {
       return;
     }
 
     this.tabs.forEach(tab => {
-      if (this.acdForm.get(tab.value).invalid) {
+      if (this.formGroup.get(tab.value).invalid) {
         this.activeTab = tab.value;
         return;
       }

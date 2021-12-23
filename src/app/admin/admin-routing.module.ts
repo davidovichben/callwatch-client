@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { PlatformComponent } from 'src/app/platform/platform.component';
+
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('../platform/platform.module').then(m => m.PlatformModule),
+    component: PlatformComponent,
     children: [
       {
         path: '',

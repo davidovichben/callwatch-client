@@ -1,4 +1,4 @@
-<form [formGroup]="callbackForm" (ngSubmit)="submit()">
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
   <div class="form-header">
     <p class="h1">{{ callbackId ? ('edit_callback' | t) : ('add_callback' | t) }}</p>
     <div>
@@ -70,7 +70,7 @@
       </div>
     </section>
     <section formArrayName="texts" [hidden]="activeTab !== 'texts'">
-      <div class="d-flex mb-3" *ngFor="let i of callbackForm.get('texts')['controls']; let index = index" [formGroupName]="index">
+      <div class="d-flex mb-3" *ngFor="let i of formGroup.get('texts')['controls']; let index = index" [formGroupName]="index">
         <mat-checkbox class="pt-3" formControlName="isActive" (change)="setTextDisabledState(index)"></mat-checkbox>
         <mat-form-field>
           <mat-label>{{ ('callback_text_' + (index + 1)) | t }}</mat-label>

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -10,17 +10,35 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 
 import { FormComponent } from 'src/app/admin/organizations/form/form.component';
 
+import { OrganizationService } from 'src/app/_shared/services/http/organization.service';
+
+import { OrganizationResolve } from 'src/app/_shared/resolves/organization.resolve';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: FormComponent
+  },
+  {
+    path: ':id',
+    component: FormComponent,
+    resolve: {
+      organization: OrganizationResolve
+    }
+  }
+];
+
 @NgModule({
   declarations: [FormComponent],
   imports: [
-    TranslateModule,
+    RouterModule.forChild(routes),
     FormsModule,
-    MatDialogModule,
-    MatCheckboxModule,
+    MatSlideToggleModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    TranslateModule
   ],
-  exports: [FormComponent]
+  providers: [OrganizationService, OrganizationResolve]
 })
 export class FormModule {}

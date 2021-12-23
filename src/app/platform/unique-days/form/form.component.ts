@@ -22,7 +22,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   uniqueDay: UniqueDayModel;
 
-  uniqueDayForm: FormGroup;
+  formGroup: FormGroup;
 
 	isSubmitting = false;
 
@@ -36,13 +36,13 @@ export class FormComponent implements OnInit, OnDestroy {
 
     this.uniqueDay = this.route.snapshot.data.uniqueDay;
     if (this.uniqueDay) {
-      this.uniqueDayForm.patchValue(this.uniqueDay);
+      this.formGroup.patchValue(this.uniqueDay);
       this.allDayChecked(this.uniqueDay.allDay);
     }
 	}
 
   private setForm(): void {
-    this.uniqueDayForm = this.fb.group({
+    this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       startDate: this.fb.control(null, Validators.required),
       endDate: this.fb.control(null),
@@ -52,15 +52,15 @@ export class FormComponent implements OnInit, OnDestroy {
       description: this.fb.control(null)
     })
 
-    const minControl = this.uniqueDayForm.get('startDate');
+    const minControl = this.formGroup.get('startDate');
     const validators = [Validators.required, isDateGreaterOrEqual.bind(this, { minControl })];
-    this.uniqueDayForm.get('endDate').setValidators(validators);
+    this.formGroup.get('endDate').setValidators(validators);
   }
 
   private setFormSubscriptions(): void {
-    const sub = this.uniqueDayForm.get('startDate').valueChanges.subscribe(() => {
-      this.uniqueDayForm.get('endDate').updateValueAndValidity();
-      this.uniqueDayForm.get('endDate').markAsTouched();
+    const sub = this.formGroup.get('startDate').valueChanges.subscribe(() => {
+      this.formGroup.get('endDate').updateValueAndValidity();
+      this.formGroup.get('endDate').markAsTouched();
     })
 
     this.sub.add(sub);
@@ -69,8 +69,8 @@ export class FormComponent implements OnInit, OnDestroy {
   allDayChecked(checked: boolean): void {
     const validators = checked ? [] : [Validators.required];
 
-    const startTime = this.uniqueDayForm.get('startTime');
-    const endTime = this.uniqueDayForm.get('endTime');
+    const startTime = this.formGroup.get('startTime');
+    const endTime = this.formGroup.get('endTime');
 
     [startTime, endTime].forEach(ctrl => {
       checked ? ctrl.disable() : ctrl.enable();
@@ -81,13 +81,13 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
 	submit(): void {
-		if (this.uniqueDayForm.valid && !this.isSubmitting) {
+		if (this.formGroup.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
       if (this.uniqueDay.id) {
-        this.uniqueDayService.updateUniqueDay(this.uniqueDay.id, this.uniqueDayForm.value).then(response => this.handleServerResponse(response));
+        this.uniqueDayService.updateUniqueDay(this.uniqueDay.id, this.formGroup.value).then(response => this.handleServerResponse(response));
 			} else {
-				this.uniqueDayService.newUniqueDay(this.uniqueDayForm.value).then(response => this.handleServerResponse(response));
+				this.uniqueDayService.newUniqueDay(this.formGroup.value).then(response => this.handleServerResponse(response));
 			}
 		}
 	}

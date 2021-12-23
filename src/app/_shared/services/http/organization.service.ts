@@ -49,7 +49,7 @@ export class OrganizationService extends BaseHttpService {
   }
 
   enterOrganization(organizationId: number): Promise<boolean> {
-    return this.http.get(this.endPoint + '/' + organizationId + '/enter', this.getTokenRequest())
+    return this.http.put(this.endPoint + '/' + organizationId + '/enter', {}, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);

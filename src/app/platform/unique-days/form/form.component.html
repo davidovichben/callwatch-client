@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="uniqueDayForm">
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
   <div class="form-header">
     <p class="h1">{{ uniqueDay ? ('edit_unique_day' | t) : ('add_unique_day' | t) }}</p>
     <div>
@@ -30,8 +30,8 @@
           <input matInput formControlName="endDate" [matDatepicker]="endDatePicker" required>
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
-          <mat-error *ngIf="uniqueDayForm.get('endDate').errors?.required">{{ errorMessages.required | t }}</mat-error>
-          <mat-error *ngIf="uniqueDayForm.get('endDate').errors?.range">{{ errorMessages.dateRange | t }}</mat-error>
+          <mat-error *ngIf="formGroup.get('endDate').errors?.required">{{ errorMessages.required | t }}</mat-error>
+          <mat-error *ngIf="formGroup.get('endDate').errors?.range">{{ errorMessages.dateRange | t }}</mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -39,14 +39,14 @@
       <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
         <mat-form-field>
           <mat-label>{{ 'from_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="startTime" [required]="!uniqueDayForm.get('allDay').value">
+          <input matInput type="time" formControlName="startTime" [required]="!formGroup.get('allDay').value">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
         <mat-form-field>
           <mat-label>{{ 'to_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="endTime"  [required]="!uniqueDayForm.get('allDay').value">
+          <input matInput type="time" formControlName="endTime"  [required]="!formGroup.get('allDay').value">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>

@@ -42,11 +42,9 @@
 	</thead>
   <tbody>
     <ng-content></ng-content>
-<!--    <tr id="noItemsRow" *ngIf="items.length === 0 || isLoading">-->
-<!--      <td class="text-center" [attr.colspan]="columnLength">-->
-<!--        {{ isLoading ? ('loading' | t) + '...' : ('no_items_to_display' | t) }}.-->
-<!--      </td>-->
-<!--    </tr>-->
+    <tr id="noItemsRow" *ngIf="items.length === 0">
+      <td class="text-center" [attr.colspan]="columnLength">{{ ('no_items_to_display' | t) }}.</td>
+    </tr>
   </tbody>
 </table>
 <app-pagination [data]="paginationData" *ngIf="items.length > 0"></app-pagination>

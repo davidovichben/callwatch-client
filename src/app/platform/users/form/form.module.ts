@@ -27,6 +27,8 @@ import { UserResolve } from 'src/app/_shared/resolves/user.resolve';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -34,7 +36,8 @@ const routes: Routes = [
     resolve: {
       permissions: PermissionSelectResolve,
       units: UnitsSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   },
   {
     path: ':id',
@@ -43,7 +46,8 @@ const routes: Routes = [
       user: UserResolve,
       permissions: PermissionSelectResolve,
       units: UnitsSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   }
 ];
 
@@ -71,7 +75,8 @@ const routes: Routes = [
     PermissionSelectResolve,
     UnitsSelectResolve,
     UserResolve,
-    TranslatePipe
+    TranslatePipe,
+    DeactivateGuard
   ]
 })
 export class FormModule {}

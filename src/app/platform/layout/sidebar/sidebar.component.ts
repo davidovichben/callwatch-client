@@ -85,9 +85,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   setActiveModule(from?: string): void {
     const to = this.router.url;
-    const url = this.helpers.getBaseUrl(to);
+    const url = this.helpers.getBaseUrl(to, this.menuType);
 
-    if (from && url === this.helpers.getBaseUrl(from)) {
+    if (from && url === this.helpers.getBaseUrl(from, this.menuType)) {
       return;
     }
 
