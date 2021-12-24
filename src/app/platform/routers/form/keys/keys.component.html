@@ -22,7 +22,7 @@
 <ng-container [formGroup]="formService.routerForm.get('keys.' + category)">
   <div class="group" [formArrayName]="type" *ngFor="let type of getKeys()">
     <div class="key-action" *ngFor="let action of formGroup.get(type)['controls']; let index = index" [formGroupName]="index">
-      <div class="text-start w-200p" *ngIf="index > 0">
+      <div class="text-start w-200p margin-fix" *ngIf="index > 0">
         <span class="f-12 green-text" *ngIf="action.get('conditionResult').value === 'true'">{{ 'existing' | t }}</span>
         <span class="f-12 red-text" *ngIf="action.get('conditionResult').value === 'false'">{{ 'else' | t }}</span>
       </div>
@@ -41,13 +41,9 @@
         </mat-select>
       </mat-form-field>
       <div class="flex-grow-1" [ngSwitch]="action.get('activityTypeName').value">
-        <bd-select [placeholder]="'select_group' | t" formControlName="acd" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
+        <bd-select class="w-100" [placeholder]="'select_group' | t" formControlName="acd" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
           <bd-option [value]="acd.id" *ngFor="let acd of formService.acds">{{ acd.name }}</bd-option>
         </bd-select>
-        <mat-form-field class="w-100" *ngSwitchCase="'sms'">
-            <mat-label>{{ 'destination' | t }}</mat-label>
-            <input matInput formControlName="activityValue">
-          </mat-form-field>
         <ng-container *ngSwitchCase="'audio_message'">
           <app-audio-input [inputFile]="action.get('files').value[lang.value]" (fileChange)="setFile(action, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
         </ng-container>

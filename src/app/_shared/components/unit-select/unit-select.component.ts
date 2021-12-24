@@ -50,7 +50,9 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
               private t: TranslatePipe) {}
 
   ngOnInit() {
-    this.placeholder = this.t.transform('select_unit');
+    if (!this.placeholder) {
+      this.placeholder = this.t.transform('select_unit');
+    }
 
     this.filteredUnits = this.units;
     if (this.multiple) {

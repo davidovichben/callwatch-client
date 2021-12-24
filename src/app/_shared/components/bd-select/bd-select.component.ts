@@ -44,7 +44,7 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
         fontSize: '*'
 			})),
 			state('active', style({
-        top: '-1px',
+        top: '-5px',
         lineHeight: '0.6',
         padding: '0 4px',
         fontSize: '12px'

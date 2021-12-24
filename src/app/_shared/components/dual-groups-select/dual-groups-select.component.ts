@@ -65,7 +65,7 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
   private setSelectedItems(): void {
     this.selectedItems.filtered = this.selectedItems.all;
 
-    const searchValue = this.selectedSearch.nativeElement.value;
+    const searchValue = this.selectedSearch?.nativeElement.value;
     if (searchValue) {
       this.search(searchValue, 'selectedItems');
     }

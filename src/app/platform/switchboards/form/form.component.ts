@@ -7,6 +7,7 @@ import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.se
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SwitchboardTypes } from 'src/app/_shared/models/switchboard.model';
 import { NumberPattern } from 'src/app/_shared/constants/patterns';
+import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
 	selector: 'app-form',
@@ -86,7 +87,7 @@ export class FormComponent implements OnInit {
   toggleServiceNumber(isChecked: boolean, service: string): void {
     const control = this.formGroup.get(service + '.number');
     if (isChecked) {
-      control.setValidators([Validators.required, Validators.pattern(NumberPattern)]);
+      control.setValidators([Validators.required, isInteger]);
       control.enable();
     } else {
       control.clearValidators();

@@ -27,27 +27,27 @@
         <p class="h3 mb-3">{{ 'personal_details' | t }}</p>
         <div class="d-flex">
           <div class="row">
-            <div class="col-12 col-lg-6 col-xxl-5">
+            <div class="col-12 col-lg-6 col-xxl-5 mb-3">
               <mat-form-field>
                 <mat-label>{{ 'first_name' | t }}</mat-label>
                 <input matInput type="text" formControlName="firstName" required>
                 <mat-error>{{ errorMessages.required | t }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-6 col-xxl-5">
+            <div class="col-12 col-lg-6 col-xxl-5 mb-3">
               <mat-form-field>
                 <mat-label>{{ 'last_name' | t }}</mat-label>
                 <input matInput type="text" formControlName="lastName" required>
                 <mat-error>{{ errorMessages.required | t }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-6 col-xxl-5">
+            <div class="col-12 col-lg-6 col-xxl-5 mb-3">
               <mat-form-field>
                 <mat-label>{{ 'employee_number' | t }}</mat-label>
                 <input matInput type="text" formControlName="workNumber">
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-6 col-xxl-5">
+            <div class="col-12 col-lg-6 col-xxl-5 mb-3">
               <mat-form-field>
                 <mat-label>{{ 'email' | t }}</mat-label>
                 <input matInput class="text-left ltr" type="email" formControlName="email" required>
@@ -55,7 +55,7 @@
                 <mat-error *ngIf="formGroup.get('email').errors?.pattern">{{ errorMessages.email | t }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-lg-6 col-xxl-5">
+            <div class="col-12 col-lg-6 col-xxl-5 mb-3">
               <mat-form-field>
                 <mat-label>{{ 'mobile' | t }}</mat-label>
                 <input matInput type="text" formControlName="mobile">
@@ -75,7 +75,7 @@
       <section>
         <p class="h3 mb-3">{{ 'user_settings' | t }}</p>
         <div class="row">
-          <div class="col-12 col-lg-6 col-xxl-5">
+          <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field>
               <mat-label>{{ 'verification_type' | t }}</mat-label>
               <mat-select formControlName="authType">
@@ -84,7 +84,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-6 col-xxl-5">
+          <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field>
               <mat-label>{{ 'username' | t }}</mat-label>
               <input matInput type="text" formControlName="username" required>
@@ -92,7 +92,7 @@
               <mat-error *ngIf="formGroup.get('username').errors?.exists">{{ 'username_exists' | t }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-6 col-xxl-5">
+          <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field class="disabled large-suffix">
               <mat-label>{{ ('password' | t) + (!user ? '*' : '') }}</mat-label>
               <input matInput type="password" formControlName="password" tabindex="-1">
@@ -100,7 +100,7 @@
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-6 col-xxl-5">
+          <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field>
               <mat-label>{{ 'system_lang_default' | t }}</mat-label>
               <mat-select formControlName="locale" required>
@@ -109,7 +109,7 @@
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-12 col-lg-6 col-xxl-5">
+          <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="formGroup.get('permission').errors && form.submitted" [required]="true">
               <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
             </bd-select>
@@ -120,7 +120,7 @@
       <section *ngIf="!user || user.units !== 'root'">
         <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
         <div class="row">
-          <div class="col-12 col-lg-6 col-xxl-5">
+          <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <app-unit-select formControlName="units" [units]="units" [toggleUp]="true" [placeholder]="'select_units' | t" [multiple]="true"></app-unit-select>
           </div>
         </div>

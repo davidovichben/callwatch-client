@@ -9,6 +9,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { EmailPattern } from 'src/app/_shared/constants/patterns';
 import { AcdModel } from 'src/app/_shared/models/acd.model';
 import { Fade } from 'src/app/_shared/constants/animations';
+import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
 	selector: 'app-form',
@@ -70,9 +71,9 @@ export class FormComponent implements OnInit, OnDestroy {
         number: this.fb.control(null, Validators.required),
         huntPilot: this.fb.control(null),
         secondaryHuntPilot: this.fb.control(null),
-        queueFullOverflow: this.fb.control(null),
-        maxWaitTime: this.fb.control(null),
-        noAgentOverflow: this.fb.control(null),
+        queueFullOverflow: this.fb.control(null, isInteger),
+        maxWaitTime: this.fb.control(null, isInteger),
+        noAgentOverflow: this.fb.control(null, isInteger),
         noAnswerRedirection: this.fb.control(null),
         busyRedirection: this.fb.control(null),
         isBroadcast: this.fb.control(null),
@@ -82,18 +83,18 @@ export class FormComponent implements OnInit, OnDestroy {
       callback: this.fb.group({
         callback: this.fb.control(null, Validators.required),
         router: this.fb.control(null),
-        overflowNumber: this.fb.control(null, Validators.required),
+        overflowNumber: this.fb.control(null, [Validators.required, isInteger]),
         email: this.fb.control(null, Validators.pattern(EmailPattern)),
         dialerCallerID: this.fb.control(null)
       })
     })
 
     this.uniqueControlNames.forEach(controlName => {
-      this.formGroup.get('switchboard.' + controlName).setAsyncValidators(this.checkUniqueness.bind(this, [controlName]))
+      this.formGroup.get('switchboard.' + controlName).setAsyncValidators(this.checkExists.bind(this, [controlName]))
     })
   }
 
-  checkUniqueness(args: object, control: FormControl): Promise<{ exists: boolean }> {
+  checkExists(args: object, control: FormControl): Promise<{ exists: boolean }> {
     const unitId = this.formGroup.get('general.unit').value;
     if (!unitId) {
       return Promise.resolve(null);

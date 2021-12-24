@@ -1,6 +1,6 @@
-<form #form="ngForm" (ngSubmit)="submit(form)">
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
   <div class="form-header">
-    <p class="h1">{{ permission.id ? ('edit_permission' | t) : ('add_permission' | t) }}</p>
+    <p class="h1">{{ permissionId ? ('edit_permission' | t) : ('add_permission' | t) }}</p>
     <div>
       <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'permissions']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
@@ -11,14 +11,15 @@
       <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
         <mat-form-field>
           <mat-label>{{ 'permission_name' | t }}</mat-label>
-          <input matInput type="text" name="name" [ngModel]="permission.name" required>
-          <mat-error>{{ errorMessages.required | t }}</mat-error>
+          <input matInput type="text" formControlName="name" required>
+          <mat-error *ngIf="formGroup.get('name').errors?.required">{{ errorMessages.required | t }}</mat-error>
+          <mat-error *ngIf="formGroup.get('name').errors?.exists">{{ errorMessages.exists | t }}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
         <mat-form-field>
           <mat-label>{{ 'description' | t }}</mat-label>
-          <input matInput type="text" name="description" [ngModel]="permission.description">
+          <input matInput type="text" formControlName="description">
         </mat-form-field>
       </div>
     </div>
@@ -38,24 +39,14 @@
           <th>{{ 'delete' | t }}</th>
         </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let module of modules; let index = index">
-          <td>{{ module.name | t }}</td>
+        <tbody formArrayName="modules">
+        <tr *ngFor="let module of formGroup.get('modules')['controls']; let index = index" [formGroupName]="index">
+          <td>{{ module.get('name').value | t }}</td>
           <td>
-            <mat-checkbox [name]="'checked-' + index" [(ngModel)]="module.checked" (change)="checkRow(module)"></mat-checkbox>
+            <mat-checkbox formControlName="all"></mat-checkbox>
           </td>
           <td *ngFor="let action of actions">
-            <mat-checkbox [name]="'action-' + index" [value]="module[action]"
-                          [checked]="module[action] || isReadAutoEnabled(module)"
-                          [disabled]="isReadAutoEnabled(module) || module.checked"
-                          (change)="checkModuleAction(module, 'read', $event.checked)"
-                          *ngIf="action === 'read'"></mat-checkbox>
-
-            <mat-checkbox [name]="'action-' + index" [value]="module[action]"
-                          [checked]="module[action]" [disabled]="module.checked"
-                          (change)="checkModuleAction(module, action, $event.checked)"
-                          *ngIf="action !== 'read'">
-            </mat-checkbox>
+            <mat-checkbox [formControlName]="action"></mat-checkbox>
           </td>
         </tr>
         </tbody>

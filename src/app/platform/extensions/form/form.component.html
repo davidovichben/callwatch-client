@@ -1,9 +1,9 @@
-<form [formGroup]="formGroup" #form="ngForm">
+<form [formGroup]="formGroup" (ngSubmit)="submit()" #form="ngForm">
   <div class="form-header">
     <p class="h1">{{ extension ? ('edit_extension' | t) : ('add_extension' | t) }}</p>
     <div>
       <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'extensions']">{{ 'cancel' | t }}</button>
-      <button type="button" class="btn blue-btn" (click)="submit()">{{ 'save' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">
@@ -24,12 +24,12 @@
           <div class="d-flex">
             <mat-form-field class="w-50 ps-1">
               <mat-label>{{ 'from' | t }}</mat-label>
-              <input matInput type="number" formControlName="from" required>
+              <input matInput type="text" formControlName="from" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
             <mat-form-field class="w-50 pe-1">
               <mat-label>{{ 'until' | t }}</mat-label>
-              <input matInput type="number" formControlName="to" required>
+              <input matInput type="text" formControlName="to" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
@@ -39,7 +39,7 @@
         <div class="col-12 col-lg-3" *ngIf="extension">
           <mat-form-field>
             <mat-label>{{ 'dial_number' | t }}</mat-label>
-            <input matInput type="number" formControlName="dialNumber" required>
+            <input matInput type="text" formControlName="dialNumber" required>
             <mat-error *ngIf="formGroup.get('general.dialNumber').errors?.required">{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
           <p class="alert alert-danger" [@fade]="formGroup.get('general.dialNumber').errors?.exists ? 'active' : 'inactive'">{{ 'dial_number_exist' | t }}.</p>
@@ -98,7 +98,8 @@
           <mat-form-field>
             <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
             <input matInput type="text" formControlName="overflowNumber" required>
-            <mat-error>{{ errorMessages.required }}</mat-error>
+            <mat-error *ngIf="formGroup.get('callback.overflowNumber').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('callback.overflowNumber').errors?.integer">{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">

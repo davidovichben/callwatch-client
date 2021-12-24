@@ -1,5 +1,5 @@
 <div class="loader" *ngIf="loadingUnits"></div>
-<ul id="tree" *ngIf="!loadingUnits">
+<ul id="tree" *ngIf="!loadingUnits" (dragover)="allowDrop($event)">
   <li (drop)="drop($event, rootUnit)">
     <span (dragover)="allowDrop($event)" [ngClass]="{ 'active': activeUnitId === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
   </li>
@@ -14,10 +14,11 @@
        (click)="toggleUnit(unit)" *ngIf="unit.hasUnits"></i>
 
     <span [draggable]="!unit.disabled" [ngClass]="{ 'disabled': unit.disabled, 'active': activeUnitId == unit.id }"
-          (dragstart)="dragStart($event, unit)" (dragover)="allowDrop($event)" (click)="unitClicked(unit)">{{ unit.name }}</span>
+          (dragstart)="dragStart($event, unit)" (click)="unitClicked(unit)">{{ unit.name }}</span>
     <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.toggled }">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
     </ul>
+
   </li>
 </ng-template>
-
+<div id="dragPlaceholder" #dragPlaceholder></div>

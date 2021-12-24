@@ -8,7 +8,7 @@ import { HelpersService } from 'src/app/_shared/services/generic/helpers.service
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { UniqueDayModel, UniqueDayTypes } from 'src/app/_shared/models/unique-day.model';
-import { isDateGreaterOrEqual } from 'src/app/_shared/constants/validators';
+import { isDateGreaterOrEqual } from 'src/app/_shared/validators/date-greater-equal.validator';
 
 @Component({
 	selector: 'app-form',

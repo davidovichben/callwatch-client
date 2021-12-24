@@ -2,7 +2,7 @@ export const EmailPattern = '^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})
 export const PhonePattern = '^[0-9\\.\\-\\+\\/]{8,14}$';
 export const BusinessNumberPattern = '^[0-9]{9}$';
 export const IDNumber = '^[0-9]{9}$';
-export const NumberPattern = '^[0-9]*$';
+export const NumberPattern = '^[0-9]+$';
 
 // export const ISRAEL_MOBILE_PHONE_REGEX = '^05\\d([-]{0,1})\\d{7}$';
 // export const ALL_ISRAEL_PHONES_REGEX = '^0(5[^7]|[2-4]|[8-9]|7[0-9])[0-9]{7}$';

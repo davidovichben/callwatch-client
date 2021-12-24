@@ -1,19 +1,19 @@
 <form #form="ngForm">
-  <div class="mb-3 text-center text-md-start">
-    <button class="btn blue-btn ms-3" type="button" (click)="submit(form)" *ngIf="userSession.hasPermission('units', 'update')">{{ 'save' | t }}</button>
+  <div class="mb-4 text-center text-md-start">
+    <button class="btn blue-btn mx-0" type="button" (click)="submit(form)" *ngIf="userSession.hasPermission('units', 'update')">{{ 'save' | t }}</button>
   </div>
   <div class="row">
-    <div class="col-12 col-lg-3">
+    <div class="col-12 col-lg-6">
       <bd-select [ngModel]="extensionGroup.switchboard" name="switchboard" [placeholder]="'select_switchboard' | t">
         <bd-option [value]="switchboard.id" *ngFor="let switchboard of selects.switchboards">{{ switchboard.name }}</bd-option>
       </bd-select>
     </div>
-    <div class="col-12 col-lg-3">
+    <div class="col-12 col-lg-6">
       <bd-select [ngModel]="extensionGroup.router" name="router" [placeholder]="'select_router' | t">
         <bd-option [value]="router.id" *ngFor="let router of selects.routers">{{ router.name }}</bd-option>
       </bd-select>
     </div>
   </div>
-  <app-dual-groups-select class="mb-3" [ngModel]="extensionGroup.extensions" name="extensions" [items]="selects.extensions" [placeholder]="'extensions'"></app-dual-groups-select>
+  <app-dual-groups-select [ngModel]="extensionGroup.extensions" name="extensions" [items]="selects.extensions" [placeholder]="'extensions'"></app-dual-groups-select>
   <app-dual-groups-select [ngModel]="extensionGroup.acds" name="acds" [items]="selects.acds" [placeholder]="'groups'"></app-dual-groups-select>
 </form>

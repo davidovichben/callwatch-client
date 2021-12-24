@@ -20,7 +20,7 @@ export class FormComponent implements OnInit, OnDestroy {
     { label: 'inactive_hours_routing', value: 'inactiveRouting', formGroup: 'keys.inactive' }
   ];
 
-  activeTab = 'general';
+  activeTab: { label: string, value: string, formGroup: string };
 
   formGroup: FormGroup;
 
@@ -31,6 +31,8 @@ export class FormComponent implements OnInit, OnDestroy {
               public formService: RouterFormService) {}
 
 	ngOnInit(): void {
+    this.activeTab = this.tabs[0];
+
     this.formService.makeForm();
 
     this.formGroup = this.formService.routerForm;
@@ -73,13 +75,13 @@ export class FormComponent implements OnInit, OnDestroy {
 
   private toggleInvalidTabs(): void {
     const form = this.formService.routerForm;
-    if (form.get(this.activeTab).invalid) {
+    if (form.get(this.activeTab.formGroup).invalid) {
       return;
     }
 
     this.tabs.forEach(tab => {
       if (form.get(tab.formGroup).invalid) {
-        this.activeTab = tab.value;
+        this.activeTab = tab;
         return;
       }
     });

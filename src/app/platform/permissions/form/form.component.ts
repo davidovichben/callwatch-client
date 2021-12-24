@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { PermissionModel, PermissionActions, PermissionModules } from 'src/app/_shared/models/permission.model';
+import { PermissionActions, PermissionModules } from 'src/app/_shared/models/permission.model';
 import { PermissionModuleModel } from 'src/app/_shared/models/permission-module.model';
 
 @Component({
@@ -15,88 +17,118 @@ import { PermissionModuleModel } from 'src/app/_shared/models/permission-module.
 })
 export class FormComponent implements OnInit {
 
+  readonly sub = new Subscription();
   readonly errorMessages = ErrorMessages;
   readonly actions =  PermissionActions;
 
-  permission: PermissionModel;
+  permissionId: number;
 
-  modules: PermissionModuleModel[] = [];
+  formGroup: FormGroup;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private permissionService: PermissionService) {}
+  isSubmitting = false;
+
+  constructor(private route: ActivatedRoute, private router: Router,
+              private fb: FormBuilder, private permissionService: PermissionService,
+              private genericService: GenericService) {}
 
   ngOnInit(): void {
-    this.modules = PermissionModules.map(module => {
-      return { name: module }
-    });
+    this.makeForm();
+    this.setModules();
 
-    this.permission = this.route.snapshot.data.permission;
-    if (this.permission) {
-      this.permission.modules.forEach(module => this.loadModule(module));
-    } else {
-      this.permission = new PermissionModel();
+    const routeData = this.route.snapshot.data.permission;
+    if (routeData) {
+      this.permissionId = routeData.id;
+      this.formGroup.patchValue(routeData);
     }
   }
 
-  private loadModule(module: PermissionModuleModel): void {
-    const match = this.modules.find(iteratedModule => iteratedModule.name === module.name);
-    if (match) {
-      match.checked = true;
-      this.actions.forEach(scope => {
-        match[scope] = module[scope];
-        if (!module[scope]) {
-          match.checked = false;
-        }
-      });
-    }
-  }
-
-  checkModuleAction(module: PermissionModuleModel, action: string, checked: boolean): void {
-    const match = this.modules.find(m => m.name === module.name);
-    match[action] = checked;
-  }
-
-  isReadAutoEnabled(module: PermissionModuleModel): boolean {
-    return (module.create || module.update || module.delete);
-  }
-
-  checkRow(module: PermissionModuleModel): void {
-    this.actions.forEach(scope => module[scope] = module.checked);
-  }
-
-  checkAll(isChecked: boolean): void {
-    this.modules.forEach(module => {
-      module.checked = isChecked;
-      this.checkRow(module)
+  private makeForm(): void {
+    this.formGroup = this.fb.group({
+      name: this.fb.control(null, Validators.required, this.checkExists.bind(this)),
+      description: this.fb.control(null),
+      modules: this.fb.array([])
     });
   }
 
-  submit(form: NgForm): void {
-    if (form.valid) {
-      const modules = this.modules.filter(module => {
-        return this.actions.some(scope => {
-          return !!module[scope];
-        });
+  private setModules(): void {
+    PermissionModules.forEach(module => {
+      console.log(module)
+
+      const group = this.fb.group({
+        name: this.fb.control(module),
+        all: this.fb.control(false),
+        read: this.fb.control(false),
+        create: this.fb.control(false),
+        update: this.fb.control(false),
+        delete: this.fb.control(false),
       });
 
-      const values = { ...form.value, modules };
+      (this.formGroup.get('modules') as FormArray).push(group);
+      this.setFormSubscriptions(group);
+    });
+  }
 
-      if (this.permission.id) {
-        this.permissionService.updatePermission(this.permission.id, values).then(response => {
+  private setFormSubscriptions(group: FormGroup): void {
+    this.sub.add(group.get('all').valueChanges.subscribe(checked =>
+      PermissionActions.forEach(action => {
+        const control = group.get(action);
+
+        control.patchValue(checked);
+        checked ? control.disable() : control.enable();
+      })
+    ));
+
+    PermissionActions.forEach(action => {
+      const control = group.get(action);
+      const read = group.get('read');
+      this.sub.add(control.valueChanges.subscribe(checked => {
+        read.patchValue(checked);
+        checked ? read.disable() : read.enable();
+      }))
+    })
+  }
+
+  checkAll(checked: boolean): void {
+    (this.formGroup.get('modules') as FormArray).controls.forEach(group => {
+      group.get('all').patchValue(checked);
+    })
+  }
+
+  submit(): void {
+    if (this.formGroup.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+
+      if (this.permissionId) {
+        this.permissionService.updatePermission(this.permissionId, this.formGroup.value).then(response => {
           this.handleSubmitResponse(response);
         })
       } else {
-        this.permissionService.newPermission(values).then(response => {
+        this.permissionService.newPermission(this.formGroup.value).then(response => {
           this.handleSubmitResponse(response);
         })
       }
     }
   }
 
-  private handleSubmitResponse(response: boolean): void  {
+  private handleSubmitResponse(response: boolean): void {
     if (response) {
       this.router.navigate(['/platform', 'permissions']);
+    } else {
+      this.isSubmitting = false;
     }
+  }
+
+  private checkExists(control: FormControl): Promise<{ exists: boolean }> {
+    return this.genericService.exists('permission', control.value).then(response => {
+      if (response) {
+        return response.exists ? { exists: true } : null;
+      }
+
+      return null;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

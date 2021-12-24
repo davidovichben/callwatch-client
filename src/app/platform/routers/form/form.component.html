@@ -7,21 +7,21 @@
 </div>
 <div class="form-body">
   <div class="tabs">
-    <a class="tab" [ngClass]="{ active: activeTab === tab.value }" (click)="activeTab = tab.value" *ngFor="let tab of tabs">{{ tab.label | t }}</a>
+    <a class="tab" [ngClass]="{ active: activeTab.value === tab.value }" (click)="activeTab = tab" *ngFor="let tab of tabs">{{ tab.label | t }}</a>
   </div>
-  <section [hidden]="activeTab !== 'general'">
+  <section [hidden]="activeTab.value !== 'general'">
     <app-general></app-general>
   </section>
-  <section [hidden]="activeTab !== 'activeMessages'">
+  <section [hidden]="activeTab.value !== 'activeMessages'">
     <app-messages [category]="'active'"></app-messages>
   </section>
-  <section [hidden]="activeTab !== 'inactiveMessages'">
+  <section [hidden]="activeTab.value !== 'inactiveMessages'">
     <app-messages [category]="'inactive'"></app-messages>
   </section>
-  <section [hidden]="activeTab !== 'activeRouting'">
+  <section [hidden]="activeTab.value !== 'activeRouting'">
     <app-keys [category]="'active'"></app-keys>
   </section>
-  <section [hidden]="activeTab !== 'inactiveRouting'">
+  <section [hidden]="activeTab.value !== 'inactiveRouting'">
     <app-keys [category]="'inactive'"></app-keys>
   </section>
 </div>

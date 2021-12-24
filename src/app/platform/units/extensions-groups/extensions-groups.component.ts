@@ -12,7 +12,8 @@ import { ExtensionGroupModel } from 'src/app/_shared/models/extension-group.mode
 
 @Component({
   selector: 'app-extensions-groups',
-  templateUrl: './extensions-groups.component.html'
+  templateUrl: './extensions-groups.component.html',
+  styleUrls: ['./extensions-groups.component.styl']
 })
 export class ExtensionsGroupsComponent implements OnInit {
 

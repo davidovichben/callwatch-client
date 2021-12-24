@@ -9,6 +9,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { EmailPattern } from 'src/app/_shared/constants/patterns';
 import { ExtensionModel } from 'src/app/_shared/models/extension.model';
 import { Fade } from 'src/app/_shared/constants/animations';
+import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
   selector: 'app-form',
@@ -76,7 +77,7 @@ export class FormComponent implements OnInit, OnDestroy {
       callback: this.fb.group({
         callback: this.fb.control(null, Validators.required),
         router: this.fb.control(null),
-        overflowNumber: this.fb.control(null, Validators.required),
+        overflowNumber: this.fb.control(null, [Validators.required, isInteger]),
         email: this.fb.control(null, Validators.pattern(EmailPattern)),
         dialerCallerID: this.fb.control(null)
       })

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +17,8 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 })
 export class UnitTreeComponent implements OnInit, OnDestroy {
 
+  @ViewChild('dragPlaceholder') dragPlaceholder: ElementRef;
+
   @Input() rootUnit: UnitModel;
   @Input() loadingUnits: boolean;
 
@@ -25,8 +27,6 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
   readonly sub = new Subscription();
 
   activeUnitId: number | string;
-
-  activeUnit: UnitModel;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -81,6 +81,18 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
   }
 
   dragStart(event: DragEvent, unit: UnitModel): void {
+    const ele = this.dragPlaceholder.nativeElement.cloneNode();
+    ele.style.backgroundColor = '#fff';
+    ele.style.width = '200px';
+    ele.style.padding = '8px';
+
+    document.body.style.cursor = 'pointer';
+
+    ele.append(unit.name);
+
+    document.body.appendChild(ele);
+
+    event.dataTransfer.setDragImage(ele, 0, 0);
     event.dataTransfer.setData('transferredUnit', JSON.stringify(unit));
   }
 
@@ -114,9 +126,6 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
                 this.rootUnit.units = units;
               });
             }
-
-            console.log(response)
-
           }
         });
       }

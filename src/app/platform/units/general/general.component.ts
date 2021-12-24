@@ -23,6 +23,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   readonly sub = new Subscription();
 
   unit = new UnitModel();
+  units: UnitModel[] = [];
 
   organizationName: string;
   permissions = [];
@@ -45,6 +46,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     }));
 
     this.organizationName = this.userSession.getUser().organization;
+    this.units = route.snapshot.data.units;
   }
 
   hasPermission(module: string, action: string): boolean {

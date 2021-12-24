@@ -33,7 +33,8 @@ import { GeneralComponent } from './general.component';
     NgxMatDatetimePickerModule, NgxMatTimepickerModule,
     TranslateModule,
     TagsInputModule,
-    AudioInputModule, ChipsInputModule,
+    AudioInputModule,
+    ChipsInputModule
   ]
 })
 export class GeneralModule {}

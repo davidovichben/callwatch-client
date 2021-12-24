@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { ReassignDialogModule } from './reassign-dialog/reassign-dialog.module';
+import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 
 import { GeneralComponent } from './general.component';
 
@@ -28,7 +29,8 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     TranslateModule,
-    ReassignDialogModule
+    ReassignDialogModule,
+    UnitSelectModule
   ]
 })
 export class GeneralModule {}

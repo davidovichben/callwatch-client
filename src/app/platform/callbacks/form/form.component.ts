@@ -8,6 +8,7 @@ import { HelpersService } from 'src/app/_shared/services/generic/helpers.service
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { CallbackTextModel, CallbackTextTypes } from 'src/app/_shared/models/callback-text.model';
+import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
 	selector: 'app-form',
@@ -64,12 +65,12 @@ export class FormComponent implements OnInit {
     this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       description: this.fb.control(null),
-      requestDuration: this.fb.control(null),
-      dialAttempts: this.fb.control(null),
+      requestDuration: this.fb.control(null, isInteger),
+      dialAttempts: this.fb.control(null, isInteger),
       enableDialer: this.fb.control(null),
       schedule: this.fb.control(null, Validators.required),
-      answerCalculation: this.fb.control(null),
-      dialAttemptIntervals: this.fb.control(null),
+      answerCalculation: this.fb.control(null, isInteger),
+      dialAttemptIntervals: this.fb.control(null, isInteger),
       mailCallback: this.fb.control(null),
       file: this.fb.control(null),
       fileName: this.fb.control(null),

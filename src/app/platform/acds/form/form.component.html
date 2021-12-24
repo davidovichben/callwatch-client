@@ -1,9 +1,9 @@
-<form [formGroup]="formGroup" #form="ngForm">
+<form [formGroup]="formGroup" (ngSubmit)="submit()" #form="ngForm">
   <div class="form-header">
     <p class="h1">{{ acd ? ('edit_acd' | t) : ('add_acd' | t) }}</p>
     <div>
       <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'acds']">{{ 'cancel' | t }}</button>
-      <button type="button" class="btn blue-btn" (ngSubmit)="submit()">{{ 'save' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">
@@ -70,18 +70,21 @@
           <mat-form-field>
             <mat-label>{{ 'queue_full_overflow_number' | t }}</mat-label>
             <input matInput type="text" formControlName="queueFullOverflow">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'max_wait_time_overflow_number' | t }}</mat-label>
             <input matInput type="text" formControlName="maxWaitTime">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'no_agent_overflow_number' | t }}</mat-label>
             <input matInput type="text" formControlName="noAgentOverflow">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
@@ -135,7 +138,8 @@
           <mat-form-field>
             <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
             <input matInput type="text" formControlName="overflowNumber" required>
-            <mat-error>{{ errorMessages.required }}</mat-error>
+            <mat-error *ngIf="formGroup.get('callback.overflowNumber').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('callback.overflowNumber').errors?.integer">{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">

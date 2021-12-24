@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup" (ngSubmit)="submit()">
+<form [formGroup]="formGroup" (ngSubmit)="submit()" #form="ngForm">
   <div class="form-header">
     <p class="h1">{{ callbackId ? ('edit_callback' | t) : ('add_callback' | t) }}</p>
     <div>
@@ -12,7 +12,7 @@
     </div>
     <section [hidden]="activeTab !== 'general'">
       <div class="row">
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-xxl-3">
           <mat-form-field>
             <mat-label>{{ 'callback_name' | t }}</mat-label>
             <input matInput type="text" formControlName="name" required>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-xl-6">
           <mat-form-field>
             <mat-label>{{ 'description' | t }}</mat-label>
             <textarea rows="8" matInput formControlName="description"></textarea>
@@ -30,24 +30,26 @@
       </div>
     </section>
     <section [hidden]="activeTab !== 'request'">
-      <div class="row mb-3">
-        <div class="col-12 col-lg-3">
+      <div class="row">
+        <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <app-number-input formControlName="requestDuration" [placeholder]="'request_duration_in_days' | t"></app-number-input>
+          <p class="alert alert-danger" *ngIf="formGroup.get('requestDuration').errors && form.submitted">{{ errorMessages.number | t }}</p>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <app-number-input formControlName="dialAttempts" [placeholder]="'number_of_call_attempts' | t"></app-number-input>
+          <p class="alert alert-danger" *ngIf="formGroup.get('dialAttempts').errors && form.submitted">{{ errorMessages.number | t }}</p>
         </div>
       </div>
-      <div class="row mb-5">
-        <div class="col-12 col-lg-3">
+      <div class="row">
+        <div class="col-12 col-md-6 col-xxl-3 mb-5">
           <mat-checkbox class="ms-3" formControlName="enableDialer">{{ 'enable_dialer_back' | t }}</mat-checkbox>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-md-6 col-xxl-3 mb-5">
           <mat-checkbox formControlName="mailCallback">{{ 'callback_mail_representative' | t }}</mat-checkbox>
         </div>
       </div>
-      <div class="row mb-3">
-        <div class="col-12 col-lg-3">
+      <div class="row">
+        <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <mat-form-field>
             <mat-label>{{ 'select_schedule' | t }}</mat-label>
             <mat-select formControlName="schedule" required>
@@ -56,15 +58,15 @@
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <app-number-input formControlName="answerCalculation" [placeholder]="'request_answer_calculation_s' | t"></app-number-input>
+          <p class="alert alert-danger" *ngIf="formGroup.get('answerCalculation').errors && form.submitted">{{ errorMessages.number | t }}</p>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <app-number-input formControlName="dialAttemptIntervals" [placeholder]="'call_attempts_intervals' | t"></app-number-input>
+          <p class="alert alert-danger" *ngIf="formGroup.get('dialAttemptIntervals').errors && form.submitted">{{ errorMessages.number | t }}</p>
         </div>
-      </div>
-      <div class="row mb-3">
-        <div class="d-flex col-12 col-lg-3">
+        <div class="d-flex col-12 col-md-6 col-xxl-3 mb-4">
           <app-audio-input [fileTypes]="['wav']" [inputFile]="audioFile" (fileChange)="setFile($event)"></app-audio-input>
         </div>
       </div>

@@ -7,7 +7,8 @@ import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audi
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { isDateGreaterOrEqual } from 'src/app/_shared/constants/validators';
+import { isDateGreaterOrEqual } from 'src/app/_shared/validators/date-greater-equal.validator';
+import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
   selector: 'app-general',
@@ -60,12 +61,12 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       irregularTimingTo: this.fb.control({ value: null, disabled: true }),
       dialedNumbers: this.fb.control(null),
       adminCode: this.fb.control(null),
-      defaultSelectionDuration: this.fb.control(null),
+      defaultSelectionDuration: this.fb.control(null, isInteger.bind(this)),
       vipEnabled: this.fb.control(null),
       vipDestination: this.fb.control({ value: null, disabled: true }),
       waitingRouterEnabled: this.fb.control(null),
       queuePositionReading: this.fb.control({ value: null, disabled: true }),
-      queueWaitingTime: this.fb.control({ value: null, disabled: true }),
+      queueWaitingTime: this.fb.control({ value: null, disabled: true }, isInteger),
       queueFile: this.fb.control(null),
       queueFileName: this.fb.control(null)
     }));
