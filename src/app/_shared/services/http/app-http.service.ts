@@ -13,11 +13,11 @@ export class AppHttpService extends BaseHttpService {
     super();
   }
 
-  login(username: string, password: string): Promise<any> {
+  login(username: string, password: string): Promise<UserModel> {
     return this.http.post(this.apiUrl + '/login', { username, password }, { headers: { noLoader: 'true' }})
       .toPromise()
       .then(response => response as UserModel)
-      .catch(response => console.log(response));
+      .catch(() => null);
   }
 
   forgotPassword(username: string): Promise<any> {

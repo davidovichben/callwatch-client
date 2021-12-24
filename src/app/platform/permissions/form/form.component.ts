@@ -1,27 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { PermissionActions, PermissionModules } from 'src/app/_shared/models/permission.model';
-import { PermissionModuleModel } from 'src/app/_shared/models/permission-module.model';
+import { PermissionActions, PermissionModel, PermissionModules } from 'src/app/_shared/models/permission.model';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.styl']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, AfterViewInit {
 
-  readonly sub = new Subscription();
   readonly errorMessages = ErrorMessages;
   readonly actions =  PermissionActions;
 
-  permissionId: number;
+  permission: PermissionModel;
 
   formGroup: FormGroup;
 
@@ -35,10 +32,12 @@ export class FormComponent implements OnInit {
     this.makeForm();
     this.setModules();
 
-    const routeData = this.route.snapshot.data.permission;
-    if (routeData) {
-      this.permissionId = routeData.id;
-      this.formGroup.patchValue(routeData);
+    this.permission = this.route.snapshot.data.permission;
+  }
+
+  ngAfterViewInit(): void {
+    if (this.permission) {
+      setTimeout(() => this.formGroup.patchValue(this.permission), 0);
     }
   }
 
@@ -52,40 +51,17 @@ export class FormComponent implements OnInit {
 
   private setModules(): void {
     PermissionModules.forEach(module => {
-      console.log(module)
-
       const group = this.fb.group({
         name: this.fb.control(module),
         all: this.fb.control(false),
         read: this.fb.control(false),
         create: this.fb.control(false),
         update: this.fb.control(false),
-        delete: this.fb.control(false),
+        delete: this.fb.control(false)
       });
 
       (this.formGroup.get('modules') as FormArray).push(group);
-      this.setFormSubscriptions(group);
     });
-  }
-
-  private setFormSubscriptions(group: FormGroup): void {
-    this.sub.add(group.get('all').valueChanges.subscribe(checked =>
-      PermissionActions.forEach(action => {
-        const control = group.get(action);
-
-        control.patchValue(checked);
-        checked ? control.disable() : control.enable();
-      })
-    ));
-
-    PermissionActions.forEach(action => {
-      const control = group.get(action);
-      const read = group.get('read');
-      this.sub.add(control.valueChanges.subscribe(checked => {
-        read.patchValue(checked);
-        checked ? read.disable() : read.enable();
-      }))
-    })
   }
 
   checkAll(checked: boolean): void {
@@ -94,16 +70,37 @@ export class FormComponent implements OnInit {
     })
   }
 
+  checkRow(checked: boolean, group: FormGroup): void {
+    PermissionActions.forEach(action => {
+      group.get(action).patchValue(checked);
+      checked ? group.get(action).disable() : group.get(action).enable();
+    });
+  }
+
+  checkRead(checked: boolean, group: FormGroup): void {
+    if (checked && group.get('read').enabled) {
+      group.get('read').patchValue(true);
+      group.get('read').disable();
+    }
+
+    if (!checked) {
+      const actionsEnabled = PermissionActions.some(action => action !== 'read' && group.get(action).value);
+      if (!actionsEnabled) {
+        group.get('read').enable();
+      }
+    }
+  }
+
   submit(): void {
     if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
-      if (this.permissionId) {
-        this.permissionService.updatePermission(this.permissionId, this.formGroup.value).then(response => {
+      if (this.permission) {
+        this.permissionService.updatePermission(this.permission.id, this.formGroup.getRawValue()).then(response => {
           this.handleSubmitResponse(response);
         })
       } else {
-        this.permissionService.newPermission(this.formGroup.value).then(response => {
+        this.permissionService.newPermission(this.formGroup.getRawValue()).then(response => {
           this.handleSubmitResponse(response);
         })
       }
@@ -119,16 +116,12 @@ export class FormComponent implements OnInit {
   }
 
   private checkExists(control: FormControl): Promise<{ exists: boolean }> {
-    return this.genericService.exists('permission', control.value).then(response => {
+    return this.genericService.exists('permission', control.value, this.permission?.id).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }
 
       return null;
     })
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 }

@@ -38,7 +38,6 @@ export class TimeInputComponent {
       }
 
       if (value < 0) {
-        console.log('r')
         value = 0;
       }
 

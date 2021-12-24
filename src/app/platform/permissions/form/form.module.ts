@@ -15,12 +15,19 @@ import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { PermissionResolve } from 'src/app/_shared/resolves/permission.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
-  { path: '', component: FormComponent },
+  {
+    path: '',
+    component: FormComponent,
+    canDeactivate: [DeactivateGuard]
+  },
   {
     path: ':id',
     component: FormComponent,
-    resolve: { permission: PermissionResolve }
+    resolve: { permission: PermissionResolve },
+    canDeactivate: [DeactivateGuard]
   }
 ];
 
@@ -35,6 +42,11 @@ const routes: Routes = [
     MatInputModule,
     TranslateModule
   ],
-  providers: [PermissionService, GenericService, PermissionResolve]
+  providers: [
+    PermissionService,
+    GenericService,
+    PermissionResolve,
+    DeactivateGuard
+  ]
 })
 export class FormModule {}

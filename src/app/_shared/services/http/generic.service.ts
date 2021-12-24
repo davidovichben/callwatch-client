@@ -11,8 +11,12 @@ export class GenericService extends BaseHttpService {
     super(userSession);
   }
 
-  exists(resource: string, value: string, key?: string): Promise<{ exists: boolean }> {
+  exists(resource: string, value: string, ignoredId?: number, key?: string): Promise<{ exists: boolean }> {
     const values = { resource, value };
+    if (ignoredId) {
+      Object.assign(values, { ignore: ignoredId })
+    }
+
     if (key) {
       Object.assign(values, { key })
     }

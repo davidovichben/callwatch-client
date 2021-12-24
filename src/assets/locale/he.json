@@ -353,7 +353,8 @@
   { "key": "back_to_organizations", "value": "בחזרה לארגונים" },
   { "key": "audit_log", "value": "Audit Log" },
   { "key": "ip_address", "value": "כתובת IP" },
-  { "key": "action", "value": "פעולה" }
+  { "key": "action", "value": "פעולה" },
+  { "key": "permission_name_exists", "value": "ההרשאה קיימת בארגון." }
 ]
 
 

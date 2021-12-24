@@ -352,5 +352,6 @@
   { "key": "back_to_organizations", "value": "Back to organizations" },
   { "key": "audit_log", "value": "Audit Log" },
   { "key": "ip_address", "value": "IP Address" },
-  { "key": "action", "value": "Action" }
+  { "key": "action", "value": "Action" },
+  { "key": "permission_name_exists", "value": "Permission already exists." }
 ]

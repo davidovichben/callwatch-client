@@ -1,19 +1,19 @@
 <form [formGroup]="formGroup" (ngSubmit)="submit()">
   <div class="form-header">
-    <p class="h1">{{ permissionId ? ('edit_permission' | t) : ('add_permission' | t) }}</p>
+    <p class="h1">{{ permission ? ('edit_permission' | t) : ('add_permission' | t) }}</p>
     <div>
       <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'permissions']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">
-    <div class="row">
+    <div class="row mb-2">
       <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
         <mat-form-field>
           <mat-label>{{ 'permission_name' | t }}</mat-label>
           <input matInput type="text" formControlName="name" required>
           <mat-error *ngIf="formGroup.get('name').errors?.required">{{ errorMessages.required | t }}</mat-error>
-          <mat-error *ngIf="formGroup.get('name').errors?.exists">{{ errorMessages.exists | t }}</mat-error>
+          <mat-error *ngIf="formGroup.get('name').errors?.exists">{{ 'permission_name_exists' | t }}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
@@ -43,10 +43,10 @@
         <tr *ngFor="let module of formGroup.get('modules')['controls']; let index = index" [formGroupName]="index">
           <td>{{ module.get('name').value | t }}</td>
           <td>
-            <mat-checkbox formControlName="all"></mat-checkbox>
+            <mat-checkbox formControlName="all" (ngModelChange)="checkRow($event, module)"></mat-checkbox>
           </td>
           <td *ngFor="let action of actions">
-            <mat-checkbox [formControlName]="action"></mat-checkbox>
+            <mat-checkbox [formControlName]="action" (ngModelChange)="action !== 'read' ? checkRead($event, module) : null"></mat-checkbox>
           </td>
         </tr>
         </tbody>
