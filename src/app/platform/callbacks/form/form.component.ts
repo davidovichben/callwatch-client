@@ -9,6 +9,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { CallbackTextModel, CallbackTextTypes } from 'src/app/_shared/models/callback-text.model';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
+import { CallbackModel } from 'src/app/_shared/models/callback.model';
 
 @Component({
 	selector: 'app-form',
@@ -32,7 +33,7 @@ export class FormComponent implements OnInit {
 
   callbackId: number;
 
-  audioFile: { bin: string, name: string };
+  audioFile: { bin: string | Blob, name: string };
 
   schedules: SelectItemModel[] = [];
 
@@ -48,16 +49,7 @@ export class FormComponent implements OnInit {
     this.schedules = routeData.schedules;
 
     if (routeData.callback) {
-      this.callbackId = routeData.callback.id;
-      const data = { ...routeData.callback };
-      delete data.texts;
-      this.formGroup.patchValue(data);
-
-      if (data.file) {
-        this.audioFile = { bin: data.file, name: data.fileName };
-      }
-
-      this.setTextArray(routeData.callback.texts);
+      this.patchData(routeData.callback);
     }
 	}
 
@@ -87,6 +79,19 @@ export class FormComponent implements OnInit {
 
       textArray.push(group);
     });
+  }
+
+  private patchData(callback: CallbackModel): void {
+    this.callbackId = callback.id;
+    const data = { ...callback };
+    delete data.texts;
+    this.formGroup.patchValue(data);
+
+    if (data.file) {
+      this.audioFile = { bin: data.file, name: data.fileName };
+    }
+
+    this.setTextArray(callback.texts);
   }
 
   private setTextArray(texts: CallbackTextModel[]): void {

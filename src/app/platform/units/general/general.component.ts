@@ -54,10 +54,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   submit(form: NgForm): void {
-    if (this.unit.parent) {
-      Object.assign(form.value, { parent: this.unit.parent.id });
-    }
-
     this.unitService.updateUnit(this.unit.id, form.value).then(response => {
       if (response) {
         this.notifications.success();
@@ -65,6 +61,12 @@ export class GeneralComponent implements OnInit, OnDestroy {
         if (this.unit.name !== form.value.name) {
           this.unit.name = form.value.name;
           this.unitStateService.unitNameChanged.next(this.unit);
+        }
+
+        if (this.unit.parent !== form.value.parent) {
+          this.unit = response.resource;
+          this.unitStateService.unitTransferred.next(this.unit);
+          this.unitStateService.refreshTree.next();
         }
       }
     })

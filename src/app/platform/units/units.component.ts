@@ -59,6 +59,10 @@ export class UnitsComponent implements OnInit, OnDestroy {
       });
     }));
 
+    this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => {
+      this.activeUnit = unit;
+    }));
+
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
       const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor.id === unit.id);
       if (activeUnit) {

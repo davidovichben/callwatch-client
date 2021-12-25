@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { SwitchboardTypes } from 'src/app/_shared/models/switchboard.model';
+import { SwitchboardModel, SwitchboardTypes } from 'src/app/_shared/models/switchboard.model';
 import { NumberPattern } from 'src/app/_shared/constants/patterns';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
@@ -37,15 +37,7 @@ export class FormComponent implements OnInit {
 
     const routeData = this.route.snapshot.data;
     if (routeData.switchboard) {
-      this.switchboardId = routeData.switchboard.id;
-      this.formGroup.patchValue(routeData.switchboard);
-
-      ['cti', 'axl'].forEach(service => {
-        const number = this.formGroup.get(service + '.number').value;
-        if (number) {
-          this.toggleServiceNumber(true, service);
-        }
-      });
+      this.patchData(routeData.switchboard);
     }
   }
 
@@ -60,15 +52,29 @@ export class FormComponent implements OnInit {
         username: this.fb.control(null, Validators.required),
         password: this.fb.control(null, Validators.required),
         dailyUpdateAt: this.fb.control(null, Validators.required),
-        number: this.fb.control({ value: null, disabled: true })
+        dialPrefix: this.fb.control({ value: null, disabled: true })
       }),
       axl: this.fb.group({
         address: this.fb.control(null),
         username: this.fb.control(null),
         password: this.fb.control(null),
-        number: this.fb.control({ value: null, disabled: true })
+        enableCdrPull: this.fb.control(null),
+        cdrPullAddress: this.fb.control(null)
       })
     });
+  }
+
+  private patchData(switchboard: SwitchboardModel): void {
+    this.switchboardId = switchboard.id;
+    this.formGroup.patchValue(switchboard);
+
+    if (this.formGroup.get('cti.dialPrefix').value) {
+      this.formGroup.get('cti.dialPrefix').enable();
+    }
+
+    if (this.formGroup.get('axl.enableCdrPull').value) {
+      this.formGroup.get('axl.cdrPullAddress').disable();
+    }
   }
 
   toggleAxi(value: string): void {
@@ -84,15 +90,27 @@ export class FormComponent implements OnInit {
     }
   }
 
-  toggleServiceNumber(isChecked: boolean, service: string): void {
-    const control = this.formGroup.get(service + '.number');
-    if (isChecked) {
+  toggleDialPrefix(checked: boolean): void {
+    const control = this.formGroup.get('cti.dialPrefix');
+    if (checked) {
       control.setValidators([Validators.required, isInteger]);
       control.enable();
     } else {
       control.clearValidators();
       control.disable();
       control.reset();
+    }
+
+    control.updateValueAndValidity();
+  }
+
+  toggleCdrPullAddress(checked: boolean): void {
+    const control = this.formGroup.get('axl.cdrPullAddress');
+    if (checked) {
+      control.disable();
+      control.reset();
+    } else {
+      control.enable();
     }
 
     control.updateValueAndValidity();

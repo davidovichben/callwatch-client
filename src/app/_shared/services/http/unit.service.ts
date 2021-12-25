@@ -5,6 +5,7 @@ import { BaseHttpService } from './base-http.service';
 import { UserSessionService } from '../state/user-session.service';
 
 import { UnitModel } from 'src/app/_shared/models/unit.model';
+import { ResponseData } from 'src/app/_shared/constants/objects';
 
 @Injectable()
 export class UnitService extends BaseHttpService {
@@ -48,11 +49,11 @@ export class UnitService extends BaseHttpService {
       .catch(() => false);
   }
 
-  updateUnit(unitId: number, values: object): Promise<boolean> {
+  updateUnit(unitId: number, values: object): Promise<ResponseData> {
     return this.http.put(this.endPoint + '/' + unitId, values, this.getTokenRequest(null, true))
       .toPromise()
-      .then(() => true)
-      .catch(() => false);
+      .then(response => response as ResponseData)
+      .catch(() => null);
   }
 
   deleteUnit(unitId: number, assignedUnitId?: number): Promise<boolean> {

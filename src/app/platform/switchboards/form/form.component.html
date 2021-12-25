@@ -70,7 +70,7 @@
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
               <mat-label>{{ 'cti_password' | t }}</mat-label>
-              <input matInput type="text" formControlName="password" required>
+              <input matInput type="password" formControlName="password" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
@@ -84,11 +84,12 @@
         </div>
         <div class="row">
           <div class="col-12 col-lg-3">
-            <mat-checkbox (change)="toggleServiceNumber($event.checked, 'cti')" [checked]="formGroup.get('cti.number').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
+            <mat-checkbox class="mb-3" (change)="toggleDialPrefix($event.checked)" [checked]="formGroup.get('cti.dialPrefix').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
             <mat-form-field class="w-100">
-              <input matInput type="text" formControlName="number" [required]="!formGroup.get('cti.number').disabled">
-              <mat-error *ngIf="formGroup.get('cti.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
-              <mat-error *ngIf="formGroup.get('cti.number').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+              <mat-label>{{ 'representative_extension_dial_prefix' | t }}</mat-label>
+              <input matInput type="text" formControlName="dialPrefix" [required]="!formGroup.get('cti.dialPrefix').disabled">
+              <mat-error *ngIf="formGroup.get('cti.dialPrefix').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('cti.dialPrefix').errors?.integer">{{ errorMessages.number | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -112,18 +113,18 @@
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
               <mat-label>{{ 'axl_password' | t }}</mat-label>
-              <input matInput type="text" formControlName="password" required>
+              <input matInput type="password" formControlName="password" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col-12 col-lg-3">
-            <mat-checkbox (change)="toggleServiceNumber($event.checked, 'axl')" [checked]="formGroup.get('axl.number').value">{{ 'axl_enable_services' | t }}</mat-checkbox>
+            <mat-checkbox class="mb-3" (ngModelChange)="toggleCdrPullAddress($event)" formControlName="enableCdrPull">{{ 'axl_enable_services' | t }}</mat-checkbox>
             <mat-form-field>
-              <input matInput type="text" formControlName="number" [required]="!formGroup.get('axl.number').disabled">
-              <mat-error *ngIf="formGroup.get('axl.number').errors?.required">{{ errorMessages.required | t }}</mat-error>
-              <mat-error *ngIf="formGroup.get('axl.number').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+              <mat-label>{{ 'cdr_pull_address' | t }}</mat-label>
+              <input matInput type="text" formControlName="cdrPullAddress">
+              <mat-error>{{ errorMessages.number | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>

@@ -353,5 +353,7 @@
   { "key": "audit_log", "value": "Audit Log" },
   { "key": "ip_address", "value": "IP Address" },
   { "key": "action", "value": "Action" },
-  { "key": "permission_name_exists", "value": "Permission already exists." }
+  { "key": "permission_name_exists", "value": "Permission already exists." },
+  { "key": "representative_extension_dial_prefix", "value": "Dial prefix from representative extension" },
+  { "key": "cdr_pull_address", "value": "CDR pull address" }
 ]
