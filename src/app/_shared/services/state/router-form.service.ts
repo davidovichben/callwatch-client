@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { RouterModel } from 'src/app/_shared/models/router.model';
+import { RouterKeyActivityTypeModel } from 'src/app/_shared/models/router-key-activity-type.model';
 
 @Injectable()
 export class RouterFormService {
@@ -13,7 +14,7 @@ export class RouterFormService {
 
   schedules: SelectItemModel[] = [];
   routers: SelectItemModel[] = [];
-  keyActivityTypes: SelectItemModel[] = [];
+  keyActivityTypes: RouterKeyActivityTypeModel[] = [];
   acds: SelectItemModel[] = [];
 
   router: RouterModel;

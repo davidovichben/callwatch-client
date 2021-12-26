@@ -120,12 +120,24 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   activityChanged(activityTypeId: number, action: FormGroup, key: string): void {
     const activityType = this.formService.keyActivityTypes.find(type => type.id === activityTypeId);
-    const value = activityType.name;
+    const activityTypeName = activityType.name;
 
     const prevValue = action.value.activityTypeName;
 
     action.get('activityTypeName').patchValue(activityType.name);
 
+    let activityValueControlName = 'activityValue';
+    switch (activityTypeName) {
+      case 'router_transfer':
+        activityValueControlName = 'router';
+        break;
+      case 'call_transfer':
+      case 'call_transfer_queue':
+        activityValueControlName = 'acd';
+    }
+
+    action.get(activityValueControlName).setValidators(activityType.hasValue ? Validators.required : null);
+    action.get(activityValueControlName).updateValueAndValidity();
 
     const arr = (this.formGroup.get(key) as FormArray);
 
@@ -135,7 +147,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       controls.forEach(control => arr.push(control));
     }
 
-    if (arr && value === 'condition') {
+    if (arr && activityTypeName === 'condition') {
       let index = arr.controls.indexOf(action);
 
       ['true', 'false'].forEach(value => {
@@ -147,6 +159,10 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     }
   }
 
+  conditionValueChanged(value: string, action: FormGroup): void {
+    action.get('conditionSchedule').setValidators(value === 'schedule' ? Validators.required : null);
+    action.get('conditionSchedule').updateValueAndValidity();
+  }
 
   setDefault(group: FormGroup): void {
     this.getKeys().forEach(key => {

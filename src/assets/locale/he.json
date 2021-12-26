@@ -357,7 +357,22 @@
   { "key": "permission_name_exists", "value": "ההרשאה קיימת בארגון." },
   { "key": "representative_extension_dial_prefix", "value": "קידומת חיוג משלוחת נציג" },
   { "key": "cdr_pull_address", "value": "כתובת למשיכת CDR" },
-  { "key": "data_sphere", "value": "עולם נתונים" }
+  { "key": "data_sphere", "value": "עולם נתונים" },
+  { "key": "service_name", "value": "שם שירות" },
+  { "key": "select_group", "value": "בחר קבוצה" },
+  { "key": "call_transfer", "value": "העברת שיחה" },
+  { "key": "audio_message", "value": "הודעה להשמעה" },
+  { "key": "operating_hours_reading", "value": "הקראת שעות פעילות" },
+  { "key": "leave_request", "value": "השארת בקשה" },
+  { "key": "send_sms", "value": "שליחת מסרון" },
+  { "key": "repeat_hearing", "value": "שמיעה חוזרת" },
+  { "key": "router_transfer", "value": "העברה לנתב אחר" },
+  { "key": "external_service", "value": "הפעלת שירות חיצוני" },
+  { "key": "call_transfer_queue", "value": "העברת שיחה + מיקום בתור" },
+  { "key": "message_record", "value": "הקלטת הודעה" },
+  { "key": "language_switch", "value": "החלפת שפה" },
+  { "key": "search_extension", "value": "הרחבת חיפוש" },
+  { "key": "extension_transfer", "value": "העברת שלוחה" }
 ]
 
 

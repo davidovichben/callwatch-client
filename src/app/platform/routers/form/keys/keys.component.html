@@ -42,39 +42,52 @@
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
       <div class="flex-grow-1" [ngSwitch]="action.get('activityTypeName').value">
-        <bd-select class="w-100 margin-fix" [placeholder]="'select_group' | t" formControlName="acd" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
-          <bd-option [value]="acd.id" *ngFor="let acd of formService.acds">{{ acd.name }}</bd-option>
-        </bd-select>
-        <ng-container *ngSwitchCase="'audio_message'">
+        <div class="margin-fix" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
+          <bd-select class="w-100" [placeholder]="'select_group' | t" formControlName="acd" required>
+            <bd-option [value]="acd.id" *ngFor="let acd of formService.acds">{{ acd.name }}</bd-option>
+          </bd-select>
+          <mat-error>{{ action.get('acd').touched && action.get('acd').errors ? (errorMessages.required | t) : null }}</mat-error>
+        </div>
+        <div *ngSwitchCase="'audio_message'">
           <app-audio-input [inputFile]="action.get('files').value[lang.value]" (fileChange)="setFile(action, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
-        </ng-container>
+        </div>
         <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
           <mat-label>{{ 'select_language' | t }}</mat-label>
-          <mat-select formControlName="activityValue">
+          <mat-select formControlName="activityValue" required>
             <mat-option [value]="lang.value" *ngFor="let lang of langs">{{ lang.label }}</mat-option>
           </mat-select>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
-        <mat-form-field class="w-100" *ngSwitchCase="'sms'">
+        <mat-form-field class="w-100" *ngSwitchCase="'send_sms'">
           <mat-label>{{ 'sms_content' | t }}</mat-label>
-          <input matInput formControlName="activityValue">
+          <input matInput formControlName="activityValue" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
-        <bd-select class="margin-fix" [placeholder]="'select_router' | t" formControlName="router" *ngSwitchCase="'router_transfer'">
-          <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
-        </bd-select>
+        <div class="margin-fix" *ngSwitchCase="'router_transfer'">
+          <bd-select class="w-100" [placeholder]="'select_router' | t" formControlName="router" required>
+            <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
+          </bd-select>
+          <mat-error>{{ action.get('router').touched && action.get('router').errors ? (errorMessages.required | t) : null }}</mat-error>
+        </div>
         <mat-form-field class="w-100" *ngSwitchCase="'external_service'">
           <mat-label>{{ 'service_name' | t }}</mat-label>
           <input matInput formControlName="activityValue">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
         <div class="d-flex align-items-center" *ngSwitchCase="'condition'">
           <mat-form-field class="ms-3 w-200p">
             <mat-label>{{ 'select_condition' | t }}</mat-label>
-            <mat-select formControlName="activityValue">
+            <mat-select formControlName="activityValue" (ngModelChange)="conditionValueChanged($event, action)">
               <mat-option [value]="condition" *ngFor="let condition of conditions">{{ condition | t }}</mat-option>
             </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
-          <bd-select class="w-200p margin-fix" [placeholder]="'select_schedule' | t" formControlName="conditionSchedule" *ngIf="action.get('activityValue').value === 'schedule'">
-            <bd-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</bd-option>
-          </bd-select>
+          <div class="w-200p margin-fix">
+            <bd-select class="w-100" [placeholder]="'select_schedule' | t" formControlName="conditionSchedule" required *ngIf="action.get('activityValue').value === 'schedule'">
+              <bd-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</bd-option>
+            </bd-select>
+            <mat-error>{{ action.get('conditionSchedule').touched && action.get('conditionSchedule').errors ? (errorMessages.required | t) : null }}</mat-error>
+          </div>
         </div>
       </div>
 <!--      <mat-form-field class="mx-3 w-200p">-->

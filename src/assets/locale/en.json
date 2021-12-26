@@ -356,5 +356,20 @@
   { "key": "permission_name_exists", "value": "Permission already exists." },
   { "key": "representative_extension_dial_prefix", "value": "Dial prefix from representative extension" },
   { "key": "cdr_pull_address", "value": "CDR pull address" },
-  { "key": "data_sphere", "value": "Data Sphere" }
+  { "key": "data_sphere", "value": "Data Sphere" },
+  { "key": "service_name", "value": "Service Name" },
+  { "key": "select_group", "value": "Select Group" },
+  { "key": "call_transfer", "value": "Call Transfer" },
+  { "key": "audio_message", "value": "Audio Message" },
+  { "key": "operating_hours_reading", "value": "Operating Hours Reading" },
+  { "key": "leave_request", "value": "Leave a Request" },
+  { "key": "send_sms", "value": "Send SMS" },
+  { "key": "repeat_hearing", "value": "Repeat Hearing" },
+  { "key": "router_transfer", "value": "Router Transfer" },
+  { "key": "external_service", "value": "External Service" },
+  { "key": "call_transfer_queue", "value": "Call Transfer Queue" },
+  { "key": "message_record", "value": "Message Record" },
+  { "key": "language_switch", "value": "Language Switch" },
+  { "key": "search_extension", "value": "Search Extension" },
+  { "key": "extension_transfer", "value": "Extension Transfer" }
 ]
