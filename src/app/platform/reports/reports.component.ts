@@ -16,7 +16,9 @@ export class ReportsComponent {
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
   readonly columns = [
-    { label: 'report_name', name: 'name' }
+    { label: 'report_name', name: 'name' },
+    { label: 'data_sphere', name: 'module' },
+    { label: 'description', name: 'description' }
   ];
 
   constructor(private route: ActivatedRoute,

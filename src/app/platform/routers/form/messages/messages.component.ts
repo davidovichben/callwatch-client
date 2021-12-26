@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,7 +16,7 @@ import { RouterMessageTypes } from 'src/app/_shared/models/router-message.model'
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.styl', '../shared/shared.component.styl']
 })
-export class MessagesComponent extends SharedComponent {
+export class MessagesComponent extends SharedComponent implements OnInit, OnDestroy {
 
   readonly messageTypes = RouterMessageTypes;
 
@@ -78,5 +78,9 @@ export class MessagesComponent extends SharedComponent {
         this.formArray.removeAt(index);
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
   }
 }

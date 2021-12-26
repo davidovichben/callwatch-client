@@ -356,7 +356,8 @@
   { "key": "action", "value": "פעולה" },
   { "key": "permission_name_exists", "value": "ההרשאה קיימת בארגון." },
   { "key": "representative_extension_dial_prefix", "value": "קידומת חיוג משלוחת נציג" },
-  { "key": "cdr_pull_address", "value": "כתובת למשיכת CDR" }
+  { "key": "cdr_pull_address", "value": "כתובת למשיכת CDR" },
+  { "key": "data_sphere", "value": "עולם נתונים" }
 ]
 
 
