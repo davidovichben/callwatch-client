@@ -15,6 +15,8 @@ export class SetPasswordComponent implements OnInit {
 
   passwordForm: FormGroup;
 
+  showPassword: boolean;
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {

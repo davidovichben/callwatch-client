@@ -371,5 +371,9 @@
   { "key": "message_record", "value": "Message Record" },
   { "key": "language_switch", "value": "Language Switch" },
   { "key": "search_extension", "value": "Search Extension" },
-  { "key": "extension_transfer", "value": "Extension Transfer" }
+  { "key": "extension_transfer", "value": "Extension Transfer" },
+  { "key": "dialer_profile", "value": "Dialer Profile" },
+  { "key": "dialer_ivr", "value": "Dialer IVR" },
+  { "key": "lbl_overflow", "value": "Overflow" },
+  { "key": "dial_outgoing_tel_line", "value": "Dial Outgoing Tel Line" }
 ]

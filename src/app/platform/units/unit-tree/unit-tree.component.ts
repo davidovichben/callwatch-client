@@ -28,8 +28,7 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
 
   activeUnitId: number | string;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
+  constructor(private route: ActivatedRoute, private router: Router,
               private notifications: NotificationService,
               private unitService: UnitService,
               private unitStateService: UnitStateService,

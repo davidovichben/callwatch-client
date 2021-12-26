@@ -69,15 +69,15 @@ export class FormComponent implements OnInit, OnDestroy {
     this.formGroup = this.fb.group({
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
-        type: this.fb.control(null, Validators.required),
+        type: this.fb.control(null),
         unit: this.fb.control(null, Validators.required),
         description: this.fb.control(null)
       }),
       acds: this.fb.control(null),
       callback: this.fb.group({
-        callback: this.fb.control(null, Validators.required),
+        callback: this.fb.control(null),
         router: this.fb.control(null),
-        overflowNumber: this.fb.control(null, [Validators.required, isInteger]),
+        overflowNumber: this.fb.control(null, isInteger),
         email: this.fb.control(null, Validators.pattern(EmailPattern)),
         dialerCallerID: this.fb.control(null)
       })

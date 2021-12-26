@@ -372,7 +372,11 @@
   { "key": "message_record", "value": "הקלטת הודעה" },
   { "key": "language_switch", "value": "החלפת שפה" },
   { "key": "search_extension", "value": "הרחבת חיפוש" },
-  { "key": "extension_transfer", "value": "העברת שלוחה" }
+  { "key": "extension_transfer", "value": "העברת שלוחה" },
+  { "key": "dialer_profile", "value": "חייגן שיחה חוזרת ללקוחות" },
+  { "key": "dialer_ivr", "value": "נתב השארת בקשה" },
+  { "key": "lbl_overflow", "value": "הרחבת חיפוש (מסםר מגבה)" },
+  { "key": "dial_outgoing_tel_line", "value": "מספר מזוהה בחיוג יוצא" }
 ]
 
 

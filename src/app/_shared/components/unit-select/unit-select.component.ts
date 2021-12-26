@@ -51,10 +51,11 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     if (!this.placeholder) {
-      this.placeholder = this.t.transform('select_unit');
+      const keyword = this.multiple ? 'select_units' : 'select_unit';
+      this.placeholder = this.t.transform(keyword);
     }
 
-    this.filteredUnits = this.units;
+    this.filteredUnits = { ...this.units };
     if (this.multiple) {
       this.selected = [];
     }
@@ -62,7 +63,7 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
     this.title = this.placeholder;
 
     if (this.ignoredUnit) {
-      this.ignoreUnit(this.units);
+      this.ignoreUnit(this.filteredUnits);
     }
   }
 
