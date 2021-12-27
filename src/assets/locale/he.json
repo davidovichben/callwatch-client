@@ -376,7 +376,10 @@
   { "key": "dialer_profile", "value": "חייגן שיחה חוזרת ללקוחות" },
   { "key": "dialer_ivr", "value": "נתב השארת בקשה" },
   { "key": "lbl_overflow", "value": "הרחבת חיפוש (מסםר מגבה)" },
-  { "key": "dial_outgoing_tel_line", "value": "מספר מזוהה בחיוג יוצא" }
+  { "key": "dial_outgoing_tel_line", "value": "מספר מזוהה בחיוג יוצא" },
+  { "key": "event", "value":  "אירוע" },
+  { "key": "date", "value":  "תאריך" },
+  { "key": "time", "value":  "זמן" }
 ]
 
 

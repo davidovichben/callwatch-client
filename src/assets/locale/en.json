@@ -375,5 +375,8 @@
   { "key": "dialer_profile", "value": "Dialer Profile" },
   { "key": "dialer_ivr", "value": "Dialer IVR" },
   { "key": "lbl_overflow", "value": "Overflow" },
-  { "key": "dial_outgoing_tel_line", "value": "Dial Outgoing Tel Line" }
+  { "key": "dial_outgoing_tel_line", "value": "Dial Outgoing Tel Line" },
+  { "key": "event", "value":  "Event" },
+  { "key": "date", "value":  "Date" },
+  { "key": "time", "value":  "Time" }
 ]

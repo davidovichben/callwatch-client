@@ -13,8 +13,9 @@ export class AuditLogComponent {
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
   readonly columns = [
+    { label: 'time', name: 'created' },
     { label: 'username', name: 'username' },
-    { label: 'resource', name: 'resource' },
+    { label: 'event', name: 'resource' },
     { label: 'ip_address', name: 'ip' }
   ];
 
