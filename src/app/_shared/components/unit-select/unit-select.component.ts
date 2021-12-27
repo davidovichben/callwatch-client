@@ -69,9 +69,10 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
 
   ignoreUnit(units: UnitModel[]): void {
     units.forEach(unit => {
-      const index = units.findIndex(unit => unit.id === this.ignoredUnit.id);
-      if (index !== -1) {
-        units.splice(index, 1);
+      const unitToIgnore = units.find(unit => unit.id === this.ignoredUnit.id);
+      if (unitToIgnore) {
+        (unitToIgnore as any).ignore = true;
+        return;
       }
 
       if (unit.units) {

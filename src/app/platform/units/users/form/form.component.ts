@@ -36,7 +36,7 @@ export class FormComponent {
 
   private handleServerResponse(response: any): void {
     if (response.error) {
-      if (response.error.errorCode) {
+      if (response.error.errorCode === 1) {
         this.notification.error(this.t.transform('values_exist'));
       }
     } else {
