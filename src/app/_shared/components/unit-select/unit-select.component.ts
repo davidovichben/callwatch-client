@@ -55,7 +55,7 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
       this.placeholder = this.t.transform(keyword);
     }
 
-    this.filteredUnits = { ...this.units };
+    this.filteredUnits = this.units;
     if (this.multiple) {
       this.selected = [];
     }
