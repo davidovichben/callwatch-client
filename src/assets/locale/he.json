@@ -379,7 +379,9 @@
   { "key": "dial_outgoing_tel_line", "value": "מספר מזוהה בחיוג יוצא" },
   { "key": "event", "value":  "אירוע" },
   { "key": "date", "value":  "תאריך" },
-  { "key": "time", "value":  "זמן" }
+  { "key": "time", "value":  "זמן" },
+  { "key": "audit_log_login", "value": "התחבר" },
+  { "key": "audit_log_logout", "value": "התנתק" }
 ]
 
 

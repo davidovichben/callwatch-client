@@ -14,7 +14,6 @@ export class AuditLogComponent {
 
   readonly columns = [
     { label: 'time', name: 'created' },
-    { label: 'username', name: 'username' },
     { label: 'event', name: 'resource' },
     { label: 'ip_address', name: 'ip' }
   ];
