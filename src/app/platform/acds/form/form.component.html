@@ -22,10 +22,9 @@
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'group_type' | t }}</mat-label>
-            <mat-select formControlName="type" required>
+            <mat-select formControlName="type">
               <mat-option *ngFor="let type of selects.types" [value]="type.id">{{ type.name }}</mat-option>
             </mat-select>
-            <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
@@ -117,10 +116,9 @@
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'dialer_profile' | t }}</mat-label>
-            <mat-select formControlName="callback" required>
+            <mat-select formControlName="callback">
               <mat-option *ngFor="let callback of selects.callbacks" [value]="callback.id">{{ callback.name }}</mat-option>
             </mat-select>
-            <mat-error>{{ errorMessages.required }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">
@@ -137,9 +135,8 @@
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'lbl_overflow' | t }}</mat-label>
-            <input matInput type="text" formControlName="overflowNumber" required>
-            <mat-error *ngIf="formGroup.get('callback.overflowNumber').errors?.required">{{ errorMessages.required | t }}</mat-error>
-            <mat-error *ngIf="formGroup.get('callback.overflowNumber').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+            <input matInput type="text" formControlName="overflowNumber">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3">

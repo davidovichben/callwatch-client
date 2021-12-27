@@ -136,7 +136,12 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
         activityValueControlName = 'acd';
     }
 
-    action.get(activityValueControlName).setValidators(activityType.hasValue ? Validators.required : null);
+    console.log(activityType.hasValue)
+
+    if (activityType.hasValue) {
+      action.get(activityValueControlName).setValidators(Validators.required);
+    }
+
     action.get(activityValueControlName).updateValueAndValidity();
 
     const arr = (this.formGroup.get(key) as FormArray);

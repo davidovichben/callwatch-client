@@ -66,7 +66,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         if (this.unit.parent !== form.value.parent) {
           this.unit = response.resource;
           this.unitStateService.unitTransferred.next(this.unit);
-          this.unitStateService.refreshTree.next();
+          this.unitStateService.refreshTree.next(true);
         }
       }
     })
