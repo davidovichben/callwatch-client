@@ -41,7 +41,6 @@ export class FormComponent implements OnInit, OnDestroy {
     this.formService.schedules = routeData.schedules;
     this.formService.routers = routeData.routers;
     this.formService.keyActivityTypes = routeData.keyActivityTypes;
-    this.formService.acds = routeData.acds;
 
     if (routeData.router) {
       this.formService.router = routeData.router;

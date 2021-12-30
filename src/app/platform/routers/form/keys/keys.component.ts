@@ -51,9 +51,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       conditionSchedule: this.fb.control(null),
       activityTypeName: this.fb.control(null),
       files: this.fb.control({}),
-      acd: this.fb.control(null),
-      router: this.fb.control(null),
-      // documenting: this.fb.control(null),
       timingType: this.fb.control(null),
       schedule: this.fb.control(null),
       startDateTime: this.fb.control(null),
@@ -126,23 +123,11 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
     action.get('activityTypeName').patchValue(activityType.name);
 
-    let activityValueControlName = 'activityValue';
-    switch (activityTypeName) {
-      case 'router_transfer':
-        activityValueControlName = 'router';
-        break;
-      case 'call_transfer':
-      case 'call_transfer_queue':
-        activityValueControlName = 'acd';
-    }
-
-    console.log(activityType.hasValue)
-
     if (activityType.hasValue) {
-      action.get(activityValueControlName).setValidators(Validators.required);
+      action.get('activityValue').setValidators(Validators.required);
     }
 
-    action.get(activityValueControlName).updateValueAndValidity();
+    action.get('activityValue').updateValueAndValidity();
 
     const arr = (this.formGroup.get(key) as FormArray);
 

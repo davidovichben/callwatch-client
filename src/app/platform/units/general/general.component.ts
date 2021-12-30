@@ -41,12 +41,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
     const route = this.route.parent.parent;
     this.sub.add(route.data.subscribe(() => {
       this.unit = route.snapshot.data.unit;
-
+      this.units = route.snapshot.data.units;
       this.isRootUnit = this.unit.id === 'root';
     }));
 
     this.organizationName = this.userSession.getUser().organization;
-    this.units = route.snapshot.data.units;
   }
 
   hasPermission(module: string, action: string): boolean {

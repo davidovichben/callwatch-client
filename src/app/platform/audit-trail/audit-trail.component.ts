@@ -2,13 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 
-import { AuditLogService } from 'src/app/_shared/services/http/audit-log.service';
+import { AuditTrailService } from 'src/app/_shared/services/http/audit-trail.service';
 
 @Component({
-  selector: 'app-audit-log',
-  templateUrl: './audit-log.component.html'
+  selector: 'app-audit-trail',
+  templateUrl: './audit-trail.component.html'
 })
-export class AuditLogComponent {
+export class AuditTrailComponent {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
@@ -18,10 +18,10 @@ export class AuditLogComponent {
     { label: 'ip_address', name: 'ip' }
   ];
 
-  constructor(private auditLogService: AuditLogService) {}
+  constructor(private auditTrailService: AuditTrailService) {}
 
   fetchItems(): void {
-    this.auditLogService.getLogs(this.dataTable.criteria).then(response => {
+    this.auditTrailService.getLogs(this.dataTable.criteria).then(response => {
       this.dataTable.setItems(response);
     });
   }

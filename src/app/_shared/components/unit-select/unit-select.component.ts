@@ -1,4 +1,4 @@
-import { Component, ElementRef, forwardRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, HostListener, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -21,7 +21,7 @@ import { Placeholder, SlideToggle } from 'src/app/_shared/constants/animations';
     }
   ]
 })
-export class UnitSelectComponent implements OnInit, ControlValueAccessor {
+export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAccessor {
 
   @ViewChild('dropdownEle') dropdownEle: ElementRef;
   @ViewChild('widthElement') widthElement: ElementRef;
@@ -62,6 +62,12 @@ export class UnitSelectComponent implements OnInit, ControlValueAccessor {
 
     this.title = this.placeholder;
 
+    if (this.ignoredUnit) {
+      this.ignoreUnit(this.filteredUnits);
+    }
+  }
+
+  ngOnChanges(): void {
     if (this.ignoredUnit) {
       this.ignoreUnit(this.filteredUnits);
     }

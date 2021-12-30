@@ -8,9 +8,9 @@ import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
 
 @Injectable()
-export class AuditLogService extends BaseHttpService {
+export class AuditTrailService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/auditLog';
+  readonly endPoint = this.apiUrl + '/auditTrail';
 
   constructor(private http: HttpClient, userSession: UserSessionService) {
     super(userSession);

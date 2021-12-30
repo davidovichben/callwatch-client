@@ -4,21 +4,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { AuditLogComponent } from './audit-log.component';
+import { AuditTrailComponent } from 'src/app/platform/audit-trail/audit-trail.component';
 
-import { AuditLogService } from 'src/app/_shared/services/http/audit-log.service';
+import { AuditTrailService } from 'src/app/_shared/services/http/audit-trail.service';
 
 const routes: Routes = [
-  { path: '', component: AuditLogComponent },
+  { path: '', component: AuditTrailComponent },
 ];
 
 @NgModule({
-  declarations: [AuditLogComponent],
+  declarations: [AuditTrailComponent],
   imports: [
     RouterModule.forChild(routes),
     TranslateModule,
     DataTableModule,
   ],
-  providers: [AuditLogService]
+  providers: [AuditTrailService]
 })
-export class AuditLogModule {}
+export class AuditTrailModule {}

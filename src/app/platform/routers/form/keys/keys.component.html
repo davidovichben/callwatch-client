@@ -42,15 +42,18 @@
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
       <div class="flex-grow-1" [ngSwitch]="action.get('activityTypeName').value">
+
         <div class="margin-fix" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
-          <bd-select class="w-100" [placeholder]="'select_group' | t" formControlName="acd" required>
-            <bd-option [value]="acd.id" *ngFor="let acd of formService.acds">{{ acd.name }}</bd-option>
-          </bd-select>
-          <mat-error>{{ action.get('acd').touched && action.get('acd').errors ? (errorMessages.required | t) : null }}</mat-error>
+          <mat-label>{{ 'number' | t }}</mat-label>
+          <input matInput formControlName="activityValue" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
         </div>
+
         <div *ngSwitchCase="'audio_message'">
           <app-audio-input [inputFile]="action.get('files').value[lang.value]" (fileChange)="setFile(action, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+
         </div>
+
         <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
           <mat-label>{{ 'select_language' | t }}</mat-label>
           <mat-select formControlName="activityValue" required>
@@ -58,22 +61,26 @@
           </mat-select>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
+
         <mat-form-field class="w-100" *ngSwitchCase="'send_sms'">
           <mat-label>{{ 'sms_content' | t }}</mat-label>
           <input matInput formControlName="activityValue" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
+
         <div class="margin-fix" *ngSwitchCase="'router_transfer'">
-          <bd-select class="w-100" [placeholder]="'select_router' | t" formControlName="router" required>
+          <bd-select class="w-100" [placeholder]="'select_router' | t" formControlName="activityValue" required>
             <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
           </bd-select>
-          <mat-error>{{ action.get('router').touched && action.get('router').errors ? (errorMessages.required | t) : null }}</mat-error>
+          <mat-error>{{ action.get('activityValue').touched && action.get('activityValue').errors ? (errorMessages.required | t) : null }}</mat-error>
         </div>
+
         <mat-form-field class="w-100" *ngSwitchCase="'external_service'">
           <mat-label>{{ 'service_name' | t }}</mat-label>
           <input matInput formControlName="activityValue">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
+
         <div class="d-flex align-items-center" *ngSwitchCase="'condition'">
           <mat-form-field class="ms-3 w-200p">
             <mat-label>{{ 'select_condition' | t }}</mat-label>
@@ -90,10 +97,6 @@
           </div>
         </div>
       </div>
-<!--      <mat-form-field class="mx-3 w-200p">-->
-<!--        <mat-label>{{ 'data_documenting' | t }}</mat-label>-->
-<!--        <mat-select formControlName="documenting"></mat-select>-->
-<!--      </mat-form-field>-->
       <div class="text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
         <p class="mb-1 bold">{{ 'timing' | t }}</p>
         <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>

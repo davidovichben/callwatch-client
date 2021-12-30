@@ -68,8 +68,8 @@ const routes: Routes = [
         loadChildren: () => import('./extensions/extensions.module').then(m => m.ExtensionsModule)
       },
       {
-        path: 'auditLog',
-        loadChildren: () => import('./audit-log/audit-log.module').then(m => m.AuditLogModule)
+        path: 'auditTrail',
+        loadChildren: () => import('./audit-trail/audit-trail.module').then(m => m.AuditTrailModule)
       },
       {
         path: '**',

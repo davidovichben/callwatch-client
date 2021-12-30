@@ -1,35 +1,53 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
 
 import { FormComponent } from 'src/app/platform/reports/form/form.component';
+import { AddComputedColumnComponent } from './add-computed-column/add-computed-column.component';
 
 import { ReportService } from 'src/app/_shared/services/http/report.service';
 
 import { ReportResolve } from 'src/app/_shared/resolves/report.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
-  { path: '', component: FormComponent },
+  {
+    path: '',
+    component: FormComponent,
+    canDeactivate: [DeactivateGuard]
+  },
   {
     path: ':id',
     component: FormComponent,
-    resolve: { report: ReportResolve }
+    resolve: { report: ReportResolve },
+    canDeactivate: [DeactivateGuard]
   }
 ];
 
 @NgModule({
-  declarations: [FormComponent],
-  imports: [
-    FormsModule,
-    RouterModule.forChild(routes),
-    MatFormFieldModule,
-    MatInputModule,
-    TranslateModule
-  ],
-  providers: [ReportService, ReportResolve]
+  declarations: [FormComponent, AddComputedColumnComponent],
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatSelectModule,
+		MatButtonModule,
+    MatDialogModule,
+		TranslateModule,
+		DualGroupsSelectModule
+	],
+  providers: [ReportService, ReportResolve, DeactivateGuard]
 })
 export class FormModule {}

@@ -15,7 +15,6 @@ export class RouterFormService {
   schedules: SelectItemModel[] = [];
   routers: SelectItemModel[] = [];
   keyActivityTypes: RouterKeyActivityTypeModel[] = [];
-  acds: SelectItemModel[] = [];
 
   router: RouterModel;
 

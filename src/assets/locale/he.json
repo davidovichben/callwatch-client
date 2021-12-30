@@ -351,7 +351,7 @@
   { "key": "warning", "value": "אזהרה" },
   { "key": "enter_organization", "value": "הכנס לארגון" },
   { "key": "back_to_organizations", "value": "בחזרה לארגונים" },
-  { "key": "audit_log", "value": "Audit Log" },
+  { "key": "audit_trail", "value": "Audit Trail" },
   { "key": "ip_address", "value": "כתובת IP" },
   { "key": "action", "value": "פעולה" },
   { "key": "permission_name_exists", "value": "ההרשאה קיימת בארגון." },
@@ -380,6 +380,14 @@
   { "key": "event", "value":  "אירוע" },
   { "key": "date", "value":  "תאריך" },
   { "key": "time", "value":  "זמן" },
+  { "key": "system", "value":  "מערכת" },
+  { "key": "next", "value":  "הבא" },
+  { "key": "back", "value":  "הקודם" },
+  { "key": "select_columns_for_report", "value": "בחירת עמודות לדוח" },
+  { "key": "available_columns", "value": "עמודות זמינות" },
+  { "key": "selected_columns", "value": "עמודות נבחרות" },
+  { "key": "add_computed_column", "value": "הוסף עמודה חישובית" },
+  { "key": "save_as_draft", "value":  "שמירה כטיוטה" },
   { "key": "audit_log_login", "value": "התחבר" },
   { "key": "audit_log_logout", "value": "התנתק" }
 ]

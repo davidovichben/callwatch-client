@@ -6,7 +6,6 @@ import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.se
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { SwitchboardModel, SwitchboardTypes } from 'src/app/_shared/models/switchboard.model';
-import { NumberPattern } from 'src/app/_shared/constants/patterns';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
@@ -47,7 +46,7 @@ export class FormComponent implements OnInit {
       type: this.fb.control(null, Validators.required),
       netAddress: this.fb.control(null, Validators.required),
       dataManager: this.fb.control(null),
-      minimalSeconds: this.fb.control(null, [Validators.required, Validators.pattern(NumberPattern)]),
+      minimalSeconds: this.fb.control(null, [Validators.required, isInteger]),
       cti: this.fb.group({
         username: this.fb.control(null, Validators.required),
         password: this.fb.control(null, Validators.required),
