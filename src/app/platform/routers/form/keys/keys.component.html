@@ -68,12 +68,13 @@
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <div class="margin-fix" *ngSwitchCase="'router_transfer'">
-          <bd-select class="w-100" [placeholder]="'select_router' | t" formControlName="activityValue" required>
-            <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
-          </bd-select>
-          <mat-error>{{ action.get('activityValue').touched && action.get('activityValue').errors ? (errorMessages.required | t) : null }}</mat-error>
-        </div>
+        <mat-form-field class="w-100" *ngSwitchCase="'router_transfer'">
+          <mat-label>{{ 'select_router' | t }}</mat-label>
+          <mat-select formControlName="activityValue" required>
+            <mat-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</mat-option>
+          </mat-select>
+          <mat-error>{{ (errorMessages.required | t) }}</mat-error>
+        </mat-form-field>
 
         <mat-form-field class="w-100" *ngSwitchCase="'external_service'">
           <mat-label>{{ 'service_name' | t }}</mat-label>
@@ -89,12 +90,13 @@
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
-          <div class="w-200p margin-fix">
-            <bd-select class="w-100" [placeholder]="'select_schedule' | t" formControlName="conditionSchedule" required *ngIf="action.get('activityValue').value === 'schedule'">
-              <bd-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</bd-option>
-            </bd-select>
-            <mat-error>{{ action.get('conditionSchedule').touched && action.get('conditionSchedule').errors ? (errorMessages.required | t) : null }}</mat-error>
-          </div>
+          <mat-form-field class="w-200p">
+            <mat-label>{{ 'select_schedule' | t }}</mat-label>
+            <mat-select formControlName="conditionSchedule" required *ngIf="action.get('activityValue').value === 'schedule'">
+              <mat-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
         </div>
       </div>
       <div class="text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">

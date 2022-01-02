@@ -30,12 +30,12 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
   };
 
   ngOnInit() {
-    this.availableItems = this.items;
+    this.availableItems = [...this.items];
   }
 
   addItems(): void {
-    const existingItems = this.selectedItems.all.map(item => item.id);
-    const addedItems = this.availableItems.filter(item => item.selected && existingItems.indexOf(item.id) === -1);
+    const addedItems = this.availableItems.filter(item => item.selected);
+    this.availableItems = [...this.availableItems.filter(item => !item.selected)];
 
     addedItems.forEach(item => {
       const newItem = { ...item };
@@ -49,13 +49,14 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   removeItems(): void {
-    this.selectedItems.all.forEach(selectedItem => {
-      if (selectedItem.selected) {
-        this.availableItems.find(item => item.id === selectedItem.id).selected = false;
-      }
-    });
+    const removedItems = this.selectedItems.all.filter(item => item.selected);
+    this.selectedItems.all = [...this.selectedItems.all.filter(item => !item.selected)];
 
-    this.selectedItems.all = this.selectedItems.all.filter(item => !item.selected);
+    removedItems.forEach(item => {
+      const newItem = { ...item };
+      newItem.selected = false;
+      this.availableItems.push(newItem);
+    });
 
     this.setSelectedItems();
 

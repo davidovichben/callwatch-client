@@ -55,7 +55,6 @@ export class ExtensionsGroupsComponent implements OnInit {
     this.unitId = +unitId;
 
     this.extensionGroup = this.route.snapshot.data.extensionGroup;
-    console.log(this.extensionGroup)
   }
 
   submit(form: NgForm): void {

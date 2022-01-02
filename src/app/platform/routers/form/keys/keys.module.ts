@@ -11,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { TimingDialogModule } from 'src/app/platform/routers/form/timing-dialog/timing-dialog.module';
-import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.module';
 import { AudioInputModule } from 'src/app/_shared/components/audio-input/audio-input.module';
 
 import { KeysComponent } from './keys.component';
@@ -31,7 +30,6 @@ import { KeysComponent } from './keys.component';
     MatRadioModule,
     TranslateModule,
     TimingDialogModule,
-    BdSelectModule,
     AudioInputModule
   ]
 })
