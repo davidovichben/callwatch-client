@@ -24,7 +24,7 @@
   <div class="search-container">
     <input matInput type="text" [placeholder]="'search' | t" (keyup)="search(selectedSearch.value, 'selected', $event)" #selectedSearch>
     <mat-icon matSuffix (click)="search(selectedSearch.value, 'selected')">search</mat-icon>
-    <mat-icon matSuffix (click)="resetSearch(selectedSearch, 'selected')">close</mat-icon>
+    <mat-icon matSuffix (click)="resetSearch(selectedSearch, 'selected')" *ngIf="selectedSearch.value">close</mat-icon>
   </div>
   <ul class="mb-3">
     <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of selectedItems.filtered">

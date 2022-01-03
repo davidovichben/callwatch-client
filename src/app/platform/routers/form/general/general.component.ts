@@ -61,7 +61,7 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       irregularTimingTo: this.fb.control({ value: null, disabled: true }),
       dialedNumbers: this.fb.control(null),
       adminCode: this.fb.control(null),
-      defaultSelectionDuration: this.fb.control(null, isInteger.bind(this)),
+      defaultSelectionDuration: this.fb.control(4, isInteger.bind(this)),
       vipEnabled: this.fb.control(null),
       vipDestination: this.fb.control({ value: null, disabled: true }),
       waitingRouterEnabled: this.fb.control(null),

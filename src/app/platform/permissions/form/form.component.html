@@ -43,10 +43,10 @@
         <tr *ngFor="let module of formGroup.get('modules')['controls']; let index = index" [formGroupName]="index">
           <td>{{ module.get('name').value | t }}</td>
           <td>
-            <mat-checkbox formControlName="all" (ngModelChange)="checkRow($event, module)"></mat-checkbox>
+            <mat-checkbox formControlName="all" (change)="checkRow($event.checked, module)"></mat-checkbox>
           </td>
           <td *ngFor="let action of actions">
-            <mat-checkbox [formControlName]="action" (ngModelChange)="action !== 'read' ? checkRead($event, module) : null"></mat-checkbox>
+            <mat-checkbox [formControlName]="action" (ngModelChange)="action !== 'read' ? actionChecked($event, module) : null"></mat-checkbox>
           </td>
         </tr>
         </tbody>

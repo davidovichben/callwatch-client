@@ -351,7 +351,6 @@
   { "key": "warning", "value": "אזהרה" },
   { "key": "enter_organization", "value": "הכנס לארגון" },
   { "key": "back_to_organizations", "value": "בחזרה לארגונים" },
-  { "key": "audit_trail", "value": "Audit Trail" },
   { "key": "ip_address", "value": "כתובת IP" },
   { "key": "action", "value": "פעולה" },
   { "key": "permission_name_exists", "value": "ההרשאה קיימת בארגון." },
@@ -388,8 +387,12 @@
   { "key": "selected_columns", "value": "עמודות נבחרות" },
   { "key": "add_computed_column", "value": "הוסף עמודה חישובית" },
   { "key": "save_as_draft", "value":  "שמירה כטיוטה" },
-  { "key": "audit_log_login", "value": "התחבר" },
-  { "key": "audit_log_logout", "value": "התנתק" }
+  { "key": "audit_trail", "value": "יומן אירועים" },
+  { "key": "audit_trail_login", "value": "התחבר" },
+  { "key": "audit_trail_logout", "value": "התנתק" },
+  { "key": "clear_default", "value": "נקה ברירת מחדל" },
+  { "key": "number", "value": "מספר" },
+  { "key": "enter_number", "value": "הכנס מספר" }
 ]
 
 

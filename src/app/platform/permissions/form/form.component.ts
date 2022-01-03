@@ -37,7 +37,16 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.permission) {
-      setTimeout(() => this.formGroup.patchValue(this.permission), 0);
+      setTimeout(() => {
+        this.formGroup.get('name').patchValue(this.permission.name);
+        this.formGroup.get('description').patchValue(this.permission.description);
+        this.permission.modules.forEach(module => {
+          const index = this.formGroup.get('modules').value.findIndex(groupModule => groupModule.name === module.name);
+          if (!isNaN(index)) {
+            (this.formGroup.get('modules') as FormArray).at(index).patchValue(module);
+          }
+        })
+      }, 0);
     }
   }
 
@@ -65,25 +74,27 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   checkAll(checked: boolean): void {
-    (this.formGroup.get('modules') as FormArray).controls.forEach(group => {
+    (this.formGroup.get('modules') as FormArray).controls.forEach((group: FormGroup) => {
       group.get('all').patchValue(checked);
+      this.checkRow(checked, group);
     })
   }
 
   checkRow(checked: boolean, group: FormGroup): void {
     PermissionActions.forEach(action => {
       group.get(action).patchValue(checked);
-      checked ? group.get(action).disable() : group.get(action).enable();
     });
   }
 
-  checkRead(checked: boolean, group: FormGroup): void {
+  actionChecked(checked: boolean, group: FormGroup): void {
     if (checked && group.get('read').enabled) {
       group.get('read').patchValue(true);
       group.get('read').disable();
     }
 
     if (!checked) {
+      group.get('all').patchValue(false);
+
       const actionsEnabled = PermissionActions.some(action => action !== 'read' && group.get(action).value);
       if (!actionsEnabled) {
         group.get('read').enable();

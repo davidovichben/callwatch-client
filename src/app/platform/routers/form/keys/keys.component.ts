@@ -26,6 +26,8 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   unusedKeys = [];
 
+  hasDefault = false;
+
   formGroup: FormGroup;
 
   constructor(dialog: MatDialog, formService: RouterFormService,
@@ -50,7 +52,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       activityValue: this.fb.control(null),
       conditionSchedule: this.fb.control(null),
       activityTypeName: this.fb.control(null),
-      files: this.fb.control({}),
       timingType: this.fb.control(null),
       schedule: this.fb.control(null),
       startDateTime: this.fb.control(null),
@@ -149,17 +150,31 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     }
   }
 
+  setSMS(action: FormGroup, value: string): void {
+    const currentValue = action.get('activityValue').value ?? {};
+    currentValue[this.activeLang] = value;
+
+    action.get('activityValue').patchValue(currentValue);
+  }
+
   conditionValueChanged(value: string, action: FormGroup): void {
     action.get('conditionSchedule').setValidators(value === 'schedule' ? Validators.required : null);
     action.get('conditionSchedule').updateValueAndValidity();
   }
 
   setDefault(group: FormGroup): void {
+    this.clearDefault();
+    this.hasDefault = true;
+
+    group.get('isDefault').patchValue(true);
+  }
+
+  clearDefault(): void {
     this.getKeys().forEach(key => {
       (this.formGroup.get(key) as FormArray).at(0).get('isDefault').patchValue(false);
     })
 
-    group.get('isDefault').patchValue(true);
+    this.hasDefault = false;
   }
 
   getKeys(): string[] {

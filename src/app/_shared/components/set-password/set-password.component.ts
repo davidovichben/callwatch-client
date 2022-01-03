@@ -16,6 +16,7 @@ export class SetPasswordComponent implements OnInit {
   passwordForm: FormGroup;
 
   showPassword: boolean;
+  showRepeatPassword: boolean;
 
   constructor(private fb: FormBuilder) {}
 

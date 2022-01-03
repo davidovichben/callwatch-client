@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
-
+import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
-import { FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-form',
@@ -28,7 +28,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute,
               private routerService: RouterService,
-              public formService: RouterFormService) {}
+              public formService: RouterFormService,
+              private helpers: HelpersService) {}
 
 	ngOnInit(): void {
     this.activeTab = this.tabs[0];
@@ -56,6 +57,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
 		if (form.valid && !this.isSubmitting) {
+      this.helpers.setPageSpinner(true);
 			this.isSubmitting = true;
 
       const values = {
@@ -90,6 +92,7 @@ export class FormComponent implements OnInit, OnDestroy {
 		if (response) {
 			this.router.navigate(['/platform', 'routers']);
 		} else {
+      this.helpers.setPageSpinner(false);
       this.isSubmitting = false;
     }
 	}

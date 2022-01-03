@@ -24,11 +24,15 @@ export abstract class SharedComponent implements OnDestroy {
 
   protected constructor(private dialog: MatDialog, public formService: RouterFormService) {}
 
-  setFile(group: FormGroup, file?: { bin: string, name: string }): void {
-    const value = group.get('files').value;
+  setFile(group: FormGroup, file: { bin: string, name: string }, formControlName = 'files'): void {
+    let value = group.get(formControlName).value;
+    if (!value) {
+      value = {};
+    }
+
     value[this.activeLang] = file;
 
-    group.get('files').patchValue(value);
+    group.get(formControlName).patchValue(value);
   }
 
   openActivityDialog(formGroup: FormGroup): void {

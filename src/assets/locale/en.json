@@ -350,7 +350,6 @@
   { "key": "warning", "value": "Warning" },
   { "key": "enter_organization", "value": "Enter Organization" },
   { "key": "back_to_organizations", "value": "Back to organizations" },
-  { "key": "audit_trail", "value": "Audit Trail" },
   { "key": "ip_address", "value": "IP Address" },
   { "key": "action", "value": "Action" },
   { "key": "permission_name_exists", "value": "Permission already exists." },
@@ -388,6 +387,10 @@
   { "key": "columns", "value": "Columns" },
   { "key": "add_computed_column", "value": "Add computed column" },
   { "key": "save_as_draft", "value": "Save as draft" },
-  { "key": "audit_log_login", "value": "logged in" },
-  { "key": "audit_log_logout", "value": "logged out" }
+  { "key": "audit_trail", "value": "Audit Trail" },
+  { "key": "audit_trail_login", "value": "logged in" },
+  { "key": "audit_trail_logout", "value": "logged out" },
+  { "key": "clear_default", "value": "Clear Default" },
+  { "key": "number", "value": "Number" },
+  { "key": "enter_number", "value": "Enter Number" }
 ]

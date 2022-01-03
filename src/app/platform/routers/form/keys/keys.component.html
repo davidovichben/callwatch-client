@@ -1,15 +1,15 @@
-<div class="d-flex justify-content-between mb-3">
+<div class="d-flex justify-content-between mb-2">
   <div class="d-flex">
     <ng-container *ngIf="getKeysLength() < keyTypes.length">
-      <div>
-        <button mat-flat-button type="button" class="ms-3 mb-4 btn blue-btn" (click)="newKey(newKeySelect.value)">{{ 'add_key' | t }}</button>
-      </div>
-      <mat-form-field id="selectKey" class="w-200p">
+      <mat-form-field id="selectKey" class="ms-3 w-150p">
         <mat-label>{{ 'select_key' | t  }}</mat-label>
         <mat-select #newKeySelect>
           <mat-option *ngFor="let key of unusedKeys" [value]="key">{{ key }}</mat-option>
         </mat-select>
       </mat-form-field>
+      <div>
+        <button mat-flat-button type="button" class="btn blue-btn" (click)="newKey(newKeySelect.value)">{{ 'add_key' | t }}</button>
+      </div>
     </ng-container>
   </div>
   <mat-form-field class="w-200p">
@@ -18,6 +18,9 @@
       <mat-option *ngFor="let lang of langs" [value]="lang.value">{{ lang.label }}</mat-option>
     </mat-select>
   </mat-form-field>
+</div>
+<div id="clearDefault" class="mb-3">
+  <button mat-button class="grey-btn" (click)="clearDefault()" *ngIf="hasDefault">{{ 'clear_default' | t }}</button>
 </div>
 <ng-container [formGroup]="formService.routerForm.get('keys.' + category)">
   <div class="group" [formArrayName]="key" *ngFor="let key of getKeys()">
@@ -43,15 +46,14 @@
       </mat-form-field>
       <div class="flex-grow-1" [ngSwitch]="action.get('activityTypeName').value">
 
-        <div class="margin-fix" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
-          <mat-label>{{ 'number' | t }}</mat-label>
+        <mat-form-field class="w-100" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
+          <mat-label>{{ 'enter_number' | t }}</mat-label>
           <input matInput formControlName="activityValue" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
-        </div>
+        </mat-form-field>
 
         <div *ngSwitchCase="'audio_message'">
-          <app-audio-input [inputFile]="action.get('files').value[lang.value]" (fileChange)="setFile(action, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
-
+          <app-audio-input [inputFile]="action.get('activityValue').value && action.get('activityValue').value[lang.value] ? action.get('activityValue').value[lang.value] : null" (fileChange)="setFile(action, $event, 'activityValue')" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
         </div>
 
         <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
@@ -64,7 +66,7 @@
 
         <mat-form-field class="w-100" *ngSwitchCase="'send_sms'">
           <mat-label>{{ 'sms_content' | t }}</mat-label>
-          <input matInput formControlName="activityValue" required>
+          <input matInput required [value]="action.get('activityValue').value && action.get('activityValue').value[lang.value] ? action.get('activityValue').value[lang.value] : null" (change)="setSMS(action, $event.target.value)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
