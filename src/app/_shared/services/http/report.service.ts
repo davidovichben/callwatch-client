@@ -11,7 +11,7 @@ import { ReportModel } from 'src/app/_shared/models/report.model';
 @Injectable()
 export class ReportService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/report';
+  readonly endPoint = this.apiUrl + '/reportTemplate';
 
   constructor(private http: HttpClient, userSession: UserSessionService) {
     super(userSession);

@@ -25,47 +25,15 @@ const routes: Routes = [
       },
       {
         path: 'reports',
-        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
-      },
-      {
-        path: 'reportSets',
-        loadChildren: () => import('./report-sets/report-sets.module').then(m => m.ReportSetsModule)
+        loadChildren: () => import('./reports/reports-routing.module').then(m => m.ReportsRoutingModule)
       },
       {
         path: 'users',
-        loadChildren: () => import('src/app/platform/users/users.module').then(m => m.UsersModule)
+        loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
       },
       {
-        path: 'permissions',
-        loadChildren: () => import('./permissions/permissions.module').then(m => m.PermissionsModule)
-      },
-      {
-        path: 'schedules',
-        loadChildren: () => import('./schedules/schedules.module').then(m => m.SchedulesModule)
-      },
-      {
-        path: 'uniqueDays',
-        loadChildren: () => import('./unique-days/unique-days.module').then(m => m.UniqueDaysModule)
-      },
-      {
-        path: 'switchboards',
-        loadChildren: () => import('./switchboards/switchboards.module').then(m => m.SwitchboardsModule)
-      },
-      {
-        path: 'callbacks',
-        loadChildren: () => import('./callbacks/callbacks.module').then(m => m.CallbacksModule)
-      },
-      {
-        path: 'routers',
-        loadChildren: () => import('./routers/routers.module').then(m => m.RoutersModule)
-      },
-      {
-        path: 'acds',
-        loadChildren: () => import('./acds/acds.module').then(m => m.AcdsModule)
-      },
-      {
-        path: 'extensions',
-        loadChildren: () => import('./extensions/extensions.module').then(m => m.ExtensionsModule)
+        path: 'settings',
+        loadChildren: () => import('./settings/settings-routing.module').then(m => m.SettingsRoutingModule)
       },
       {
         path: 'auditTrail',

@@ -76,6 +76,10 @@ button
 button:focus
   outline: 0 !important
 
+.borderless
+  border: none
+  outline: 0
+
 .flex-grow-1
   flex-grow: 1
 
@@ -96,6 +100,9 @@ button:focus
 
 .ltr
   direction: ltr
+
+.rtl
+  direction: rtl
 
 .bold
   font-weight: bold
@@ -166,6 +173,27 @@ button:focus
 .link
   color: #024dbc
   cursor: pointer
+
+.chip
+  display: flex
+  align-items: center
+  justify-content: space-between
+  min-width: 70px
+  margin: 3px 5px
+  padding: 3px 6px
+  border-radius: 6px
+  background-color: #afafaf
+  color: #fff
+  word-break: break-all
+
+  > mat-icon, > span
+    font-size: 14px
+
+  > mat-icon
+    height: 14px
+    width: 14px
+    cursor: pointer
+
 
 .fade
   opacity: 0
@@ -244,6 +272,10 @@ button:focus
 .icon-img
   height: 11px !important
   width: 11px !important
+
+mat-icon.f-16
+  height: 16px
+  width: 16px
 
 .close-circle
   border-radius: 50%
@@ -438,7 +470,7 @@ form
 
 .mat-menu-item
   .mat-icon
-    margin-bottom: 2px;
+    margin-bottom: 2px
 
 textarea.mat-input-element
   margin: 12px 0

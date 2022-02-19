@@ -15,8 +15,8 @@ export class HelpersService {
     return entityType.substring(0, entityType.length - 1);
   }
 
-  getBaseUrl(baseUrl: string, menuType: string): string {
-    let url = baseUrl.substr(menuType.length + 2);
+  getUrlSegment(fullUrl: string, from?: number): string {
+    let url = fullUrl.substr(from);
     if (url.indexOf('/') !== -1) {
       url = url.substr(0, url.indexOf('/'));
     }

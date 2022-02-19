@@ -66,7 +66,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
 
     this.modules = this.modules.filter(module => {
-      if (module.subModules && !module.isGuarded) {
+      if (module.subModules && module.isOpen) {
         module.subModules = module.subModules.filter(subModule => this.checkAllowedModule(permissions, subModule));
         return module.subModules.length > 0;
       }
@@ -76,7 +76,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   private checkAllowedModule(permissions: any, module: ModuleModel): boolean {
-    if (!module.isGuarded) {
+    if (module.isOpen) {
       return true;
     }
 
@@ -85,9 +85,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   setActiveModule(from?: string): void {
     const to = this.router.url;
-    const url = this.helpers.getBaseUrl(to, this.menuType);
+    const url = this.helpers.getUrlSegment(to, this.menuType.length + 2);
 
-    if (from && url === this.helpers.getBaseUrl(from, this.menuType)) {
+    if (from && url === this.helpers.getUrlSegment(from, this.menuType.length + 2)) {
       return;
     }
 
@@ -105,23 +105,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.findActiveModule(this.modules, url);
   }
 
-  private findActiveModule(modules: ModuleModel[], url: string, parent?: ModuleModel): void {
-    modules.forEach(module => {
-      if (module.subModules) {
-        this.findActiveModule(module.subModules, url, module);
-      }
+  private findActiveModule(modules: ModuleModel[], url: string): void {
+    this.activeModule = modules.find(module => url === module.name);
 
-      if (module.name === url) {
-        this.activeModule = module.name;
-        if (parent) {
-          this.activeModule = parent.name;
-          this.activeSubModule = module.name;
-        }
-        if (parent) {
-          parent.isToggled = true;
-        }
-      }
-    });
+    if (this.activeModule?.subModules) {
+      this.activeModule.isToggled = true;
+
+      const from = this.router.url.indexOf(this.activeModule.name) + this.activeModule.name.length + 1;
+      const subUrl = this.helpers.getUrlSegment(this.router.url, from);
+
+      this.activeSubModule = this.activeModule.subModules.find(subModule => subUrl === subModule.name);
+    }
   }
 
   toggleSubModules(module: ModuleModel): void {

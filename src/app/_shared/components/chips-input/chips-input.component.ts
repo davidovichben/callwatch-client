@@ -4,7 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-chips-input',
   templateUrl: './chips-input.component.html',
-  styleUrls: ['../_shared/form-field.styl', '../_shared/chips.styl', './chips-input.component.styl', ],
+  styleUrls: ['../_shared/form-field.styl', './chips-input.component.styl', ],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: ChipsInputComponent, multi: true }
   ]

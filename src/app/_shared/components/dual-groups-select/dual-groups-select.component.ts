@@ -1,4 +1,4 @@
-import { Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, forwardRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
@@ -17,10 +17,12 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 })
 export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
-  @ViewChild('selectedSearch') selectedSearch: ElementRef;
+  @ContentChild('row', { static: false }) rowTemplateRef: TemplateRef<any>;
+  @ContentChild('selected', { static: false }) selectedTemplateRef: TemplateRef<any>;
 
   @Input() items: SelectItemModel[];
   @Input() placeholder = 'items';
+  @Input() objectOutput = false;
 
   availableItems = [];
 
@@ -28,6 +30,11 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     all: [],
     filtered: []
   };
+
+  searchInputs = {
+    available: null,
+    selected: null
+  }
 
   ngOnInit() {
     this.availableItems = [...this.items];
@@ -45,7 +52,8 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
     this.setSelectedItems();
 
-    this.propagateChange(this.selectedItems.all.map(item => item.id));
+    const selected = this.selectedItems.all;
+    this.propagateChange(this.objectOutput ? selected : selected.map(item => item.id));
   }
 
   removeItems(): void {
@@ -60,19 +68,18 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
     this.setSelectedItems();
 
-    this.propagateChange(this.selectedItems.all.map(item => item.id));
+    const selected = this.selectedItems.all;
+    this.propagateChange(this.objectOutput ? selected : selected.map(item => item.id));
   }
 
   private setSelectedItems(): void {
     this.selectedItems.filtered = this.selectedItems.all;
-
-    const searchValue = this.selectedSearch?.nativeElement.value;
-    if (searchValue) {
-      this.search(searchValue, 'selectedItems');
+    if (this.searchInputs.selected) {
+      this.search('selected');
     }
   }
 
-  search(keyword: string, type: string, event?: KeyboardEvent): void {
+  search(type: string, event?: KeyboardEvent): void {
     if (event.key === 'Enter') {
       event.cancelBubble = true;
       event.returnValue = false;
@@ -84,6 +91,7 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     }
 
     const items = type === 'available' ? this.items : this.selectedItems.all;
+    const keyword = type === 'available' ? this.searchInputs.available : this.searchInputs.selected;
     if (type === 'available') {
       this.availableItems = items.filter(item => item.name.indexOf(keyword) !== -1);
     } else {
@@ -91,14 +99,30 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  resetSearch(keywordEle: HTMLInputElement, type: string): void {
-    keywordEle.value = null;
-
+  resetSearch(type: string): void {
     if (type === 'available') {
       this.availableItems = this.items;
+      this.searchInputs.available = null;
     } else {
       this.selectedItems.filtered = this.selectedItems.all;
+      this.searchInputs.selected = null;
     }
+  }
+
+  newItem(item: SelectItemModel, selected?: boolean): void {
+    if (selected) {
+      this.selectedItems.all.push(item);
+    } else {
+      this.availableItems.push(item);
+    }
+
+    const type = selected ? 'selected' : 'available';
+    this.resetSearch(type);
+  }
+
+  reset(): void {
+    this.selectedItems.filtered = [];
+    this.selectedItems.all = [];
   }
 
   private propagateChange = (_: any) => {};

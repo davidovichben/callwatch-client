@@ -21,7 +21,7 @@ const routes: Routes = [
     component: UsersComponent,
     resolve: { permissions: PermissionSelectResolve }
   },
-  { path: 'form', loadChildren: () => import('./form/form.module').then(m => m.FormModule) }
+  { path: 'form', loadChildren: () => import('src/app/platform/users/form/form.module').then(m => m.FormModule) }
 ];
 
 @NgModule({

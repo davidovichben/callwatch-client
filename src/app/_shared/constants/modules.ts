@@ -1,30 +1,31 @@
 export const PlatformModules = [
-  { name: 'dashboard', icon: 'dashboard' },
-  { name: 'units', icon: 'account_tree', isGuarded: true },
+  { name: 'dashboard', icon: 'dashboard', isOpen: true },
+  { name: 'units', icon: 'account_tree' },
   {
     name: 'reports',
     icon: 'assignment',
-    isGuarded: true,
     subModules: [
-      { name: 'reports', isGuarded: true },
-      { name: 'reportSets', label: 'report_sets', isGuarded: true }
+      { name: 'templates', label: 'templates' },
+      { name: 'sets', label: 'report_sets' },
+      { name: 'timings', label: 'timed_reports' },
+      { name: 'historical', label: 'historical_reports' }
     ]
   },
-  { name: 'users', icon: 'group', isGuarded: true },
+  { name: 'users', icon: 'group' },
   // { name: 'auditLog', label: 'audit_log', icon: 'group', isGuarded: true },
   {
     name: 'settings',
     icon: 'settings',
-    isGuarded: false,
+    isOpen: true,
     subModules: [
-      { name: 'permissions', isGuarded: true },
-      { name: 'schedules', isGuarded: true },
-      { name: 'uniqueDays', label: 'unique_days', isGuarded: true },
-      { name: 'switchboards', isGuarded: true },
-      { name: 'callbacks', isGuarded: true },
-      { name: 'routers', isGuarded: true },
-      { name: 'acds', isGuarded: true },
-      { name: 'extensions', isGuarded: true }
+      { name: 'permissions' },
+      { name: 'schedules' },
+      { name: 'uniqueDays', label: 'unique_days' },
+      { name: 'switchboards' },
+      { name: 'callbacks' },
+      { name: 'routers' },
+      { name: 'acds' },
+      { name: 'extensions' }
     ]
   },
 ];

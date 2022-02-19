@@ -1,13 +1,18 @@
 <div class="ms-3 group">
   <p *ngIf="placeholder" class="placeholder">{{ ('available_' + placeholder) | t }}</p>
   <div class="search-container">
-    <input matInput type="text" [placeholder]="'search' | t" (keyup)="search(availableSearch.value, 'available', $event)" #availableSearch>
-    <mat-icon matSuffix (click)="search(availableSearch.value, 'available')">search</mat-icon>
-    <mat-icon matSuffix (click)="resetSearch(availableSearch, 'available')" *ngIf="availableSearch.value">close</mat-icon>
+    <input matInput type="text" [placeholder]="'search' | t" (keyup)="search('available', $event)" [(ngModel)]="searchInputs.available">
+    <mat-icon matSuffix (click)="search('available')">search</mat-icon>
+    <mat-icon matSuffix (click)="resetSearch('available')" *ngIf="searchInputs.available">close</mat-icon>
   </div>
   <ul class="mb-3">
     <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of availableItems">
-      {{ item.name }}
+      <ng-container
+        *ngIf="rowTemplateRef"
+        [ngTemplateOutlet]="rowTemplateRef"
+        [ngTemplateOutletContext]="{ $implicit:item }">
+      </ng-container>
+      <span *ngIf="!rowTemplateRef">{{ item.name }}</span>
     </li>
   </ul>
 </div>
@@ -22,13 +27,15 @@
 <div class="me-3 group">
   <p *ngIf="placeholder" class="placeholder">{{ ('selected_' + placeholder) | t }}</p>
   <div class="search-container">
-    <input matInput type="text" [placeholder]="'search' | t" (keyup)="search(selectedSearch.value, 'selected', $event)" #selectedSearch>
-    <mat-icon matSuffix (click)="search(selectedSearch.value, 'selected')">search</mat-icon>
-    <mat-icon matSuffix (click)="resetSearch(selectedSearch, 'selected')" *ngIf="selectedSearch.value">close</mat-icon>
+    <input matInput type="text" [placeholder]="'search' | t" (keyup)="search('selected', $event)" [(ngModel)]="searchInputs.selected">
+    <mat-icon matSuffix (click)="search('selected')">search</mat-icon>
+    <mat-icon matSuffix (click)="resetSearch('selected')" *ngIf="searchInputs.selected">close</mat-icon>
   </div>
   <ul class="mb-3">
     <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of selectedItems.filtered">
-      {{ item.name }}
+      <ng-container *ngIf="rowTemplateRef" [ngTemplateOutlet]="rowTemplateRef" [ngTemplateOutletContext]="{ $implicit:item }"></ng-container>
+      <ng-container *ngIf="selectedTemplateRef" [ngTemplateOutlet]="selectedTemplateRef" [ngTemplateOutletContext]="{ $implicit:item }"></ng-container>
+      <span *ngIf="!rowTemplateRef && !selectedTemplateRef">{{ item.name }}</span>
     </li>
   </ul>
 </div>

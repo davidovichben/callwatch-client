@@ -1,0 +1,58 @@
+<form (ngSubmit)="submit()" [formGroup]="formGroup" #form="ngForm">
+  <div class="form-header">
+    <h1>{{ report ? ('edit_report' | t) : ('add_report' | t) }}</h1>
+  </div>
+  <div class="form-body">
+    <section [hidden]="currentStep !== 1">
+      <p class="mb-5 f-20 blue-text">{{ 'report_details' | t }}</p>
+      <div class="row">
+        <div class="col-12 col-md-8 col-lg-6 col-xxl-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'report_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-8 col-lg-6 col-xxl-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'data_world' | t }}</mat-label>
+            <mat-select formControlName="module" (valueChange)="moduleChanged()" required>
+              <mat-option [value]="module" *ngFor="let module of modules">{{ module | t }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-8 col-lg-6 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'description' | t }}</mat-label>
+            <textarea matInput formControlName="description" rows="5"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+    <section [hidden]="currentStep !== 2">
+      <p class="mb-5 f-20 blue-text">{{ 'select_columns_for_report' | t }}</p>
+      <app-dual-groups-select formControlName="columns" [items]="columns" [objectOutput]="true" [placeholder]="'columns' | t">
+        <ng-template let-item #selected>
+          <div class="flex-between">
+            <div>
+              <mat-icon class="ms-3 align-middle dark-grey-text f-16">menu</mat-icon>
+              <span>{{ item.name }}</span>
+            </div>
+            <mat-icon class="dark-grey-text f-16" (click)="item.formula ? openComputedColumnDialog(item, $event) : openColumnSettingsDialog(item, $event)">settings</mat-icon>
+          </div>
+        </ng-template>
+      </app-dual-groups-select>
+      <p class="my-3 alert alert-danger w-250p" *ngIf="form.submitted && formGroup.get('columns').errors">{{ 'choose_columns_error' | t }}</p>
+      <span class="blue-text f-12 underline pointer" (click)="openComputedColumnDialog()">{{ 'add_computed_column' | t }}</span>
+    </section>
+  </div>
+  <div class="mt-3">
+    <button type="button" class="ms-3 btn grey-btn" [routerLink]="['/platform', 'reports', 'templates']">{{ 'cancel' | t }}</button>
+    <button type="button" class="ms-3 btn blue-btn" (click)="currentStep = 1" *ngIf="currentStep === 2">{{ 'back' | t }}</button>
+    <button type="button" class="ms-3 btn blue-btn" (click)="nextStep()" *ngIf="currentStep === 1">{{ 'next' | t }}</button>
+    <button type="submit" class="ms-3 btn blue-btn" *ngIf="currentStep === 2">{{ 'save' | t }}</button>
+  </div>
+</form>

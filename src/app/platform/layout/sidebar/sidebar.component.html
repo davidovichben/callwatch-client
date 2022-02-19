@@ -4,13 +4,13 @@
 <div id="menu">
   <div id="modules">
     <div class="module-container" *ngFor="let module of modules">
-      <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule }" *ngIf="!module.subModules">
+      <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule.name }" *ngIf="!module.subModules">
         <figure>
           <mat-icon inline>{{ module.icon }}</mat-icon>
         </figure>
         <span>{{ module.label ? (module.label | t) : (module.name | t) }}</span>
       </a>
-      <div class="sidebar-item" (click)="toggleSubModules(module)" [ngClass]="{ active: module.name === activeModule }" *ngIf="module.subModules">
+      <div class="sidebar-item" (click)="toggleSubModules(module)" [ngClass]="{ active: module.name === activeModule.name }" *ngIf="module.subModules">
         <figure>
           <mat-icon inline>{{ module.icon }}</mat-icon>
         </figure>
@@ -21,8 +21,8 @@
       </div>
       <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 70) + 'px' : 0, transition: toggleState === 'opened' ? '0.3s ease' : '0s' }">
         <a *ngFor="let subModule of module.subModules"
-           [ngClass]="{ active: subModule.name === activeSubModule }"
-           [routerLink]="['/', menuType, subModule.name]"
+           [ngClass]="{ active: activeSubModule && subModule.name === activeSubModule.name }"
+           [routerLink]="['/', menuType, module.name, subModule.name]"
            class="sidebar-item">{{ subModule.label ? (subModule.label | t) : (subModule.name | t) }}</a>
       </div>
     </div>

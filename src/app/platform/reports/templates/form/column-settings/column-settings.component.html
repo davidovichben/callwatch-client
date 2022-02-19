@@ -1,0 +1,54 @@
+<div class="dialog-header">
+  <span>{{ 'column_settings' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div class="row">
+    <div class="col-12 col-lg-6 mb-3">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'column_name' | t }}</mat-label>
+        <input matInput type="text" formControlName="name" required>
+        <mat-error>{{ errorMessages.required | t }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-lg-6 mb-3">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'column_description' | t }}</mat-label>
+        <input matInput type="text" formControlName="description">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="mb-3">
+    <mat-form-field class="w-100">
+      <mat-label>{{ 'total_column_type' | t }}</mat-label>
+      <mat-select formControlName="totalType" required>
+        <mat-option *ngFor="let type of totalTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+      <mat-error>{{ errorMessages.required | t }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="mb-3">
+    <mat-form-field class="w-100">
+      <mat-label>{{ 'data_type' | t }}</mat-label>
+      <mat-select formControlName="dataType" required>
+        <mat-option *ngFor="let type of dataTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+      <mat-error>{{ errorMessages.required | t }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <div class="col-12 col-lg-4 mb-3">
+      <span>{{ 'call_types' | t }}</span>
+    </div>
+    <div class="col-12 col-lg-4 mb-3">
+      <mat-checkbox formControlName="showExternal">{{ 'show_external_calls' | t }}</mat-checkbox>
+    </div>
+    <div class="col-12 col-lg-4 mb-3">
+      <mat-checkbox formControlName="showInternal">{{ 'show_internal_calls' | t }}</mat-checkbox>
+    </div>
+  </div>
+<!--  <p>{{ 'conditional_design' | t }}</p>-->
+  <div class="text-center">
+    <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
+  </div>
+</form>

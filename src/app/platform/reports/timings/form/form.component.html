@@ -1,0 +1,20 @@
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
+  <div class="form-header">
+<!--    <h1>{{ reportSet.id ? ('edit_report_set' | t) : ('add_report_set' | t) }}</h1>-->
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'report', 'timings']">{{ 'cancel' | t }}</button>
+      <button type="button" class="btn blue-btn" (click)="submit()">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'timed_report_name' | t }}</mat-label>
+          <input matInput type="text" name="name" formControlName="name">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</form>
+

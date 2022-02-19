@@ -226,6 +226,7 @@
   { "key": "delete_user", "value": "מחק משתמש" },
   { "key": "delete_unit", "value": "מחק יחידה" },
   { "key": "timed_reports", "value": "דו\"חות מתוזמנים" },
+  { "key": "historical_reports", "value": "דו\"חות היסטוריים" },
   { "key": "routers", "value": "נתבים" },
   { "key": "calls", "value": "שיחות" },
   { "key": "calltime_editing_submit_error", "value": "לא ניתן לשמור בזמן עריכת זמני חיוג" },
@@ -356,7 +357,7 @@
   { "key": "permission_name_exists", "value": "ההרשאה קיימת בארגון." },
   { "key": "representative_extension_dial_prefix", "value": "קידומת חיוג משלוחת נציג" },
   { "key": "cdr_pull_address", "value": "כתובת למשיכת CDR" },
-  { "key": "data_sphere", "value": "עולם נתונים" },
+  { "key": "data_world", "value": "עולם נתונים" },
   { "key": "service_name", "value": "שם שירות" },
   { "key": "select_group", "value": "בחר קבוצה" },
   { "key": "call_transfer", "value": "העברת שיחה" },
@@ -386,15 +387,29 @@
   { "key": "available_columns", "value": "עמודות זמינות" },
   { "key": "selected_columns", "value": "עמודות נבחרות" },
   { "key": "add_computed_column", "value": "הוסף עמודה חישובית" },
+  { "key": "computed_column_name", "value": "שם עמודה חישובית" },
+  { "key": "computed_column_description", "value": "תיאור עמודה חישובית" },
   { "key": "save_as_draft", "value":  "שמירה כטיוטה" },
   { "key": "audit_trail", "value": "יומן אירועים" },
   { "key": "audit_trail_login", "value": "התחבר" },
   { "key": "audit_trail_logout", "value": "התנתק" },
   { "key": "clear_default", "value": "נקה ברירת מחדל" },
   { "key": "number", "value": "מספר" },
-  { "key": "enter_number", "value": "הכנס מספר" }
+  { "key": "enter_number", "value": "הכנס מספר" },
+  { "key": "add_column", "value": "הוסף עמודה" },
+  { "key": "add_computed_column", "value": "הוסף עמודת חישובית" },
+  { "key": "report_details", "value": "פרטי דו\"ח" },
+  { "key": "column_settings", "value": "הגדרות עמודה" },
+  { "key": "column_name", "value": "שם עמודה" },
+  { "key": "column_description", "value": "תיאור עמודה" },
+  { "key": "total_column_type", "value": "סוג עמודת סה\"כ" },
+  { "key": "data_type", "value": "סוג נתונים" },
+  { "key": "call_types", "value": "סוגי שיחות" },
+  { "key": "show_external_calls", "value": "הצג שיחות חיצוניות" },
+  { "key": "show_internal_calls", "value": "הצג שיחות פנימיות" },
+  { "key": "next_production_date", "value": "תאריך הפקה הבא" },
+  { "key": "timed_report_name", "value": "שם דו\"ח מתוזמן" },
+  { "key": "templates", "value": "תבניות" },
+  { "key": "formula", "value": "נוסחה" },
+  { "key": "choose_columns_error", "value": "יש לבחור עמודות" }
 ]
-
-
-
-

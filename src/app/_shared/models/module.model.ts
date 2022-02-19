@@ -1,7 +1,7 @@
 export class ModuleModel {
   name: string;
   checked?: boolean;
-  isGuarded?: boolean;
+  isOpen?: boolean;
   isToggled?: boolean;
   subModules?: ModuleModel[];
 }
