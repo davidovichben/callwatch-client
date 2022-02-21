@@ -33,6 +33,8 @@ export class HistoricalComponent implements OnInit {
 
   formGroup: FormGroup;
 
+  isSubmitting = false;
+
   constructor(private route: ActivatedRoute, private fb: FormBuilder,
               private reportService: ReportTemplateService) {}
 
@@ -111,6 +113,12 @@ export class HistoricalComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.formGroup.value)
+    if (!this.isSubmitting && this.activeReport) {
+      this.isSubmitting = true;
+      this.reportService.produceReport(this.activeReport.id, this.formGroup.value).then(response => {
+        console.log(response)
+        this.isSubmitting = false;
+      })
+    }
   }
 }

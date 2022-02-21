@@ -60,4 +60,11 @@ export class ReportTemplateService extends BaseHttpService {
       .then(response => response as ReportTemplateModel[])
       .catch(() => []);
   }
+
+  produceReport(reportTemplateId: number, criteria: object): Promise<boolean> {
+    return this.http.post(this.endPoint + '/' + reportTemplateId + '/produce', criteria, this.getTokenRequest())
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
 }
