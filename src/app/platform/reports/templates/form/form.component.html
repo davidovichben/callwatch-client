@@ -1,6 +1,6 @@
 <form (ngSubmit)="submit()" [formGroup]="formGroup" #form="ngForm">
   <div class="form-header">
-    <h1>{{ report ? ('edit_report' | t) : ('add_report' | t) }}</h1>
+    <h1>{{ reportTemplate ? ('edit_report' | t) : ('add_report' | t) }}</h1>
   </div>
   <div class="form-body">
     <section [hidden]="currentStep !== 1">
@@ -16,8 +16,8 @@
         <div class="col-12 col-md-8 col-lg-6 col-xxl-3 mb-3">
           <mat-form-field>
             <mat-label>{{ 'data_world' | t }}</mat-label>
-            <mat-select formControlName="module" (valueChange)="moduleChanged()" required>
-              <mat-option [value]="module" *ngFor="let module of modules">{{ module | t }}</mat-option>
+            <mat-select formControlName="module" (valueChange)="moduleChanged($event)" required>
+              <mat-option [value]="module.id" *ngFor="let module of modules">{{ module.name }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
@@ -34,7 +34,7 @@
     </section>
     <section [hidden]="currentStep !== 2">
       <p class="mb-5 f-20 blue-text">{{ 'select_columns_for_report' | t }}</p>
-      <app-dual-groups-select formControlName="columns" [items]="columns" [objectOutput]="true" [placeholder]="'columns' | t">
+      <app-dual-groups-select formControlName="columns" [items]="[]" [objectIO]="true" [placeholder]="'columns' | t">
         <ng-template let-item #selected>
           <div class="flex-between">
             <div>

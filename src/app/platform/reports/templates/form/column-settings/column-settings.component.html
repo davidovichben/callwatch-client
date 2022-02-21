@@ -18,11 +18,25 @@
       </mat-form-field>
     </div>
   </div>
+  <div class="row">
+    <div class="col-12 col-lg-6 mb-3">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'title' | t }}</mat-label>
+        <input matInput type="text" formControlName="title">
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-lg-6 mb-3">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'sub_title' | t }}</mat-label>
+        <input matInput type="text" formControlName="subTitle">
+      </mat-form-field>
+    </div>
+  </div>
   <div class="mb-3">
     <mat-form-field class="w-100">
       <mat-label>{{ 'total_column_type' | t }}</mat-label>
       <mat-select formControlName="totalType" required>
-        <mat-option *ngFor="let type of totalTypes" [value]="type">{{ type }}</mat-option>
+        <mat-option *ngFor="let type of totalTypes" [value]="type.toLowerCase()">{{ type }}</mat-option>
       </mat-select>
       <mat-error>{{ errorMessages.required | t }}</mat-error>
     </mat-form-field>
@@ -31,7 +45,7 @@
     <mat-form-field class="w-100">
       <mat-label>{{ 'data_type' | t }}</mat-label>
       <mat-select formControlName="dataType" required>
-        <mat-option *ngFor="let type of dataTypes" [value]="type">{{ type }}</mat-option>
+        <mat-option *ngFor="let type of dataTypes" [value]="type.value">{{ type.label }}</mat-option>
       </mat-select>
       <mat-error>{{ errorMessages.required | t }}</mat-error>
     </mat-form-field>

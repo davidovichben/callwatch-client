@@ -6,7 +6,7 @@ import { UserSessionService } from '../state/user-session.service';
 
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
-import { ReportModel } from 'src/app/_shared/models/report.model';
+import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
 @Injectable()
 export class ReportTimingService extends BaseHttpService {
@@ -26,10 +26,10 @@ export class ReportTimingService extends BaseHttpService {
       .catch(() => null);
   }
 
-  getReport(reportId: number): Promise<ReportModel> {
+  getReport(reportId: number): Promise<ReportTemplateModel> {
     return this.http.get(this.endPoint + '/' + reportId, this.getTokenRequest())
       .toPromise()
-      .then(response => response as ReportModel)
+      .then(response => response as ReportTemplateModel)
       .catch(() => null);
   }
 

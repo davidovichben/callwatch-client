@@ -8,12 +8,15 @@ import { AddComputedColumnComponent } from './add-computed-column/add-computed-c
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 import { DualGroupsSelectComponent } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.component';
 
-import { ReportService } from 'src/app/_shared/services/http/report.service';
+import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { ReportModel, ReportModules } from 'src/app/_shared/models/report.model';
+import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
-import { ReportComputedColumnModel } from 'src/app/_shared/models/report-computed-column.model';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
   selector: 'app-form',
@@ -26,14 +29,14 @@ export class FormComponent implements OnInit, OnDestroy {
 
   readonly sub = new Subscription();
 
-  readonly modules = ReportModules;
   readonly errorMessages = ErrorMessages;
 
-  columns = [{ id: 1, name: 'עמודה א' }, { id: 2, name: 'עמודה ב' }, { id: 3, name: 'עמודה ג' }];
+  columns: SelectItemModel[] = [];
+  modules: SelectItemModel[] = [];
 
   formGroup: FormGroup;
 
-  report: ReportModel;
+  reportTemplate: ReportTemplateModel;
 
   currentStep = 1;
 
@@ -41,7 +44,9 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute,
               private fb: FormBuilder, private dialog: MatDialog,
-              private reportService: ReportService) {}
+              private reportService: ReportTemplateService,
+              private selectService: SelectService,
+              private t: TranslatePipe) {}
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
@@ -51,17 +56,38 @@ export class FormComponent implements OnInit, OnDestroy {
       columns: this.fb.control(null, Validators.required)
     });
 
-    this.report = this.route.snapshot.data.report;
-    if (this.report) {
-      this.formGroup.patchValue(this.report);
+    const routeData = this.route.snapshot.data;
+    this.modules = routeData.modules;
+    this.reportTemplate = routeData.reportTemplate;
+    if (this.reportTemplate) {
+      this.getModuleColumns(this.reportTemplate.module).then(() => {
+        const computedColumns = this.reportTemplate.columns.filter(column => column.type === 'computed');
+        this.dualGroupsComponent.availableItems.push(...computedColumns);
+        this.formGroup.patchValue(this.reportTemplate);
+      });
     }
   }
 
-  moduleChanged(): void {
+  moduleChanged(moduleId: number): void {
     if (this.formGroup.get('columns').value) {
       this.formGroup.get('columns').reset();
       this.dualGroupsComponent.reset();
     }
+
+    this.getModuleColumns(moduleId);
+  }
+
+  private getModuleColumns(moduleId: number): Promise<any> {
+    return this.selectService.select('reportModuleColumn', { moduleId }).then(columns => {
+      if (columns) {
+        columns = columns.map(column => {
+          return { id: column.id, name: this.t.transform(column.name.toLowerCase()) }
+        })
+
+        this.columns = columns;
+        this.dualGroupsComponent.availableItems = columns;
+      }
+    })
   }
 
   nextStep(): void {
@@ -75,7 +101,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
 
-  openComputedColumnDialog(column?: ReportComputedColumnModel, event?: PointerEvent): void {
+  openComputedColumnDialog(column?: ReportColumnModel, event?: PointerEvent): void {
     if (event) {
       event.stopPropagation();
     }
@@ -118,8 +144,8 @@ export class FormComponent implements OnInit, OnDestroy {
     if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
-      if (this.report) {
-        this.reportService.updateReport(this.report.id, this.formGroup.value).then(response => {
+      if (this.reportTemplate) {
+        this.reportService.updateReport(this.reportTemplate.id, this.formGroup.value).then(response => {
           this.handleServerResponse(response);
         });
       } else {

@@ -27,7 +27,7 @@ export class ColumnSettingsComponent {
       title: this.fb.control(null),
       subTitle: this.fb.control(null),
       totalType: this.fb.control('SUM', Validators.required),
-      dataType: this.fb.control('%', Validators.required),
+      dataType: this.fb.control('percent', Validators.required),
       showExternal: this.fb.control(false),
       showInternal: this.fb.control(false),
     });

@@ -7,7 +7,7 @@ import { DataTableModule } from 'src/app/_shared/components/data-table/data-tabl
 
 import { SetsComponent } from './sets.component';
 
-import { ReportService } from 'src/app/_shared/services/http/report.service';
+import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { ReportSetService } from 'src/app/_shared/services/http/report-set.service';
 
 const routes: Routes = [
@@ -23,6 +23,6 @@ const routes: Routes = [
     DataTableModule,
     TranslateModule
   ],
-  providers: [ReportService, ReportSetService]
+  providers: [ReportTemplateService, ReportSetService]
 })
 export class SetsModule {}

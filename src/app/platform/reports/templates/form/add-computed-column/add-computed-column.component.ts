@@ -4,10 +4,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 
-import { ReportComputedColumnModel } from 'src/app/_shared/models/report-computed-column.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Operations } from 'src/app/_shared/constants/general';
+import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 
 @Component({
   selector: 'app-add-computed-column',
@@ -17,13 +17,14 @@ import { Operations } from 'src/app/_shared/constants/general';
 export class AddComputedColumnComponent implements OnInit {
 
   readonly errorMessages = ErrorMessages;
+  readonly operations = Operations;
 
-  operations = Operations;
+  columnsById = {};
 
   formGroup: FormGroup;
 
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<AddComputedColumnComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { computedColumn?: ReportComputedColumnModel, columns: SelectItemModel[] },
+              @Inject(MAT_DIALOG_DATA) public data: { computedColumn?: ReportColumnModel, columns: SelectItemModel[] },
               public localeService: LocaleService) {}
 
   ngOnInit(): void {
@@ -35,6 +36,8 @@ export class AddComputedColumnComponent implements OnInit {
         operators: this.fb.array([])
       })
     });
+
+    this.data.columns.forEach(column => this.columnsById[column.id] = column.name);
 
     if (this.data.computedColumn) {
       this.patchForm();
@@ -62,7 +65,7 @@ export class AddComputedColumnComponent implements OnInit {
       operators.push(this.fb.control('+'));
     }
 
-    columns.push(this.fb.control(column.name));
+    columns.push(this.fb.control(column.id));
   }
 
   removeColumn(index: number): void {

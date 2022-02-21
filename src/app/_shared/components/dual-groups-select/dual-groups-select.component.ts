@@ -22,7 +22,7 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
   @Input() items: SelectItemModel[];
   @Input() placeholder = 'items';
-  @Input() objectOutput = false;
+  @Input() objectIO = false;
 
   availableItems = [];
 
@@ -53,7 +53,7 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     this.setSelectedItems();
 
     const selected = this.selectedItems.all;
-    this.propagateChange(this.objectOutput ? selected : selected.map(item => item.id));
+    this.propagateChange(this.objectIO ? selected : selected.map(item => item.id));
   }
 
   removeItems(): void {
@@ -69,7 +69,7 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     this.setSelectedItems();
 
     const selected = this.selectedItems.all;
-    this.propagateChange(this.objectOutput ? selected : selected.map(item => item.id));
+    this.propagateChange(this.objectIO ? selected : selected.map(item => item.id));
   }
 
   private setSelectedItems(): void {
@@ -127,18 +127,34 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
   private propagateChange = (_: any) => {};
 
-  writeValue(values: number[]): void {
+  writeValue(values: any[]): void {
     if (!values) {
       return;
     }
 
-    const selectedItems = this.availableItems.filter(item => {
-      return values.indexOf(item.id) !== -1;
-    })
-
-    selectedItems.forEach(item => item.selected = true);
+    if (this.objectIO) {
+      this.writeObjectValue(values);
+    } else {
+      this.availableItems.forEach(item => {
+        if (values.includes(item.id)) {
+          item.selected = true;
+        }
+      })
+    }
 
     this.addItems();
+  }
+
+  writeObjectValue(values: any[]): void {
+    const itemsById = {};
+    this.availableItems.forEach(item => itemsById[item.id] = item);
+
+    values.forEach(value => {
+      if (itemsById[value.id]) {
+        Object.assign(itemsById[value.id], value);
+        itemsById[value.id].selected = true;
+      }
+    })
   }
 
   registerOnChange(fn: any) {

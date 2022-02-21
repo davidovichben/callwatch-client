@@ -6,7 +6,7 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 
 import { TemplatesComponent } from './templates.component';
 
-import { ReportService } from 'src/app/_shared/services/http/report.service';
+import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 
 const routes: Routes = [
   { path: '', component: TemplatesComponent },
@@ -20,6 +20,6 @@ const routes: Routes = [
     TranslateModule,
     DataTableModule
   ],
-  providers: [ReportService]
+  providers: [ReportTemplateService]
 })
 export class TemplatesModule {}

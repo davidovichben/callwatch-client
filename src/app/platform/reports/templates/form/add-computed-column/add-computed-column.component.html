@@ -26,7 +26,7 @@
           <option *ngFor="let operation of operations" [value]="operation">{{ operation }}</option>
         </select>
         <span [class]="'chip ' + localeService.dir">
-          <span>{{ formGroup.get('formula.columns').value[index] }}</span>
+          <span>{{ columnsById[column.value] }}</span>
           <mat-icon (click)="removeColumn(index)">close</mat-icon>
         </span>
       </ng-container>

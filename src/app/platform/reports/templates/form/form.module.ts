@@ -17,22 +17,27 @@ import { FormComponent } from './form.component';
 import { AddComputedColumnComponent } from './add-computed-column/add-computed-column.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 
-import { ReportService } from 'src/app/_shared/services/http/report.service';
+import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
 
-import { ReportResolve } from 'src/app/_shared/resolves/report.resolve';
+import { ReportTemplateResolve } from 'src/app/_shared/resolves/report-template.resolve';
+import { ReportModulesSelectResolve } from 'src/app/_shared/resolves/report-modules-select.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 const routes: Routes = [
   {
     path: '',
     component: FormComponent,
+    resolve: { modules: ReportModulesSelectResolve },
     canDeactivate: [DeactivateGuard]
   },
   {
     path: ':id',
     component: FormComponent,
-    resolve: { report: ReportResolve },
+    resolve: { modules: ReportModulesSelectResolve, reportTemplate: ReportTemplateResolve },
     canDeactivate: [DeactivateGuard]
   }
 ];
@@ -53,6 +58,13 @@ const routes: Routes = [
 		TranslateModule,
 		DualGroupsSelectModule,
 	],
-  providers: [ReportService, ReportResolve, DeactivateGuard]
+  providers: [
+    ReportTemplateService,
+    SelectService,
+    ReportTemplateResolve,
+    ReportModulesSelectResolve,
+    DeactivateGuard,
+    TranslatePipe
+  ]
 })
 export class FormModule {}

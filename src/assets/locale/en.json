@@ -410,5 +410,8 @@
   { "key": "timed_report_name", "value": "Timed Report Name" },
   { "key": "templates", "value": "Templates" },
   { "key": "formula", "value": "Formula" },
-  { "key": "choose_columns_error", "value": "Choosing columns is required" }
+  { "key": "choose_columns_error", "value": "Choosing columns is required" },
+  { "key": "accepted", "value": "Accepted" },
+  { "key": "title", "value": "Title" },
+  { "key": "sub_title", "value": "Sub Title" }
 ]
