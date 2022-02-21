@@ -8,6 +8,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { SortDirections, WeekDays } from 'src/app/_shared/constants/general';
 import { AbandonTimes, TimeSpaces } from 'src/app/_shared/constants/report';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
+import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Component({
   selector: 'app-historical',
@@ -23,6 +24,7 @@ export class HistoricalComponent implements OnInit {
 
   modules: SelectItemModel[] = [];
   reportTemplates: ReportTemplateModel[] = [];
+  units: UnitModel[] = [];
 
   activeModule: SelectItemModel;
   activeReport: ReportTemplateModel;
@@ -36,6 +38,8 @@ export class HistoricalComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = this.route.snapshot.data.modules;
+    this.units = this.route.snapshot.data.units;
+
     this.setActiveModule(this.modules[0]);
 
     this.makeForm();

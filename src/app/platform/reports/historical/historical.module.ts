@@ -10,19 +10,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 
 import { HistoricalComponent } from './historical.component';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
+import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { ReportModulesSelectResolve } from 'src/app/_shared/resolves/report-modules-select.resolve';
+import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
 
 const routes: Routes = [
   {
     path: '',
     component: HistoricalComponent,
-    resolve: { modules: ReportModulesSelectResolve }
+    resolve: {
+      modules: ReportModulesSelectResolve,
+      units: UnitsSelectResolve
+    }
   }
 ];
 
@@ -32,18 +38,21 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    TranslateModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule,
+    UnitSelectModule
   ],
   providers: [
     ReportTemplateService,
     SelectService,
-    ReportModulesSelectResolve
+    UnitService,
+    ReportModulesSelectResolve,
+    UnitsSelectResolve
   ]
 })
 export class HistoricalModule {}

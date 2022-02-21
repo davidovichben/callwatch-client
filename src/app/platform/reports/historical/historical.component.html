@@ -5,7 +5,7 @@
   </div>
   <div class="px-3">
     <div class="loader inline" *ngIf="isLoadingReports"></div>
-    <div class="d-flex" *ngIf="!isLoadingReports">
+    <div class="d-flex chips" *ngIf="!isLoadingReports">
       <span class="chip" [ngClass]="{ active: activeReport && activeReport.id === report.id }" (click)="activeReport = report" *ngFor="let report of reportTemplates">{{ report.name }}</span>
     </div>
     <p class="blue-text" *ngIf="reportTemplates.length === 0 && !isLoadingReports">{{ 'no_reports_exist_in_data_world' | t }}.</p>
@@ -99,6 +99,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <p class="mb-3 f-20 blue-text">{{ 'units_to_show' | t }}</p>
+    <div class="mb-4">
+      <app-unit-select [units]="units" [multiple]="true" class="w-300p"></app-unit-select>
     </div>
     <div>
       <button mat-flat-button class="blue-btn w-100p" type="submit">{{ 'show_report' | t }}</button>
