@@ -1,1 +1,80 @@
-<p>historical works!</p>
+<section id="modules" class="mb-5 white-bg">
+  <div class="tabs">
+    <div class="tab" [ngClass]="{ active: activeModule.id === module.id }"
+         (click)="setActiveModule(module)" *ngFor="let module of modules">{{ module.name | t }}</div>
+  </div>
+  <div class="px-3">
+    <div class="loader inline" *ngIf="isLoadingReports"></div>
+    <div class="d-flex" *ngIf="!isLoadingReports">
+      <span class="chip" [ngClass]="{ active: activeReport && activeReport.id === report.id }" (click)="activeReport = report" *ngFor="let report of reportTemplates">{{ report.name }}</span>
+    </div>
+    <p class="blue-text" *ngIf="reportTemplates.length === 0 && !isLoadingReports">{{ 'no_reports_exist_in_data_world' | t }}.</p>
+  </div>
+</section>
+<section id="main" class="py-4 px-5 white-bg">
+  <form (ngSubmit)="submit()" [formGroup]="formGroup">
+    <p class="mb-5 f-20 blue-text">{{ 'data_filtering' | t }}</p>
+    <div class="criterion">
+      <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>
+      <div formArrayName="times">
+        <div class="d-flex" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
+          <mat-form-field class="mx-3 no-space">
+            <mat-label>{{ 'from_hour' | t }}</mat-label>
+            <input matInput type="time" formControlName="startTime">
+          </mat-form-field>
+          <mat-form-field class="mx-3 no-space">
+            <mat-label>{{ 'to_hour' | t }}</mat-label>
+            <input matInput type="time" formControlName="endTime">
+          </mat-form-field>
+          <div class="d-flex align-items-center">
+            <button mat-flat-button type="button" class="light-green-btn" (click)="addTime()" *ngIf="last">
+              <mat-icon class="f-16">add</mat-icon>
+            </button>
+            <button mat-flat-button type="button" class="light-green-btn" (click)="removeTime(i)" *ngIf="!first">
+              <mat-icon class="f-16">remove</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="criterion" formArrayName="weekDays">
+      <span>{{ 'days_to_show' | t }}:</span>
+      <mat-checkbox class="mx-3" [formControlName]="day" *ngFor="let day of weekDays">{{ day | t }}</mat-checkbox>
+    </div>
+    <div class="criterion">
+      <span>{{ 'phone_numbers' | t }}:</span>
+      <mat-form-field class="mx-3 no-space">
+        <mat-label>{{ 'calling_number' | t }}</mat-label>
+        <input matInput type="text" formControlName="callingNumber">
+      </mat-form-field>
+      <mat-form-field class="mx-3 no-space">
+        <mat-label>{{ 'called_to_number' | t }}</mat-label>
+        <input matInput type="text" formControlName="calledNumber">
+      </mat-form-field>
+    </div>
+    <div class="criterion">
+      <span>{{ 'abandonment_treatment_time_seconds' | t }}:</span>
+      <mat-form-field class="mx-3 no-space">
+        <mat-select formControlName="abandonTime">
+          <mat-option [value]="time" *ngFor="let time of abandonTimes">{{ time }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="criterion">
+      <span>{{ 'time_space' | t }}:</span>
+      <mat-form-field class="mx-3 no-space">
+        <mat-select formControlName="timeSpace">
+          <mat-option [value]="time" *ngFor="let time of timeSpaces">{{ time }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="criterion">
+      <span>{{ 'call_types' | t }}:</span>
+      <mat-checkbox class="mx-3" formControlName="showExternal">{{ 'show_external_calls' | t }}</mat-checkbox>
+      <mat-checkbox class="mx-3" formControlName="showInternal">{{ 'show_internal_calls' | t }}</mat-checkbox>
+    </div>
+    <div>
+      <button mat-flat-button class="blue-btn w-100p" type="submit">{{ 'show_report' | t }}</button>
+    </div>
+  </form>
+</section>

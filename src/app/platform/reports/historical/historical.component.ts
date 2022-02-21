@@ -1,14 +1,96 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+
+import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
+
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { WeekDays } from 'src/app/_shared/constants/general';
+import { AbandonTimes, TimeSpaces } from 'src/app/_shared/constants/report';
+import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
 @Component({
   selector: 'app-historical',
-  templateUrl: './historical.component.html'
+  templateUrl: './historical.component.html',
+  styleUrls: ['./historical.component.styl']
 })
 export class HistoricalComponent implements OnInit {
 
-  constructor() { }
+  readonly weekDays = WeekDays;
+  readonly abandonTimes = AbandonTimes;
+  readonly timeSpaces = TimeSpaces;
+
+  modules: SelectItemModel[] = [];
+  reportTemplates: ReportTemplateModel[] = [];
+
+  activeModule: SelectItemModel;
+  activeReport: ReportTemplateModel;
+
+  isLoadingReports = true;
+
+  formGroup: FormGroup;
+
+  constructor(private route: ActivatedRoute, private fb: FormBuilder,
+              private reportService: ReportTemplateService) {}
 
   ngOnInit(): void {
+    this.modules = this.route.snapshot.data.modules;
+    this.setActiveModule(this.modules[0]);
+
+    this.makeForm();
   }
 
+  private makeForm(): void {
+    this.formGroup = this.fb.group({
+      times: this.fb.array([]),
+      weekDays: this.fb.group({}),
+      callingNumber: this.fb.control(null),
+      calledNumber: this.fb.control(null),
+      showInternal: this.fb.control(null),
+      showExternal: this.fb.control(null),
+      abandonTime: this.fb.control(null),
+      timeSpace: this.fb.control(null)
+    });
+
+    this.addTime();
+
+    this.weekDays.forEach(day => {
+      const control = this.fb.control(false);
+      (this.formGroup.get('weekDays') as FormGroup).addControl(day, control);
+    });
+  }
+
+  setActiveModule(module: SelectItemModel): void {
+    if (this.activeModule && this.activeModule.id === module.id) {
+      return;
+    }
+
+    this.isLoadingReports = true;
+
+    this.activeModule = module;
+
+    this.reportService.getReportByModule(module.id).then(response => {
+      this.isLoadingReports = false;
+
+      this.reportTemplates = response;
+      this.activeReport = this.reportTemplates[0];
+    })
+  }
+
+  addTime(): void {
+    const group = this.fb.group({
+      startTime: this.fb.control(null),
+      endTime: this.fb.control(null)
+    });
+
+    (this.formGroup.get('times') as FormArray).push(group);
+  }
+
+  removeTime(index: number): void {
+    (this.formGroup.get('times') as FormArray).removeAt(index);
+  }
+
+  submit(): void {
+    console.log(this.formGroup.value)
+  }
 }

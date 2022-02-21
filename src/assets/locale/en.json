@@ -413,5 +413,21 @@
   { "key": "choose_columns_error", "value": "Choosing columns is required" },
   { "key": "accepted", "value": "Accepted" },
   { "key": "title", "value": "Title" },
-  { "key": "sub_title", "value": "Sub Title" }
+  { "key": "sub_title", "value": "Sub Title" },
+  { "key": "data_filtering", "value": "Data Filtering" },
+  { "key": "show_values_in_date_range", "value": "Show values in date range" },
+  { "key": "for_hours_in_day", "value": "For hours in day" },
+  { "key": "days_to_show", "value": "Days to show" },
+  { "key": "phone_numbers", "value": "Phone Numbers" },
+  { "key": "abandonment_treatment_time_seconds", "value": "Abandonment treatment time (in seconds)" },
+  { "key": "time_space", "value": "Time space" },
+  { "key": "data_sorting", "value": "Data sorting" },
+  { "key": "ignore_dates", "value": "Ignore dates" },
+  { "key": "units_to_show", "value": "Units To Show" },
+  { "key": "select_column", "value": "Select Column" },
+  { "key": "calling_number", "value": "Calling number" },
+  { "key": "called_to_number", "value": "Called to number" },
+  { "key": "order", "value": "Order" },
+  { "key": "show_report", "value": "Show Report" },
+  { "key": "no_reports_exist_in_data_world", "value": "No reports exist in data world" }
 ]

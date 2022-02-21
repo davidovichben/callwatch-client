@@ -414,5 +414,22 @@
   { "key": "choose_columns_error", "value": "יש לבחור עמודות" },
   { "key": "accepted", "value": "התקבל" },
   { "key": "title", "value": "כותרת" },
-  { "key": "sub_title", "value": "כותרת משנה" }
+  { "key": "sub_title", "value": "כותרת משנה" },
+  { "key": "data_filtering", "value": "סינון נתונים" },
+  { "key": "days_to_show", "value": "הצגת נתונים" },
+  { "key": "for_hours_in_day", "value": "עבור שעות ביום" },
+  { "key": "show_values_in_date_range", "value": "הצגת נתונים בטווח תאריכים" },
+  { "key": "for_hours_in_day", "value": "עבור שעות ביום" },
+  { "key": "phone_numbers", "value": "מספרי טלפון" },
+  { "key": "abandonment_treatment_time_seconds", "value": "זמן התייחסות לנטישה (בשניות)" },
+  { "key": "time_space", "value": "מרווח זמן" },
+  { "key": "data_sorting", "value": "מיון נתונים" },
+  { "key": "ignore_dates", "value": "התעלם מתאריכים" },
+  { "key": "units_to_show", "value": "יחידות להצגה" },
+  { "key": "select_column", "value": "בחירת עמודה" },
+  { "key": "calling_number", "value": "המספר שחייג" },
+  { "key": "called_to_number", "value": "המספר שחוייג" },
+  { "key": "order", "value": "סדר" },
+  { "key": "show_report", "value": "הצג דוח" },
+  { "key": "no_reports_exist_in_data_world", "value": "לא קיימים דוחות בעולם הנתונים" }
 ]

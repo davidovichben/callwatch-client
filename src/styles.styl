@@ -194,6 +194,8 @@ button:focus
     width: 14px
     cursor: pointer
 
+.chip.active
+  background-color: BlueColor
 
 .fade
   opacity: 0
@@ -208,8 +210,9 @@ button:focus
 .ltr .btn > img
   margin-right: 10px
 
-.grey-btn, .blue-btn, .red-btn, .green-btn
+.grey-btn, .blue-btn, .red-btn, .green-btn, .light-green-btn
   color: WhiteColor !important
+  transition: 0.3s
 
 .white-btn
   background-color: LightColor !important
@@ -226,11 +229,13 @@ button:focus
 .blue-btn:hover
   background-color: LightBlueColor !important
 
+.light-green-btn
+  background-color: LightGreenColor
+
 .green-btn
   background-color: GreenColor
-  transition: 0.3s
 
-.green-btn:hover
+.green-btn:hover, .light-green-btn:hover
   background-color: DarkGreenColor
 
 .red-btn
@@ -457,6 +462,9 @@ form
   .mat-form-field-suffix
     top: -0.3em
 
+.mat-form-field.no-space .mat-form-field-wrapper
+  padding: 0
+
 .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
 .mat-checkbox-checked.mat-primary .mat-checkbox-background
   background-color: BlueColor
@@ -659,6 +667,10 @@ app-audio-input
   border-radius: 50%
   width: 10em
   height: 10em
+
+.loader.inline
+  margin: 10px 5px
+  font-size: 2px
 
 .loader
   position: relative
