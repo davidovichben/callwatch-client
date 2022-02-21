@@ -17,7 +17,7 @@
     <div class="criterion">
       <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>
       <div formArrayName="times">
-        <div class="d-flex" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
+        <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
           <mat-form-field class="mx-3 no-space">
             <mat-label>{{ 'from_hour' | t }}</mat-label>
             <input matInput type="time" formControlName="startTime">
@@ -72,6 +72,33 @@
       <span>{{ 'call_types' | t }}:</span>
       <mat-checkbox class="mx-3" formControlName="showExternal">{{ 'show_external_calls' | t }}</mat-checkbox>
       <mat-checkbox class="mx-3" formControlName="showInternal">{{ 'show_internal_calls' | t }}</mat-checkbox>
+    </div>
+    <div class="criterion" *ngIf="activeReport">
+      <span class="d-flex align-items-baseline">{{ 'data_sorting' | t }}:</span>
+      <div formArrayName="sort">
+        <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('sort')['controls']; let i = index; let first = first; let last = last">
+          <mat-form-field class="mx-3 no-space">
+            <mat-label>{{ 'select_column' | t }}</mat-label>
+            <mat-select formControlName="column">
+              <mat-option [value]="column.id" *ngFor="let column of activeReport.columns">{{ column.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mx-3 no-space">
+            <mat-label>{{ 'order' | t }}</mat-label>
+            <mat-select formControlName="direction">
+              <mat-option [value]="direction.value" *ngFor="let direction of sortDirections">{{ direction.label | t }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="d-flex align-items-center">
+            <button mat-flat-button type="button" class="light-green-btn" (click)="addSortColumn()" *ngIf="last">
+              <mat-icon class="f-16">add</mat-icon>
+            </button>
+            <button mat-flat-button type="button" class="light-green-btn" (click)="removeSortColumn(i)" *ngIf="!first">
+              <mat-icon class="f-16">remove</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <div>
       <button mat-flat-button class="blue-btn w-100p" type="submit">{{ 'show_report' | t }}</button>

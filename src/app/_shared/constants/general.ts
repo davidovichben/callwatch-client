@@ -6,3 +6,7 @@ export const Langs = [
   { value: 'he', label: 'עברית' },
   { value: 'en', label: 'English' }
 ]
+export const SortDirections = [
+  { value: 'desc', label: 'descending' },
+  { value: 'asc', label: 'ascending' }
+];
