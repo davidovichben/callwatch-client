@@ -416,7 +416,7 @@
   { "key": "title", "value": "כותרת" },
   { "key": "sub_title", "value": "כותרת משנה" },
   { "key": "data_filtering", "value": "סינון נתונים" },
-  { "key": "days_to_show", "value": "הצגת נתונים" },
+  { "key": "days_to_show", "value": "ימים להצגה" },
   { "key": "for_hours_in_day", "value": "עבור שעות ביום" },
   { "key": "show_values_in_date_range", "value": "הצגת נתונים בטווח תאריכים" },
   { "key": "for_hours_in_day", "value": "עבור שעות ביום" },

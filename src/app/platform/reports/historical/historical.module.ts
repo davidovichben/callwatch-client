@@ -13,6 +13,8 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 
 import { HistoricalComponent } from './historical.component';
+import { ResultsComponent } from './results/results.component';
+import { ProductionComponent } from './production/production.component';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
@@ -33,7 +35,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HistoricalComponent],
+  declarations: [HistoricalComponent, ProductionComponent, ResultsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
