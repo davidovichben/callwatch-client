@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
@@ -46,8 +47,9 @@ const routes: Routes = [
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule,
+    MatDatepickerModule,
     TranslateModule,
-    UnitSelectModule
+    UnitSelectModule,
   ],
   providers: [
     ReportTemplateService,

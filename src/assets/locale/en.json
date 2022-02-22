@@ -429,5 +429,7 @@
   { "key": "called_to_number", "value": "Called to number" },
   { "key": "order", "value": "Order" },
   { "key": "show_report", "value": "Show Report" },
-  { "key": "no_reports_exist_in_data_world", "value": "No reports exist in data world" }
+  { "key": "no_reports_exist_in_data_world", "value": "No reports exist in data world" },
+  { "key": "start_date", "value": "Start Date" },
+  { "key": "end_date", "value": "End Date" }
 ]

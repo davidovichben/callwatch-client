@@ -431,5 +431,7 @@
   { "key": "called_to_number", "value": "המספר שחוייג" },
   { "key": "order", "value": "סדר" },
   { "key": "show_report", "value": "הצג דוח" },
-  { "key": "no_reports_exist_in_data_world", "value": "לא קיימים דוחות בעולם הנתונים" }
+  { "key": "no_reports_exist_in_data_world", "value": "לא קיימים דוחות בעולם הנתונים" },
+  { "key": "start_date", "value": "תאריך התחלה" },
+  { "key": "end_date", "value": "תאריך סיום" }
 ]
