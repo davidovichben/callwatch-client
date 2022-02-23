@@ -327,6 +327,7 @@
   { "key": "dial_number", "value": "Dial Number" },
   { "key": "until", "value": "Until" },
   { "key": "upload_audio_file", "value": "Upload Audio File" },
+  { "key": "download", "value": "Download" },
   { "key": "download_file", "value": "Download File" },
   { "key": "dial_numbers_exist", "value": "Dial numbers exist for this switchboard" },
   { "key": "dial_number_exist", "value": "Dial number exist for this switchboard" },
@@ -431,5 +432,12 @@
   { "key": "show_report", "value": "Show Report" },
   { "key": "no_reports_exist_in_data_world", "value": "No reports exist in data world" },
   { "key": "start_date", "value": "Start Date" },
-  { "key": "end_date", "value": "End Date" }
+  { "key": "end_date", "value": "End Date" },
+  { "key": "descending", "value": "Descending" },
+  { "key": "ascending", "value": "Ascending" },
+  { "key": "example_report", "value": "Example Report" },
+  { "key": "example_report_for_dates", "value": "Example report for dates" },
+  { "key": "information", "value": "Information" },
+  { "key": "refresh", "value": "Refresh" },
+  { "key": "columns", "value": "Columns" }
 ]

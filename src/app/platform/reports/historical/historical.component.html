@@ -11,5 +11,4 @@
     <p class="blue-text" *ngIf="reportTemplates.length === 0 && !isLoadingReports">{{ 'no_reports_exist_in_data_world' | t }}.</p>
   </div>
 </section>
-<app-production [units]="units" [columns]="activeReport.columns" (isSubmitted)="submit($event)" *ngIf="activeReport && !results"></app-production>
-<app-results [results]="results" *ngIf="results"></app-results>
+<router-outlet></router-outlet>

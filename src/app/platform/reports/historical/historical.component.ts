@@ -6,6 +6,7 @@ import { ReportTemplateService } from 'src/app/_shared/services/http/report-temp
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
+import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
 
 @Component({
   selector: 'app-historical',
@@ -20,18 +21,12 @@ export class HistoricalComponent implements OnInit {
   activeModule: SelectItemModel;
   activeReport: ReportTemplateModel;
 
-  units: UnitModel[] = [];
-  results = null;
-
   isLoadingReports = true;
-
-  isSubmitting = false;
 
   constructor(private route: ActivatedRoute, private reportService: ReportTemplateService) {}
 
   ngOnInit(): void {
     this.modules = this.route.snapshot.data.modules;
-    this.units = this.route.snapshot.data.units;
 
     this.setActiveModule(this.modules[0]);
   }
@@ -51,19 +46,5 @@ export class HistoricalComponent implements OnInit {
       this.reportTemplates = response;
       this.activeReport = this.reportTemplates[0];
     })
-  }
-
-  submit(values: object): void {
-    if (!this.isSubmitting && this.activeReport) {
-      this.isSubmitting = true;
-
-      this.reportService.produceReport(this.activeReport.id, values).then(response => {
-        if (response) {
-          this.results = response.results;
-        }
-
-        this.isSubmitting = false;
-      })
-    }
   }
 }

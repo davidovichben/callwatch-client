@@ -326,6 +326,7 @@
   { "key": "dial_number", "value": "מספר חיוג" },
   { "key": "until", "value": "עד" },
   { "key": "upload_audio_file", "value": "העלה קובץ אודיו" },
+  { "key": "download", "value": "הורדה" },
   { "key": "download_file", "value": "הורד קובץ" },
   { "key": "dial_numbers_exist", "value": "מספרי חיוג קיימים במרכזיה" },
   { "key": "dial_number_exist", "value": "מספר חיוג קיים במרכזיה" },
@@ -433,5 +434,12 @@
   { "key": "show_report", "value": "הצג דוח" },
   { "key": "no_reports_exist_in_data_world", "value": "לא קיימים דוחות בעולם הנתונים" },
   { "key": "start_date", "value": "תאריך התחלה" },
-  { "key": "end_date", "value": "תאריך סיום" }
+  { "key": "end_date", "value": "תאריך סיום" },
+  { "key": "descending", "value": "יורד" },
+  { "key": "ascending", "value": "עולה" },
+  { "key": "example_report", "value": "דוח לדוגמה" },
+  { "key": "example_report_for_dates", "value": "דוח לדוגמה בתאריכים" },
+  { "key": "information", "value": "מידע" },
+  { "key": "refresh", "value": "רענן" },
+  { "key": "columns", "value": "עמודות" }
 ]

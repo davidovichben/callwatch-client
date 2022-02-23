@@ -1,0 +1,47 @@
+<div class="mb-3 flex-between">
+  <p class="h1">
+    <ng-container *ngIf="dates.start && dates.end">
+      <span>{{ 'example_report_for_dates' | t }} </span>
+      <span>{{ dates.start|date: 'd/MM/Y' }} - {{ dates.end|date: 'd/MM/Y' }}</span>
+    </ng-container>
+  </p>
+  <div>
+    <button mat-flat-button class="ms-2">
+      <mat-icon class="ms-1">error_outline</mat-icon>
+      <span>{{ 'information' | t }}</span>
+    </button>
+    <button mat-flat-button class="ms-2">
+      <mat-icon class="ms-1">refresh</mat-icon>
+      <span>{{ 'refresh' | t }}</span>
+    </button>
+    <button mat-flat-button class="ms-2">
+      <mat-icon class="ms-1">grid_on</mat-icon>
+      <span>{{ 'columns' | t }}</span>
+    </button>
+    <button mat-flat-button class="ms-2">
+      <mat-icon class="ms-1">settings</mat-icon>
+      <span>{{ 'settings' | t }}</span>
+    </button>
+    <button mat-flat-button>
+      <mat-icon class="ms-1">download</mat-icon>
+      <span>{{ 'download' | t }}</span>
+    </button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+  <tr>
+    <th *ngFor="let label of results.labels">{{ label }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let row of results.rows">
+    <td *ngFor="let value of row">{{ value }}</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td *ngFor="let total of results.totals">{{ total }}</td>
+  </tr>
+  </tfoot>
+</table>
