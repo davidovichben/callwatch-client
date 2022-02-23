@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 
@@ -8,16 +9,19 @@ import { SortDirections, WeekDays } from 'src/app/_shared/constants/general';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 import { AbandonTimes, TimeSpaces } from 'src/app/_shared/models/report-criteria.model';
+import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
 @Component({
   selector: 'app-criteria',
   templateUrl: './criteria.component.html',
   styleUrls: ['./criteria.component.styl']
 })
-export class CriteriaComponent implements OnInit {
+export class CriteriaComponent implements OnInit, OnDestroy {
+
+  readonly sub = new Subscription();
 
   units: UnitModel[] = [];
-  columns: ReportColumnModel[] = [];
+  reportTemplate: ReportTemplateModel;
 
   readonly weekDays = WeekDays;
   readonly abandonTimes = AbandonTimes;
@@ -31,6 +35,13 @@ export class CriteriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.units = this.route.snapshot.data.units;
+
+    this.reportTemplate = this.reportStateService.getReportTemplate();
+    const sub = this.reportStateService.reportTemplateChanged.subscribe(() => {
+      this.reportTemplate = this.reportStateService.getReportTemplate();
+    })
+
+    this.sub.add(sub);
 
     this.makeForm();
   }
@@ -54,19 +65,23 @@ export class CriteriaComponent implements OnInit {
         start: this.fb.control(null),
         end: this.fb.control(null),
       }),
+      units: this.fb.control(null)
     });
-
-    this.addTime();
-    this.addSortColumn();
 
     this.weekDays.forEach((day, index) => {
       const control = this.fb.control(true);
       (this.formGroup.get('weekDays') as FormGroup).addControl(index.toString(), control);
     });
 
-    const criteria = localStorage.getItem('report-criteria');
+    const criteria = this.reportStateService.getCriteria();
     if (criteria) {
-      this.formGroup.patchValue(JSON.parse(criteria));
+      criteria.times.forEach(() => this.addTime());
+      criteria.sort.forEach(() => this.addSortColumn());
+
+      this.formGroup.patchValue(criteria);
+    } else {
+      this.addTime();
+      this.addSortColumn();
     }
   }
 
@@ -100,5 +115,9 @@ export class CriteriaComponent implements OnInit {
     this.reportStateService.setCriteria(this.formGroup.value);
 
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

@@ -1,6 +1,6 @@
 <div class="mb-3 flex-between">
   <p class="h1">
-    <ng-container *ngIf="dates.start && dates.end">
+    <ng-container *ngIf="dates && dates.start && dates.end">
       <span>{{ 'example_report_for_dates' | t }} </span>
       <span>{{ dates.start|date: 'd/MM/Y' }} - {{ dates.end|date: 'd/MM/Y' }}</span>
     </ng-container>

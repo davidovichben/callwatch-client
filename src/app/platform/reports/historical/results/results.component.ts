@@ -48,7 +48,7 @@ export class ResultsComponent implements OnInit {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
 
-      const reportTemplateId = this.reportStateService.reportTemplate.id;
+      const reportTemplateId = this.reportStateService.getReportTemplate().id;
       const criteria = this.reportStateService.getCriteria();
       this.reportService.produceReport(reportTemplateId, criteria).then(response => {
         if (response) {
@@ -59,6 +59,4 @@ export class ResultsComponent implements OnInit {
       })
     }
   }
-
-
 }

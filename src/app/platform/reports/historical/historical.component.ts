@@ -27,8 +27,15 @@ export class HistoricalComponent implements OnInit {
 
   ngOnInit(): void {
     this.modules = this.route.snapshot.data.modules;
+    let activeModule = this.modules[0];
 
-    this.setActiveModule(this.modules[0]);
+    const reportTemplate = this.reportStateService.getReportTemplate();
+    if (reportTemplate) {
+      activeModule = this.modules.find(module => module.id === reportTemplate.module);
+      this.activeReport = reportTemplate;
+    }
+
+    this.setActiveModule(activeModule);
   }
 
   setActiveModule(module: SelectItemModel): void {
@@ -44,12 +51,16 @@ export class HistoricalComponent implements OnInit {
       this.isLoadingReports = false;
 
       this.reportTemplates = response;
-      this.setActiveReport(this.reportTemplates[0]);
+
+      if (this.reportTemplates.length > 0) {
+        this.setActiveReport(this.reportTemplates[0]);
+      }
     })
   }
 
-  setActiveReport(report: ReportTemplateModel): void {
-    this.activeReport = report;
-    this.reportStateService.reportTemplate = report;
+  setActiveReport(reportTemplate: ReportTemplateModel): void {
+    this.activeReport = reportTemplate;
+
+    this.reportStateService.setReportTemplate(reportTemplate);
   }
 }

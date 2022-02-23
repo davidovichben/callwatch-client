@@ -11,16 +11,15 @@ export class HistoricalReportResultsResolve implements Resolve<any> {
               private reportStateService: HistoricalReportsService) {}
 
   resolve() {
-    if (!this.reportStateService.reportTemplate) {
+    const reportTemplate = this.reportStateService.getReportTemplate();
+    if (!reportTemplate) {
       this.router.navigate(['/platform', 'reports', 'historical', 'criteria']);
       return false;
     }
 
-    const reportTemplateId = this.reportStateService.reportTemplate.id;
-
     const values = this.reportStateService.getCriteria();
     values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
 
-    return this.reportService.produceReport(reportTemplateId, values).then(response => response);
+    return this.reportService.produceReport(reportTemplate.id, values).then(response => response);
   }
 }
