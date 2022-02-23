@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 
 import { SortDirections, WeekDays } from 'src/app/_shared/constants/general';
-import { AbandonTimes, TimeSpaces } from 'src/app/_shared/constants/report';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
+import { AbandonTimes, TimeSpaces } from 'src/app/_shared/models/report-criteria.model';
 
 @Component({
   selector: 'app-criteria',
@@ -27,7 +27,7 @@ export class CriteriaComponent implements OnInit {
   formGroup: FormGroup;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-              private reportStateService: HistoricalReportsService) {}
+              private router: Router, public reportStateService: HistoricalReportsService) {}
 
   ngOnInit(): void {
     this.units = this.route.snapshot.data.units;
@@ -48,7 +48,7 @@ export class CriteriaComponent implements OnInit {
       showInternal: this.fb.control(null),
       showExternal: this.fb.control(null),
       abandonTime: this.fb.control(null),
-      timeSpace: this.fb.control(null),
+      timeSpace: this.fb.control('hour'),
       sort: this.fb.array([]),
       ignoreDates: this.fb.group({
         start: this.fb.control(null),
@@ -98,5 +98,7 @@ export class CriteriaComponent implements OnInit {
 
   submit(): void {
     this.reportStateService.setCriteria(this.formGroup.value);
+
+    this.router.navigate(['..', 'results'], { relativeTo: this.route });
   }
 }

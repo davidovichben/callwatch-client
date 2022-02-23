@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, Router } from '@angular/router';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
@@ -7,9 +7,15 @@ import { ReportTemplateService } from 'src/app/_shared/services/http/report-temp
 @Injectable()
 export class HistoricalReportResultsResolve implements Resolve<any> {
 
-  constructor(private reportService: ReportTemplateService, private reportStateService: HistoricalReportsService) {}
+  constructor(private router: Router, private reportService: ReportTemplateService,
+              private reportStateService: HistoricalReportsService) {}
 
   resolve() {
+    if (!this.reportStateService.reportTemplate) {
+      this.router.navigate(['/platform', 'reports', 'historical', 'criteria']);
+      return false;
+    }
+
     const reportTemplateId = this.reportStateService.reportTemplate.id;
 
     const values = this.reportStateService.getCriteria();

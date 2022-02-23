@@ -6,41 +6,52 @@
     </ng-container>
   </p>
   <div>
-    <button mat-flat-button class="ms-2">
+    <button mat-flat-button class="ms-2 action-btn" (click)="openInformationDialog()">
       <mat-icon class="ms-1">error_outline</mat-icon>
       <span>{{ 'information' | t }}</span>
     </button>
-    <button mat-flat-button class="ms-2">
+    <button mat-flat-button class="ms-2 action-btn" (click)="refreshResults()">
       <mat-icon class="ms-1">refresh</mat-icon>
       <span>{{ 'refresh' | t }}</span>
     </button>
-    <button mat-flat-button class="ms-2">
+    <button mat-flat-button class="ms-2 action-btn" (click)="openColumnsDialog()">
       <mat-icon class="ms-1">grid_on</mat-icon>
       <span>{{ 'columns' | t }}</span>
     </button>
-    <button mat-flat-button class="ms-2">
+    <button mat-flat-button class="ms-2 action-btn" [routerLink]="['..', 'criteria']">
       <mat-icon class="ms-1">settings</mat-icon>
       <span>{{ 'settings' | t }}</span>
     </button>
-    <button mat-flat-button>
+    <button mat-flat-button class="action-btn" [matMenuTriggerFor]="downloadMenu">
       <mat-icon class="ms-1">download</mat-icon>
       <span>{{ 'download' | t }}</span>
     </button>
+    <mat-menu #downloadMenu="matMenu">
+      <button mat-menu-item>CSV</button>
+      <button mat-menu-item>XLS</button>
+      <button mat-menu-item>XML</button>
+      <button mat-menu-item>PDF</button>
+    </mat-menu>
   </div>
 </div>
-<table class="table">
+<div class="loader inline" *ngIf="isRefreshing"></div>
+<table class="table" *ngIf="!isRefreshing">
   <thead>
   <tr>
+    <th></th>
     <th *ngFor="let label of results.labels">{{ label }}</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let row of results.rows">
-    <td *ngFor="let value of row">{{ value }}</td>
+    <td *ngFor="let value of row; let first = first">
+      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}
+    </td>
   </tr>
   </tbody>
   <tfoot>
   <tr>
+    <td></td>
     <td *ngFor="let total of results.totals">{{ total }}</td>
   </tr>
   </tfoot>

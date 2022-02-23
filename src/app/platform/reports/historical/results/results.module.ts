@@ -4,11 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
 import { ResultsComponent } from './results.component';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
+import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.component';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 
@@ -25,13 +27,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ResultsComponent, InformationDialogComponent],
+  declarations: [ResultsComponent, InformationDialogComponent, ColumnsDialogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
+    MatMenuModule,
     TranslateModule,
   ],
   providers: [ReportTemplateService, HistoricalReportResultsResolve]

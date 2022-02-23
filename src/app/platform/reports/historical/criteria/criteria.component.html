@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="formGroup">
+<form (ngSubmit)="submit()" [formGroup]="formGroup" *ngIf="reportStateService.reportTemplate">
   <p class="mb-5 f-20 blue-text">{{ 'data_filtering' | t }}</p>
   <div class="criterion">
     <span class="d-flex align-items-center">{{ 'show_values_in_date_range' | t }}:</span>
@@ -61,7 +61,7 @@
     <span>{{ 'time_space' | t }}:</span>
     <mat-form-field class="mx-3 no-space">
       <mat-select formControlName="timeSpace">
-        <mat-option [value]="time" *ngFor="let time of timeSpaces">{{ time }}</mat-option>
+        <mat-option [value]="timeSpace" *ngFor="let timeSpace of timeSpaces">{{ timeSpace | t }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

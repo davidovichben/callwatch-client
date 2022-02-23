@@ -64,7 +64,7 @@ export class ReportTemplateService extends BaseHttpService {
   produceReport(reportTemplateId: number, criteria: object): Promise<any> {
     return this.http.post(this.endPoint + '/' + reportTemplateId + '/produce', criteria, this.getTokenRequest())
       .toPromise()
-      .then(response => response)
+      .then(response => (response as any).results)
       .catch(() => null);
   }
 }

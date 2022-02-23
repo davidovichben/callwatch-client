@@ -7,7 +7,11 @@ export class ReportCriteriaModel {
   showInternal: boolean;
   showExternal: boolean;
   abandonTime: number;
-  timeSpace: number;
+  timeSpace: string;
   sort: { column: string, direction: 'desc' | 'asc' }[];
   ignoreDates: { start: string, end: string }
 }
+
+export const AbandonTimes = [];
+
+export const TimeSpaces = ['hour', 'hour_in_day', 'day', 'day_in_week', 'week', 'month', 'year'];

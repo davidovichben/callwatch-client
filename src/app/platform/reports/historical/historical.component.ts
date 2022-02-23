@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
+import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
-import { UnitModel } from 'src/app/_shared/models/unit.model';
-import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
 
 @Component({
   selector: 'app-historical',
@@ -23,7 +22,8 @@ export class HistoricalComponent implements OnInit {
 
   isLoadingReports = true;
 
-  constructor(private route: ActivatedRoute, private reportService: ReportTemplateService) {}
+  constructor(private route: ActivatedRoute, private reportService: ReportTemplateService,
+              private reportStateService: HistoricalReportsService) {}
 
   ngOnInit(): void {
     this.modules = this.route.snapshot.data.modules;
@@ -44,7 +44,12 @@ export class HistoricalComponent implements OnInit {
       this.isLoadingReports = false;
 
       this.reportTemplates = response;
-      this.activeReport = this.reportTemplates[0];
+      this.setActiveReport(this.reportTemplates[0]);
     })
+  }
+
+  setActiveReport(report: ReportTemplateModel): void {
+    this.activeReport = report;
+    this.reportStateService.reportTemplate = report;
   }
 }
