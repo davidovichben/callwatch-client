@@ -45,8 +45,7 @@ export class FormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute,
               private fb: FormBuilder, private dialog: MatDialog,
               private reportService: ReportTemplateService,
-              private selectService: SelectService,
-              private t: TranslatePipe) {}
+              private selectService: SelectService, private t: TranslatePipe) {}
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
@@ -114,9 +113,13 @@ export class FormComponent implements OnInit, OnDestroy {
       }
     });
 
-    const sub = dialog.afterClosed().subscribe(column => {
-      if (column) {
-        this.dualGroupsComponent.newItem(column, true);
+    const sub = dialog.afterClosed().subscribe(savedColumn => {
+      if (savedColumn) {
+        if (column) {
+          Object.assign(column, { ...savedColumn });
+        } else {
+          this.dualGroupsComponent.newItem(savedColumn, true);
+        }
       }
     });
 

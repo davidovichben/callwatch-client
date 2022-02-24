@@ -1,6 +1,6 @@
 <section id="modules" class="mb-5 white-bg">
   <div class="tabs">
-    <div class="tab" [ngClass]="{ active: activeModule.id === module.id }"
+    <div class="tab" [ngClass]="{ active: activeModule && activeModule.id === module.id }"
          (click)="setActiveModule(module)" *ngFor="let module of modules">{{ module.name | t }}</div>
   </div>
   <div class="px-3">
