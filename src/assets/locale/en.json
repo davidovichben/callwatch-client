@@ -490,5 +490,6 @@
   { "key": "select_time", "value": "Select Time" },
   { "key": "select_time_space", "value": "Select Time Space" },
   { "key": "current_year", "value": "Current Year" },
-  { "key": "last_year", "value": "Last Year" }
+  { "key": "last_year", "value": "Last Year" },
+  { "key": "report_columns_information", "value": "Description of the fields shown in this report" }
 ]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
@@ -22,7 +22,8 @@ export class HistoricalComponent implements OnInit {
 
   isLoadingReports = true;
 
-  constructor(private route: ActivatedRoute, private reportService: ReportTemplateService,
+  constructor(private route: ActivatedRoute, private router: Router,
+              private reportService: ReportTemplateService,
               private reportStateService: HistoricalReportsService) {}
 
   ngOnInit(): void {
@@ -62,5 +63,7 @@ export class HistoricalComponent implements OnInit {
     this.activeReport = reportTemplate;
 
     this.reportStateService.setReportTemplate(reportTemplate);
+
+    this.router.navigate(['/platform', 'reports', 'historical', 'criteria']);
   }
 }

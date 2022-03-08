@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { AddComputedColumnComponent } from './add-computed-column/add-computed-column.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 import { DualGroupsSelectComponent } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.component';
 
@@ -100,43 +99,28 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
 
-  openComputedColumnDialog(column?: ReportColumnModel, event?: PointerEvent): void {
+  openColumnSettingsDialog(columnType: string, column?: ReportColumnModel, event?: MouseEvent): void {
     if (event) {
       event.stopPropagation();
     }
 
-    const dialog = this.dialog.open(AddComputedColumnComponent, {
-      width: '620px',
-      data: {
-        columns: this.columns,
-        computedColumn: column
-      }
-    });
+    const data = { columnType, column };
+    if (columnType === 'computed') {
+      Object.assign(data, { columns: this.columns });
+    }
+
+    const dialog = this.dialog.open(ColumnSettingsComponent, {
+      data: data,
+      width: '800px'
+    })
 
     const sub = dialog.afterClosed().subscribe(savedColumn => {
       if (savedColumn) {
         if (column) {
           Object.assign(column, { ...savedColumn });
-        } else {
+        } else if (columnType === 'computed') {
           this.dualGroupsComponent.newItem(savedColumn, true);
         }
-      }
-    });
-
-    this.sub.add(sub);
-  }
-
-  openColumnSettingsDialog(column: ReportColumnModel, event: PointerEvent): void {
-    event.stopPropagation();
-
-    const dialog = this.dialog.open(ColumnSettingsComponent, {
-      data: column,
-      width: '800px'
-    })
-
-    const sub = dialog.afterClosed().subscribe(values => {
-      if (values) {
-        Object.assign(column, { ...values });
       }
     });
 

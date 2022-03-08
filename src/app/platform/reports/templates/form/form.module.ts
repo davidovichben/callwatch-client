@@ -14,7 +14,6 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
 
 import { FormComponent } from './form.component';
-import { AddComputedColumnComponent } from './add-computed-column/add-computed-column.component';
 import { ColumnSettingsComponent } from './column-settings/column-settings.component';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
@@ -43,7 +42,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [FormComponent, AddComputedColumnComponent, ColumnSettingsComponent],
+  declarations: [FormComponent, ColumnSettingsComponent],
 	imports: [
 		CommonModule,
 		RouterModule.forChild(routes),

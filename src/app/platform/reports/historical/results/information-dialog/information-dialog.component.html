@@ -1,7 +1,13 @@
 <div class="dialog-header">
-  <div>
-    <mat-icon>error_outline</mat-icon>
-    <span>{{ 'example_report' | t }}</span>
+  <div class="flex-center">
+    <mat-icon class="ms-1">error_outline</mat-icon>
+    <span>{{ reportTemplate.name }}</span>
   </div>
   <i class="la la-times" mat-dialog-close></i>
 </div>
+<p class="mb-5 f-16" *ngIf="reportTemplate.description">{{ reportTemplate.description }}</p>
+<p class="mb-3 f-16">{{ 'report_columns_information' | t }}:</p>
+<p *ngFor="let column of reportTemplate.columns">
+  <span class="bold">{{ column.name }}</span>
+  <span *ngIf="column.description">- {{ column.description }}</span>
+</p>

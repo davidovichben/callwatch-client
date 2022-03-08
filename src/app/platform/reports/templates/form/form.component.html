@@ -41,12 +41,12 @@
               <mat-icon class="ms-3 align-middle dark-grey-text f-16">menu</mat-icon>
               <span>{{ item.name }}</span>
             </div>
-            <mat-icon class="dark-grey-text f-16" (click)="item.formula ? openComputedColumnDialog(item, $event) : openColumnSettingsDialog(item, $event)">settings</mat-icon>
+            <mat-icon class="dark-grey-text f-16" (click)="openColumnSettingsDialog(item.formula ? 'computed' : 'standard', item, $event)">settings</mat-icon>
           </div>
         </ng-template>
       </app-dual-groups-select>
       <p class="my-3 alert alert-danger w-250p" *ngIf="form.submitted && formGroup.get('columns').errors">{{ 'choose_columns_error' | t }}</p>
-      <span class="blue-text f-12 underline pointer" (click)="openComputedColumnDialog()">{{ 'add_computed_column' | t }}</span>
+      <span class="blue-text f-12 underline pointer" (click)="openColumnSettingsDialog('computed')">{{ 'add_computed_column' | t }}</span>
     </section>
   </div>
   <div class="mt-3">

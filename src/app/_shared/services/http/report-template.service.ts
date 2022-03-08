@@ -76,7 +76,7 @@ export class ReportTemplateService extends BaseHttpService {
   }
 
   exportReport(reportTemplateId: number, criteria: object, format: string): Promise<any> {
-    return this.http.post(this.endPoint + '/' + reportTemplateId + '/produce', criteria, this.getBlobRequest({ format }))
+    return this.http.post(this.endPoint + '/' + reportTemplateId + '/export', criteria, this.getBlobRequest({ format }))
       .toPromise()
       .then(response => response)
       .catch(() => null);

@@ -9,7 +9,7 @@ import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.componen
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 
-import { ReportFormats } from 'src/app/_shared/models/report-template.model';
+import { ReportFormats, ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
 @Component({
   selector: 'app-results',
@@ -20,6 +20,7 @@ export class ResultsComponent implements OnInit {
 
   readonly formats = ReportFormats;
 
+  reportTemplate: ReportTemplateModel;
   dates: { from: string, to: string };
   timeSpace: string;
 
@@ -42,15 +43,20 @@ export class ResultsComponent implements OnInit {
   ngOnInit(): void {
     this.results = this.route.snapshot.data.results;
     this.dates = this.reportStateService.dates;
+    this.reportTemplate = this.reportStateService.getReportTemplate();
     this.timeSpace = this.reportStateService.getCriteria().timeSpace;
   }
 
   openInformationDialog(): void {
-    this.dialog.open(InformationDialogComponent);
+    this.dialog.open(InformationDialogComponent, {
+      data: this.reportTemplate
+    });
   }
 
   openColumnsDialog(): void {
-    this.dialog.open(ColumnsDialogComponent);
+    this.dialog.open(ColumnsDialogComponent, {
+      data: this.reportTemplate.columns
+    });
   }
 
   produce(): void {

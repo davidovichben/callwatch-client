@@ -111,7 +111,10 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.reportStateService.setCriteria(this.formGroup.value);
+    const values = this.formGroup.value;
+    values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
+
+    this.reportStateService.setCriteria(values);
 
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
   }
