@@ -24,6 +24,8 @@ export class ResultsComponent implements OnInit {
   timeSpace: string;
 
   results: {
+    titles: [],
+    subTitles: [],
     labels: [],
     rows: [];
     totals: []
@@ -75,7 +77,7 @@ export class ResultsComponent implements OnInit {
       const criteria = this.reportStateService.getCriteria();
       this.reportService.exportReport(reportTemplate.id, criteria, format.toLowerCase()).then(response => {
         if (response) {
-          this.fileSaver.save(response, reportTemplate.name + '.' + format);
+          this.fileSaver.save(response, reportTemplate.name + '.' + (format.toLowerCase()));
         }
 
         this.isDownloading = false;

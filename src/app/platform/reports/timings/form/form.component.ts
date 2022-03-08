@@ -133,6 +133,12 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  setDistributionControlValidation(controlName: string, notRequired: boolean): void {
+    const validators = notRequired ? [] : Validators.required;
+    this.formGroup.get('distribution.' + controlName).setValidators(validators);
+    this.formGroup.get('distribution.' + controlName).updateValueAndValidity();
+  }
+
   submit(): void {
     if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;

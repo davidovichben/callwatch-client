@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="formGroup">
+<form (ngSubmit)="submit()" [formGroup]="formGroup" #form="ngForm">
   <div class="form-header">
     <h1>{{ reportTimingId ? ('edit_report_timing' | t) : ('add_report_timing' | t) }}</h1>
     <div>
@@ -73,7 +73,7 @@
     <section formGroupName="distribution" [hidden]="currentStep !== 4">
       <p class="f-18 bold light-black-text">{{ 'select_users_to_send' | t }}</p>
       <p class="mb-3 f-16 bold light-black-text">{{ 'report_timing_users_s' | t }}</p>
-      <mat-checkbox>{{ 'send_report_to_organization' | t }}</mat-checkbox>
+<!--      <mat-checkbox [checked]="!formGroup.get('distribution.users').value" (change)="setDistributionControlValidation('users', $event.checked)">{{ 'send_report_to_organization' | t }}</mat-checkbox>-->
       <div class="mb-5 row">
         <div class="col-12 col-lg-3">
           <mat-form-field>
@@ -81,6 +81,7 @@
             <mat-select formControlName="users" multiple>
               <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
             </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -89,10 +90,11 @@
         <span>{{ 'report_timing_units_s1' | t }}. </span>
         <span class="red-text">{{ 'report_timing_units_s2' | t }}.</span>
       </p>
-      <mat-checkbox>{{ 'report_timing_units_s3' | t }}</mat-checkbox>
+<!--      <mat-checkbox [checked]="!formGroup.get('distribution.units').value" (change)="setDistributionControlValidation('units', $event.checked)">{{ 'report_timing_units_s3' | t }}</mat-checkbox>-->
       <div class="row">
         <div class="col-12 col-lg-3">
           <app-unit-select [units]="units" [multiple]="true"></app-unit-select>
+          <p class="mt-1 alert alert-danger d-block" [@fade]="form.submitted && formGroup.get('distribution.units').errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
         </div>
       </div>
     </section>

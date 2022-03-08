@@ -27,13 +27,21 @@
       <span>{{ 'download' | t }}</span>
     </button>
     <mat-menu #downloadMenu="matMenu">
-      <button mat-menu-item (click)="download(format)" *ngFor="let format of formats">format</button>
+      <button mat-menu-item (click)="download(format)" *ngFor="let format of formats">{{ format }}</button>
     </mat-menu>
   </div>
 </div>
 <div class="loader inline" *ngIf="isProducing"></div>
 <table class="table" *ngIf="!isProducing">
   <thead>
+  <tr *ngIf="results.titles.length > 0">
+    <th></th>
+    <th *ngFor="let title of results.titles" [colSpan]="title.length">{{ title.name }}</th>
+  </tr>
+  <tr *ngIf="results.subTitles.length > 0">
+    <th></th>
+    <th *ngFor="let subTitle of results.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>
+  </tr>
   <tr>
     <th></th>
     <th *ngFor="let label of results.labels">{{ label }}</th>
