@@ -1,0 +1,23 @@
+<div id="selectLabel" [ngClass]="{ 'hasError': hasError, 'opened': isSelectOpened, 'selected' : value }" (click)="openDropdown()">
+	<div id="selectLabelBorder"></div>
+  <div id="selectLabelCover">
+    <span id="placeholder" [@placeholder]="value && (!multiple || value.length > 0) ? 'active' : 'inactive'">{{ placeholder }}</span>
+    <div id="multipleSelectedItems" *ngIf="value && multiple">
+      <span *ngFor="let item of label; let last = last">{{ last ? item : item + ',' }}</span>
+    </div>
+    <span id="selectedValue" *ngIf="value && !multiple">{{ label }}</span>
+    <div id="buttons">
+      <mat-icon>arrow_drop_down</mat-icon>
+    </div>
+  </div>
+</div>
+<div id="dropdown" #dropdown [@slideToggle]="isSelectOpened ? 'active' : 'inactive'">
+	<div id="filterInput">
+		<input (keyup)="filter()" [placeholder]="searchPlaceholder" [(ngModel)]="filterValue" class="w-100" #filterValueEle>
+	</div>
+	<div id="options" [ngStyle]="{ 'maxHeight': optionsHeight }">
+    <bd-option [default]="true" (click)="resetValue($event)" *ngIf="!required">--</bd-option>
+    <ng-content></ng-content>
+  </div>
+</div>
+

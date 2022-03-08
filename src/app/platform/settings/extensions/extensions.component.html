@@ -1,0 +1,30 @@
+<div class="mb-3 flex-between">
+  <h1>{{ 'extensions' | t }}</h1>
+  <div>
+    <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('switchboards', 'create')">
+      <i class="la la-plus ms-1"></i>
+      <span>{{ 'add_extension' | t }}</span>
+    </button>
+  </div>
+</div>
+<app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('switchboards')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+  <tr *ngFor="let item of dataTable.items">
+    <td>{{ item.name }}</td>
+    <td>{{ item.dialNumber }}</td>
+    <td>{{ item.type }}</td>
+    <td>{{ item.unit }}</td>
+    <td class="row-icons" *ngIf="userSession.canModify('switchboards')">
+      <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('switchboards', 'update')">
+          <mat-icon>edit</mat-icon>
+          <span>{{ 'edit' | t }}</span>
+        </button>
+        <button mat-menu-item class="row-action" (click)="deleteItem(item.id)" *ngIf="userSession.hasPermission('switchboards', 'delete')">
+          <mat-icon>delete</mat-icon>
+          <span>{{ 'delete' | t }}</span>
+        </button>
+      </mat-menu>
+    </td>
+  </tr>
+</app-data-table>

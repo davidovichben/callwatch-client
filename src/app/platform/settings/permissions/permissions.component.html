@@ -1,0 +1,29 @@
+<div class="mb-3 flex-between">
+  <h1>{{ 'permission_management' | t }}</h1>
+  <div>
+    <button class="btn blue-btn" routerLink="form" *ngIf="userSession.hasPermission('permissions', 'create')">
+      <i class="la la-plus ms-1"></i>
+      <span>{{ 'add_permission' | t }}</span>
+    </button>
+  </div>
+</div>
+<app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('permissions')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+  <tr *ngFor="let item of dataTable.items">
+    <td>{{ item.name }}</td>
+    <td>{{ item.description }}</td>
+    <td>{{ item.userCount }}</td>
+    <td class="row-icons" *ngIf="userSession.canModify('permissions')">
+      <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('permissions', 'update')">
+          <mat-icon>edit</mat-icon>
+          <span>{{ 'edit' | t }}</span>
+        </button>
+        <button mat-menu-item class="row-action" (click)="deleteItem(item)" *ngIf="userSession.hasPermission('permissions', 'delete')">
+          <mat-icon>delete</mat-icon>
+          <span>{{ 'delete' | t }}</span>
+        </button>
+      </mat-menu>
+    </td>
+  </tr>
+</app-data-table>

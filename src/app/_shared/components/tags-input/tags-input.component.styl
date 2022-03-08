@@ -1,0 +1,61 @@
+@import '~src/assets/variables';
+
+:host
+  position: relative
+  display: block
+  width: 100%
+
+.form-field
+  display: flex
+  flex-wrap: wrap
+
+#suggestedTags
+  position: absolute
+  width: 100%
+  z-index: 999999
+  border: 1px solid MaterialGrey
+  background-color: #fff
+
+  .search-container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin: 8px
+    margin-bottom: 0
+    padding: 6px
+    border: 1px solid MaterialGrey
+    border-radius: 6px
+
+  input
+    border: none
+    outline: none
+    font-size: 14px
+    flex-grow: 1
+
+  .suggested-tags-list
+    max-height: 160px
+    min-height: 40px
+    overflow-y: auto
+
+    .suggested-tag
+      padding: 8px
+      color: #005073
+      cursor: pointer
+
+    .suggested-tag:hover
+      color: #fff
+      background-color: #005073
+
+    .loader
+      margin: 10px 5px
+      font-size: 2px
+
+  .create-tag
+    display: inline-flex
+    align-items: center
+    margin: 0 6px 5px 6px
+    padding: 4px 8px
+    background-color: #dbe0e6
+    color: #112344
+    border-radius: 5px
+    cursor: pointer

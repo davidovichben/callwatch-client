@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-field {
+	margin: 0 10px;
+	width: 200px;
+}
+
+.date-select-fields {
+	margin-bottom: 10px;
+}
+
+#resetButton, #searchButton {
+  cursor: pointer;
+}
+
+#resetButton {
+  margin: 0 20px;
+  text-decoration: underline;
+}

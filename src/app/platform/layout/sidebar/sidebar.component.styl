@@ -1,0 +1,131 @@
+@import '~src/assets/variables';
+
+:host
+  position: fixed
+  top: 0
+  display: flex
+  height: 100vh
+  flex-direction: column
+  background-color: #1e2635
+  color: #fff
+  z-index: 999999
+  overflow-y: visible
+  transition: 0.3s ease
+
+.rtl :host
+  right: 0
+
+.ltr :host
+  left: 0
+
+:host.opened
+  width: 220px
+
+:host.closed
+  width: 80px
+
+  .sidebar-item
+
+    > div, > span
+      display: none
+
+.logo
+  height: 8.5vh !important
+  min-height: 80px
+
+  span
+    max-height: 40px
+    overflow: hidden
+    word-break: break-all
+
+#menu
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  flex-grow: 1
+  height: 80vh
+  overflow-y: auto
+  overflow-x: hidden
+
+#menu::-webkit-scrollbar
+    width: 10px
+
+#menu::-webkit-scrollbar-track
+    background: DarkBlueColor
+    border-radius: 8px
+
+#menu::-webkit-scrollbar-thumb
+    background: BlueColor
+    border-radius: 8px
+
+:host.closed
+  #menu
+    overflow: visible
+
+#modules
+
+  .module-container:hover > .sidebar-item, .sidebar-item.active
+    margin: 10px
+    border-radius: 10px
+    background-color: AlphaBlueColor
+    color: LighterBlueColor
+
+.sidebar-item
+  display: flex
+  align-items: center
+  height: 70px
+  margin: 10px 0
+  color: #fff
+  cursor: pointer
+  transition: 0.3s ease margin
+
+  figure
+    display: flex
+    align-items: center
+    margin: 0 25px
+
+    mat-icon
+      font-size: 32px
+
+  span
+    max-height: 30px
+    overflow: hidden
+    transition: 0.3s
+
+.sub-modules
+  overflow: hidden
+
+  .sidebar-item
+    margin: 0
+    background-color: DarkBlueColor
+    font-size: 14px
+
+  :before
+    content: ""
+    width: 80px
+
+  .sidebar-item.active, .sidebar-item:hover
+    color: LighterBlueColor !important
+    font-weight: bold
+    border: none
+    background-color: DarkBlueColor !important
+    margin: 0 !important
+    border-radius: 0 !important
+
+:host.closed
+  #modules
+    .sidebar-item:hover, .sidebar-item.active
+      margin: 0
+
+  .sub-modules
+    display: none
+
+#toggleSidebar
+  height: 5.5vh
+  min-height: 50px
+  margin: 0
+  background-color: BlueColor
+
+  mat-icon
+    margin: 0
+    font-size: 20px

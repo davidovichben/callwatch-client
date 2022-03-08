@@ -1,0 +1,130 @@
+<div class="d-flex justify-content-between mb-2">
+  <div class="d-flex">
+    <ng-container *ngIf="getKeysLength() < keyTypes.length">
+      <mat-form-field id="selectKey" class="ms-3 w-150p">
+        <mat-label>{{ 'select_key' | t  }}</mat-label>
+        <mat-select #newKeySelect>
+          <mat-option *ngFor="let key of unusedKeys" [value]="key">{{ key }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-flat-button type="button" class="btn blue-btn" (click)="newKey(newKeySelect.value)">{{ 'add_key' | t }}</button>
+      </div>
+    </ng-container>
+  </div>
+  <mat-form-field class="w-200p">
+    <mat-label>{{ 'select_language' | t  }}</mat-label>
+    <mat-select [value]="activeLang" (valueChange)="activeLang = $event">
+      <mat-option *ngFor="let lang of langs" [value]="lang.value">{{ lang.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div id="clearDefault" class="mb-3">
+  <button mat-button class="grey-btn" (click)="clearDefault()" *ngIf="hasDefault">{{ 'clear_default' | t }}</button>
+</div>
+<ng-container [formGroup]="formService.routerForm.get('keys.' + category)">
+  <div class="group" [formArrayName]="key" *ngFor="let key of getKeys()">
+    <div class="key-action" *ngFor="let action of formGroup.get(key)['controls']; let index = index" [formGroupName]="index">
+      <div class="text-start w-200p margin-fix" *ngIf="index > 0">
+        <span class="f-12 green-text" *ngIf="action.get('conditionResult').value === 'true'">{{ 'existing' | t }}</span>
+        <span class="f-12 red-text" *ngIf="action.get('conditionResult').value === 'false'">{{ 'else' | t }}</span>
+      </div>
+      <div class="text-center margin-fix" *ngIf="index === 0">
+        <p>{{ 'default' | t }}</p>
+        <mat-radio-button [checked]="action.value.isDefault" (change)="setDefault(action)"></mat-radio-button>
+      </div>
+      <div class="text-center margin-fix" *ngIf="index === 0">
+        <p>{{ 'key_number' | t }}</p>
+        <p>{{ key }}</p>
+      </div>
+      <mat-form-field class="mx-3 w-200p">
+        <mat-label>{{ 'activity' | t }}</mat-label>
+        <mat-select formControlName="activityType" (ngModelChange)="activityChanged($event, action, key)" required>
+          <mat-option [value]="type.id" *ngFor="let type of formService.keyActivityTypes">{{ type.name | t }}</mat-option>
+        </mat-select>
+        <mat-error>{{ errorMessages.required | t }}</mat-error>
+      </mat-form-field>
+      <div class="flex-grow-1" [ngSwitch]="action.get('activityTypeName').value">
+
+        <mat-form-field class="w-100" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
+          <mat-label>{{ 'enter_number' | t }}</mat-label>
+          <input matInput formControlName="activityValue" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+
+        <div *ngSwitchCase="'audio_message'">
+          <app-audio-input [inputFile]="action.get('activityValue').value && action.get('activityValue').value[lang.value] ? action.get('activityValue').value[lang.value] : null" (fileChange)="setFile(action, $event, 'activityValue')" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+        </div>
+
+        <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
+          <mat-label>{{ 'select_language' | t }}</mat-label>
+          <mat-select formControlName="activityValue" required>
+            <mat-option [value]="lang.value" *ngFor="let lang of langs">{{ lang.label }}</mat-option>
+          </mat-select>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" *ngSwitchCase="'send_sms'">
+          <mat-label>{{ 'sms_content' | t }}</mat-label>
+          <input matInput required [value]="action.get('activityValue').value && action.get('activityValue').value[lang.value] ? action.get('activityValue').value[lang.value] : null" (change)="setSMS(action, $event.target.value)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" *ngSwitchCase="'router_transfer'">
+          <mat-label>{{ 'select_router' | t }}</mat-label>
+          <mat-select formControlName="activityValue" required>
+            <mat-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</mat-option>
+          </mat-select>
+          <mat-error>{{ (errorMessages.required | t) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100" *ngSwitchCase="'external_service'">
+          <mat-label>{{ 'service_name' | t }}</mat-label>
+          <input matInput formControlName="activityValue">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+
+        <div class="d-flex align-items-center" *ngSwitchCase="'condition'">
+          <mat-form-field class="ms-3 w-200p">
+            <mat-label>{{ 'select_condition' | t }}</mat-label>
+            <mat-select formControlName="activityValue" (ngModelChange)="conditionValueChanged($event, action)">
+              <mat-option [value]="condition" *ngFor="let condition of conditions">{{ condition | t }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-200p">
+            <mat-label>{{ 'select_schedule' | t }}</mat-label>
+            <mat-select formControlName="conditionSchedule" required *ngIf="action.get('activityValue').value === 'schedule'">
+              <mat-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
+        <p class="mb-1 bold">{{ 'timing' | t }}</p>
+        <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>
+        <p>{{ action.get('timingType').value ? (action.get('timingType').value  | t) : ('none' | t) }}</p>
+      </div>
+      <div class="text-center icon-container" *ngIf="index === 0">
+        <p class="mb-1 bold">{{ 'status' | t }}</p>
+        <mat-icon [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">power_settings_new</mat-icon>
+        <p [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">{{ action.get('isOnline').value ? ('active' | t) : ('inactive' | t) }}</p>
+      </div>
+      <div class="group-actions">
+        <div class="h-100 text-center" *ngIf="index === 0 || action.get('isFirstCondition').value">
+          <p class="mb-2 bold">{{ 'add_line' | t }}</p>
+          <button mat-flat-button class="green-btn" (click)="addAction(key, index)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div class="text-center" *ngIf="index === 0">
+          <mat-slide-toggle formControlName="isActive" (ngModelChange)="action.get('isOnline').patchValue($event)"></mat-slide-toggle>
+        </div>
+        <div class="delete-container">
+          <mat-icon class="pointer dark-grey-text" (click)="deleteAction(key, index)" *ngIf="!action.get('isFirstCondition').value">delete</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

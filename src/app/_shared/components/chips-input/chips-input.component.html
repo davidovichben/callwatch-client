@@ -1,0 +1,11 @@
+<div class="form-field" (click)="input.focus()">
+  <span class="placeholder">{{ placeholder }}</span>
+  <div class="d-flex flex-wrap">
+    <div class="chip" *ngFor="let value of values">
+      <span>{{ value }}</span>
+      <mat-icon class="me-1" (click)="removeValue(value, $event)">close</mat-icon>
+    </div>
+    <input type="text" (keypress)="keyPressed(input, $event)" #input>
+  </div>
+</div>
+<mat-hint class="f-12">{{ 'press_enter_to_insert' | t }}</mat-hint>

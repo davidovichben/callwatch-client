@@ -1,0 +1,21 @@
+<div class="dialog-header">
+  <span>{{ 'add_unit' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<form #form="ngForm" (ngSubmit)="submit(form)">
+  <mat-form-field class="w-100">
+    <mat-label>{{ 'unit_name' | t }}</mat-label>
+    <input matInput type="text" name="name" autocomplete="off" ngModel required>
+    <mat-error>{{ errorMessages.required | t }}</mat-error>
+  </mat-form-field>
+  <div>
+    <app-unit-select class="mb-3" [units]="units" [placeholder]="'select_parent_unit' | t" ngModel name="parent"></app-unit-select>
+  </div>
+  <mat-form-field class="w-100">
+    <mat-label>{{ 'external_identification' | t }}</mat-label>
+    <input matInput type="text" name="externalID" ngModel>
+  </mat-form-field>
+  <div class="text-center">
+    <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
+  </div>
+</form>

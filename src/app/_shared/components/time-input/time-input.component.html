@@ -1,0 +1,8 @@
+<div class="form-field">
+  <p>{{ placeholder }}</p>
+  <input type="number" value="00" (click)="hourInput.select()" (keyup)="inputKeyUp('hours')" (change)="inputChanged('hours')" autocomplete="off" #hourInput>
+  <span>:</span>
+  <input type="number" value="00" (click)="minuteInput.select()" (keyup)="inputKeyUp('minutes')" (change)="inputChanged('minutes')" autocomplete="off" #minuteInput>
+</div>
+
+

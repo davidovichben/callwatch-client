@@ -1,0 +1,106 @@
+@import '~src/assets/variables';
+
+:host
+  display: block
+  max-height: 720px
+  width: 350px
+  padding: 10px 30px
+  overflow-y: auto
+
+.rtl :host ul
+  margin: 2px 42px 0 0
+
+  li
+    border-right: 1px solid rgb(100, 100, 100)
+
+  li:last-child
+    border-right: none
+
+  li:before
+    right: -3px
+    content: ""
+
+  li:last-child:before
+    border-right: 1px solid rgb(100, 100, 100)
+
+.ltr :host ul
+  margin: 2px 0 0 42px
+
+  li
+    border-left: 1px solid rgb(100, 100, 100)
+
+  li:last-child
+    border-left: none
+
+  li:before
+    left: -3px
+    content: ""
+
+  li:last-child:before
+    border-left: 1px solid rgb(100, 100, 100)
+
+.loader
+  font-size: 4px
+
+ul
+  display: none
+
+  li
+    margin: 0
+    padding: 0 3px
+    line-height: 20px
+    color: BlueColor
+    font-size: 14px
+
+    i
+      background-color: WhiteColor
+      border: 1px solid LightBlackColor
+      cursor: pointer
+
+    span
+      font-size: 16px
+      font-weight: bold
+      cursor: pointer
+
+    span.active
+      text-decoration: underline
+      color: LighterBlueColor
+
+    span.disabled
+      cursor: none
+      color: LightBlackColor
+
+  li:before
+    position: relative
+    top: -0.3em
+    display: inline-block
+    height: 40px
+    width: 35px
+    color: #fff
+    border-bottom: 1px solid rgb(100, 100, 100)
+
+ul.toggled, #tree, #tree > ul
+  display: block
+
+#tree
+  margin: 0
+
+  > li:before
+    content: none
+
+.rtl :host #tree
+  > li
+    border-right: none
+
+.ltr :host #tree
+  > li
+    border-left: none
+
+.rtl :host #mainBranch
+  margin: 0 20px 0 0
+
+.ltr :host #mainBranch
+  margin: 0 0 0 20px
+
+#dragPlaceholder
+  background-color: #000

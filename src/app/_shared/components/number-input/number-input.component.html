@@ -1,0 +1,13 @@
+<div class="form-field">
+  <span class="placeholder">{{ placeholder }}</span>
+  <div class="d-flex">
+    <div class="icon-container">
+      <mat-icon (click)="incrementValue()">add</mat-icon>
+    </div>
+    <input type="number" [value]="value" [required]="required" (change)="value = $event.target.value">
+    <div class="icon-container">
+      <mat-icon (click)="decrementValue()">remove</mat-icon>
+    </div>
+    <mat-error *ngIf="required">{{ errorMessages.required | t }}</mat-error>
+  </div>
+</div>

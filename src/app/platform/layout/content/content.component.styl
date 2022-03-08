@@ -1,0 +1,49 @@
+@import '~src/assets/variables';
+
+:host
+  display: flex
+  flex-direction: column
+  flex-grow: 1
+  transition: 0.3s ease
+
+.ltr :host.opened
+  margin-left: 220px
+
+.rtl :host.opened
+  margin-right: 220px
+
+.ltr :host.closed
+  margin-left: 80px
+
+.rtl :host.closed
+  margin-right: 80px
+
+header
+  height: 8.5vh
+  min-height: 80px
+  padding: 0 10px
+
+  .user-default-avatar
+    margin: 0 30px 20px 20px
+    font-size: 45px
+
+  .user-avatar
+    height: 45px
+    width: 45px
+    margin: 0 15px
+
+#content
+  flex-grow: 1
+  padding: 25px
+  background-color: LightGreyColor
+
+#content.no-padding
+  padding: 0
+
+@media (min-width: 992px)
+  #content
+    padding: 25px 50px
+
+@media (min-width: 1200px)
+  #content
+    padding: 25px 100px

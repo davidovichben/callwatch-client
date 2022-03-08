@@ -1,0 +1,66 @@
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
+  <div class="form-header">
+    <p class="h1">{{ uniqueDay ? ('edit_unique_day' | t) : ('add_unique_day' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'uniqueDays']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+        <mat-form-field>
+          <mat-label>{{ 'unique_day_name' | t }}</mat-label>
+          <input matInput type="text" formControlName="name" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+        <mat-form-field>
+          <mat-label>{{ 'from_date' | t }}</mat-label>
+          <input matInput formControlName="startDate" [matDatepicker]="startDatePicker" required>
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+        <mat-form-field>
+          <mat-label>{{ 'to_date' | t }}</mat-label>
+          <input matInput formControlName="endDate" [matDatepicker]="endDatePicker" required>
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+          <mat-error *ngIf="formGroup.get('endDate').errors?.required">{{ errorMessages.required | t }}</mat-error>
+          <mat-error *ngIf="formGroup.get('endDate').errors?.range">{{ errorMessages.dateRange | t }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+        <mat-form-field>
+          <mat-label>{{ 'from_hour' | t }}</mat-label>
+          <input matInput type="time" formControlName="startTime" [required]="!formGroup.get('allDay').value">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
+        <mat-form-field>
+          <mat-label>{{ 'to_hour' | t }}</mat-label>
+          <input matInput type="time" formControlName="endTime"  [required]="!formGroup.get('allDay').value">
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3 mb-3 mb-lg-0 mt-lg-3">
+        <mat-checkbox class="ms-3" formControlName="allDay" (change)="allDayChecked($event.checked)">{{ 'all_day' | t }}</mat-checkbox>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-xl-9 col-xxl-6">
+        <mat-form-field>
+          <mat-label>{{ 'description' | t }}</mat-label>
+          <textarea matInput rows="8" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,32 @@
+#avatarUpload
+  position: relative
+  padding: 0
+  width: fit-content
+
+  .user-avatar, .user-default-avatar
+    width: 175px
+    height: 175px
+
+.user-default-avatar
+  font-size: 160px
+
+.overlay
+  display: flex
+  align-items: flex-end
+  justify-content: center
+  height: 100% !important
+  padding: 10px
+  background: rgba(0, 0, 0, 0.5)
+  transition: .5s ease
+  opacity: 0
+  color: rgba(255, 255, 255, 0.65)
+  font-size: 25px
+  border-radius: 50%
+
+#avatarUpload:hover
+
+  .overlay
+    opacity: 1
+
+#passwordSuffix
+  top: 5px

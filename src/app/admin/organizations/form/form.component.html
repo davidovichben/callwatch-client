@@ -1,0 +1,22 @@
+<form #form="ngForm" (ngSubmit)="submit(form)">
+  <div class="form-header">
+    <p class="h1">{{ organization.id ? ('edit_organization' | t) : ('add_organization' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/admin', 'organizations']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3 mb-3">
+        <mat-form-field>
+          <mat-label>{{ 'organization_name' | t }}</mat-label>
+          <input matInput type="text" name="name" [ngModel]="organization.name">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4 col-xxl-3 pt-3">
+        <mat-slide-toggle name="isActive" [ngModel]="organization.isActive">{{ 'active' | t }}</mat-slide-toggle>
+      </div>
+    </div>
+  </div>
+</form>

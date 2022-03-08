@@ -1,0 +1,147 @@
+:host {
+	display: block;
+	position: relative;
+	min-width: 180px;
+  margin-bottom: 5px;
+  border-radius: 11px;
+}
+
+#selectLabel {
+  position: relative;
+  height: 44px;
+  width: 100%;
+  color: rgba(0, 0, 0, .6);
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 5px;
+  box-sizing: content-box;
+  z-index: 99;
+}
+
+#selectLabel:hover {
+  border-color: transparent;
+}
+
+#selectLabel.opened {
+  border-color: transparent
+}
+
+#selectLabel.selected #placeholder {
+  position: absolute;
+  background: #fff;
+  font-size: 1rem;
+}
+
+#selectLabel.opened #placeholder {
+  color: #3f51b5;
+}
+
+#selectLabel.hasError #placeholder {
+  color: #f44336;
+}
+
+#selectLabelBorder {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  height: 46.5px;
+  width: 100%;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  pointer-events: none;
+  transition: border-color 0.1s;
+}
+
+#selectLabel:hover #selectLabelBorder {
+  border-color: #afafaf;
+}
+
+#selectLabel.opened #selectLabelBorder {
+  border-color: #3f51b5;
+}
+
+#selectLabel.hasError #selectLabelBorder {
+  border-color: #f44336;
+}
+
+#selectLabelCover {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0 .75em 0 .75em;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+#selectedValue {
+  padding: 0 4px;
+}
+
+#selectedValue {
+  color: #000;
+}
+
+#multipleSelectedItems {
+	height: 30px;
+	overflow: hidden;
+}
+
+#multipleSelectedItems > span {
+	display: inline-flex;
+	align-items: center;
+	height: 100%;
+	margin-left: 3px;
+}
+
+#selectLabel, #filterInput {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+}
+
+#buttons {
+  display: flex;
+  align-items: center;
+}
+
+mat-icon {
+  color: rgba(0, 0, 0, .54);
+}
+
+#dropdown {
+  position: absolute;
+  top: 37px;
+  width: 100%;
+  border: 2px solid #3f51b5;
+  border-top: none;
+  background-color: #fff;
+  z-index: 999999999;
+  border-radius: 0 0 5px 5px;
+}
+
+#filterInput {
+  padding: 4px 2px;
+}
+
+#filterInput > input {
+  padding: 6px 11px;
+  margin: 6px;
+  flex-grow: 1;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+}
+
+#options {
+	overflow: auto;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+:host.unfiltered ::ng-deep bd-option {
+  display: block !important;
+}

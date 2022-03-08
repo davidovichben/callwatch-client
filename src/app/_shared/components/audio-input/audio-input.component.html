@@ -1,0 +1,31 @@
+<div class="player">
+  <ng-container *ngIf="!file">
+    <span id="placeholder">{{ placeholder }}</span>
+    <mat-icon (click)="audioFileInput.click()" *ngIf="!disabled">upload</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="file">
+    <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+    <mat-menu #menu="matMenu">
+      <div mat-menu-item (click)="resetFile()">
+        <mat-icon>delete</mat-icon>
+        <span>{{ 'delete' | t }}</span>
+      </div>
+      <div mat-menu-item (click)="downloadFile()">
+        <mat-icon>download</mat-icon>
+        <span>{{ 'download_file' | t }}</span>
+      </div>
+    </mat-menu>
+    <span id="times">{{ currentTime.minutes }}:{{ currentTime.seconds }} / {{ duration.minutes }}:{{ duration.seconds }}</span>
+    <div class="d-flex" *ngIf="file">
+      <mat-icon (click)="audioPlayer.pause(); audioPlayer.currentTime = 0; playing = false">stop_circle</mat-icon>
+      <mat-icon (click)="audioPlayer.play(); playing = true" *ngIf="!playing">play_circle_filled</mat-icon>
+      <mat-icon (click)="audioPlayer.pause(); playing = false" *ngIf="playing">pause_circle_filled</mat-icon>
+    </div>
+  </ng-container>
+  <input type="file" (change)="uploadFile(audioFileInput.files[0])" #audioFileInput>
+  <audio #audioPlayer></audio>
+</div>
+<p class="file-name">
+  <ng-container *ngIf="file">{{ file.name.length < 25 ? file.name : file.name.substr(0, 25) + '...' }}</ng-container>
+</p>
+<p class="mt-3 alert alert-danger" [@fade]="hasTypeError ? 'active' : 'inactive'">{{ 'invalid_file_type_detailed' | t }}: wav</p>

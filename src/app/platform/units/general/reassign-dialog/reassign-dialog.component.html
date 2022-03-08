@@ -1,0 +1,14 @@
+<div class="dialog-header">
+  <span>{{ 'delete_unit' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<form #form="ngForm" class="mt-3" (ngSubmit)="submit(form)">
+    <p class="mt-3 mb-0">{{ 'unit_has_related_units' | t }}.</p>
+    <p class="mb-3">{{ 'reassign_related_units' | t }}:</p>
+  <div class="mb-3">
+    <app-unit-select [units]="data.units" [ignoredUnit]="data.replacedUnit" name="unitId" ngModel></app-unit-select>
+  </div>
+  <div class="text-center">
+    <button class="btn blue-btn" type="submit">{{ 'confirm' | t }}</button>
+  </div>
+</form>

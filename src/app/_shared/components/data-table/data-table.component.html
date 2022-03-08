@@ -1,0 +1,50 @@
+<div id="tableHeader">
+  <div>
+    <mat-form-field id="searchContainer" class="ms-3">
+      <mat-label>{{ 'search' | t }}</mat-label>
+      <input matInput [ngModel]="criteria.keyword" (keyup)="search(searchInput.value, $event)" #searchInput="ngModel">
+      <div matSuffix class="d-flex">
+        <mat-icon (click)="resetSearch(searchInput)" *ngIf="searchInput.value || criteria.keyword">close</mat-icon>
+        <mat-icon (click)="search(searchInput.value)">search</mat-icon>
+      </div>
+    </mat-form-field>
+    <ng-content select=".data-table-filters"></ng-content>
+    <div *ngIf="activeSwitch">
+      <mat-slide-toggle (change)="toggleActiveStatus($event.checked)" [checked]="isActive">{{ activeSwitch }}</mat-slide-toggle>
+    </div>
+  </div>
+  <ng-content select=".data-table-menus"></ng-content>
+</div>
+<!--<div [@slideToggle]="showFilters ? 'active' : 'inactive'">-->
+<!--  <app-side-filters [columns]="columns" (searchSubmitted)="extendedSearch($event)"></app-side-filters>-->
+<!--</div>-->
+<p class="alert alert-success mb-3" *ngIf="savedItem">
+  <span> {{ savedItem }}</span>
+  <span>{{ 'saved_successfully' | t }}</span>
+</p>
+<table class="table table-responsive" [ngClass]="{ 'table-hover': isSelectable }">
+	<thead>
+	<tr>
+		<th *ngIf="hasCheckColumn" class="pointer table-header">
+			<mat-checkbox (change)="checkAll($event.checked)" [ngModel]="criteria.isCheckAll" *ngIf="items.length > 0 && !disableCheckAll"></mat-checkbox>
+		</th>
+		<th *ngFor="let column of columns" class="table-header">
+      <div class="d-flex align-items-center">
+        <span>{{ column.label | t }}</span>
+        <div class="sort-container">
+          <div class="triangle-up" (click)="sort(column, 'desc')" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'desc' }"></div>
+          <div class="triangle-down" (click)="sort(column, 'asc')" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'asc' }"></div>
+        </div>
+      </div>
+		</th>
+		<th class="table-header" *ngIf="hasActionsHeader">{{ 'actions' | t }}</th>
+	</tr>
+	</thead>
+  <tbody>
+    <ng-content></ng-content>
+    <tr id="noItemsRow" *ngIf="items.length === 0">
+      <td class="text-center" [attr.colspan]="columnLength">{{ ('no_items_to_display' | t) }}.</td>
+    </tr>
+  </tbody>
+</table>
+<app-pagination [data]="paginationData" *ngIf="items.length > 0"></app-pagination>

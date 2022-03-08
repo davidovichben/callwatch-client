@@ -1,0 +1,34 @@
+@import '~src/assets/variables';
+@import '~src/assets/extendables';
+
+#clearDefault
+  height: 25px
+
+  button
+    padding: 0 5px
+    line-height: 24px
+    font-size: 12px
+
+#selectKey
+  margin-top: -10px
+
+.group
+
+  > .key-action
+    display: flex
+    align-items: center
+
+    .margin-fix
+      margin-top: -15px
+
+    > *
+      min-width: 100px
+
+  .delete-container
+    width: 64px
+    text-align: center
+
+  .group-actions
+    @extend .flex-between
+    height: 75px
+    width: 300px

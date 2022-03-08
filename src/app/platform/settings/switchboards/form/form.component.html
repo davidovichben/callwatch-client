@@ -1,0 +1,134 @@
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
+  <div class="form-header">
+    <p class="h1">{{ switchboardId ? ('edit_switchboard' | t) : ('add_switchboard' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'switchboards']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <section>
+      <p class="h3 mb-3">{{ 'switchboard_details' | t }}</p>
+      <div class="row">
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'switchboard_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'switchboard_type' | t }}</mat-label>
+            <mat-select formControlName="type" (valueChange)="toggleAxi($event)" required>
+              <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'net_address' | t }}</mat-label>
+            <input matInput type="text" formControlName="netAddress" required>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'assigned_data_manager' | t }}</mat-label>
+            <mat-select formControlName="dataManager">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let manager of managers" [value]="manager">{{ manager }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'minimal_number_of_seconds' | t }}</mat-label>
+            <input matInput type="text" min="0" formControlName="minimalSeconds" required>
+            <mat-error *ngIf="formGroup.get('minimalSeconds').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('minimalSeconds').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+    <section>
+      <p class="h3 mb-3">{{ 'switchboard_settings' | t }}</p>
+      <div class="mb-4 tabs">
+        <div class="tab" [ngClass]="{ active: activeTab === 'cti' }" (click)="activeTab = 'cti'">CTI</div>
+        <div class="tab" [ngClass]="{ active: activeTab === 'axl' }" (click)="activeTab = 'axl'" *ngIf="formGroup.get('type').value === 'CISCO'">AXL & CDR</div>
+      </div>
+      <div *ngIf="activeTab === 'cti'" formGroupName="cti">
+        <div class="row">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'cti_username' | t }}</mat-label>
+              <input matInput type="text" formControlName="username" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'cti_password' | t }}</mat-label>
+              <input matInput type="password" formControlName="password" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'cti_daily_update_time' | t }}</mat-label>
+              <input matInput type="time" formControlName="dailyUpdateAt" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <mat-checkbox class="mb-3" (change)="toggleDialPrefix($event.checked)" [checked]="formGroup.get('cti.dialPrefix').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'representative_extension_dial_prefix' | t }}</mat-label>
+              <input matInput type="text" formControlName="dialPrefix" [required]="!formGroup.get('cti.dialPrefix').disabled">
+              <mat-error *ngIf="formGroup.get('cti.dialPrefix').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('cti.dialPrefix').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTab === 'axl'" formGroupName="axl">
+        <div class="row">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'axl_address' | t }}</mat-label>
+              <input matInput type="text" formControlName="address" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'axl_username' | t }}</mat-label>
+              <input matInput type="text" formControlName="username" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'axl_password' | t }}</mat-label>
+              <input matInput type="password" formControlName="password" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <mat-checkbox class="mb-3" (ngModelChange)="toggleCdrPullAddress($event)" formControlName="enableCdrPull">{{ 'axl_enable_services' | t }}</mat-checkbox>
+            <mat-form-field>
+              <mat-label>{{ 'cdr_pull_address' | t }}</mat-label>
+              <input matInput type="text" formControlName="cdrPullAddress">
+              <mat-error>{{ errorMessages.number | t }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</form>

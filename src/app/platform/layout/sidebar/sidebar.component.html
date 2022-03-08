@@ -1,0 +1,34 @@
+<div class="logo flex-center">
+  <span>{{ toggleState === 'opened' ? 'Call Watch Pro' : 'CWP' }}</span>
+</div>
+<div id="menu">
+  <div id="modules">
+    <div class="module-container" *ngFor="let module of modules">
+      <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule.name }" *ngIf="!module.subModules">
+        <figure>
+          <mat-icon inline>{{ module.icon }}</mat-icon>
+        </figure>
+        <span>{{ module.label ? (module.label | t) : (module.name | t) }}</span>
+      </a>
+      <div class="sidebar-item" (click)="toggleSubModules(module)" [ngClass]="{ active: module.name === activeModule.name }" *ngIf="module.subModules">
+        <figure>
+          <mat-icon inline>{{ module.icon }}</mat-icon>
+        </figure>
+        <div class="w-100 flex-between">
+          <span>{{ module.name | t }}</span>
+          <mat-icon class="mx-2 side-chevron" [ngClass]="{ 'rotate-side': module.isToggled }">chevron_left</mat-icon>
+        </div>
+      </div>
+      <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 70) + 'px' : 0, transition: toggleState === 'opened' ? '0.3s ease' : '0s' }">
+        <a *ngFor="let subModule of module.subModules"
+           [ngClass]="{ active: activeSubModule && subModule.name === activeSubModule.name }"
+           [routerLink]="['/', menuType, module.name, subModule.name]"
+           class="sidebar-item">{{ subModule.label ? (subModule.label | t) : (subModule.name | t) }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="toggleSidebar" class="px-3 sidebar-item" [ngClass]="{ 'justify-content-end': toggleState === 'opened', 'justify-content-center': toggleState === 'closed' }">
+  <i class="la la-angle-double-right f-20" *ngIf="(pageDirection === 'rtl' && toggleState === 'opened') || (pageDirection === 'ltr' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
+  <i class="la la-angle-double-left f-20" *ngIf="(pageDirection === 'ltr' && toggleState === 'opened') || (pageDirection === 'rtl' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
+</div>

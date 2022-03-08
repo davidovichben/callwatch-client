@@ -1,0 +1,14 @@
+<section id="modules" class="mb-5 white-bg">
+  <div class="tabs">
+    <div class="tab" [ngClass]="{ active: activeModule && activeModule.id === module.id }"
+         (click)="setActiveModule(module)" *ngFor="let module of modules">{{ module.name | t }}</div>
+  </div>
+  <div class="px-3">
+    <div class="loader inline" *ngIf="isLoadingReports"></div>
+    <div class="d-flex chips" *ngIf="!isLoadingReports">
+      <span class="chip" [ngClass]="{ active: activeReport && activeReport.id === report.id }" (click)="setActiveReport(report)" *ngFor="let report of reportTemplates">{{ report.name }}</span>
+    </div>
+    <p class="blue-text" *ngIf="reportTemplates.length === 0 && !isLoadingReports">{{ 'no_reports_exist_in_data_world' | t }}.</p>
+  </div>
+</section>
+<router-outlet></router-outlet>

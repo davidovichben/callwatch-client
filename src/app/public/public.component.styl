@@ -1,0 +1,43 @@
+@import '~src/assets/variables';
+
+:host
+  display: flex
+  justify-content: center
+  height: 100vh
+  background-image: linear-gradient(to bottom, #37536a, #15466e)
+
+#page
+  display: flex
+  align-items: center
+  flex-direction: column
+  width: 70%
+  margin: 15px 0
+  background: #fff
+  border-radius: 5px
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.72)
+
+  header
+    width: 100%
+    margin: 20px 0
+    padding: 0 20px
+
+    #locale
+      font-weight: bold
+      color: BlueColor
+      text-decoration: underline
+      cursor: pointer
+
+  .logo
+    margin-bottom: 70px
+    font-size: 50px
+
+  #main
+    width: 310px
+
+@media (min-height: 700px)
+
+  #page
+    margin: 50px 0
+
+    header
+      margin: 20px 0 70px 0

@@ -1,0 +1,67 @@
+@import '~src/assets/variables';
+
+:host
+  display: flex
+
+mat-icon
+  color: DarkGreyColor
+  cursor: pointer
+
+.group
+  position: relative
+  border: 1px solid LightMaterialGrey
+  border-radius: 5px
+  background-color: #fff
+
+  .placeholder
+    position: absolute
+    top: -12px
+    margin: 0 8px
+    padding: 0 5px
+    font-size: 14px
+    background-color: #fff
+    color: #37536a
+
+  .search-container
+    display: flex
+    align-items: center
+    width: 90%
+    margin: 15px auto
+    padding: 4px
+    border: 1px solid #d7d7d7
+    border-radius: 5px
+    font-size: 12px
+
+    input
+      flex-grow: 1
+      border: none
+      outline: 0
+
+    mat-icon
+      width: 20px
+      height: 20px
+      font-size: 20px
+
+  ul
+    height: 200px
+    width: 250px
+    overflow: auto
+
+    li
+      padding: 4px 20px
+      color: BlueColor
+      background-color: #fff
+      cursor: pointer
+
+    li.selected
+      color: #fff
+      background-color: BlueColor
+
+.controls
+  display: flex
+  justify-content: center
+  flex-direction: column
+
+  mat-icon
+    background-color: BlueColor
+    color: #fff
