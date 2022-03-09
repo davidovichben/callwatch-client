@@ -493,5 +493,6 @@
   { "key": "select_time_space", "value": "בחר מרווח זמן" },
   { "key": "current_year", "value": "שנה נוכחית" },
   { "key": "last_year", "value": "שנה שעברה" },
-  { "key": "report_columns_information", "value": "פירוט השדות הניתנים להצגה בדוח זה" }
+  { "key": "report_columns_information", "value": "פירוט השדות הניתנים להצגה בדוח זה" },
+  { "key": "select_columns", "value": "בחירת עמודות" }
 ]

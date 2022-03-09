@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FileSaverModule } from 'ngx-filesaver';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
 
 import { ResultsComponent } from './results.component';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
@@ -31,6 +33,7 @@ const routes: Routes = [
   declarations: [ResultsComponent, InformationDialogComponent, ColumnsDialogComponent],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes),
     MatDialogModule,
     MatButtonModule,
@@ -38,6 +41,7 @@ const routes: Routes = [
     MatMenuModule,
     FileSaverModule,
     TranslateModule,
+    DualGroupsSelectModule
   ],
   providers: [ReportTemplateService, HistoricalReportResultsResolve]
 })

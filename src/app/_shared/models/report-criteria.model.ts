@@ -1,3 +1,5 @@
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+
 export class ReportCriteriaModel {
   dates: { from: string, to: string };
   times: { from: string, to: string }[];
@@ -9,7 +11,8 @@ export class ReportCriteriaModel {
   abandonTime: number;
   timeSpace: string;
   sort: { column: string, direction: 'desc' | 'asc' }[];
-  ignoreDates: { start: string, end: string }
+  ignoreDates: { start: string, end: string };
+  columns: SelectItemModel[];
 }
 
 export const AbandonTimes = [];

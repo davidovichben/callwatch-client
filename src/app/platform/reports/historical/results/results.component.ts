@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FileSaverService } from 'ngx-filesaver';
+import { Subscription } from 'rxjs';
 
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.component';
@@ -16,8 +17,9 @@ import { ReportFormats, ReportTemplateModel } from 'src/app/_shared/models/repor
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.styl']
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, OnDestroy {
 
+  readonly sub = new Subscription();
   readonly formats = ReportFormats;
 
   reportTemplate: ReportTemplateModel;
@@ -54,9 +56,25 @@ export class ResultsComponent implements OnInit {
   }
 
   openColumnsDialog(): void {
-    this.dialog.open(ColumnsDialogComponent, {
-      data: this.reportTemplate.columns
+    const criteria = this.reportStateService.getCriteria();
+    const availableColumns = this.reportTemplate.columns;
+    const selectedColumns = criteria.columns ?? availableColumns.map(column => column.id);
+
+    const dialog = this.dialog.open(ColumnsDialogComponent, {
+      data: { selected: selectedColumns, available: availableColumns }
     });
+
+    const sub = dialog.afterClosed().subscribe(newColumns => {
+      console.log(newColumns)
+      if (newColumns) {
+        criteria.columns = newColumns;
+
+        this.reportStateService.setCriteria(criteria);
+        this.produce();
+      }
+    });
+
+    this.sub.add(sub);
   }
 
   produce(): void {
@@ -89,5 +107,9 @@ export class ResultsComponent implements OnInit {
         this.isDownloading = false;
       })
     }
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

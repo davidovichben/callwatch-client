@@ -1,1 +1,8 @@
-<p>columns-dialog works!</p>
+<div class="dialog-header">
+  <span>{{ 'select_columns' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<app-dual-groups-select [items]="columns.available" [ngModel]="columns.selected" #columnsInput="ngModel"></app-dual-groups-select>
+<div class="text-center">
+  <button class="btn blue-btn" type="submit" (click)="submit(columnsInput.value)">{{ 'save' | t }}</button>
+</div>

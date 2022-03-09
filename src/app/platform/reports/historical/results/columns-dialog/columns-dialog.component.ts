@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
   selector: 'app-columns-dialog',
-  templateUrl: './columns-dialog.component.html',
-  styleUrls: ['./columns-dialog.component.less']
+  templateUrl: './columns-dialog.component.html'
 })
-export class ColumnsDialogComponent implements OnInit {
+export class ColumnsDialogComponent {
 
-  constructor() { }
+  constructor(private dialogRef: MatDialogRef<ColumnsDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public columns) {}
 
-  ngOnInit(): void {
+  submit(currentColumns: number[]): void {
+    let output = null;
+
+    const previousColumns = this.columns.selected;
+    if (JSON.stringify(currentColumns) !== JSON.stringify(previousColumns)) {
+      output = currentColumns;
+      this.columns.available.forEach(column => column.selected = false);
+    }
+
+    this.dialogRef.close(output)
   }
-
 }

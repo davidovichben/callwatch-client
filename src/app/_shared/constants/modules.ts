@@ -6,7 +6,7 @@ export const PlatformModules = [
     icon: 'assignment',
     subModules: [
       { name: 'templates', label: 'templates' },
-      { name: 'sets', label: 'report_sets' },
+      // { name: 'sets', label: 'report_sets' },
       { name: 'timings', label: 'timed_reports' },
       { name: 'historical', label: 'historical_reports' }
     ]

@@ -53,7 +53,7 @@ export class HistoricalComponent implements OnInit {
 
       this.reportTemplates = response;
 
-      if (this.reportTemplates.length > 0) {
+      if (this.reportTemplates.length > 0 && !this.activeReport) {
         this.setActiveReport(this.reportTemplates[0]);
       }
     })
