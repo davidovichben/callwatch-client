@@ -494,5 +494,6 @@
   { "key": "current_year", "value": "שנה נוכחית" },
   { "key": "last_year", "value": "שנה שעברה" },
   { "key": "report_columns_information", "value": "פירוט השדות הניתנים להצגה בדוח זה" },
-  { "key": "select_columns", "value": "בחירת עמודות" }
+  { "key": "select_columns", "value": "בחירת עמודות" },
+  { "key": "no_column_selected_error", "value": "לא נבחרו עמודות, יש לבחור עמודה אחת לפחות" }
 ]

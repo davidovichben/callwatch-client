@@ -492,5 +492,6 @@
   { "key": "current_year", "value": "Current Year" },
   { "key": "last_year", "value": "Last Year" },
   { "key": "report_columns_information", "value": "Description of the fields shown in this report" },
-  { "key": "select_columns", "value": "Select Columns" }
+  { "key": "select_columns", "value": "Select Columns" },
+  { "key": "no_column_selected_error", "value": "At least one column is required for selection" }
 ]
