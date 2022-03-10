@@ -2,7 +2,7 @@
   <div class="form-header">
     <p class="h1">{{ scheduleId ? ('edit_schedule' | t) : ('add_schedule' | t) }}</p>
     <div>
-      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'schedules']">{{ 'cancel' | t }}</button>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'settings', 'schedules']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>

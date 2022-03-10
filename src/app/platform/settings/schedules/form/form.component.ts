@@ -200,7 +200,7 @@ export class FormComponent {
 
   private handleServerResponse(response: boolean): void {
     if (response) {
-      this.router.navigate(['/platform', 'schedules']);
+      this.router.navigate(['/platform', 'settings', 'schedules']);
     } else {
       this.isSubmitting = false;
     }

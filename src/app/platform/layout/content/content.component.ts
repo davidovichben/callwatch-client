@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
+import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
 
 import { UserModel } from 'src/app/_shared/models/user.model';
 
@@ -23,9 +24,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   user: UserModel;
   isAdminViewing = false;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private userSession: UserSessionService,
+  constructor(private router: Router, private route: ActivatedRoute,
+              private userSession: UserSessionService, private appHttp: AppHttpService,
               private helpers: HelpersService) {}
 
   ngOnInit(): void {
@@ -61,6 +61,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
+    this.appHttp.logout();
+
     this.userSession.unsetUser();
     this.router.navigate(['/']);
   }

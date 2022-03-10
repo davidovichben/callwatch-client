@@ -12,7 +12,6 @@ export const PlatformModules = [
     ]
   },
   { name: 'users', icon: 'group' },
-  // { name: 'auditLog', label: 'audit_log', icon: 'group', isGuarded: true },
   {
     name: 'settings',
     icon: 'settings',
@@ -28,6 +27,7 @@ export const PlatformModules = [
       { name: 'extensions' }
     ]
   },
+  { name: 'auditTrail', label: 'audit_trail', icon: 'library_books', isOpen: true },
 ];
 
 export const AdminModules = [

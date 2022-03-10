@@ -94,7 +94,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
 	private handleServerResponse(response: boolean): void {
 		if (response) {
-			this.router.navigate(['/platform', 'uniqueDays']);
+			this.router.navigate(['/platform', 'settings', 'uniqueDays']);
     } else {
       this.isSubmitting = false;
     }

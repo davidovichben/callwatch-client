@@ -20,6 +20,13 @@ export class AppHttpService extends BaseHttpService {
       .catch(() => null);
   }
 
+  logout(): Promise<boolean> {
+    return this.http.post(this.apiUrl + '/logout', {}, { headers: { noLoader: 'true' }})
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
+
   forgotPassword(username: string): Promise<any> {
     return this.http.post(this.apiUrl + '/password/forgot', { username }, { headers: { noLoader: 'true' }})
       .toPromise()

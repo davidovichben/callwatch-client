@@ -2,7 +2,7 @@
   <div class="form-header">
     <p class="h1">{{ extension ? ('edit_extension' | t) : ('add_extension' | t) }}</p>
     <div>
-      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'extensions']">{{ 'cancel' | t }}</button>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'settings', 'extensions']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>

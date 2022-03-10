@@ -147,7 +147,7 @@ export class FormComponent implements OnInit {
 
 	private handleServerResponse(response: boolean): void {
 		if (response) {
-			this.router.navigate(['/platform', 'switchboards']);
+			this.router.navigate(['/platform', 'settings', 'switchboards']);
     } else {
       this.isSubmitting = false;
     }

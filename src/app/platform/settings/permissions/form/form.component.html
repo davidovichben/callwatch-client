@@ -2,7 +2,7 @@
   <div class="form-header">
     <p class="h1">{{ permission ? ('edit_permission' | t) : ('add_permission' | t) }}</p>
     <div>
-      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'permissions']">{{ 'cancel' | t }}</button>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'settings', 'permissions']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>

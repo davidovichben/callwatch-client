@@ -120,7 +120,7 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   private handleSubmitResponse(response: boolean): void {
     if (response) {
-      this.router.navigate(['/platform', 'permissions']);
+      this.router.navigate(['/platform', 'settings', 'permissions']);
     } else {
       this.isSubmitting = false;
     }

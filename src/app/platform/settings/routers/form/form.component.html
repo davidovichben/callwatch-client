@@ -1,7 +1,7 @@
 <div class="mb-3 flex-between">
   <p class="h1">{{ formService.router ? ('edit_router' | t) : ('add_router' | t) }}</p>
   <div>
-    <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'routers']">{{ 'cancel' | t }}</button>
+    <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'settings', 'routers']">{{ 'cancel' | t }}</button>
     <button type="submit" class="btn blue-btn" (click)="submit()">{{ 'save' | t }}</button>
   </div>
 </div>

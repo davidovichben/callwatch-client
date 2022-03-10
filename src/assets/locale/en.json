@@ -392,9 +392,6 @@
   { "key": "computed_column_name", "value": "Computed Column Name" },
   { "key": "computed_column_description", "value": "Computed Column Description" },
   { "key": "save_as_draft", "value": "Save as draft" },
-  { "key": "audit_trail", "value": "Audit Trail" },
-  { "key": "audit_trail_login", "value": "logged in" },
-  { "key": "audit_trail_logout", "value": "logged out" },
   { "key": "clear_default", "value": "Clear Default" },
   { "key": "number", "value": "Number" },
   { "key": "enter_number", "value": "Enter Number" },
@@ -493,5 +490,14 @@
   { "key": "last_year", "value": "Last Year" },
   { "key": "report_columns_information", "value": "Description of the fields shown in this report" },
   { "key": "select_columns", "value": "Select Columns" },
-  { "key": "no_column_selected_error", "value": "At least one column is required for selection" }
+  { "key": "no_column_selected_error", "value": "At least one column is required for selection" },
+  { "key": "audit_trail", "value": "Audit Trail" },
+  { "key": "audit_trail_login", "value": "logged in" },
+  { "key": "audit_trail_logout", "value": "logged out" },
+  { "key": "audit_trail_create", "value": "created the" },
+  { "key": "audit_trail_update", "value": "updated the" },
+  { "key": "audit_trail_delete", "value": "deleted the" },
+  { "key": "acd", "value": "Group" },
+  { "key": "uniqueday", "value": "Unique Day" }
 ]
+

@@ -21,6 +21,10 @@ export class HelpersService {
       url = url.substr(0, url.indexOf('/'));
     }
 
+    if (url.indexOf('?') !== -1) {
+      url = url.substr(0, url.indexOf('?'));
+    }
+
     return url;
   }
 
