@@ -11,6 +11,9 @@ import { HistoricalReportsService } from 'src/app/_shared/services/state/histori
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 
 import { ReportFormats, ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
+import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
+import { isNumeric } from 'rxjs/internal-compatibility';
+import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 
 @Component({
   selector: 'app-results',
@@ -25,6 +28,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
   reportTemplate: ReportTemplateModel;
   dates: { from: string, to: string };
   timeSpace: string;
+  criteria: ReportCriteriaModel;
+  activeColumns: ReportColumnModel[];
 
   results: {
     titles: [],
@@ -33,6 +38,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
     rows: [];
     totals: []
   }
+
+  styles = [];
 
   isProducing = false;
   isDownloading = false;
@@ -47,6 +54,18 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.dates = this.reportStateService.dates;
     this.reportTemplate = this.reportStateService.getReportTemplate();
     this.timeSpace = this.reportStateService.getCriteria().timeSpace;
+    this.criteria = this.reportStateService.getCriteria();
+
+    this.setActiveColumns();
+    this.setStyles();
+  }
+
+  private setActiveColumns(): void {
+    if (this.criteria.columns) {
+      this.activeColumns = this.reportTemplate.columns.filter(column => this.criteria.columns.includes(column.id));
+    } else {
+      this.activeColumns = this.reportTemplate.columns;
+    }
   }
 
   openInformationDialog(): void {
@@ -56,20 +75,19 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   openColumnsDialog(): void {
-    const criteria = this.reportStateService.getCriteria();
     const availableColumns = this.reportTemplate.columns;
-    const selectedColumns = criteria.columns ?? availableColumns.map(column => column.id);
+    const selectedColumns = this.criteria.columns ?? availableColumns.map(column => column.id);
 
     const dialog = this.dialog.open(ColumnsDialogComponent, {
       data: { selected: selectedColumns, available: availableColumns }
     });
 
     const sub = dialog.afterClosed().subscribe(newColumns => {
-      console.log(newColumns)
       if (newColumns) {
-        criteria.columns = newColumns;
+        this.criteria.columns = newColumns;
+        this.setActiveColumns();
 
-        this.reportStateService.setCriteria(criteria);
+        this.reportStateService.setCriteria(this.criteria);
         this.produce();
       }
     });
@@ -82,10 +100,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
       this.isProducing = true;
 
       const reportTemplateId = this.reportStateService.getReportTemplate()?.id;
-      const criteria = this.reportStateService.getCriteria();
-      this.reportService.produceReport(reportTemplateId, criteria).then(response => {
+      this.reportService.produceReport(reportTemplateId, this.criteria).then(response => {
         if (response) {
           this.results = response;
+          this.setStyles();
         }
 
         this.isProducing = false;
@@ -98,8 +116,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
       this.isDownloading = true;
 
       const reportTemplate = this.reportStateService.getReportTemplate();
-      const criteria = this.reportStateService.getCriteria();
-      this.reportService.exportReport(reportTemplate.id, criteria, format.toLowerCase()).then(response => {
+      this.reportService.exportReport(reportTemplate.id, this.criteria, format.toLowerCase()).then(response => {
         if (response) {
           this.fileSaver.save(response, reportTemplate.name + '.' + (format.toLowerCase()));
         }
@@ -107,6 +124,48 @@ export class ResultsComponent implements OnInit, OnDestroy {
         this.isDownloading = false;
       })
     }
+  }
+
+  setStyles(): void {
+    this.results.rows.forEach((row: any[], rowIndex) => {
+      const rowStyle = [];
+
+      for (let index = 1; index < row.length; index++) {
+
+        const column = this.activeColumns[index - 1];
+
+        if (column && column.conditionalDesign) {
+          const value = row[index];
+
+          const design = column.conditionalDesign;
+          if (design.equalTo?.value && design.equalTo.value == value) {
+            rowStyle[index] = { backgroundColor: design.equalTo.color, color: '#fff' };
+            continue;
+          }
+
+          if (isNumeric(value)) {
+            if (design.greaterThan?.value && design.greaterThan.value > value) {
+              rowStyle[index] = { backgroundColor: design.greaterThan.color, color: '#fff' };
+              continue;
+            }
+
+            if (design.lessThan?.value && design.lessThan.value < value) {
+              rowStyle[index] = { backgroundColor: design.lessThan.color, color: '#fff' };
+              continue;
+            }
+
+            if (design.between?.values && design.between.values.from <= value && design.between.values.to >= value) {
+              rowStyle[index] = { backgroundColor: design.between.color, color: '#fff' };
+              continue;
+            }
+          }
+        }
+
+        rowStyle[index] = null;
+      }
+
+      this.styles[rowIndex] = rowStyle;
+    })
   }
 
   ngOnDestroy(): void {

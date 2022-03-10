@@ -88,6 +88,7 @@
   { "key": "phone", "value": "Phone" },
   { "key": "primary", "value": "Primary" },
   { "key": "primary_f", "value": "Primary" },
+  { "key": "and", "value": "and" },
   { "key": "repeat_password", "value": "Repeat Password" },
   { "key": "reports", "value": "Reports" },
   { "key": "required_error", "value": "Field is required." },
@@ -498,6 +499,14 @@
   { "key": "audit_trail_update", "value": "updated the" },
   { "key": "audit_trail_delete", "value": "deleted the" },
   { "key": "acd", "value": "Group" },
-  { "key": "uniqueday", "value": "Unique Day" }
+  { "key": "conditional_design", "value": "Conditional Design" },
+  { "key": "single_value", "value": "Single Value" },
+  { "key": "value_range", "value": "Value Range" },
+  { "key": "select_color", "value": "Select Color" },
+  { "key": "value_equal_to", "value": "Value equal to" },
+  { "key": "value_greater_than", "value": "Value greater than" },
+  { "key": "value_less_than", "value": "Value less than" },
+  { "key": "value_between", "value": "Value between" },
+  { "key": "between_to", "value": "to" }
 ]
 

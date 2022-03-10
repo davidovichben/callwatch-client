@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { DataTypes, TotalTypes } from 'src/app/_shared/models/report-column.model';
+import { DataTypes, DesignColors, TotalTypes } from 'src/app/_shared/models/report-column.model';
 import { Operations } from 'src/app/_shared/constants/general';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { Fade } from 'src/app/_shared/constants/animations';
@@ -22,6 +22,12 @@ export class ColumnSettingsComponent {
   readonly totalTypes = TotalTypes;
   readonly dataTypes = DataTypes;
   readonly operations = Operations;
+  readonly designColors = DesignColors;
+  readonly designGroupNames = [
+    { name: 'equalTo', label: 'value_equal_to' },
+    { name: 'greaterThan', label: 'value_greater_than' },
+    { name: 'lessThan', label: 'value_less_than' }
+  ];
 
   columnsById = {};
 
@@ -32,6 +38,11 @@ export class ColumnSettingsComponent {
               @Inject(MAT_DIALOG_DATA) public data) {}
 
   ngOnInit(): void {
+    this.makeForm();
+    this.modifyForm();
+  }
+
+  private makeForm(): void {
     this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       description: this.fb.control(null),
@@ -41,8 +52,31 @@ export class ColumnSettingsComponent {
       dataType: this.fb.control('percent', Validators.required),
       showExternal: this.fb.control(false),
       showInternal: this.fb.control(false),
+      conditionalDesign: this.fb.group({
+        equalTo: this.fb.group({
+          value: this.fb.control(null),
+          color: this.fb.control(null)
+        }),
+        greaterThan: this.fb.group({
+          value: this.fb.control(null),
+          color: this.fb.control(null)
+        }),
+        lessThan: this.fb.group({
+          value: this.fb.control(null),
+          color: this.fb.control(null)
+        }),
+        between: this.fb.group({
+          values: this.fb.group({
+            from: this.fb.control(null),
+            to: this.fb.control(null)
+          }),
+          color: this.fb.control(null),
+        })
+      })
     });
+  }
 
+  private modifyForm(): void {
     if (this.data.columnType === 'computed') {
       this.formGroup.addControl('formula', this.fb.group({
         columns: this.fb.array([], Validators.required),
@@ -93,8 +127,25 @@ export class ColumnSettingsComponent {
   }
 
   submit(): void {
+    const values = this.formGroup.value;
+
+    values.conditionalDesign = this.filterDesign(values.conditionalDesign);
+
     if (this.formGroup.valid) {
       this.dialogRef.close(this.formGroup.value);
     }
+  }
+
+  private filterDesign(design: object): object {
+    const filtered = {};
+
+    Object.keys(design).forEach(conditionName => {
+      const condition = design[conditionName];
+      if ((condition.value || (condition.values && condition.values.from && condition.values.to)) && condition.color) {
+        filtered[conditionName] = condition;
+      }
+    });
+
+    return filtered;
   }
 }

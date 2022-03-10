@@ -82,7 +82,45 @@
     </div>
     <p class="alert alert-danger d-block" [@fade]="form.submitted && formGroup.get('formula.columns').errors ? 'active' : 'inactive'">{{ 'choose_columns_error' | t }}</p>
   </ng-container>
-<!--  <p>{{ 'conditional_design' | t }}</p>-->
+  <p class="bold light-black-text">{{ 'conditional_design' | t }}</p>
+  <ng-container formGroupName="conditionalDesign">
+    <div class="row" [formGroupName]="group.name" *ngFor="let group of designGroupNames; let first = first">
+      <div class="col-12 col-lg-4">
+        <mat-form-field class="w-100">
+          <mat-label>{{ group.label | t }}</mat-label>
+          <input matInput [type]="first? 'text' : 'number'" formControlName="value">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-4">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'select_color' | t }}</mat-label>
+          <mat-select formControlName="color">
+            <mat-option *ngFor="let color of designColors" [value]="color.value">{{ color.label | t }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" formGroupName="between">
+      <div class="col-12 col-lg-4" formGroupName="values">
+        <mat-form-field class="w-50">
+          <mat-label>{{ 'value_between' | t }}</mat-label>
+          <input matInput type="number" formControlName="from">
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <mat-label>{{ 'between_to' | t }}</mat-label>
+          <input matInput type="number" formControlName="to">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-4">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'select_color' | t }}</mat-label>
+          <mat-select formControlName="color">
+            <mat-option *ngFor="let color of designColors" [value]="color.value">{{ color.label | t }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
   <div class="text-center">
     <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
   </div>

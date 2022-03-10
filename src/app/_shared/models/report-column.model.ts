@@ -12,8 +12,16 @@ export class ReportColumnModel {
   formula: {
     columns: string[];
     operators: string[];
-  }
+  };
+  conditionalDesign: {
+    equalTo?: DesignObj,
+    greaterThan?: DesignObj,
+    lessThan?: DesignObj,
+    between?: DesignObj
+  };
 }
+
+class DesignObj { value?: string; values?: { from: number, to: number }; color: string }
 
 export const ReportColumnTypes = ['standard', 'computed'];
 export const TotalTypes = ['SUM', 'COUNT', 'AVG'];
@@ -23,3 +31,8 @@ export const DataTypes = [
   { value: 'text', label: 'TEXT' },
   { value: 'time', label: 'TIME' },
 ]
+export const DesignColors = [
+  { value: '#f00', label: 'green' },
+  { value: '#ff0', label: 'yellow' },
+  { value: '#0f0', label: 'red' }
+];

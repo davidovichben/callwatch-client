@@ -48,8 +48,8 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let row of results.rows">
-    <td *ngFor="let value of row; let first = first">
+  <tr *ngFor="let row of results.rows; let rowIndex = index">
+    <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">
       {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}
     </td>
   </tr>

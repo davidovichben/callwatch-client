@@ -50,12 +50,12 @@ const routes: Routes = [
 		MatFormFieldModule,
 		MatInputModule,
 		MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule,
+		MatCheckboxModule,
+		MatButtonModule,
 		MatIconModule,
 		MatDialogModule,
 		TranslateModule,
-		DualGroupsSelectModule,
+		DualGroupsSelectModule
 	],
   providers: [
     ReportTemplateService,
