@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { DualGroupsSelectComponent } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.component';
+import { CriteriaComponent } from './criteria/criteria.component';
 
 import { ReportTimingService } from 'src/app/_shared/services/http/report-timing.service';
 
@@ -22,7 +22,7 @@ import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.mode
 })
 export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('columns') columnsComponent: DualGroupsSelectComponent;
+  @ViewChild(CriteriaComponent) criteriaComponent: CriteriaComponent;
 
   readonly sub = new Subscription();
   readonly errorMessages = ErrorMessages;
@@ -40,6 +40,8 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   formGroup: FormGroup;
 
+  columns = [];
+
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -47,7 +49,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.makeForm();
-    this.setSubscriptions();
+    this.setFormSubscriptions();
 
     const routeData = this.route.snapshot.data;
     this.reportTemplates = routeData.reportTemplates;
@@ -60,16 +62,13 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.criteria = timing.criteria;
 
       timing.general.reportTemplate = this.reportTemplates.find(template => template.id === timing.general.reportTemplate);
-
-      this.formGroup.patchValue(timing);
+      this.columns = timing.general.reportTemplate.columns;
     }
   }
 
   ngAfterViewInit(): void {
-    if (this.reportTimingId) {
-      setTimeout(() => {
-        this.columnsComponent.availableItems = this.formGroup.get('general.reportTemplate').value.columns;
-      }, 1);
+    if (this.route.snapshot.data.reportTiming) {
+      this.formGroup.patchValue(this.route.snapshot.data.reportTiming);
     }
   }
 
@@ -78,7 +77,8 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
         reportTemplate: this.fb.control(null, Validators.required),
-        columns: this.fb.control(null, Validators.required)
+        columns: this.fb.control(null, Validators.required),
+        isActive: this.fb.control(true)
       }),
       production: this.fb.group({
         dateType: this.fb.control('day'),
@@ -86,12 +86,12 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
         time: this.fb.control(null, Validators.required)
       }),
       criteria: this.fb.group({
-        format: this.fb.control(null),
-        distribution: this.fb.control(null),
-        timeRange: this.fb.control(null),
+        format: this.fb.control(null, Validators.required),
+        distribution: this.fb.control('email', Validators.required),
+        timeRange: this.fb.control(null, Validators.required),
         times: this.fb.array([]),
-        resolution: this.fb.control(null),
-        timeSpace: this.fb.control(null),
+        resolution: this.fb.control(null, Validators.required),
+        timeSpace: this.fb.control('15_minutes'),
         weekDays: this.fb.group({}),
         callingNumber: this.fb.control(null),
         calledNumber: this.fb.control(null),
@@ -111,14 +111,27 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private setSubscriptions(): void {
-    const sub = this.formGroup.get('production.dateType').valueChanges.subscribe(value => {
+  private setFormSubscriptions(): void {
+    const dateTypeSub = this.formGroup.get('production.dateType').valueChanges.subscribe(value => {
       const validators = value !== 'day' ? Validators.required : null;
       this.formGroup.get('production.dates').setValidators(validators);
       this.formGroup.get('production.dates').updateValueAndValidity();
     });
 
-    this.sub.add(sub);
+    this.sub.add(dateTypeSub);
+
+    const columnSub = this.formGroup.get('general.columns').valueChanges.subscribe(columnIds => {
+      const templateColumns = this.formGroup.get('general.reportTemplate').value.columns;
+      this.criteriaComponent.columns = templateColumns.filter(column => columnIds.includes(column.id));
+    });
+
+    this.sub.add(columnSub);
+  }
+
+  setDistributionControlValidation(controlName: string, notRequired: boolean): void {
+    const validators = notRequired ? [] : Validators.required;
+    this.formGroup.get('distribution.' + controlName).setValidators(validators);
+    this.formGroup.get('distribution.' + controlName).updateValueAndValidity();
   }
 
   nextStep(): void {
@@ -133,12 +146,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  setDistributionControlValidation(controlName: string, notRequired: boolean): void {
-    const validators = notRequired ? [] : Validators.required;
-    this.formGroup.get('distribution.' + controlName).setValidators(validators);
-    this.formGroup.get('distribution.' + controlName).updateValueAndValidity();
-  }
-
   submit(): void {
     if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;
@@ -146,7 +153,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       const values = this.formGroup.value;
       const spread = { ...values.general, ...values.production, ...values.criteria, ...values.distribution };
       spread.reportTemplate = spread.reportTemplate.id;
-      spread.columns = spread.columns.map(column => column.id);
       spread.weekDays = Object.keys(spread.weekDays).filter(day => !!spread.weekDays[day]);
 
       if (this.reportTimingId) {

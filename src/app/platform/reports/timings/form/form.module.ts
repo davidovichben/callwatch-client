@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
@@ -49,20 +50,21 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [FormComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    TranslateModule,
-    DualGroupsSelectModule,
-    CriteriaModule,
-    MatCheckboxModule,
-    UnitSelectModule
-  ],
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatSelectModule,
+		MatRadioModule,
+		TranslateModule,
+		DualGroupsSelectModule,
+		CriteriaModule,
+		MatCheckboxModule,
+		UnitSelectModule,
+		MatSlideToggleModule
+	],
   providers: [
     ReportTemplateService,
     ReportTimingService,

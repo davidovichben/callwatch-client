@@ -16,7 +16,6 @@ import { Fade } from 'src/app/_shared/constants/animations';
 export class CriteriaComponent implements OnInit {
 
   @Input() criteria: ReportCriteriaModel;
-  @Input() columns: object[];
   @Input() formGroup: FormGroup;
 
   readonly errorMessages = ErrorMessages;
@@ -26,6 +25,8 @@ export class CriteriaComponent implements OnInit {
   readonly abandonTimes = AbandonTimes;
   readonly sortDirections = SortDirections;
   readonly weekDays = WeekDays;
+
+  columns: object[];
 
   constructor(private fb: FormBuilder) {}
 

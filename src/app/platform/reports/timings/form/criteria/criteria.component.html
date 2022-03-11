@@ -11,13 +11,10 @@
   </div>
   <div class="criterion">
     <span>{{ 'report_distribution_method' | t }}</span>
-    <div>
-      <mat-radio-group formControlName="distribution">
-        <mat-radio-button value="email" class="ms-3">{{ 'send_email' | t }}</mat-radio-button>
-        <mat-radio-button value="save">{{ 'save_on_server' | t }}</mat-radio-button>
-      </mat-radio-group>
-      <p class="alert alert-danger d-block" [@fade]="formGroup.get('distribution').touched && formGroup.get('distribution').errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
-    </div>
+    <mat-radio-group formControlName="distribution">
+      <mat-radio-button value="email" class="ms-3">{{ 'send_email' | t }}</mat-radio-button>
+      <mat-radio-button value="save">{{ 'save_on_server' | t }}</mat-radio-button>
+    </mat-radio-group>
   </div>
   <div class="criterion">
     <span>{{ 'production_time_range' | t }}</span>

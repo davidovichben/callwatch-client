@@ -465,7 +465,7 @@
   { "key": "production_properties", "value": "מאפייני הפקה" },
   { "key": "production_dates", "value": "מועדי הפקה" },
   { "key": "file_format", "value": "פורמט הקובץ" },
-  { "key": "report_distribution_method", "value": "דרך הפצת הדו\"וח" },
+  { "key": "report_distribution_method", "value": "דרך הפצת הדו\"ח" },
   { "key": "send_email", "value": "שליחה בדואר אלקטרוני" },
   { "key": "save_on_server", "value": "שמירה בשרת" },
   { "key": "production_time_range", "value": "טווח זמן להפקה" },

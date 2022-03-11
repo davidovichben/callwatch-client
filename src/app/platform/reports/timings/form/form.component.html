@@ -8,6 +8,9 @@
   </div>
   <div class="form-body">
     <section formGroupName="general" [hidden]="currentStep !== 1">
+      <div class="mb-3">
+        <mat-slide-toggle formControlName="isActive">{{ 'active' | t }}</mat-slide-toggle>
+      </div>
       <div class="row">
         <div class="col-12 col-lg-3">
           <mat-form-field>
@@ -21,7 +24,7 @@
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'select_report' | t }}</mat-label>
-            <mat-select formControlName="reportTemplate" (valueChange)="columns.reset(); columns.availableItems = $event.columns" required>
+            <mat-select formControlName="reportTemplate" (valueChange)="columnsInput.reset(); columnsInput.availableItems = $event.columns" required>
               <mat-option *ngFor="let template of reportTemplates" [value]="template">{{ template.name }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
@@ -29,7 +32,7 @@
         </div>
       </div>
       <div class="dual-groups-container">
-        <app-dual-groups-select [items]="[]" [objectIO]="true" formControlName="columns" #columns></app-dual-groups-select>
+        <app-dual-groups-select [items]="columns" formControlName="columns" #columnsInput></app-dual-groups-select>
         <p class="alert alert-danger d-block" [@fade]="formGroup.get('general.columns').touched && formGroup.get('general.columns').errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
       </div>
     </section>
@@ -68,7 +71,7 @@
     </section>
     <section [hidden]="currentStep !== 3">
       <p class="mb-5 f-18 bold light-black-text">{{ 'production_properties' | t }}</p>
-      <app-criteria [formGroup]="formGroup.get('criteria')" [criteria]="criteria" [columns]="formGroup.get('general.columns').value"></app-criteria>
+      <app-criteria [formGroup]="formGroup.get('criteria')" [criteria]="criteria"></app-criteria>
     </section>
     <section formGroupName="distribution" [hidden]="currentStep !== 4">
       <p class="f-18 bold light-black-text">{{ 'select_users_to_send' | t }}</p>
