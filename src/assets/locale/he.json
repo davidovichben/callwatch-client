@@ -510,5 +510,7 @@
   { "key": "value_greater_than", "value": "ערך גדול מ" },
   { "key": "value_less_than", "value": "ערך קטן מ" },
   { "key": "value_between", "value": "ערך בין" },
-  { "key": "between_to", "value": "לבין" }
+  { "key": "between_to", "value": "לבין" },
+  { "key": "reporttiming", "value": "תזמון דו\"ח" },
+  { "key": "production_inactive", "value": "ההפקה לא פעילה" }
 ]

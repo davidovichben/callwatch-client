@@ -114,6 +114,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
   private setFormSubscriptions(): void {
     const dateTypeSub = this.formGroup.get('production.dateType').valueChanges.subscribe(value => {
       const validators = value !== 'day' ? Validators.required : null;
+      this.formGroup.get('production.dates').reset();
       this.formGroup.get('production.dates').setValidators(validators);
       this.formGroup.get('production.dates').updateValueAndValidity();
     });

@@ -53,7 +53,7 @@
           <p>{{ 'days_in_month' | t }}</p>
           <mat-form-field class="d-block" [@fade]="formGroup.get('production.dateType').value === 'month' ? 'active' : 'inactive'">
             <mat-select formControlName="dates" multiple>
-              <mat-option *ngFor="let day of monthDays">{{ day }}</mat-option>
+              <mat-option *ngFor="let day of monthDays" [value]="day">{{ day }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>

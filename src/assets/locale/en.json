@@ -507,6 +507,8 @@
   { "key": "value_greater_than", "value": "Value greater than" },
   { "key": "value_less_than", "value": "Value less than" },
   { "key": "value_between", "value": "Value between" },
-  { "key": "between_to", "value": "to" }
+  { "key": "between_to", "value": "to" },
+  { "key": "reporttiming", "value": "Report Timing" },
+  { "key": "production_inactive", "value": "Production inactive" }
 ]
 

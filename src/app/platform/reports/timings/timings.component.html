@@ -9,7 +9,7 @@
   <tr *ngFor="let item of dataTable.items">
     <td>{{ item.name }}</td>
     <td>{{ item.module | t }}</td>
-    <td>{{ item.nextDate }}</td>
+    <td>{{ item.nextDate ?? ('production_inactive' | t) }}</td>
     <td>{{ item.isActive ? ('active' | t) : ('inactive' | t)  }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('reports')">
       <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
