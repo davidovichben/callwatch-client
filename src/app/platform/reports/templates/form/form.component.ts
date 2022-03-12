@@ -32,8 +32,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
   currentStep = 1;
 
-  columns: SelectItemModel[] = [];
   modules: SelectItemModel[] = [];
+  columns = [];
 
   formGroup: FormGroup;
 
@@ -61,9 +61,11 @@ export class FormComponent implements OnInit, OnDestroy {
       this.getModuleColumns(this.reportTemplate.module).then(() => {
         const computedColumns = this.reportTemplate.columns.filter(column => column.type === 'computed');
         this.dualGroupsComponent.availableItems.push(...computedColumns);
-        this.formGroup.patchValue(this.reportTemplate);
+        this.formGroup.get('columns').patchValue(this.reportTemplate.columns);
       });
     }
+
+    this.formGroup.patchValue(this.reportTemplate);
   }
 
   moduleChanged(moduleId: number): void {
@@ -106,12 +108,14 @@ export class FormComponent implements OnInit, OnDestroy {
 
     const data = { columnType, column };
     if (columnType === 'computed') {
-      Object.assign(data, { columns: this.columns });
+      const standardColumns = this.columns.filter(column => !column.formula);
+      Object.assign(data, { columns: standardColumns });
     }
 
     const dialog = this.dialog.open(ColumnSettingsComponent, {
       data: data,
-      width: '800px'
+      width: '800px',
+      height: '800px'
     })
 
     const sub = dialog.afterClosed().subscribe(savedColumn => {

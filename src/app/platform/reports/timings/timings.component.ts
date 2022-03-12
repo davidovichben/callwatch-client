@@ -23,25 +23,25 @@ export class TimingsComponent {
   ];
 
   constructor(private route: ActivatedRoute,
-              private reportService: ReportTimingService,
+              private reportTimingService: ReportTimingService,
               private notificationService: NotificationService,
               public userSession: UserSessionService) {}
 
   fetchItems(): void {
-    this.reportService.getReportTimings(this.dataTable.criteria).then(response => {
+    this.reportTimingService.getReportTimings(this.dataTable.criteria).then(response => {
       this.dataTable.setItems(response);
     })
   }
 
-  deleteItem(reportSetId: number): void {
+  deleteItem(reportTimingId: number): void {
     this.notificationService.warning().then(confirmation => {
       if (confirmation.value) {
-        // this.reportSetService.deleteReportSet(reportSetId).then(response => {
-        //   if (response) {
-        //     this.notificationService.success();
-        //     this.fetchItems();
-        //   }
-        // });
+        this.reportTimingService.deleteReportTiming(reportTimingId).then(response => {
+          if (response) {
+            this.notificationService.success();
+            this.fetchItems();
+          }
+        });
       }
     })
   }

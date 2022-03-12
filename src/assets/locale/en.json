@@ -509,6 +509,7 @@
   { "key": "value_between", "value": "Value between" },
   { "key": "between_to", "value": "to" },
   { "key": "reporttiming", "value": "Report Timing" },
-  { "key": "production_inactive", "value": "Production inactive" }
+  { "key": "production_inactive", "value": "Production inactive" },
+  { "key": "acds", "value": "Groups" }
 ]
 

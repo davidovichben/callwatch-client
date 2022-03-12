@@ -512,5 +512,6 @@
   { "key": "value_between", "value": "ערך בין" },
   { "key": "between_to", "value": "לבין" },
   { "key": "reporttiming", "value": "תזמון דו\"ח" },
-  { "key": "production_inactive", "value": "ההפקה לא פעילה" }
+  { "key": "production_inactive", "value": "ההפקה לא פעילה" },
+  { "key": "acds", "value": "קבוצות" }
 ]

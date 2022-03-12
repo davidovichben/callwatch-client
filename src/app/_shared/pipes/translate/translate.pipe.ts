@@ -19,6 +19,6 @@ export class TranslatePipe implements PipeTransform {
   }
 
   transform(key: string) {
-    return this.translations[key] || key;
+    return this.translations[key.toLowerCase()] || key;
   }
 }
