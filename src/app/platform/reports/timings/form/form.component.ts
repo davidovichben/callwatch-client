@@ -106,7 +106,9 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       distribution: this.fb.group({
         users: this.fb.control(null),
-        units: this.fb.control(null)
+        units: this.fb.control(null),
+        allUsers: this.fb.control(null),
+        allUnits: this.fb.control(null)
       })
     });
   }
@@ -127,12 +129,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.sub.add(columnSub);
-  }
-
-  setDistributionControlValidation(controlName: string, notRequired: boolean): void {
-    const validators = notRequired ? [] : Validators.required;
-    this.formGroup.get('distribution.' + controlName).setValidators(validators);
-    this.formGroup.get('distribution.' + controlName).updateValueAndValidity();
   }
 
   nextStep(): void {

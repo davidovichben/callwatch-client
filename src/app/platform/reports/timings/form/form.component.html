@@ -76,7 +76,7 @@
     <section formGroupName="distribution" [hidden]="currentStep !== 4">
       <p class="f-18 bold light-black-text">{{ 'select_users_to_send' | t }}</p>
       <p class="mb-3 f-16 bold light-black-text">{{ 'report_timing_users_s' | t }}</p>
-<!--      <mat-checkbox [checked]="!formGroup.get('distribution.users').value" (change)="setDistributionControlValidation('users', $event.checked)">{{ 'send_report_to_organization' | t }}</mat-checkbox>-->
+      <mat-checkbox formControlName="allUsers">{{ 'send_report_to_organization' | t }}</mat-checkbox>
       <div class="mb-5 row">
         <div class="col-12 col-lg-3">
           <mat-form-field>
@@ -93,10 +93,10 @@
         <span>{{ 'report_timing_units_s1' | t }}. </span>
         <span class="red-text">{{ 'report_timing_units_s2' | t }}.</span>
       </p>
-<!--      <mat-checkbox [checked]="!formGroup.get('distribution.units').value" (change)="setDistributionControlValidation('units', $event.checked)">{{ 'report_timing_units_s3' | t }}</mat-checkbox>-->
+      <mat-checkbox formControlName="allUnits">{{ 'send_report_to_organization' | t }}</mat-checkbox>
       <div class="row">
         <div class="col-12 col-lg-3">
-          <app-unit-select [units]="units" [multiple]="true"></app-unit-select>
+          <app-unit-select [units]="units" formControlName="units" [multiple]="true"></app-unit-select>
           <p class="mt-1 alert alert-danger d-block" [@fade]="form.submitted && formGroup.get('distribution.units').errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
         </div>
       </div>
