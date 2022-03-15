@@ -78,8 +78,13 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       criteria.sort.forEach(() => this.addSortColumn());
 
       this.formGroup.patchValue(criteria);
-    } else {
+    }
+
+    if ((this.formGroup.get('times') as FormArray).length === 0) {
       this.addTime();
+    }
+
+    if ((this.formGroup.get('sort') as FormArray).length === 0) {
       this.addSortColumn();
     }
   }

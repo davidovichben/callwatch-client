@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { BaseHttpService } from './base-http.service';
 
 import { UserModel } from 'src/app/_shared/models/user.model';
-import { TranslationModel } from 'src/app/_shared/models/translation.model';
 
 @Injectable()
 export class AppHttpService extends BaseHttpService {
@@ -46,12 +45,5 @@ export class AppHttpService extends BaseHttpService {
       .toPromise()
       .then(() => true)
       .catch(() => false);
-  }
-
-  getTranslations(locale: string): Promise<TranslationModel[]> {
-    return this.http.get('/assets/locale/' + locale + '.json')
-      .toPromise()
-      .then(response => response as TranslationModel[])
-      .catch(() => undefined);
   }
 }

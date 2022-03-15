@@ -68,7 +68,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (this.route.snapshot.data.reportTiming) {
-      this.formGroup.patchValue(this.route.snapshot.data.reportTiming);
+      setTimeout(() => this.formGroup.patchValue(this.route.snapshot.data.reportTiming), 0);
     }
   }
 
@@ -148,7 +148,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
       const values = this.formGroup.value;
       const spread = { ...values.general, ...values.production, ...values.distribution };
-      spread.reportTemplate = values.reportTemplate.id;
+      spread.reportTemplate = spread.reportTemplate.id;
       spread.criteria = this.sanitizeCriteria(values.criteria);
 
       if (this.reportTimingId) {
@@ -165,7 +165,6 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private sanitizeCriteria(criteria: ReportCriteriaModel): ReportCriteriaModel {
     criteria.weekDays = Object.keys(criteria.weekDays).filter(day => !!criteria.weekDays[day]);
-
     if (!criteria.ignoreDates.from || !criteria.ignoreDates.to) {
       delete criteria.ignoreDates;
     }

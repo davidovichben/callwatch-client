@@ -9,6 +9,8 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ContentComponent } from './content/content.component';
 
+import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
+
 @NgModule({
   declarations: [SidebarComponent, ContentComponent],
   imports: [
@@ -18,6 +20,7 @@ import { ContentComponent } from './content/content.component';
     MatIconModule,
     MatMenuModule
   ],
-  exports: [SidebarComponent, ContentComponent]
+  exports: [SidebarComponent, ContentComponent],
+  providers: [AppHttpService]
 })
 export class LayoutModule {}

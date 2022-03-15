@@ -19,7 +19,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
-import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -47,7 +47,7 @@ const appearance: MatFormFieldDefaultOptions = {
     NotificationService,
     HelpersService,
     LocaleService,
-    AppHttpService,
+    GenericService,
     GuestGuard,
     LoggedInGuard,
     TranslatePipe,

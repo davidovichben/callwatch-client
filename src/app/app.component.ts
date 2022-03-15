@@ -3,8 +3,8 @@ import { NavigationEnd, Router, ChildActivationStart } from '@angular/router';
 
 import { Fade } from 'src/app/_shared/constants/animations';
 
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
-import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router, private renderer: Renderer2,
               private helpers: HelpersService,
-              private appHttp: AppHttpService,
+              private genericService: GenericService,
               public localeService: LocaleService) {}
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
     if (this.locale) {
       this.setDirection();
 
-      this.appHttp.getTranslations(this.locale).then(response => {
+      this.genericService.getTranslations(this.locale).then(response => {
         this.localeService.setTranslations(response);
       })
     } else {
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
 
       this.setDirection();
 
-      this.appHttp.getTranslations(this.locale).then(response => {
+      this.genericService.getTranslations(this.locale).then(response => {
         this.localeService.setTranslations(response);
       })
     })

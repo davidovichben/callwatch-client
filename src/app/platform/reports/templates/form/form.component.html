@@ -35,11 +35,14 @@
     <section [hidden]="currentStep !== 2">
       <p class="mb-5 f-20 blue-text">{{ 'select_columns_for_report' | t }}</p>
       <app-dual-groups-select formControlName="columns" [items]="[]" [objectIO]="true">
+        <ng-template let-item #row>
+          <span>{{ item.name | t }}</span>
+        </ng-template>
         <ng-template let-item #selected>
           <div class="flex-between">
             <div>
               <mat-icon class="ms-3 align-middle dark-grey-text f-16">menu</mat-icon>
-              <span>{{ item.name }}</span>
+              <span>{{ item.name | t }}</span>
             </div>
             <mat-icon class="dark-grey-text f-16" (click)="openColumnSettingsDialog(item.formula ? 'computed' : 'standard', item, $event)">settings</mat-icon>
           </div>
