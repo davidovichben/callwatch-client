@@ -36,7 +36,7 @@
   </div>
   <div class="criterion" formArrayName="weekDays">
     <span>{{ 'days_to_show' | t }}:</span>
-    <mat-checkbox class="mx-3" [formControlName]="i" *ngFor="let day of weekDays; let i = index">{{ day | t }}</mat-checkbox>
+    <mat-checkbox class="mx-3" [formControlName]="day" *ngFor="let day of weekDays">{{ day | t }}</mat-checkbox>
   </div>
   <div class="criterion">
     <span>{{ 'phone_numbers' | t }}:</span>

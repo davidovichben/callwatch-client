@@ -7,7 +7,7 @@ import { HistoricalReportsService } from 'src/app/_shared/services/state/histori
 
 import { SortDirections, WeekDays } from 'src/app/_shared/constants/general';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
-import { AbandonTimes, ReportTimeSpaces } from 'src/app/_shared/models/report-criteria.model';
+import { AbandonTimes, ReportCriteriaModel, ReportTimeSpaces } from 'src/app/_shared/models/report-criteria.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
 @Component({
@@ -55,8 +55,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       weekDays: this.fb.group({}),
       callingNumber: this.fb.control(null),
       calledNumber: this.fb.control(null),
-      showInternal: this.fb.control(null),
-      showExternal: this.fb.control(null),
+      showInternal: this.fb.control(true),
+      showExternal: this.fb.control(true),
       abandonTime: this.fb.control(null),
       timeSpace: this.fb.control('hour'),
       sort: this.fb.array([]),
@@ -67,9 +67,9 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       units: this.fb.control(null)
     });
 
-    this.weekDays.forEach((day, index) => {
+    this.weekDays.forEach(day => {
       const control = this.fb.control(true);
-      (this.formGroup.get('weekDays') as FormGroup).addControl(index.toString(), control);
+      (this.formGroup.get('weekDays') as FormGroup).addControl(day, control);
     });
 
     const criteria = this.reportStateService.getCriteria();
@@ -111,12 +111,28 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    const values = this.formGroup.value;
-    values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
+    const values = this.sanitizeValues(this.formGroup.value);
+
 
     this.reportStateService.setCriteria(values);
 
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
+  }
+
+  private sanitizeValues(values: ReportCriteriaModel): ReportCriteriaModel {
+    values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
+    if (!values.dates.from || !values.dates.to) {
+      delete values.dates;
+    }
+
+    if (!values.ignoreDates.from || !values.ignoreDates.to) {
+      delete values.ignoreDates;
+    }
+
+    values.times = values.times.filter((time) => time.from && time.to);
+    values.sort = values.sort.filter((sort) => sort.column && sort.direction);
+
+    return values;
   }
 
   ngOnDestroy(): void {

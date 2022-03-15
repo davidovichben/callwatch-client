@@ -88,15 +88,14 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       criteria: this.fb.group({
         format: this.fb.control(null, Validators.required),
         distribution: this.fb.control('email', Validators.required),
-        timeRange: this.fb.control(null, Validators.required),
+        timeRange: this.fb.control('day', Validators.required),
         times: this.fb.array([]),
-        resolution: this.fb.control(null, Validators.required),
-        timeSpace: this.fb.control('15_minutes'),
+        timeSpace: this.fb.control('15_minutes', Validators.required),
         weekDays: this.fb.group({}),
         callingNumber: this.fb.control(null),
         calledNumber: this.fb.control(null),
-        showInternal: this.fb.control(null),
-        showExternal: this.fb.control(null),
+        showInternal: this.fb.control(true),
+        showExternal: this.fb.control(true),
         abandonTime: this.fb.control(null),
         sort: this.fb.array([]),
         ignoreDates: this.fb.group({
@@ -148,9 +147,9 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isSubmitting = true;
 
       const values = this.formGroup.value;
-      const spread = { ...values.general, ...values.production, ...values.criteria, ...values.distribution };
-      spread.reportTemplate = spread.reportTemplate.id;
-      spread.weekDays = Object.keys(spread.weekDays).filter(day => !!spread.weekDays[day]);
+      const spread = { ...values.general, ...values.production, ...values.distribution };
+      spread.reportTemplate = values.reportTemplate.id;
+      spread.criteria = this.sanitizeCriteria(values.criteria);
 
       if (this.reportTimingId) {
         this.reportTimingService.updateReportTiming(this.reportTimingId, spread).then(response => {
@@ -162,6 +161,19 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
+  }
+
+  private sanitizeCriteria(criteria: ReportCriteriaModel): ReportCriteriaModel {
+    criteria.weekDays = Object.keys(criteria.weekDays).filter(day => !!criteria.weekDays[day]);
+
+    if (!criteria.ignoreDates.from || !criteria.ignoreDates.to) {
+      delete criteria.ignoreDates;
+    }
+
+    criteria.times = criteria.times.filter((time) => time.from && time.to);
+    criteria.sort = criteria.sort.filter((sort) => sort.column && sort.direction);
+
+    return criteria;
   }
 
   private handleServerResponse(response: boolean): void {
