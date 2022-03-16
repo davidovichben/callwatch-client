@@ -135,12 +135,15 @@ export class FormComponent implements OnInit, OnDestroy {
     if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;
 
+      const values = this.formGroup.value;
+      this.sanitizeColumns(values.columns);
+
       if (this.reportTemplate) {
-        this.reportService.updateReport(this.reportTemplate.id, this.formGroup.value).then(response => {
+        this.reportService.updateReport(this.reportTemplate.id, values).then(response => {
           this.handleServerResponse(response);
         });
       } else {
-        this.reportService.newReport(this.formGroup.value).then(response => {
+        this.reportService.newReport(values).then(response => {
           this.handleServerResponse(response);
         });
       }
@@ -153,6 +156,18 @@ export class FormComponent implements OnInit, OnDestroy {
     } else {
       this.isSubmitting = false;
     }
+  }
+
+  private sanitizeColumns(columns: ReportColumnModel[]): void {
+    columns.forEach(column => {
+      if (!column.dataType) {
+        column.dataType = 'number';
+      }
+
+      if (!column.totalType) {
+        column.totalType = 'sum';
+      }
+    });
   }
 
   ngOnDestroy(): void {

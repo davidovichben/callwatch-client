@@ -5,14 +5,11 @@
     <mat-icon matSuffix (click)="search('available')">search</mat-icon>
     <mat-icon matSuffix (click)="resetSearch('available')" *ngIf="searchInputs.available">close</mat-icon>
   </div>
-  <ul class="mb-3">
+  <ul class="mb-3" [style.width]="width">
     <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of availableItems">
-      <ng-container
-        *ngIf="rowTemplateRef"
-        [ngTemplateOutlet]="rowTemplateRef"
-        [ngTemplateOutletContext]="{ $implicit:item }">
-      </ng-container>
-      <span *ngIf="!rowTemplateRef">{{ item.name }}</span>
+      <ng-container *ngIf="rowTemplateRef" [ngTemplateOutlet]="rowTemplateRef" [ngTemplateOutletContext]="{ $implicit:item }"></ng-container>
+      <ng-container *ngIf="availableTemplateRef" [ngTemplateOutlet]="availableTemplateRef" [ngTemplateOutletContext]="{ $implicit:item }"></ng-container>
+      <span *ngIf="!rowTemplateRef && !availableTemplateRef">{{ item.name }}</span>
     </li>
   </ul>
 </div>
@@ -31,7 +28,7 @@
     <mat-icon matSuffix (click)="search('selected')">search</mat-icon>
     <mat-icon matSuffix (click)="resetSearch('selected')" *ngIf="searchInputs.selected">close</mat-icon>
   </div>
-  <ul class="mb-3">
+  <ul class="mb-3" [style.width]="width">
     <li [ngClass]="{ 'selected': item.selected }" (click)="item.selected = !item.selected" *ngFor="let item of selectedItems.filtered">
       <ng-container *ngIf="rowTemplateRef" [ngTemplateOutlet]="rowTemplateRef" [ngTemplateOutletContext]="{ $implicit:item }"></ng-container>
       <ng-container *ngIf="selectedTemplateRef" [ngTemplateOutlet]="selectedTemplateRef" [ngTemplateOutletContext]="{ $implicit:item }"></ng-container>

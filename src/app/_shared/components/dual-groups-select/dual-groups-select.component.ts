@@ -18,10 +18,12 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
   @ContentChild('row', { static: false }) rowTemplateRef: TemplateRef<any>;
+  @ContentChild('available', { static: false }) availableTemplateRef: TemplateRef<any>;
   @ContentChild('selected', { static: false }) selectedTemplateRef: TemplateRef<any>;
 
   @Input() items: SelectItemModel[];
   @Input() placeholder = 'items';
+  @Input() width = '250px';
   @Input() objectIO = false;
 
   availableItems = [];

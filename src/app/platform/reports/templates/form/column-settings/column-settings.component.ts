@@ -50,8 +50,8 @@ export class ColumnSettingsComponent {
       subTitle: this.fb.control(null),
       totalType: this.fb.control('sum', Validators.required),
       dataType: this.fb.control('percent', Validators.required),
-      showExternal: this.fb.control(false),
-      showInternal: this.fb.control(false),
+      showExternal: this.fb.control(true),
+      showInternal: this.fb.control(true),
       conditionalDesign: this.fb.group({
         equalTo: this.fb.group({
           value: this.fb.control(null),

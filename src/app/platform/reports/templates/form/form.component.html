@@ -34,8 +34,8 @@
     </section>
     <section [hidden]="currentStep !== 2">
       <p class="mb-5 f-20 blue-text">{{ 'select_columns_for_report' | t }}</p>
-      <app-dual-groups-select formControlName="columns" [items]="[]" [objectIO]="true">
-        <ng-template let-item #row>
+      <app-dual-groups-select formControlName="columns" [items]="[]" [width]="'350px'" [objectIO]="true">
+        <ng-template let-item #available>
           <span>{{ item.name | t }}</span>
         </ng-template>
         <ng-template let-item #selected>

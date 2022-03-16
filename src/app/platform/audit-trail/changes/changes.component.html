@@ -1,0 +1,21 @@
+<div class="dialog-header">
+  <span>{{ 'changes' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>{{ 'attribute' | t }}</th>
+      <th>{{ 'old_value' | t }}</th>
+      <th>{{ 'new_value' | t }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let change of changes">
+      <td>{{ change.attribute | t }}</td>
+      <td>{{ change.newValue }}</td>
+      <td>{{ change.oldValue }}</td>
+    </tr>
+  </tbody>
+</table>
+
