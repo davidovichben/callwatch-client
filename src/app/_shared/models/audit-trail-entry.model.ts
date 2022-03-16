@@ -1,4 +1,4 @@
-export class AuditLogEntryModel {
+export class AuditTrailEntryModel {
   created: string;
   username: string;
   action: string;

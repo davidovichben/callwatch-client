@@ -1,11 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
+import { ChangesComponent } from './changes/changes.component';
 
 import { AuditTrailService } from 'src/app/_shared/services/http/audit-trail.service';
 
-import { AuditLogEntryModel } from 'src/app/_shared/models/audit-log-entry.model';
+import { AuditTrailEntryModel } from 'src/app/_shared/models/audit-trail-entry.model';
 
 @Component({
   selector: 'app-audit-trail',
@@ -21,7 +23,8 @@ export class AuditTrailComponent {
     { label: 'ip_address', name: 'ip' }
   ];
 
-  constructor(private router: Router, private auditTrailService: AuditTrailService) {}
+  constructor(private router: Router, private dialog: MatDialog,
+              private auditTrailService: AuditTrailService) {}
 
   fetchItems(): void {
     this.auditTrailService.getLogs(this.dataTable.criteria).then(response => {
@@ -29,7 +32,7 @@ export class AuditTrailComponent {
     });
   }
 
-  navigateToResource(item: AuditLogEntryModel): void {
+  navigateToResource(item: AuditTrailEntryModel): void {
     let url;
     if (item.resourceType === 'unit') {
       url = ['/platform', 'units', item.resourceId];
@@ -38,5 +41,16 @@ export class AuditTrailComponent {
     }
 
     this.router.navigate(url);
+  }
+
+  openChangesDialog(entryId: number): void {
+    this.auditTrailService.getChanges(entryId).then(changes => {
+      if (changes) {
+        this.dialog.open(ChangesComponent, {
+          data: changes,
+          width: '600px'
+        })
+      }
+    })
   }
 }
