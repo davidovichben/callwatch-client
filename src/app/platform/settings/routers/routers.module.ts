@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
 import { RoutersComponent } from 'src/app/platform/settings/routers/routers.component';
+import { DuplicationDialogComponent } from './duplication-dialog/duplication-dialog.component';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 const routes: Routes = [
 	{
@@ -17,12 +21,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [RoutersComponent],
+	declarations: [RoutersComponent, DuplicationDialogComponent],
 	imports: [
 		RouterModule.forChild(routes),
-		DataTableModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    DataTableModule,
     TranslateModule
 	],
-	providers: [RouterService]
+	providers: [RouterService, GenericService]
 })
 export class RoutersModule {}

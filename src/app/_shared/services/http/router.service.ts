@@ -62,8 +62,8 @@ export class RouterService extends BaseHttpService {
       .catch(() => []);
   }
 
-  duplicateRouter(routerId: number): Promise<any> {
-    return this.http.post(this.endPoint + '/' + routerId + '/duplicate', {}, this.getTokenRequest())
+  duplicateRouter(routerId: number, name: string): Promise<any> {
+    return this.http.post(this.endPoint + '/' + routerId + '/duplicate', { name }, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);

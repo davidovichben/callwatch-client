@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audio-input.component';
 
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { isDateGreaterOrEqual } from 'src/app/_shared/validators/date-greater-equal.validator';
@@ -32,7 +33,8 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
   routerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, public formService: RouterFormService) {}
+  constructor(private fb: FormBuilder, public formService: RouterFormService,
+              private genericService: GenericService) {}
 
   ngOnInit(): void {
     this.makeForm();
@@ -51,7 +53,7 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private makeForm(): void {
     this.formService.routerForm.setControl('general', this.fb.group({
-      name: this.fb.control(null, Validators.required),
+      name: this.fb.control(null, Validators.required, this.checkNameExists.bind(this)),
       tags: this.fb.control(null),
       description: this.fb.control(null),
       schedule: this.fb.control(null),
@@ -115,6 +117,20 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   setFile(file?: { bin: string, name: string }): void {
     this.routerForm.get('queueFile').patchValue(file ? file.bin : null);
     this.routerForm.get('queueFileName').patchValue(file ? file.name : null);
+  }
+
+  checkNameExists(control: FormControl): Promise<object> {
+    if (this.formService.router && this.formService.router.general.name === control.value) {
+      return Promise.resolve(null);
+    }
+
+    return this.genericService.exists('router', control.value).then(response => {
+      if (response) {
+        return response.exists ? { exists: true } : null;
+      }
+
+      return null;
+    })
   }
 
   ngOnDestroy(): void {

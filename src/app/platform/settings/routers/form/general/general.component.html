@@ -4,7 +4,8 @@
       <mat-form-field class="w-100">
         <mat-label>{{ 'router_name' | t }}</mat-label>
         <input matInput type="text" formControlName="name" required>
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
+        <mat-error *ngIf="routerForm.get('name').errors?.required">{{ errorMessages.required | t }}</mat-error>
+        <mat-error *ngIf="routerForm.get('name').errors?.exists">{{ 'router_name_exists' | t }}</mat-error>
       </mat-form-field>
     </div>
     <div class="col-12 col-lg-3">

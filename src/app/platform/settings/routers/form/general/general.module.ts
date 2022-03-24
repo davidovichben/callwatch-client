@@ -17,6 +17,8 @@ import { ChipsInputModule } from 'src/app/_shared/components/chips-input/chips-i
 
 import { GeneralComponent } from 'src/app/platform/settings/routers/form/general/general.component';
 
+import { GenericService } from 'src/app/_shared/services/http/generic.service';
+
 @NgModule({
   declarations: [GeneralComponent],
   exports: [GeneralComponent],
@@ -35,6 +37,7 @@ import { GeneralComponent } from 'src/app/platform/settings/routers/form/general
     TagsInputModule,
     AudioInputModule,
     ChipsInputModule
-  ]
+  ],
+  providers: [GenericService]
 })
 export class GeneralModule {}
