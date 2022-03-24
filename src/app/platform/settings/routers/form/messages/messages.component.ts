@@ -10,6 +10,7 @@ import { RouterFormService } from 'src/app/_shared/services/state/router-form.se
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { RouterMessageTypes } from 'src/app/_shared/models/router-message.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
@@ -22,50 +23,24 @@ export class MessagesComponent extends SharedComponent implements OnInit, OnDest
 
   formArray: FormArray;
 
-  constructor(dialog: MatDialog, formService: RouterFormService,
-              private locale: LocaleService, private fb: FormBuilder,
-              private notificationService: NotificationService) {
-    super(dialog, formService);
+  constructor(dialog: MatDialog, formService: RouterFormService, router: Router,
+              private route: ActivatedRoute, private locale: LocaleService,
+              private fb: FormBuilder, private notificationService: NotificationService) {
+    super(dialog, router, formService);
   }
 
   ngOnInit(): void {
-    this.formArray = (this.formService.routerForm.get('messages.' + this.category) as FormArray);
-    this.languages = this.formService.languages;
-    this.activeLang = this.languages[0].id;
+    this.sub.add(this.route.params.subscribe(params => {
+      this.setLanguage();
 
-    const router = this.formService.router;
-    if (router?.messages && router.messages[this.category]) {
-      const messages = router.messages[this.category];
-
-      messages.forEach(message => {
-        const group = this.getMessageGroup;
-        group.patchValue(message);
-        this.checkOnline(group);
-        this.formArray.push(group);
-      });
-    }
-  }
-
-  private get getMessageGroup(): FormGroup {
-    return this.fb.group({
-      category: this.fb.control(this.category),
-      type: this.fb.control('message'),
-      description: this.fb.control(null),
-      tags: this.fb.control(null),
-      files: this.fb.control({}),
-      router: this.fb.control(null),
-      timingType: this.fb.control(null),
-      schedule: this.fb.control(null),
-      startTime: this.fb.control(null),
-      endTime: this.fb.control(null),
-      isActive: this.fb.control(true),
-      isOnline: this.fb.control(true),
-      callTimes: this.fb.control(null)
-    });
+      this.category = params.category;
+      this.formArray = (this.formService.routerForm.get('messages.' + this.category) as FormArray);
+      this.formService.activeGroup = 'messages.' + this.category;
+    }))
   }
 
   pushMessage(): void {
-    const message = this.getMessageGroup;
+    const message = this.formService.getMessageGroup(this.category);
     this.formArray.push(message);
   }
 

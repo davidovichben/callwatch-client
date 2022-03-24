@@ -27,6 +27,13 @@ export class SelectService extends BaseHttpService {
       .catch(() => []);
   }
 
+  routerForm(): Promise<object> {
+    return this.http.get(this.endPoint + '/routerForm', this.getTokenRequest())
+      .toPromise()
+      .then(response => response)
+      .catch(() => null);
+  }
+
   acdForm(): Promise<object> {
     return this.http.get(this.endPoint + '/acdForm', this.getTokenRequest())
       .toPromise()

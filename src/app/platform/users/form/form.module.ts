@@ -36,7 +36,8 @@ const routes: Routes = [
     component: FormComponent,
     resolve: {
       permissions: PermissionSelectResolve,
-      units: UnitsSelectResolve
+      units: UnitsSelectResolve,
+      languages: LanguageSelectResolve
     },
     canDeactivate: [DeactivateGuard]
   },
@@ -46,7 +47,8 @@ const routes: Routes = [
     resolve: {
       user: UserResolve,
       permissions: PermissionSelectResolve,
-      units: UnitsSelectResolve
+      units: UnitsSelectResolve,
+      languages: LanguageSelectResolve
     },
     canDeactivate: [DeactivateGuard]
   }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -30,40 +31,31 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   formGroup: FormGroup;
 
-  constructor(dialog: MatDialog, formService: RouterFormService,
-              private fb: FormBuilder, private locale: LocaleService,
-              private t: TranslatePipe,
-              private notificationService: NotificationService) {
-    super(dialog, formService);
+  isLoading = false;
+
+  constructor(dialog: MatDialog, formService: RouterFormService, router: Router,
+              private route: ActivatedRoute, private fb: FormBuilder, private locale: LocaleService,
+              private t: TranslatePipe, private notificationService: NotificationService) {
+    super(dialog, router, formService);
   }
 
   ngOnInit(): void {
-    this.formGroup = (this.formService.routerForm.get('keys.' + this.category) as FormGroup);
-    this.setKeys();
+    this.sub.add(this.route.params.subscribe(params => {
+      this.setLanguage();
 
-    this.setUnusedKeys();
+      this.category = params.category;
+      this.formGroup = (this.formService.routerForm.get('keys.' + this.category) as FormGroup);
+      this.formService.activeGroup = 'messages.' + this.category;
 
-    this.languages = this.formService.languages;
-    this.activeLang = this.languages[0].id;
-  }
+      this.setUnusedKeys();
 
-  addKeyGroup(conditionResult?: string, isFirstCondition?: boolean): FormGroup {
-    return this.fb.group({
-      category: this.fb.control(this.category),
-      activityType: this.fb.control(null, Validators.required),
-      activityValue: this.fb.control(null),
-      conditionSchedule: this.fb.control(null),
-      activityTypeName: this.fb.control(null),
-      timingType: this.fb.control(null),
-      schedule: this.fb.control(null),
-      startTime: this.fb.control(null),
-      endTime: this.fb.control(null),
-      isActive: this.fb.control(true),
-      isDefault: this.fb.control(null),
-      isOnline: this.fb.control(true),
-      conditionResult: this.fb.control(conditionResult ?? null),
-      isFirstCondition: this.fb.control(isFirstCondition ?? null)
-    });
+      if (this.formService.router && this.formService.router.keys[this.category]) {
+        this.isLoading = true;
+
+        setTimeout(() => this.isLoading = false, 0);
+      }
+
+    }))
   }
 
   newKey(key: string): void {
@@ -72,7 +64,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       return;
     }
 
-    const arr = this.fb.array([this.addKeyGroup()]);
+    const arr = this.fb.array([this.formService.getKeyGroup(this.category)]);
     this.formGroup.addControl(key, arr);
 
     this.setUnusedKeys();
@@ -82,9 +74,9 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     const arr = (this.formGroup.get(key) as FormArray);
     const conditionResult = arr.at(index).value.conditionResult;
     if (conditionResult) {
-      arr.insert(index + 1, this.addKeyGroup(conditionResult));
+      arr.insert(index + 1, this.formService.getKeyGroup(conditionResult));
     } else {
-      arr.push(this.addKeyGroup());
+      arr.push(this.formService.getKeyGroup(this.category));
     }
   }
 
@@ -146,7 +138,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       ['true', 'false'].forEach(value => {
         index++;
 
-        const group = this.addKeyGroup(value, true);
+        const group = this.formService.getKeyGroup(this.category, value, true);
         arr.insert(index, group);
       })
     }
@@ -185,35 +177,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   getKeysLength(): number {
     return Object.keys(this.formGroup.controls).length;
-  }
-
-  private setKeys(): void {
-    const existingKeys = this.formService.router?.keys[this.category];
-    if (existingKeys && Object.keys(existingKeys).length > 0) {
-      this.setExistingKeys(existingKeys);
-    }
-  }
-
-  // Patching value, setting first condition and setting files if exist
-
-  private setExistingKeys(existingKeys: object): void {
-    Object.keys(existingKeys).forEach(key => {
-      const actions = [];
-      let conditionResult = null;
-      existingKeys[key].forEach(action => {
-        const group = this.addKeyGroup();
-        group.patchValue(action);
-
-        if (action.conditionResult && action.conditionResult != conditionResult) {
-          conditionResult = action.conditionResult;
-          group.get('isFirstCondition').patchValue(true);
-        }
-
-        actions.push(group);
-      });
-
-      this.formGroup.addControl(key, this.fb.array(actions));
-    })
   }
 
   private setUnusedKeys(): void {

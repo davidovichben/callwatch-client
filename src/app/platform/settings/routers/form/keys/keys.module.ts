@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,6 +9,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.module';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { TimingDialogModule } from 'src/app/platform/settings/routers/form/timing-dialog/timing-dialog.module';
@@ -15,11 +17,15 @@ import { AudioInputModule } from 'src/app/_shared/components/audio-input/audio-i
 
 import { KeysComponent } from 'src/app/platform/settings/routers/form/keys/keys.component';
 
+const routes: Routes = [
+  { path: '', component: KeysComponent }
+];
+
 @NgModule({
   declarations: [KeysComponent],
-  exports: [KeysComponent],
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -30,7 +36,8 @@ import { KeysComponent } from 'src/app/platform/settings/routers/form/keys/keys.
     MatRadioModule,
     TranslateModule,
     TimingDialogModule,
-    AudioInputModule
+    AudioInputModule,
+    BdSelectModule
   ]
 })
 export class KeysModule {}

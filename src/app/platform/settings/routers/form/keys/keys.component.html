@@ -22,7 +22,8 @@
 <div id="clearDefault" class="mb-3">
   <button mat-button class="grey-btn" (click)="clearDefault()" *ngIf="hasDefault">{{ 'clear_default' | t }}</button>
 </div>
-<ng-container [formGroup]="formService.routerForm.get('keys.' + category)">
+<div class="loader inline" *ngIf="isLoading"></div>
+<ng-container [formGroup]="formService.routerForm.get('keys.' + category)" *ngIf="!isLoading">
   <div class="group" [formArrayName]="key" *ngFor="let key of getKeys()">
     <div class="key-action" *ngFor="let action of formGroup.get(key)['controls']; let index = index" [formGroupName]="index">
       <div class="text-start w-200p margin-fix" *ngIf="index > 0">
@@ -70,13 +71,12 @@
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-100" *ngSwitchCase="'router_transfer'">
-          <mat-label>{{ 'select_router' | t }}</mat-label>
-          <mat-select formControlName="activityValue" required>
-            <mat-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</mat-option>
-          </mat-select>
-          <mat-error>{{ (errorMessages.required | t) }}</mat-error>
-        </mat-form-field>
+        <div *ngSwitchCase="'router_transfer'">
+          <bd-select [placeholder]="'select_router' | t" formControlName="activityValue" required>
+            <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
+          </bd-select>
+          <p class="alert alert-danger" *ngIf="action.get('activityValue').errors">{{ (errorMessages.required | t) }}</p>
+        </div>
 
         <mat-form-field class="w-100" *ngSwitchCase="'external_service'">
           <mat-label>{{ 'service_name' | t }}</mat-label>

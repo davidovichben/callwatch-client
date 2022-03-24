@@ -94,7 +94,7 @@
           </div>
           <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field class="disabled large-suffix">
-              <mat-label>{{ ('password' | t) + (!user ? '*' : '') }}</mat-label>
+              <mat-label>{{ ('password' | t) }}</mat-label>
               <input matInput type="password" formControlName="password" tabindex="-1">
               <span matSuffix class="enabled link pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
               <mat-error>{{ errorMessages.required | t }}</mat-error>

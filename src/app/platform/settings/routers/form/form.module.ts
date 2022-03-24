@@ -6,9 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { GeneralModule } from 'src/app/platform/settings/routers/form/general/general.module';
-import { MessagesModule } from 'src/app/platform/settings/routers/form/messages/messages.module';
-import { KeysModule } from 'src/app/platform/settings/routers/form/keys/keys.module';
 
 import { FormComponent } from 'src/app/platform/settings/routers/form/form.component';
 
@@ -17,10 +14,7 @@ import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
 import { RouterResolve } from 'src/app/_shared/resolves/router.resolve';
-import { ScheduleSelectResolve } from 'src/app/_shared/resolves/schedule-select.resolve';
-import { RouterActivityTypeResolve } from 'src/app/_shared/resolves/router-activity-type.resolve';
-import { RouterSelectResolve } from 'src/app/_shared/resolves/router-select.resolve';
-import { LanguageSelectResolve } from 'src/app/_shared/resolves/language-select.resolve';
+import { RouterFormResolve } from 'src/app/_shared/resolves/router-form.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
 
@@ -29,24 +23,30 @@ const routes: Routes = [
 		path: '',
 		component: FormComponent,
     resolve: {
-      keyActivityTypes: RouterActivityTypeResolve,
-      schedules: ScheduleSelectResolve,
-      routers: RouterSelectResolve,
-      languages: LanguageSelectResolve
+      selects: RouterFormResolve
     },
-    canDeactivate: [DeactivateGuard]
+    canDeactivate: [DeactivateGuard],
+    children: [
+      { path: '', redirectTo: 'general', pathMatch: 'full' },
+      { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
+      { path: 'messages/:category', loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule) },
+      { path: 'routing/:category', loadChildren: () => import('./keys/keys.module').then(m => m.KeysModule) }
+    ]
 	},
 	{
 		path: ':id',
-		component: FormComponent,
-		resolve: {
-      router: RouterResolve,
-      keyActivityTypes: RouterActivityTypeResolve,
-      schedules: ScheduleSelectResolve,
-      routers: RouterSelectResolve,
-      languages: LanguageSelectResolve
+    component: FormComponent,
+    resolve: {
+      selects: RouterFormResolve,
+      router: RouterResolve
     },
-    canDeactivate: [DeactivateGuard]
+    canDeactivate: [DeactivateGuard],
+    children: [
+      { path: '', redirectTo: 'general', pathMatch: 'full' },
+      { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
+      { path: 'messages/:category', loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule) },
+      { path: 'routing/:category', loadChildren: () => import('./keys/keys.module').then(m => m.KeysModule) }
+    ]
   }
 ];
 
@@ -58,19 +58,13 @@ const routes: Routes = [
     ReactiveFormsModule,
 		MatButtonModule,
 		TranslateModule,
-    GeneralModule,
-		MessagesModule,
-		KeysModule
 	],
 	providers: [
     RouterService,
     SelectService,
     RouterFormService,
     RouterResolve,
-    ScheduleSelectResolve,
-    RouterActivityTypeResolve,
-    RouterSelectResolve,
-    LanguageSelectResolve,
+    RouterFormResolve,
     DeactivateGuard
   ]
 })

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,11 +20,15 @@ import { TimingDialogModule } from 'src/app/platform/settings/routers/form/timin
 
 import { MessagesComponent } from 'src/app/platform/settings/routers/form/messages/messages.component';
 
+const routes: Routes = [
+  { path: '', component: MessagesComponent }
+];
+
 @NgModule({
   declarations: [MessagesComponent],
-  exports: [MessagesComponent],
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

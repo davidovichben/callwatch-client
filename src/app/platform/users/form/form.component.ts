@@ -65,6 +65,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
     this.units = routeData.units;
     this.permissions = routeData.permissions;
+    this.languages = routeData.languages;
 
     this.user = routeData.user;
     if (this.user) {

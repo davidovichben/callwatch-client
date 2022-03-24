@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -15,13 +16,18 @@ export abstract class SharedComponent implements OnDestroy {
 
   readonly sub = new Subscription();
 
+  category: string;
+
   languages = [];
-
-  @Input() category: string;
-
   activeLang: string;
 
-  protected constructor(private dialog: MatDialog, public formService: RouterFormService) {}
+  protected constructor(private dialog: MatDialog, protected router: Router,
+                        public formService: RouterFormService) {}
+
+  setLanguage(): void {
+    this.languages = this.formService.languages;
+    this.activeLang = this.languages[0].id;
+  }
 
   setFile(group: FormGroup, file: { bin: string, name: string }, formControlName = 'files'): void {
     let value = group.get(formControlName).value;

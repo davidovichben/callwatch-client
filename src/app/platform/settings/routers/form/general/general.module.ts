@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,11 +20,15 @@ import { GeneralComponent } from 'src/app/platform/settings/routers/form/general
 
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
+const routes: Routes = [
+  { path: '', component: GeneralComponent }
+];
+
 @NgModule({
   declarations: [GeneralComponent],
-  exports: [GeneralComponent],
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
