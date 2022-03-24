@@ -7,8 +7,6 @@ import { TimingDialogComponent } from 'src/app/platform/settings/routers/form/ti
 
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
 
-import { Langs } from 'src/app/_shared/constants/general';
-
 @Component({
   selector: 'app-shared',
   template: ''
@@ -16,7 +14,8 @@ import { Langs } from 'src/app/_shared/constants/general';
 export abstract class SharedComponent implements OnDestroy {
 
   readonly sub = new Subscription();
-  readonly langs = Langs;
+
+  languages = [];
 
   @Input() category: string;
 

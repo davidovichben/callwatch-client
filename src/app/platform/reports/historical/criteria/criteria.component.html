@@ -32,9 +32,11 @@
           </button>
         </div>
       </div>
+
+
     </div>
   </div>
-  <div class="criterion" formArrayName="weekDays">
+  <div class="criterion" formGroupName="weekDays">
     <span>{{ 'days_to_show' | t }}:</span>
     <mat-checkbox class="mx-3" [formControlName]="day" *ngFor="let day of weekDays">{{ day | t }}</mat-checkbox>
   </div>

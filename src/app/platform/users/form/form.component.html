@@ -103,8 +103,8 @@
           <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field>
               <mat-label>{{ 'system_lang_default' | t }}</mat-label>
-              <mat-select formControlName="locale" required>
-                <mat-option *ngFor="let locale of locales" [value]="locale.code">{{ locale.label }}</mat-option>
+              <mat-select formControlName="language" required>
+                <mat-option *ngFor="let language of languages" [value]="language.id">{{ language.name }}</mat-option>
               </mat-select>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>

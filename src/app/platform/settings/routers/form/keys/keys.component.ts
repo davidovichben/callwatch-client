@@ -42,7 +42,9 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     this.setKeys();
 
     this.setUnusedKeys();
-    this.activeLang = this.locale.getLocale();
+
+    this.languages = this.formService.languages;
+    this.activeLang = this.languages[0].id;
   }
 
   addKeyGroup(conditionResult?: string, isFirstCondition?: boolean): FormGroup {

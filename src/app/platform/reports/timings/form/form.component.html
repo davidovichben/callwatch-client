@@ -1,10 +1,6 @@
 <form (ngSubmit)="submit()" [formGroup]="formGroup" #form="ngForm">
   <div class="form-header">
     <h1>{{ reportTimingId ? ('edit_report_timing' | t) : ('add_report_timing' | t) }}</h1>
-    <div>
-      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'report', 'timings']">{{ 'cancel' | t }}</button>
-      <button type="button" class="btn blue-btn" (click)="submit()">{{ 'save' | t }}</button>
-    </div>
   </div>
   <div class="form-body">
     <section formGroupName="general" [hidden]="currentStep !== 1">

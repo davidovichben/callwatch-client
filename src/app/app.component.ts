@@ -35,9 +35,12 @@ export class AppComponent implements OnInit {
     if (this.locale) {
       this.setDirection();
 
-      this.genericService.getTranslations(this.locale).then(response => {
-        this.localeService.setTranslations(response);
-      })
+      const translations = this.localeService.getTranslations();
+      if (translations.length === 0) {
+        this.genericService.getTranslations(this.locale).then(response => {
+          this.localeService.setTranslations(response);
+        })
+      }
     } else {
       this.localeService.setLocale();
     }

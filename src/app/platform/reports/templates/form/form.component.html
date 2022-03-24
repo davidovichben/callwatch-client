@@ -17,7 +17,7 @@
           <mat-form-field>
             <mat-label>{{ 'data_world' | t }}</mat-label>
             <mat-select formControlName="module" (valueChange)="moduleChanged($event)" required>
-              <mat-option [value]="module.id" *ngFor="let module of modules">{{ module.name }}</mat-option>
+              <mat-option [value]="module.id" *ngFor="let module of modules">{{ module.name | t }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>

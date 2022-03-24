@@ -15,7 +15,7 @@
   <mat-form-field class="w-200p">
     <mat-label>{{ 'select_language' | t  }}</mat-label>
     <mat-select [value]="activeLang" (valueChange)="activeLang = $event">
-      <mat-option *ngFor="let lang of langs" [value]="lang.value">{{ lang.label }}</mat-option>
+      <mat-option *ngFor="let language of languages" [value]="language.id">{{ language.name }}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -53,20 +53,20 @@
         </mat-form-field>
 
         <div *ngSwitchCase="'audio_message'">
-          <app-audio-input [inputFile]="action.get('activityValue').value && action.get('activityValue').value[lang.value] ? action.get('activityValue').value[lang.value] : null" (fileChange)="setFile(action, $event, 'activityValue')" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+          <app-audio-input [inputFile]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (fileChange)="setFile(action, $event, 'activityValue')" [hidden]="activeLang !== language.id" *ngFor="let language of languages"></app-audio-input>
         </div>
 
         <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
           <mat-label>{{ 'select_language' | t }}</mat-label>
           <mat-select formControlName="activityValue" required>
-            <mat-option [value]="lang.value" *ngFor="let lang of langs">{{ lang.label }}</mat-option>
+            <mat-option [value]="language.id" *ngFor="let language of languages">{{ language.name }}</mat-option>
           </mat-select>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
         <mat-form-field class="w-100" *ngSwitchCase="'send_sms'">
           <mat-label>{{ 'sms_content' | t }}</mat-label>
-          <input matInput required [value]="action.get('activityValue').value && action.get('activityValue').value[lang.value] ? action.get('activityValue').value[lang.value] : null" (change)="setSMS(action, $event.target.value)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs">
+          <input matInput required [value]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (change)="setSMS(action, $event.target.value)" [hidden]="activeLang !== language.id" *ngFor="let language of languages">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
@@ -92,9 +92,9 @@
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
-          <mat-form-field class="w-200p">
+          <mat-form-field class="w-200p" *ngIf="action.get('activityValue').value === 'schedule'">
             <mat-label>{{ 'select_schedule' | t }}</mat-label>
-            <mat-select formControlName="conditionSchedule" required *ngIf="action.get('activityValue').value === 'schedule'">
+            <mat-select formControlName="conditionSchedule" required>
               <mat-option [value]="schedule.id" *ngFor="let schedule of formService.schedules">{{ schedule.name }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>

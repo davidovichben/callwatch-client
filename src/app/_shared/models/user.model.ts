@@ -13,7 +13,7 @@ export class UserModel {
   isRoot: boolean;
   avatar: string;
   authType: string;
-  locale: string;
+  language: string;
   unit: string;
   email: string;
   extension: string;

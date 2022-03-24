@@ -1,0 +1,29 @@
+@import '~src/assets/variables';
+@import '~src/assets/extendables';
+
+.widget-type
+  display: flex
+  flex-direction: column
+  align-items: center
+  color: DarkGreyColor
+  text-align: center
+  cursor: pointer
+  transition: 0.3s
+
+  .icon-container
+    @extend .flex-center
+    width: 50px
+    height: 50px
+    border: 2px solid #afafaf
+    border-radius: 8px
+
+    mat-icon
+      width: 32px
+      height: 32px
+      font-size: 32px
+
+.widget-type.active, .widget-type:hover
+  color: BlueColor
+
+  .icon-container
+    border-color: BlueColor

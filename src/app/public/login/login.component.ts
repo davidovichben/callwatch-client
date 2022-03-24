@@ -33,7 +33,7 @@ export class LoginComponent {
 
       this.appHttp.login(form.value.username, form.value.password).then(response => {
         if (response) {
-          this.localeService.setLocale(response.locale);
+          this.localeService.setLocale(response.language);
           this.userSession.setUser({ extension: form.value.extension, ...response });
 
           const url = response.isAdmin ? ['/admin'] : ['/platform'];

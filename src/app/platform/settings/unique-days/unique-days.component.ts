@@ -16,6 +16,8 @@ export class UniqueDaysComponent {
 
 	readonly columns = [
 		{ name: 'name', label: 'name' },
+    { name: 'startDate', label: 'from_date' },
+    { name: 'endDate', label: 'to_date' },
     { name: 'startTime', label: 'from_hour' },
     { name: 'endTime', label: 'to_hour' },
     { name: 'description', label: 'description' }

@@ -115,7 +115,8 @@
               "src/styles.styl"
             ],
             "scripts": [
-              "node_modules/sweetalert2/dist/sweetalert2.min.js"
+              "node_modules/sweetalert2/dist/sweetalert2.min.js",
+              "node_modules/chart.js/dist/chart.js"
             ]
           }
         }

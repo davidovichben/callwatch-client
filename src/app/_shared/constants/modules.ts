@@ -39,8 +39,3 @@ export const UnitModules = [
   { name: 'users', label: 'users' },
   { name: 'groups', label: 'groups_extensions' }
 ];
-
-export const Locales = [
-  { label: 'עברית', code: 'he', key: 'hebrew' },
-  { label: 'English', code: 'en', key: 'english' }
-];

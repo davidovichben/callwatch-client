@@ -5,7 +5,7 @@
   <mat-form-field class="w-200p">
     <mat-label>{{ 'select_language' | t  }}</mat-label>
     <mat-select [value]="activeLang" (valueChange)="activeLang = $event">
-      <mat-option *ngFor="let lang of langs" [value]="lang.value">{{ lang.label }}</mat-option>
+      <mat-option *ngFor="let language of languages" [value]="language.id">{{ language.name }}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -34,7 +34,7 @@
       <ng-container *ngIf="message.get('type').value === 'message'">
         <app-tags-input class="w-300p" [type]="'routerMessage'" formControlName="tags"></app-tags-input>
         <div class="flex-grow-1">
-          <app-audio-input [inputFile]="message.get('files').value[lang.value]" (fileChange)="setFile(message, $event)" [hidden]="activeLang !== lang.value" *ngFor="let lang of langs"></app-audio-input>
+          <app-audio-input [inputFile]="message.get('files').value[language.id]" (fileChange)="setFile(message, $event)" [hidden]="activeLang !== language.id" *ngFor="let language of languages"></app-audio-input>
         </div>
         <div class="icon-container pointer" (click)="openActivityDialog(message)">
           <p class="mb-1 bold">{{ 'timing' | t }}</p>

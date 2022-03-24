@@ -1,0 +1,13 @@
+<div class="mb-3">
+  <button type="button" class="btn grey-btn" (click)="openWidgetFormDialog()">
+    <i class="la la-plus-circle ms-1 align-middle f-20 blue-text"></i>
+    <span class="blue-text bold">{{ 'add_widget' | t }}</span>
+  </button>
+</div>
+<div class="grid">
+  <div class="grid-box" *ngFor="let widget of widgets"
+       [ngStyle]="{ width: widget.width, height: widget.height, top: widget.y + 'px', right: widget.x + '%' }">
+    <div class="grid-box-inner">{{ widget.value }}</div>
+  </div>
+</div>
+

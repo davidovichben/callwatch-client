@@ -30,7 +30,8 @@ export class MessagesComponent extends SharedComponent implements OnInit, OnDest
 
   ngOnInit(): void {
     this.formArray = (this.formService.routerForm.get('messages.' + this.category) as FormArray);
-    this.activeLang = this.locale.getLocale();
+    this.languages = this.formService.languages;
+    this.activeLang = this.languages[0].id;
 
     const router = this.formService.router;
     if (router?.messages && router.messages[this.category]) {

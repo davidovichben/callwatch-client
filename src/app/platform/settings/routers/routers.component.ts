@@ -20,8 +20,9 @@ export class RoutersComponent {
 
 	readonly columns = [
 		{ name: 'name', label: 'name' },
-    { name: 'schedule', label: 'schedule' }
-	];
+    { name: 'schedule', label: 'schedule' },
+    { name: 'description', label: 'description' }
+  ];
 
 	constructor(private notification: NotificationService,
               private routerService: RouterService,

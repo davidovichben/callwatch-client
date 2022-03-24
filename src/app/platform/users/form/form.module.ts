@@ -24,6 +24,7 @@ import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-select.resolve';
 import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
 import { UserResolve } from 'src/app/_shared/resolves/user.resolve';
+import { LanguageSelectResolve } from 'src/app/_shared/resolves/language-select.resolve';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -75,6 +76,7 @@ const routes: Routes = [
     PermissionSelectResolve,
     UnitsSelectResolve,
     UserResolve,
+    LanguageSelectResolve,
     TranslatePipe,
     DeactivateGuard
   ]

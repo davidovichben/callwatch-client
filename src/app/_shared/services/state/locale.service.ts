@@ -23,7 +23,7 @@ export class LocaleService {
 
   setLocale(locale?: string): void {
     this.activeLocale = locale ? locale : 'he';
-    this.dir = this.activeLocale === 'en' ? 'ltr' : 'rtl';
+    this.dir = this.activeLocale === 'he' ? 'rtl' : 'ltr';
 
     localStorage.removeItem('locale');
     localStorage.setItem('locale', this.activeLocale);

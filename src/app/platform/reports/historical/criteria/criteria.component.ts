@@ -117,15 +117,13 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   submit(): void {
     const values = this.sanitizeValues(this.formGroup.value);
-
-
     this.reportStateService.setCriteria(values);
 
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
   }
 
   private sanitizeValues(values: ReportCriteriaModel): ReportCriteriaModel {
-    values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
+    values.weekDays = values.weekDays.filter(day => !!day);
     if (!values.dates.from || !values.dates.to) {
       delete values.dates;
     }

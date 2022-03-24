@@ -18,7 +18,6 @@ export class HistoricalReportResultsResolve implements Resolve<any> {
     }
 
     const values = this.reportStateService.getCriteria();
-    values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
 
     return this.reportService.produceReport(reportTemplate.id, values).then(response => response);
   }

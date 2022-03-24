@@ -15,7 +15,6 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
-import { Locales } from 'src/app/_shared/constants/modules';
 import { EmailPattern, PhonePattern } from 'src/app/_shared/constants/patterns';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
@@ -35,7 +34,6 @@ export class FormComponent implements OnInit, OnDestroy {
   readonly sub = new Subscription();
 
   readonly authTypes = AuthTypes;
-  readonly locales = Locales;
   readonly errorMessages = ErrorMessages;
   readonly avatarErrors = {
     size: false,
@@ -47,8 +45,9 @@ export class FormComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
 
   user: UserModel;
-  permissions: SelectItemModel[] = [];
   units: UnitModel[] = [];
+  permissions: SelectItemModel[] = [];
+  languages: SelectItemModel[] = [];
 
   isSubmitting = false;
 
@@ -84,7 +83,7 @@ export class FormComponent implements OnInit, OnDestroy {
       authType: this.fb.control(null),
       username: this.fb.control(null, Validators.required, this.checkUsernameUnique.bind(this)),
       password: this.fb.control(null),
-      locale: this.fb.control(null, Validators.required),
+      language: this.fb.control(null, Validators.required),
       permission: this.fb.control(null, Validators.required),
       // primaryUnit: this.fb.control(null, Validators.required),
       units: this.fb.control([], null),
