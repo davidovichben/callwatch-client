@@ -24,10 +24,10 @@ export class ReportColumnModel {
 class DesignObj { value?: string; values?: { from: number, to: number }; color: string }
 
 export const ReportColumnTypes = ['standard', 'computed'];
-export const TotalTypes = ['SUM', 'COUNT', 'AVG'];
+export const TotalTypes = ['SUM', 'COUNT', 'AVG', 'MAX', 'MIN'];
 export const DataTypes = [
-  { value: 'percent', label: '%' },
   { value: 'number', label: 'NUM' },
+  { value: 'percent', label: '%' },
   { value: 'text', label: 'TEXT' },
   { value: 'time', label: 'TIME' },
 ]

@@ -32,9 +32,12 @@ export class ResultsComponent implements OnInit, OnDestroy {
   activeColumns: ReportColumnModel[];
 
   results: {
-    titles: [],
-    subTitles: [],
-    labels: [],
+    labels: {
+      titles: [],
+      subTitles: [],
+      columns: [],
+      columnTypes: [],
+    },
     rows: [];
     totals: []
   }

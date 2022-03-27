@@ -16,3 +16,5 @@ export class ReportWidgetModel {
 
 export const WidgetTypes = ['pie', 'meter', 'table', 'numerical'];
 export const CalculationTypes = ['SUM', 'COUNT', 'AVG'];
+export const DataTypes = ['time', 'percentage', 'number'];
+export const TemporaryDesignTypes = [];

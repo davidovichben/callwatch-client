@@ -123,13 +123,19 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   private sanitizeValues(values: ReportCriteriaModel): ReportCriteriaModel {
-    values.weekDays = values.weekDays.filter(day => !!day);
+    values.weekDays = Object.keys(values.weekDays).filter(day => !!day);
     if (!values.dates.from || !values.dates.to) {
       delete values.dates;
+    } else {
+      values.dates.from = values.dates.from.indexOf('T') === -1 ? values.dates.from : values.dates.from.substring(0, values.dates.from.indexOf('T'));
+      values.dates.to = values.dates.to.indexOf('T') === -1 ? values.dates.to : values.dates.to.substring(0, values.dates.to.indexOf('T'));
     }
 
     if (!values.ignoreDates.from || !values.ignoreDates.to) {
       delete values.ignoreDates;
+    } else {
+      // values.ignoreDates.from = values.ignoreDates.from.indexOf('T') === -1 ? values.ignoreDates.from : values.ignoreDates.from.substring(0, values.ignoreDates.from.indexOf('T'));
+      // values.ignoreDates.to = values.ignoreDates.to.indexOf('T') === -1 ? values.ignoreDates.to : values.ignoreDates.to.substring(0, values.ignoreDates.to.indexOf('T'));
     }
 
     values.times = values.times.filter((time) => time.from && time.to);

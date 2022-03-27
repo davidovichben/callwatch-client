@@ -44,7 +44,7 @@
   <div class="mb-3">
     <mat-form-field class="w-100">
       <mat-label>{{ 'data_type' | t }}</mat-label>
-      <mat-select formControlName="dataType" required>
+      <mat-select formControlName="dataType" (valueChange)="dataTypeChange($event)" required>
         <mat-option *ngFor="let type of dataTypes" [value]="type.value">{{ type.label }}</mat-option>
       </mat-select>
       <mat-error>{{ errorMessages.required | t }}</mat-error>
@@ -88,7 +88,7 @@
       <div class="col-12 col-lg-4">
         <mat-form-field class="w-100">
           <mat-label>{{ group.label | t }}</mat-label>
-          <input matInput [type]="first? 'text' : 'number'" formControlName="value">
+          <input matInput [type]="first ? 'text' : 'number'" formControlName="value">
         </mat-form-field>
       </div>
       <div class="col-12 col-lg-4">

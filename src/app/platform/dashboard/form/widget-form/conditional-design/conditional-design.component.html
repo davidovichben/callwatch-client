@@ -1,0 +1,125 @@
+<ng-container [formGroup]="formGroup">
+  <div class="mb-3">
+    <p class="bold light-black-text">{{ 'single_value' | t }}</p>
+    <ng-container formArrayName="equalTo">
+      <div class="row" [formGroupName]="index" *ngFor="let control of formGroup.get('equalTo')['controls']; let index = index; let last = last">
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'value_equal_to' | t }}</mat-label>
+            <input matInput type="text" formControlName="value" required>
+            <mat-error>{{ errorMessages.required }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'for_longer_than' | t }}</mat-label>
+            <input matInput type="number" formControlName="duration" required>
+            <mat-error>{{ errorMessages.required }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'select_color' | t }}</mat-label>
+            <mat-select formControlName="color">
+              <mat-option *ngFor="let color of colors" [value]="color">{{ color | t }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-3" *ngIf="last">
+          <button type="button" class="mt-2 py-1 px-3 light-green-btn" (click)="addEqualToDesignGroup()">
+            <mat-icon class="f-16">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="mb-3">
+    <p class="bold light-black-text">{{ 'value_range' | t }}</p>
+    <div class="row" [formGroupName]="group.name" *ngFor="let group of designGroupNames; let first = first">
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ group.label | t }}</mat-label>
+          <input matInput type="text" formControlName="value">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'for_longer_than' | t }}</mat-label>
+          <input matInput type="number" formControlName="duration">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'select_color' | t }}</mat-label>
+          <mat-select formControlName="color">
+            <mat-option *ngFor="let color of colors" [value]="color.value">{{ color.label | t }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" formGroupName="between">
+      <div class="col-12 col-lg-3" formGroupName="values">
+        <mat-form-field class="w-50">
+          <mat-label>{{ 'value_between' | t }}</mat-label>
+          <input matInput type="number" formControlName="from">
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <mat-label>{{ 'between_to' | t }}</mat-label>
+          <input matInput type="number" formControlName="to">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'for_longer_than' | t }}</mat-label>
+          <input matInput type="number" formControlName="duration">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-lg-3">
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'select_color' | t }}</mat-label>
+          <mat-select formControlName="color">
+            <mat-option *ngFor="let color of colors" [value]="color.value">{{ color.label | t }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <p class="bold light-black-text">{{ 'temporary_conditional_design' | t }}</p>
+    <ng-container formArrayName="temporary">
+      <div class="row" [formGroupName]="index" *ngFor="let control of formGroup.get('temporary')['controls']; let index = index; let last = last">
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'change_type' | t }}</mat-label>
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let type of temporaryDesignTypes" [value]="type">{{ type | t }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'for_longer_than' | t }}</mat-label>
+            <input matInput type="number" formControlName="duration" required>
+            <mat-error>{{ errorMessages.required }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'select_color' | t }}</mat-label>
+            <mat-select formControlName="color">
+              <mat-option *ngFor="let color of colors" [value]="color">{{ color | t }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-3" *ngIf="last">
+          <button type="button" class="mt-2 py-1 px-3 light-green-btn" (click)="addTemporaryDesignGroup()">
+            <mat-icon class="f-16">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="mb-3">
+    <mat-checkbox formControlName="currentReportOnly">{{ 'current_report_design_only' | t }}</mat-checkbox>
+  </div>
+</ng-container>

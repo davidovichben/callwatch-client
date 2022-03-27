@@ -34,30 +34,35 @@
 <div class="loader inline" *ngIf="isProducing"></div>
 <table class="table" *ngIf="!isProducing">
   <thead>
-  <tr *ngIf="results.titles.length > 0">
+  <tr *ngIf="results.labels.titles.length > 0">
     <th></th>
-    <th *ngFor="let title of results.titles" [colSpan]="title.length">{{ title.name }}</th>
+    <th *ngFor="let title of results.labels.titles" [colSpan]="title.length">{{ title.name }}</th>
   </tr>
-  <tr *ngIf="results.subTitles.length > 0">
+  <tr *ngIf="results.labels.subTitles.length > 0">
     <th></th>
-    <th *ngFor="let subTitle of results.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>
+    <th *ngFor="let subTitle of results.labels.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>
   </tr>
   <tr>
     <th></th>
-    <th *ngFor="let label of results.labels">{{ label }}</th>
+    <th *ngFor="let column of results.labels.columns" [colSpan]="column.length">{{ column.name }}</th>
+  </tr>
+  <tr *ngIf="results.labels.columnTypes.length > 0">
+    <th></th>
+    <th *ngFor="let type of results.labels.columnTypes">{{ type | t }}</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let row of results.rows; let rowIndex = index">
     <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">
-      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}
+<!--      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}-->
+      {{ value }}
     </td>
   </tr>
   </tbody>
   <tfoot>
   <tr>
     <td></td>
-    <td *ngFor="let total of results.totals">{{ total }}</td>
+    <td *ngFor="let total of results.totals">{{ total ?? 0 }}</td>
   </tr>
   </tfoot>
 </table>

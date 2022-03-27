@@ -39,10 +39,10 @@
           <input matInput type="time" formControlName="to">
         </mat-form-field>
         <div class="d-flex align-items-center">
-          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">
+          <button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">
             <mat-icon class="f-16">add</mat-icon>
           </button>
-          <button mat-flat-button type="button" class="blue-btn" (click)="removeTime(i)" *ngIf="!first">
+          <button type="button" class="blue-btn" (click)="removeTime(i)" *ngIf="!first">
             <mat-icon class="f-16">remove</mat-icon>
           </button>
         </div>

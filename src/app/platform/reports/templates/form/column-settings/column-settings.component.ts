@@ -33,9 +33,9 @@ export class ColumnSettingsComponent {
 
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ColumnSettingsComponent>,
-              public localeService: LocaleService,
-              @Inject(MAT_DIALOG_DATA) public data) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data, private fb: FormBuilder,
+              private dialogRef: MatDialogRef<ColumnSettingsComponent>,
+              public localeService: LocaleService) {}
 
   ngOnInit(): void {
     this.makeForm();
@@ -49,7 +49,7 @@ export class ColumnSettingsComponent {
       title: this.fb.control(null),
       subTitle: this.fb.control(null),
       totalType: this.fb.control('sum', Validators.required),
-      dataType: this.fb.control('percent', Validators.required),
+      dataType: this.fb.control('number', Validators.required),
       showExternal: this.fb.control(true),
       showInternal: this.fb.control(true),
       conditionalDesign: this.fb.group({
@@ -84,6 +84,12 @@ export class ColumnSettingsComponent {
       }))
 
       this.data.columns.forEach(column => this.columnsById[column.id] = column.name);
+    } else {
+
+      // Removing percent if not computed
+
+      const index = this.dataTypes.findIndex(type => type.value === 'percent');
+      this.dataTypes.splice(index, 1);
     }
 
     if (this.data.column) {
@@ -92,6 +98,16 @@ export class ColumnSettingsComponent {
       }
 
       this.formGroup.patchValue(this.data.column);
+    }
+  }
+
+  dataTypeChange(value: string): void {
+    const totalType = this.formGroup.get('totalType');
+    if (value === 'text') {
+      totalType.patchValue('count');
+      totalType.disable();
+    } else {
+      totalType.enable();
     }
   }
 
@@ -127,7 +143,7 @@ export class ColumnSettingsComponent {
   }
 
   submit(): void {
-    const values = this.formGroup.value;
+    const values = this.formGroup.getRawValue();
 
     values.conditionalDesign = this.filterDesign(values.conditionalDesign);
 
