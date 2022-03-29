@@ -50,8 +50,8 @@ export class ColumnSettingsComponent {
       subTitle: this.fb.control(null),
       totalType: this.fb.control('sum', Validators.required),
       dataType: this.fb.control('number', Validators.required),
-      showExternal: this.fb.control(true),
-      showInternal: this.fb.control(true),
+      showExternal: this.fb.control(false),
+      showInternal: this.fb.control(false),
       conditionalDesign: this.fb.group({
         equalTo: this.fb.group({
           value: this.fb.control(null),
@@ -143,25 +143,8 @@ export class ColumnSettingsComponent {
   }
 
   submit(): void {
-    const values = this.formGroup.getRawValue();
-
-    values.conditionalDesign = this.filterDesign(values.conditionalDesign);
-
     if (this.formGroup.valid) {
-      this.dialogRef.close(this.formGroup.value);
+      this.dialogRef.close(this.formGroup.getRawValue());
     }
-  }
-
-  private filterDesign(design: object): object {
-    const filtered = {};
-
-    Object.keys(design).forEach(conditionName => {
-      const condition = design[conditionName];
-      if ((condition.value || (condition.values && condition.values.from && condition.values.to)) && condition.color) {
-        filtered[conditionName] = condition;
-      }
-    });
-
-    return filtered;
   }
 }

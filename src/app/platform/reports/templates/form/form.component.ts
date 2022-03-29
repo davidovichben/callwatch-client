@@ -167,6 +167,17 @@ export class FormComponent implements OnInit, OnDestroy {
       if (!column.totalType) {
         column.totalType = 'sum';
       }
+
+      const filteredDesign = {};
+
+      Object.keys(column.conditionalDesign).forEach(conditionName => {
+        const condition = column.conditionalDesign[conditionName];
+        if ((condition.value || (condition.values && condition.values.from && condition.values.to)) && condition.color) {
+          filteredDesign[conditionName] = condition;
+        }
+      });
+
+      column.conditionalDesign = filteredDesign;
     });
   }
 

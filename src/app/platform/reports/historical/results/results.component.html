@@ -44,11 +44,14 @@
   </tr>
   <tr>
     <th></th>
-    <th *ngFor="let column of results.labels.columns" [colSpan]="column.length">{{ column.name }}</th>
+    <th *ngFor="let column of results.labels.columns" [colSpan]="column.length">
+      <span>{{ column.name | t }}</span>
+      <span *ngIf="column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
+    </th>
   </tr>
   <tr *ngIf="results.labels.columnTypes.length > 0">
     <th></th>
-    <th *ngFor="let type of results.labels.columnTypes">{{ type | t }}</th>
+    <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name | t }}</th>
   </tr>
   </thead>
   <tbody>
