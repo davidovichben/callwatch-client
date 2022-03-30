@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.module';
 import { AudioInputModule } from 'src/app/_shared/components/audio-input/audio-input.module';
 import { TagsInputModule } from 'src/app/_shared/components/tags-input/tags-input.module';
 import { TimingDialogModule } from 'src/app/platform/settings/routers/form/timing-dialog/timing-dialog.module';
@@ -41,6 +42,7 @@ const routes: Routes = [
     MatDatepickerModule,
     DragDropModule,
     TranslateModule,
+    BdSelectModule,
     AudioInputModule,
     TagsInputModule,
     TimingDialogModule
