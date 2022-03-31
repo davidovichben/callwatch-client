@@ -68,4 +68,11 @@ export class RouterService extends BaseHttpService {
       .then(() => true)
       .catch(() => false);
   }
+
+  numbersExist(numbers: string[]): Promise<{ exists: boolean }> {
+    return this.http.post(this.endPoint + '/numbersExist', { numbers }, this.getTokenRequest())
+      .toPromise()
+      .then(response => response as { exists: boolean })
+      .catch(() => null);
+  }
 }

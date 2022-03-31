@@ -1,18 +1,19 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audio-input.component';
 
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { isDateGreaterOrEqual } from 'src/app/_shared/validators/date-greater-equal.validator';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-general',
-  templateUrl: './general.component.html'
+  templateUrl: './general.component.html',
+  animations: [Fade]
 })
 export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 

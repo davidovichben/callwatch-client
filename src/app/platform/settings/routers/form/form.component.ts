@@ -25,8 +25,7 @@ export class FormComponent implements OnInit, OnDestroy {
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private routerService: RouterService,
-              public formService: RouterFormService,
+              private routerService: RouterService, public formService: RouterFormService,
               private helpers: HelpersService) {}
 
 	ngOnInit(): void {

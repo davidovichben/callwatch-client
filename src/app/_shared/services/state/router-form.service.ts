@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { RouterService } from 'src/app/_shared/services/http/router.service';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { RouterModel } from 'src/app/_shared/models/router.model';
@@ -11,7 +12,8 @@ import { isInteger } from 'src/app/_shared/validators/integer.validator';
 @Injectable()
 export class RouterFormService {
 
-  constructor(private fb: FormBuilder, private genericService: GenericService) {}
+  constructor(private fb: FormBuilder, private genericService: GenericService,
+              private routerService: RouterService) {}
 
   routerForm: FormGroup;
 
@@ -37,7 +39,7 @@ export class RouterFormService {
         irregularTimingActive: this.fb.control({ value: null, disabled: true }),
         irregularTimingFrom: this.fb.control({ value: null, disabled: true }),
         irregularTimingTo: this.fb.control({ value: null, disabled: true }),
-        dialedNumbers: this.fb.control(null),
+        dialedNumbers: this.fb.control(null, [], this.checkNumbersExists.bind(this)),
         adminCode: this.fb.control(null),
         defaultSelectionDuration: this.fb.control(4, isInteger.bind(this)),
         vipEnabled: this.fb.control(null),
@@ -149,6 +151,30 @@ export class RouterFormService {
     }
 
     return this.genericService.exists('router', control.value).then(response => {
+      if (response) {
+        return response.exists ? { exists: true } : null;
+      }
+
+      return null;
+    })
+  }
+
+  checkNumbersExists(control: FormControl): Promise<object> {
+    if (!control.value) {
+      return Promise.resolve(null);
+    }
+
+    let values = control.value;
+    if (this.router) {
+      const existingNumbers = this.router.general.dialedNumbers;
+      values = values.filter(value =>!existingNumbers.includes(value));
+    }
+
+    if (values.length === 0) {
+      return Promise.resolve(null);
+    }
+
+    return this.routerService.numbersExist(values).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }
