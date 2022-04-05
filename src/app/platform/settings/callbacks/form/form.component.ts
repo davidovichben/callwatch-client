@@ -27,6 +27,8 @@ export class FormComponent implements OnInit {
     { label: 'texts', value: 'texts' }
   ];
 
+  readonly optionalDialerControls = ['schedule', 'dialAttemptIntervals', 'dialAttempts', 'minDigitsForRequest'];
+
   activeTab = 'general';
 
 	formGroup: FormGroup;
@@ -58,11 +60,12 @@ export class FormComponent implements OnInit {
       name: this.fb.control(null, Validators.required),
       description: this.fb.control(null),
       requestDuration: this.fb.control(null, isInteger),
-      dialAttempts: this.fb.control(null, isInteger),
       enableDialer: this.fb.control(null),
-      schedule: this.fb.control(null, Validators.required),
       answerCalculation: this.fb.control(null, isInteger),
-      dialAttemptIntervals: this.fb.control(null, isInteger),
+      schedule: this.fb.control({ value: null, disabled: true }),
+      dialAttempts: this.fb.control({ value: null, disabled: true }, isInteger),
+      dialAttemptIntervals: this.fb.control({ value: null, disabled: true }, isInteger),
+      minDigitsForRequest: this.fb.control({ value: 7, disabled: true }, isInteger),
       mailCallback: this.fb.control(null),
       file: this.fb.control(null),
       fileName: this.fb.control(null),
@@ -91,6 +94,10 @@ export class FormComponent implements OnInit {
       this.audioFile = { bin: data.file, name: data.fileName };
     }
 
+    if (this.formGroup.get('enableDialer').value) {
+      this.enableDialerChecked(true);
+    }
+
     this.setTextArray(callback.texts);
   }
 
@@ -103,6 +110,16 @@ export class FormComponent implements OnInit {
         control.get('isActive').value ? control.get('content').enable() : null;
       }
     });
+  }
+
+  enableDialerChecked(checked: boolean): void {
+    this.optionalDialerControls.forEach(controlName => {
+      const control = this.formGroup.get(controlName);
+      checked ? control.enable() : control.disable();
+    })
+
+    const validators = checked ? Validators.required : null;
+    this.formGroup.get('schedule').setValidators(validators);
   }
 
   setFile(file?: { bin: string, name: string }): void {
@@ -121,7 +138,7 @@ export class FormComponent implements OnInit {
     }
 
 		if (this.formGroup.valid && !this.isSubmitting) {
-      const values = this.formGroup.value;
+      const values = this.formGroup.getRawValue();
       values.texts = this.filterEmptyTexts();
 
 			this.isSubmitting = true;

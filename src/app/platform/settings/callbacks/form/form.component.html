@@ -32,41 +32,64 @@
     <section [hidden]="activeTab !== 'request'">
       <div class="row">
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
-          <app-number-input formControlName="requestDuration" [placeholder]="'request_duration_in_days' | t"></app-number-input>
-          <p class="alert alert-danger" *ngIf="formGroup.get('requestDuration').errors && form.submitted">{{ errorMessages.number | t }}</p>
+          <mat-form-field>
+            <mat-label>{{ 'request_duration_in_days' | t }}</mat-label>
+            <input matInput type="number" formControlName="requestDuration">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
+          </mat-form-field>
         </div>
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
-          <app-number-input formControlName="dialAttempts" [placeholder]="'number_of_call_attempts' | t"></app-number-input>
-          <p class="alert alert-danger" *ngIf="formGroup.get('dialAttempts').errors && form.submitted">{{ errorMessages.number | t }}</p>
+          <mat-form-field>
+            <mat-label>{{ 'request_answer_calculation_s' | t }}</mat-label>
+            <input matInput type="number" formControlName="answerCalculation">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
+          </mat-form-field>
         </div>
       </div>
       <div class="row">
         <div class="col-12 col-md-6 col-xxl-3 mb-5">
-          <mat-checkbox class="ms-3" formControlName="enableDialer">{{ 'enable_dialer_back' | t }}</mat-checkbox>
-        </div>
-        <div class="col-12 col-md-6 col-xxl-3 mb-5">
           <mat-checkbox formControlName="mailCallback">{{ 'callback_mail_representative' | t }}</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 col-xxl-3 mb-5">
+          <mat-checkbox class="ms-3" formControlName="enableDialer" (change)="enableDialerChecked($event.checked)">{{ 'enable_dialer_back' | t }}</mat-checkbox>
         </div>
       </div>
       <div class="row">
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <mat-form-field>
             <mat-label>{{ 'select_schedule' | t }}</mat-label>
-            <mat-select formControlName="schedule" required>
+            <mat-select formControlName="schedule" [required]="formGroup.get('enableDialer').value">
               <mat-option *ngFor="let schedule of schedules" [value]="schedule.id">{{ schedule.name }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
-          <app-number-input formControlName="answerCalculation" [placeholder]="'request_answer_calculation_s' | t"></app-number-input>
-          <p class="alert alert-danger" *ngIf="formGroup.get('answerCalculation').errors && form.submitted">{{ errorMessages.number | t }}</p>
+          <mat-form-field>
+            <mat-label>{{ 'call_attempts_intervals' | t }}</mat-label>
+            <input matInput type="number" formControlName="dialAttemptIntervals">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
+          </mat-form-field>
         </div>
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
-          <app-number-input formControlName="dialAttemptIntervals" [placeholder]="'call_attempts_intervals' | t"></app-number-input>
-          <p class="alert alert-danger" *ngIf="formGroup.get('dialAttemptIntervals').errors && form.submitted">{{ errorMessages.number | t }}</p>
+          <mat-form-field>
+            <mat-label>{{ 'number_of_call_attempts' | t }}</mat-label>
+            <input matInput type="number" formControlName="dialAttempts">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
+          </mat-form-field>
         </div>
-        <div class="d-flex col-12 col-md-6 col-xxl-3 mb-4">
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 col-xxl-3 mb-4">
+          <mat-form-field>
+            <mat-label>{{ 'min_number_of_digits_for_request' | t }}</mat-label>
+            <input matInput type="number" formControlName="minDigitsForRequest">
+            <mat-error>{{ errorMessages.number | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="d-flex col-12 col-md-6 col-xxl-3 mb-4" [ngClass]="{ disabled: !formGroup.get('enableDialer').value }">
           <app-audio-input [fileTypes]="['wav']" [inputFile]="audioFile" (fileChange)="setFile($event)"></app-audio-input>
         </div>
       </div>

@@ -10,7 +10,7 @@
 <app-data-table [columns]="columns" [hasActionsHeader]="true" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
 	<tr *ngFor="let item of dataTable.items">
 		<td>{{ item.name }}</td>
-    <td>{{ item.schedule }}</td>
+    <td>{{ item.schedule ? item.schedule : 'no_schedule_assigned' | t }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('schedules')">
       <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
       <mat-menu #menu="matMenu">
