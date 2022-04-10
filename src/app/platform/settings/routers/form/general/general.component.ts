@@ -29,6 +29,8 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
     waitingRouterEnabled: ['queuePositionReading', 'queueWaitingTime']
   };
 
+  languages = [];
+
   audioFile: { bin: string, name: string };
 
   routerForm: FormGroup;
@@ -38,6 +40,7 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.routerForm = (this.formService.routerForm.get('general') as FormGroup);
     this.formService.activeGroup = 'general';
+    this.languages = this.formService.languages;
 
     const router = this.formService.router;
     if (router) {

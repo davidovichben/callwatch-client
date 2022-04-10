@@ -168,16 +168,18 @@ export class FormComponent implements OnInit, OnDestroy {
         column.totalType = 'sum';
       }
 
-      const filteredDesign = {};
+      if (column.conditionalDesign) {
+        const filteredDesign = {};
 
-      Object.keys(column.conditionalDesign).forEach(conditionName => {
-        const condition = column.conditionalDesign[conditionName];
-        if ((condition.value || (condition.values && condition.values.from && condition.values.to)) && condition.color) {
-          filteredDesign[conditionName] = condition;
-        }
-      });
+        Object.keys(column.conditionalDesign).forEach(conditionName => {
+          const condition = column.conditionalDesign[conditionName];
+          if ((condition.value || (condition.values && condition.values.from && condition.values.to)) && condition.color) {
+            filteredDesign[conditionName] = condition;
+          }
+        });
 
-      column.conditionalDesign = filteredDesign;
+        column.conditionalDesign = filteredDesign;
+      }
     });
   }
 

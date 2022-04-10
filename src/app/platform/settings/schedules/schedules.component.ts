@@ -16,7 +16,8 @@ export class SchedulesComponent {
 
   readonly columns = [
     { label: 'name', name: 'name' },
-    { label: 'type', name: 'type' }
+    { label: 'type', name: 'type' },
+    { label: 'unique_schedule', name: 'uniqueSchedule' }
   ];
 
   constructor(private scheduleService: ScheduleService,

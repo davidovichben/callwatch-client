@@ -53,6 +53,8 @@ export class FormComponent {
       this.scheduleId = routeData.schedule.id;
       this.formGroup.patchValue(routeData.schedule);
       this.callTimes = routeData.schedule.callTimes;
+
+      console.log(routeData.schedule.tags)
     }
   }
 
@@ -60,6 +62,7 @@ export class FormComponent {
     this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control('regular', Validators.required),
+      tags: this.fb.control(null),
       description: this.fb.control(null),
       uniqueSchedule: this.fb.control(null)
     });

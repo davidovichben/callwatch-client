@@ -54,7 +54,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.menuType = this.router.url.substr(1, 5) === 'admin' ? 'admin' : 'platform';
     this.modules = this.menuType === 'admin' ? AdminModules : PlatformModules;
 
-    this.setModules();
+    if (this.menuType === 'platform') {
+      this.setModules();
+    }
   }
 
   private setModules(): void {

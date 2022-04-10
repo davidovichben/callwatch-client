@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.module';
+import { TagsInputModule } from 'src/app/_shared/components/tags-input/tags-input.module';
 
 import { FormComponent } from 'src/app/platform/settings/schedules/form/form.component';
 
@@ -61,7 +62,8 @@ const routes: Routes = [
     MatSlideToggleModule,
     MatIconModule,
     TranslateModule,
-    BdSelectModule
+    BdSelectModule,
+    TagsInputModule
   ],
   providers: [
     ScheduleService,

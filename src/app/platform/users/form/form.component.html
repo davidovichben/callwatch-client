@@ -79,7 +79,7 @@
             <mat-form-field>
               <mat-label>{{ 'verification_type' | t }}</mat-label>
               <mat-select formControlName="authType">
-                <mat-option>--</mat-option>
+                <mat-option>-------</mat-option>
                 <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
               </mat-select>
             </mat-form-field>
