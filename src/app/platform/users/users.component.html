@@ -12,7 +12,10 @@
     </bd-select>
   </div>
   <tr *ngFor="let item of dataTable.items">
-    <td>{{ item.name }}</td>
+    <td>
+      <a [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('users', 'update')">{{ item.name }}</a>
+      <span *ngIf="!userSession.hasPermission('users', 'update')">{{ item.name }}</span>
+    </td>
     <td>{{ item.username }}</td>
     <td>{{ item.permission }}</td>
     <td>{{ item.unit ? item.unit : 'user_not_assigned_to_unit' | t }}{{ item.unitCount > 1 ? '...' : '' }}</td>

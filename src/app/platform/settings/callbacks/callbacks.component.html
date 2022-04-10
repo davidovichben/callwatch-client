@@ -9,7 +9,10 @@
 </div>
 <app-data-table [columns]="columns" [hasActionsHeader]="true" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
 	<tr *ngFor="let item of dataTable.items">
-		<td>{{ item.name }}</td>
+    <td>
+      <a [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('schedules', 'update')">{{ item.name }}</a>
+      <span *ngIf="!userSession.hasPermission('schedules', 'update')">{{ item.name }}</span>
+    </td>
     <td>{{ item.schedule ? item.schedule : 'no_schedule_assigned' | t }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('schedules')">
       <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>

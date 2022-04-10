@@ -9,7 +9,10 @@
 </div>
 <app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('permissions')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <tr *ngFor="let item of dataTable.items">
-    <td>{{ item.name }}</td>
+    <td>
+      <a [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('permissions', 'update')">{{ item.name }}</a>
+      <span *ngIf="!userSession.hasPermission('permissions', 'update')">{{ item.name }}</span>
+    </td>
     <td>{{ item.description }}</td>
     <td>{{ item.userCount }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('permissions')">
