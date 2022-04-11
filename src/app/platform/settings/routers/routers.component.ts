@@ -26,7 +26,7 @@ export class RoutersComponent implements OnDestroy {
 	readonly columns = [
 		{ name: 'name', label: 'name' },
     { name: 'schedule', label: 'schedule' },
-    { name: 'description', label: 'description' }
+    { name: 'numbers', label: 'dialed_numbers' }
   ];
 
 	constructor(private notification: NotificationService,

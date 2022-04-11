@@ -31,7 +31,7 @@
 		<th *ngFor="let column of columns" class="table-header">
       <div class="d-flex align-items-center">
         <span>{{ column.label | t }}</span>
-        <div class="sort-container">
+        <div class="sort-container" *ngIf="column.sortable !== false">
           <div class="triangle-up" (click)="sort(column, 'desc')" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'desc' }"></div>
           <div class="triangle-down" (click)="sort(column, 'asc')" [ngClass]="{ selected: criteria.sort.column === column.name && criteria.sort.direction === 'asc' }"></div>
         </div>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,6 +13,8 @@ export class ChipsInputComponent implements ControlValueAccessor {
 
   @Input() placeholder: string;
   @Input() rules: { pattern?: string; length?: number } = {};
+
+  @Output() change = new EventEmitter();
 
   regex: RegExp;
 
@@ -42,6 +44,8 @@ export class ChipsInputComponent implements ControlValueAccessor {
       this.propagateChange(Array.from(this.values));
 
       input.value = '';
+
+      this.change.emit(this.values);
     }
   }
 
@@ -50,6 +54,8 @@ export class ChipsInputComponent implements ControlValueAccessor {
 
     this.values.delete(value);
     this.propagateChange(Array.from(this.values));
+
+    this.change.emit(this.values);
   }
 
   writeValue(values: any[]): void {

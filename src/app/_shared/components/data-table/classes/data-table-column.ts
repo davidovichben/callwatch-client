@@ -1,5 +1,6 @@
 export class DataTableColumn {
 	name: string;
 	label: string;
-	isSearchable?: boolean;
+	searchable?: boolean;
+  sortable?: boolean;
 }
