@@ -47,17 +47,17 @@
       </mat-form-field>
       <div class="flex-grow-1" [ngSwitch]="action.get('activityTypeName').value">
 
-        <mat-form-field class="w-100" *ngSwitchCase="['call_transfer', 'call_transfer_queue'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
+        <mat-form-field class="w-100" *ngSwitchCase="['TransferCall', 'PlayPositionInQ'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
           <mat-label>{{ 'enter_number' | t }}</mat-label>
           <input matInput formControlName="activityValue" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <div *ngSwitchCase="'audio_message'">
+        <div *ngSwitchCase="'PlayMessage'">
           <app-audio-input [inputFile]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (fileChange)="setFile(action, $event, 'activityValue')" [hidden]="activeLang !== language.id" *ngFor="let language of languages"></app-audio-input>
         </div>
 
-        <mat-form-field class="w-100" *ngSwitchCase="'language_switch'">
+        <mat-form-field class="w-100" *ngSwitchCase="'ChangeLang'">
           <mat-label>{{ 'select_language' | t }}</mat-label>
           <mat-select formControlName="activityValue" required>
             <mat-option [value]="language.id" *ngFor="let language of languages">{{ language.name }}</mat-option>
@@ -65,26 +65,26 @@
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-100" *ngSwitchCase="'send_sms'">
+        <mat-form-field class="w-100" *ngSwitchCase="'SetSMS'">
           <mat-label>{{ 'sms_content' | t }}</mat-label>
           <input matInput required [value]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (change)="setSMS(action, $event.target.value)" [hidden]="activeLang !== language.id" *ngFor="let language of languages">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <div *ngSwitchCase="'router_transfer'">
+        <div *ngSwitchCase="'TransferAnotherRouter'">
           <bd-select [placeholder]="'select_router' | t" formControlName="activityValue" required>
             <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
           </bd-select>
           <p class="alert alert-danger" *ngIf="action.get('activityValue').errors">{{ (errorMessages.required | t) }}</p>
         </div>
 
-        <mat-form-field class="w-100" *ngSwitchCase="'external_service'">
+        <mat-form-field class="w-100" *ngSwitchCase="'WebServices'">
           <mat-label>{{ 'service_name' | t }}</mat-label>
           <input matInput formControlName="activityValue">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <div class="d-flex align-items-center" *ngSwitchCase="'condition'">
+        <div class="d-flex align-items-center" *ngSwitchCase="'IfScheduler'">
           <mat-form-field class="ms-3 w-200p">
             <mat-label>{{ 'select_condition' | t }}</mat-label>
             <mat-select formControlName="activityValue" (ngModelChange)="conditionValueChanged($event, action)">
