@@ -133,6 +133,7 @@ export class RouterFormService {
       activityValue: this.fb.control(null),
       conditionSchedule: this.fb.control(null),
       activityTypeName: this.fb.control(null),
+      tags: this.fb.control(null),
       timingType: this.fb.control(null),
       schedule: this.fb.control(null),
       startTime: this.fb.control(null),

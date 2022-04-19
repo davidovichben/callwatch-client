@@ -34,7 +34,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
   isLoading = false;
 
   constructor(dialog: MatDialog, formService: RouterFormService, router: Router,
-              private route: ActivatedRoute, private fb: FormBuilder, private locale: LocaleService,
+              private route: ActivatedRoute, private fb: FormBuilder, public locale: LocaleService,
               private t: TranslatePipe, private notificationService: NotificationService) {
     super(dialog, router, formService);
   }
@@ -54,7 +54,6 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
         setTimeout(() => this.isLoading = false, 0);
       }
-
     }))
   }
 

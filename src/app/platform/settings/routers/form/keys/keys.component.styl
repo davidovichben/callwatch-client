@@ -24,11 +24,25 @@
     > *
       min-width: 100px
 
+    .activity-value
+      display: flex
+      width: 225px
+
+      > *
+        width: 100%
+
   .delete-container
     width: 64px
     text-align: center
 
   .group-actions
     @extend .flex-between
+    flex-grow: 1
     height: 75px
     width: 300px
+
+    .delete-container:before
+      content: ""
+
+  app-tags-input
+    margin-top: -22px

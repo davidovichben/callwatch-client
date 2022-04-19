@@ -45,9 +45,8 @@
         </mat-select>
         <mat-error>{{ errorMessages.required | t }}</mat-error>
       </mat-form-field>
-      <div class="flex-grow-1" [ngSwitch]="action.get('activityTypeName').value">
-
-        <mat-form-field class="w-100" *ngSwitchCase="['TransferCall', 'PlayPositionInQ'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
+      <div class="activity-value" [ngSwitch]="action.get('activityTypeName').value">
+        <mat-form-field *ngSwitchCase="['TransferCall', 'PlayPositionInQ'].includes(action.get('activityTypeName').value) ? action.get('activityTypeName').value : false">
           <mat-label>{{ 'enter_number' | t }}</mat-label>
           <input matInput formControlName="activityValue" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
@@ -57,7 +56,7 @@
           <app-audio-input [inputFile]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (fileChange)="setFile(action, $event, 'activityValue')" [hidden]="activeLang !== language.id" *ngFor="let language of languages"></app-audio-input>
         </div>
 
-        <mat-form-field class="w-100" *ngSwitchCase="'ChangeLang'">
+        <mat-form-field *ngSwitchCase="'ChangeLang'">
           <mat-label>{{ 'select_language' | t }}</mat-label>
           <mat-select formControlName="activityValue" required>
             <mat-option [value]="language.id" *ngFor="let language of languages">{{ language.name }}</mat-option>
@@ -65,25 +64,25 @@
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-100" *ngSwitchCase="'SetSMS'">
+        <mat-form-field *ngSwitchCase="'SetSMS'">
           <mat-label>{{ 'sms_content' | t }}</mat-label>
           <input matInput required [value]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (change)="setSMS(action, $event.target.value)" [hidden]="activeLang !== language.id" *ngFor="let language of languages">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
         <div *ngSwitchCase="'TransferAnotherRouter'">
-          <bd-select [placeholder]="'select_router' | t" formControlName="activityValue" required>
+          <bd-select class="w-100" [placeholder]="'select_router' | t" formControlName="activityValue" required>
             <bd-option [value]="router.id" *ngFor="let router of formService.routers">{{ router.name }}</bd-option>
           </bd-select>
-          <p class="alert alert-danger" *ngIf="action.get('activityValue').errors">{{ (errorMessages.required | t) }}</p>
+          <p class="alert alert-danger" *ngIf="action.get('activityValue').errors && action.get('activityValue').touched">{{ errorMessages.required | t }}</p>
         </div>
 
-        <mat-form-field class="w-100" *ngSwitchCase="'WebServices'">
+        <mat-form-field *ngSwitchCase="'WebServices'">
           <mat-label>{{ 'service_name' | t }}</mat-label>
           <input matInput formControlName="activityValue">
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
-        
+
         <div class="d-flex align-items-center" *ngSwitchCase="'Condition'">
           <mat-form-field class="ms-3 w-200p">
             <mat-label>{{ 'select_condition' | t }}</mat-label>
@@ -101,6 +100,7 @@
           </mat-form-field>
         </div>
       </div>
+      <app-tags-input [placeholder]="'data_documenting' | t" type="router_key" formControlName="tags" class="mx-1 w-250p" *ngIf="action.get('activityTypeName').value !== 'Condition'"></app-tags-input>
       <div class="text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
         <p class="mb-1 bold">{{ 'timing' | t }}</p>
         <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>
@@ -111,7 +111,7 @@
         <mat-icon [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">power_settings_new</mat-icon>
         <p [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">{{ action.get('isOnline').value ? ('active' | t) : ('inactive' | t) }}</p>
       </div>
-      <div class="group-actions">
+      <div class="group-actions" [ngClass]="{ 'justify-content-end': index > 0 }">
         <div class="h-100 text-center" *ngIf="index === 0 || action.get('isFirstCondition').value">
           <p class="mb-2 bold">{{ 'add_line' | t }}</p>
           <button mat-flat-button class="green-btn" (click)="addAction(key, index)">
