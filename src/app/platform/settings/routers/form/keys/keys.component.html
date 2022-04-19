@@ -100,18 +100,22 @@
           </mat-form-field>
         </div>
       </div>
-      <app-tags-input [placeholder]="'data_documenting' | t" type="router_key" formControlName="tags" class="mx-1 w-250p" *ngIf="action.get('activityTypeName').value !== 'Condition'"></app-tags-input>
-      <div class="text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
-        <p class="mb-1 bold">{{ 'timing' | t }}</p>
-        <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>
-        <p>{{ action.get('timingType').value ? (action.get('timingType').value  | t) : ('none' | t) }}</p>
+      <div class="mx-1 w-250p">
+        <app-tags-input [placeholder]="'data_documenting' | t" type="router_key" formControlName="tags" *ngIf="action.get('activityTypeName').value !== 'Condition'"></app-tags-input>
       </div>
-      <div class="text-center icon-container" *ngIf="index === 0">
-        <p class="mb-1 bold">{{ 'status' | t }}</p>
-        <mat-icon [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">power_settings_new</mat-icon>
-        <p [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">{{ action.get('isOnline').value ? ('active' | t) : ('inactive' | t) }}</p>
+      <div class="d-flex w-200p">
+        <div class="w-50 text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
+          <p class="mb-1 bold">{{ 'timing' | t }}</p>
+          <mat-icon [ngClass]="{ 'green-text': action.get('timingType').value }">watch_later</mat-icon>
+          <p>{{ action.get('timingType').value ? (action.get('timingType').value  | t) : ('none' | t) }}</p>
+        </div>
+        <div class="w-50 text-center icon-container" *ngIf="index === 0">
+          <p class="mb-1 bold">{{ 'status' | t }}</p>
+          <mat-icon [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">power_settings_new</mat-icon>
+          <p [ngClass]="{ 'green-text': action.get('isOnline').value, 'red-text': !action.get('isOnline').value }">{{ action.get('isOnline').value ? ('active' | t) : ('inactive' | t) }}</p>
+        </div>
       </div>
-      <div class="group-actions" [ngClass]="{ 'justify-content-end': index > 0 }">
+      <div class="group-actions" [ngClass]="{ 'justify-content-end': index > 0 && !action.get('isFirstCondition').value }">
         <div class="h-100 text-center" *ngIf="index === 0 || action.get('isFirstCondition').value">
           <p class="mb-2 bold">{{ 'add_line' | t }}</p>
           <button mat-flat-button class="green-btn" (click)="addAction(key, index)">

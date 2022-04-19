@@ -94,7 +94,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
         arr.removeAt(index);
 
-        if (activityType === 'condition') {
+        if (activityType === 'Condition') {
           while (arr.at(index) && arr.at(index).value.conditionResult) {
             arr.removeAt(index);
           }
@@ -125,13 +125,13 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
     const arr = (this.formGroup.get(key) as FormArray);
 
-    if (prevValue === 'condition') {
+    if (prevValue === 'Condition') {
       const controls = arr.controls.filter(control => !control.get('conditionResult').value);
       arr.clear();
       controls.forEach(control => arr.push(control));
     }
 
-    if (arr && activityTypeName === 'condition') {
+    if (arr && activityTypeName === 'Condition') {
       let index = arr.controls.indexOf(action);
 
       ['true', 'false'].forEach(value => {
