@@ -11,6 +11,6 @@ export class UnitsSelectResolve implements Resolve<UnitModel[]> {
   constructor(private unitService: UnitService) {}
 
   resolve() {
-    return this.unitService.getUnitsSelect().then(response => response as UnitModel[]);
+    return this.unitService.getUnits().then(response => response as UnitModel[]);
   }
 }

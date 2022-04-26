@@ -1,17 +1,17 @@
 <form (ngSubmit)="submit(form)" #form="ngForm">
   <h3 class="text-center blue-text">{{ 'system_login' | t }}</h3>
   <mat-form-field class="w-100">
-    <mat-label>{{ 'username' | t }}</mat-label>
+    <mat-label>{{ 'lbl_login_user_name' | t }}</mat-label>
     <input matInput type="text" ngModel name="username" required>
     <mat-error>{{ errorMessages.required | t }}</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100">
-    <mat-label>{{ 'password' | t }}</mat-label>
+    <mat-label>{{ 'lbl_login_password' | t }}</mat-label>
     <input matInput type="password" ngModel name="password" required>
     <mat-error>{{ errorMessages.required | t }}</mat-error>
   </mat-form-field>
   <mat-form-field class="w-100">
-    <mat-label>{{ 'extension' | t }}</mat-label>
+    <mat-label>{{ 'lbl_login_extension' | t }}</mat-label>
     <input matInput type="text" ngModel name="extension">
   </mat-form-field>
   <button class="btn blue-btn w-100" type="submit">{{ 'login' | t }}</button>

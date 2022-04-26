@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-password',
@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class PasswordComponent {
 
-  constructor(private dialogRef: MatDialogRef<PasswordComponent>) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public password: string, private dialogRef: MatDialogRef<PasswordComponent>) {}
 
   submit(password: string): void {
     this.dialogRef.close(password);

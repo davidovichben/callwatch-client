@@ -72,6 +72,9 @@ export class UserSessionService {
 
   hasPermission(module: string, action: string): boolean {
     const user = this.getUser();
+    if (!user) {
+      return false;
+    }
 
     const permissions = user.permissions;
     if (permissions === 'root') {

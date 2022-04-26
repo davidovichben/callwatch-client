@@ -95,7 +95,7 @@
           <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field class="disabled large-suffix">
               <mat-label>{{ ('password' | t) }}</mat-label>
-              <input matInput type="password" formControlName="password" tabindex="-1">
+              <input matInput type="password" formControlName="password" tabindex="-1" required>
               <span matSuffix class="enabled link pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
@@ -117,9 +117,10 @@
           </div>
         </div>
       </section>
-      <section *ngIf="!user || user.units !== 'root'">
+      <section>
         <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
-        <div class="row">
+        <mat-checkbox formControlName="isRoot" *ngIf="loggedUser.permissions === 'root'">{{ 'main_user' | t }}</mat-checkbox>
+        <div class="row" *ngIf="!formGroup.get('isRoot').value">
           <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <app-unit-select formControlName="units" [units]="units" [toggleUp]="true" [multiple]="true"></app-unit-select>
           </div>

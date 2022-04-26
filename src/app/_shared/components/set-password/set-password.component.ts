@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
@@ -8,6 +8,8 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
   templateUrl: './set-password.component.html'
 })
 export class SetPasswordComponent implements OnInit {
+
+  @Input() password: string;
 
   @Output() submitted = new EventEmitter();
 
@@ -22,8 +24,8 @@ export class SetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.passwordForm = this.fb.group({
-      password: this.fb.control(null, Validators.required),
-      repeatPassword: this.fb.control(null)
+      password: this.fb.control(this.password, Validators.required),
+      repeatPassword: this.fb.control(this.password)
     });
 
     this.setValidators();

@@ -83,10 +83,10 @@ export class FormComponent implements OnInit, OnDestroy {
       phone: this.fb.control(null, Validators.pattern(PhonePattern)),
       authType: this.fb.control(null),
       username: this.fb.control(null, Validators.required, this.checkUsernameUnique.bind(this)),
-      password: this.fb.control(null),
+      password: this.fb.control(null, Validators.required),
       language: this.fb.control(null, Validators.required),
       permission: this.fb.control(null, Validators.required),
-      // primaryUnit: this.fb.control(null, Validators.required),
+      isRoot: this.fb.control(null),
       units: this.fb.control([], null),
       avatar: this.fb.control(null)
     });
@@ -123,12 +123,17 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   openPasswordDialog(): void {
+    console.log(this.formGroup.get('password').value)
+
     const dialog = this.dialog.open(PasswordComponent,{
-      width: '400px'
+      width: '400px',
+      data: this.formGroup.get('password').value
     });
 
     this.sub.add(dialog.afterClosed().subscribe(password => {
-      this.formGroup.get('password').patchValue(password);
+      if (password) {
+        this.formGroup.get('password').patchValue(password);
+      }
     }));
   }
 

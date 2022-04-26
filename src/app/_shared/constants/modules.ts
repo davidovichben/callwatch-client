@@ -1,6 +1,6 @@
 export const PlatformModules = [
   { name: 'dashboard', icon: 'dashboard', isOpen: true },
-  { name: 'units', icon: 'account_tree' },
+  { name: 'units', permission: 'units', icon: 'account_tree' },
   {
     name: 'reports',
     icon: 'assignment',
@@ -11,20 +11,20 @@ export const PlatformModules = [
       { name: 'historical', label: 'historical_reports' }
     ]
   },
-  { name: 'users', icon: 'group' },
+  { name: 'users', permission: 'users', icon: 'group' },
   {
     name: 'settings',
     icon: 'settings',
     isOpen: true,
     subModules: [
       { name: 'permissions' },
-      { name: 'schedules' },
-      { name: 'uniqueDays', label: 'unique_days' },
-      { name: 'switchboards' },
-      { name: 'callbacks' },
-      { name: 'routers' },
-      { name: 'acds' },
-      { name: 'extensions' }
+      { name: 'schedules', permission: 'schedules' },
+      { name: 'uniqueDays', permission: 'schedules', label: 'unique_days' },
+      { name: 'switchboards', permission: 'switchboards' },
+      { name: 'callbacks', permission: 'callback'  },
+      { name: 'routers', permission: 'routers' },
+      { name: 'acds', permission: 'switchboards' },
+      { name: 'extensions', permission: 'switchboards' }
     ]
   },
   { name: 'auditTrail', label: 'audit_trail', icon: 'library_books', isOpen: true },

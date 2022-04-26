@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +18,9 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.styl']
 })
-export class GeneralComponent implements OnInit, OnDestroy {
+export class GeneralComponent implements AfterViewInit, OnDestroy {
+
+  @ViewChild('form') form: NgForm;
 
   readonly sub = new Subscription();
 
@@ -37,9 +39,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
               private unitStateService: UnitStateService,
               private dialog: MatDialog) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     const route = this.route.parent.parent;
     this.sub.add(route.data.subscribe(() => {
+      this.form.reset();
+
       this.unit = route.snapshot.data.unit;
       this.units = route.snapshot.data.units;
       this.isRootUnit = this.unit.id === 'root';
@@ -52,17 +56,17 @@ export class GeneralComponent implements OnInit, OnDestroy {
     return this.userSession.hasPermission(module, action);
   }
 
-  submit(form: NgForm): void {
-    this.unitService.updateUnit(this.unit.id, form.value).then(response => {
+  submit(): void {
+    this.unitService.updateUnit(this.unit.id, this.form.value).then(response => {
       if (response) {
         this.notifications.success();
 
-        if (this.unit.name !== form.value.name) {
-          this.unit.name = form.value.name;
+        if (this.unit.name !== this.form.value.name) {
+          this.unit.name = this.form.value.name;
           this.unitStateService.unitNameChanged.next(this.unit);
         }
 
-        if (this.unit.parent !== form.value.parent) {
+        if (this.unit.parent !== this.form.value.parent) {
           this.unit = response.resource;
           this.unitStateService.unitTransferred.next(this.unit);
           this.unitStateService.refreshTree.next(true);
@@ -73,7 +77,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   reassignUnit(): void {
     if (this.unit.hasUnits) {
-      this.unitService.getUnitsSelect().then(units => {
+      this.unitService.getUnits().then(units => {
         if (units) {
           const dialog = this.dialog.open(ReassignDialogComponent, {
             data: { replacedUnit: this.unit, units },
@@ -106,5 +110,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+
+    this.form.reset();
   }
 }

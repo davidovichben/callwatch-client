@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { PinInputComponent } from 'src/app/_shared/components/pin-input/pin-input.component';
 
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Fade } from 'src/app/_shared/constants/animations';
@@ -31,7 +32,7 @@ export class ForgotPasswordComponent {
   username: string;
   token: string;
 
-  constructor(private appHttp: AppHttpService) {}
+  constructor(private appHttp: AppHttpService, private notifications: NotificationService) {}
 
   submit(form: NgForm): void {
     if (form.valid && !this.isSubmitting) {
@@ -59,7 +60,11 @@ export class ForgotPasswordComponent {
   sendResetToken(username: string): void {
     this.appHttp.forgotPassword(username).then(response => {
       if (response.error) {
-        this.errors.userNotFound = true;
+        if (response.error.errorCode === 1) {
+          this.errors.userNotFound = true;
+        } else {
+          this.notifications.serverError();
+        }
       } else {
         this.errors.userNotFound = false;
         this.status = 'sent';

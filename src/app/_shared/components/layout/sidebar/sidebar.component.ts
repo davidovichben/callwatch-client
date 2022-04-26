@@ -82,7 +82,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       return true;
     }
 
-    return permissions[module.name] && permissions[module.name].read;
+    return permissions[module.permission] && permissions[module.permission].read;
   }
 
   setActiveModule(from?: string): void {

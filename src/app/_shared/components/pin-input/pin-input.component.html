@@ -1,3 +1,1 @@
-<mat-form-field *ngFor="let number of numbers; let index = index">
-  <input matInput #inputEle type="number" ngModel (keyup)="numberEntered(index, $event.key)" required>
-</mat-form-field>
+<input matInput #inputEle type="number" ngModel (keyup)="numberEntered(index, $event.key)" required *ngFor="let number of numbers; let index = index">

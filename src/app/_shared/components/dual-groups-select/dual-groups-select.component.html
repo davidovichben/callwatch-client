@@ -1,5 +1,5 @@
 <div class="ms-3 group">
-  <p *ngIf="placeholder" class="placeholder">{{ ('available_' + placeholder) | t }}</p>
+  <p class="placeholder">{{ 'lbl_available' | t }}</p>
   <div class="search-container">
     <input matInput type="text" [placeholder]="'search' | t" (keyup)="search('available', $event)" [(ngModel)]="searchInputs.available">
     <mat-icon matSuffix (click)="search('available')">search</mat-icon>
@@ -22,7 +22,7 @@
   </div>
 </div>
 <div class="me-3 group">
-  <p *ngIf="placeholder" class="placeholder">{{ ('selected_' + placeholder) | t }}</p>
+  <p class="placeholder">{{ 'lbl_selected' | t }}</p>
   <div class="search-container">
     <input matInput type="text" [placeholder]="'search' | t" (keyup)="search('selected', $event)" [(ngModel)]="searchInputs.selected">
     <mat-icon matSuffix (click)="search('selected')">search</mat-icon>

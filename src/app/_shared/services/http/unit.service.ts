@@ -27,14 +27,7 @@ export class UnitService extends BaseHttpService {
       .then(response => response as UnitModel[])
       .catch(() => []);
   }
-
-  getUnitsSelect(): Promise<UnitModel[]> {
-    return this.http.get(this.endPoint + '/select', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as UnitModel[])
-      .catch(() => []);
-  }
-
+  
   getUnit(unitId: number | 'root'): Promise<UnitModel> {
     return this.http.get(this.endPoint + '/' + unitId, this.getTokenRequest())
       .toPromise()
@@ -67,11 +60,11 @@ export class UnitService extends BaseHttpService {
       .then(() => true)
       .catch(() => false);
   }
+
   transferUnit(unit: number, parent: number): Promise<any> {
     return this.http.put(this.endPoint + '/' + unit + '/transfer', { parent }, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(response => response);
   }
-
 }

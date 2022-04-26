@@ -22,7 +22,6 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
   @ContentChild('selected', { static: false }) selectedTemplateRef: TemplateRef<any>;
 
   @Input() items: SelectItemModel[];
-  @Input() placeholder = 'items';
   @Input() width = '250px';
   @Input() objectIO = false;
 

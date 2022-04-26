@@ -80,7 +80,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
   }
 
   openFormDialog(): void {
-    this.unitService.getUnitsSelect().then(units => {
+    this.unitService.getUnits().then(units => {
       const dialog = this.dialog.open(UnitFormComponent, {
         width: '600px',
         data: units

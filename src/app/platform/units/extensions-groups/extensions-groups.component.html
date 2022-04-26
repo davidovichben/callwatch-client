@@ -15,12 +15,12 @@
     </div>
   </div>
   <ng-container *ngIf="form.value.switchboard">
-    <app-dual-groups-select [ngModel]="extensionGroup.extensions" name="extensions" [items]="selects.extensions" [placeholder]="'extensions'">
+    <app-dual-groups-select [ngModel]="extensionGroup.extensions" name="extensions" [items]="selects.extensions">
       <ng-template let-item #row>
         <span>{{ item.name }} ({{ item.number }})</span>
       </ng-template>
     </app-dual-groups-select>
-    <app-dual-groups-select [ngModel]="extensionGroup.acds" name="acds" [items]="selects.acds" [placeholder]="'groups'">
+    <app-dual-groups-select [ngModel]="extensionGroup.acds" name="acds" [items]="selects.acds">
       <ng-template let-item #row>
         <span>{{ item.name }} ({{ item.number }})</span>
       </ng-template>

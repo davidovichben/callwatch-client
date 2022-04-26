@@ -9,6 +9,8 @@ import { SetPasswordModule } from 'src/app/_shared/components/set-password/set-p
 
 import { ForgotPasswordComponent } from './forgot-password.component';
 
+import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
+
 const routes: Routes = [
   { path: '', component: ForgotPasswordComponent }
 ];
@@ -22,6 +24,7 @@ const routes: Routes = [
     TranslateModule,
     PinInputModule,
     SetPasswordModule
-  ]
+  ],
+  providers: [AppHttpService]
 })
 export class ForgotPasswordModule {}

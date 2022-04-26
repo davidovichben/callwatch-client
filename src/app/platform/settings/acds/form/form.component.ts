@@ -71,11 +71,11 @@ export class FormComponent implements OnInit, OnDestroy {
         number: this.fb.control(null, Validators.required),
         huntPilot: this.fb.control(null),
         secondaryHuntPilot: this.fb.control(null),
-        queueFullOverflow: this.fb.control(null, isInteger),
-        maxWaitTime: this.fb.control(null, isInteger),
-        noAgentOverflow: this.fb.control(null, isInteger),
-        noAnswerRedirection: this.fb.control(null),
-        busyRedirection: this.fb.control(null),
+        queueFullOverflow: this.fb.control({ value: null, disabled: true }),
+        maxWaitTime: this.fb.control({ value: null, disabled: true }),
+        noAgentOverflow: this.fb.control({ value: null, disabled: true }),
+        noAnswerRedirection: this.fb.control({ value: null, disabled: true }),
+        busyRedirection: this.fb.control({ value: null, disabled: true }),
         isBroadcast: this.fb.control(null),
         hasQueue: this.fb.control(null)
       }),
@@ -123,7 +123,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
       const values = {
         ...this.formGroup.value.general,
-        ...this.formGroup.value.switchboard,
+        ...this.formGroup.getRawValue().switchboard,
         ...this.formGroup.value.callback,
         extensions: this.formGroup.value.extensions
       };
