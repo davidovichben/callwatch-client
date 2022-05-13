@@ -12,14 +12,16 @@
       <div class="row">
         <div class="col-12 col-lg-3 mb-3">
           <mat-form-field>
-            <mat-label>{{ 'switchboard_name' | t }}</mat-label>
+            <mat-label>{{ 'PBX_NAME' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'PBX_NAME_TIP' | t ">help</mat-icon>
             <input matInput type="text" formControlName="name" required>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3 mb-3">
           <mat-form-field>
-            <mat-label>{{ 'switchboard_type' | t }}</mat-label>
+            <mat-label>{{ 'PBX_SWITCH_TYPE' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'PBX_SWITCH_TYPE_TIP' | t ">help</mat-icon>
             <mat-select formControlName="type" (valueChange)="toggleAxi($event)" required>
               <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
             </mat-select>
@@ -28,14 +30,16 @@
         </div>
         <div class="col-12 col-lg-3 mb-3">
           <mat-form-field>
-            <mat-label>{{ 'net_address' | t }}</mat-label>
+            <mat-label>{{ 'CTI_DOMAIN' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CTI_DOMAIN_TIP' | t ">help</mat-icon>
             <input matInput type="text" formControlName="netAddress" required>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-lg-3 mb-3">
           <mat-form-field>
-            <mat-label>{{ 'assigned_data_manager' | t }}</mat-label>
+            <mat-label>{{ 'HANDLED_BY_MANAGER' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'HANDLED_BY_MANAGER_TIP' | t ">help</mat-icon>
             <mat-select formControlName="dataManager">
               <mat-option>-------</mat-option>
               <mat-option *ngFor="let manager of managers" [value]="manager">{{ manager }}</mat-option>
@@ -44,11 +48,90 @@
         </div>
         <div class="col-12 col-lg-3 mb-3">
           <mat-form-field>
-            <mat-label>{{ 'minimal_number_of_seconds' | t }}</mat-label>
-            <input matInput type="text" min="0" formControlName="minimalSeconds" required>
+            <mat-label>{{ 'TrunkName' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'TrunkName_TIP' | t ">help</mat-icon>
+            <input matInput type="text" formControlName="trunk">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'LBL_SESSION_ELAPSED_SECONDS' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'LBL_SESSION_ELAPSED_SECONDS_TIP' | t ">help</mat-icon>
+            <input matInput type="number" min="0" formControlName="minimalSeconds" required>
             <mat-error *ngIf="formGroup.get('minimalSeconds').errors?.required">{{ errorMessages.required | t }}</mat-error>
             <mat-error *ngIf="formGroup.get('minimalSeconds').errors?.integer">{{ errorMessages.number | t }}</mat-error>
           </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'ExtraAreaCode' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'ExtraAreaCode_TIP' | t ">help</mat-icon>
+            <input matInput type="text" formControlName="extraAreaCode">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'DialAgentPrefix' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'DialAgentPrefix_TIP' | t ">help</mat-icon>
+            <input matInput type="text" formControlName="dialAgentPrefix">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'CustomerCustomCode' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CustomerCustomCode_TIP' | t ">help</mat-icon>
+            <input matInput type="text" formControlName="customerCustomCode">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'DialNumberPostfix' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'DialNumberPostfix_TIP' | t ">help</mat-icon>
+            <input matInput type="text" formControlName="dialNumberPostfix">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'TimeToRefreshInfoMS' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'TimeToRefreshInfoMS_TIP' | t ">help</mat-icon>
+            <input matInput type="number" formControlName="timeToRefreshInfoMS">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'FailedMonitorRetryIntervalMins' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'FailedMonitorRetryIntervalMins_TIP' | t ">help</mat-icon>
+            <input matInput type="number" formControlName="failedMonitorRetryIntervalMins">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'SyncClientDateIntervalMins' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'SyncClientDateIntervalMins_TIP' | t ">help</mat-icon>
+            <input matInput type="number" formControlName="syncClientDateIntervalMins">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3 margin-fix">
+          <mat-checkbox formControlName="uniteAdjacentBusyCalls" (change)="toggleDisabledField($event.checked, 'maxSecondsDiffToUniteAdjacentBusyCalls', true)">{{ 'UniteAdjacentBusyCalls' | t }}</mat-checkbox>
+          <mat-form-field>
+            <mat-label>{{ 'MaxSecondsDiffToUniteAdjacentBusyCalls' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'MaxSecondsDiffToUniteAdjacentBusyCalls_TIP' | t ">help</mat-icon>
+            <input matInput type="number" formControlName="maxSecondsDiffToUniteAdjacentBusyCalls" [required]="!formGroup.get('maxSecondsDiffToUniteAdjacentBusyCalls').disabled">
+            <mat-error *ngIf="formGroup.get('maxSecondsDiffToUniteAdjacentBusyCalls').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('maxSecondsDiffToUniteAdjacentBusyCalls').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'SwitchTimeDiff' | t }}</mat-label>
+            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'SwitchTimeDiff_TIP' | t ">help</mat-icon>
+            <input matInput type="text" formControlName="switchTimeDiff">
+            <mat-hint>{{ 'last_update_time' | t }}:</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-checkbox class="mb-3" formControlName="isDNDSupport">{{ 'IsDNDSupport' | t }}</mat-checkbox>
+          <mat-checkbox class="mb-3" formControlName="doSwitchRetrieving">{{ 'DoSwitchRetrieving' | t }}</mat-checkbox>
         </div>
       </div>
     </section>
@@ -56,40 +139,63 @@
       <p class="h3 mb-3">{{ 'switchboard_settings' | t }}</p>
       <div class="mb-4 tabs">
         <div class="tab" [ngClass]="{ active: activeTab === 'cti' }" (click)="activeTab = 'cti'">CTI</div>
-        <div class="tab" [ngClass]="{ active: activeTab === 'axl' }" (click)="activeTab = 'axl'" *ngIf="formGroup.get('type').value === 'CISCO'">AXL & CDR</div>
+        <div class="tab" [ngClass]="{ active: activeTab === 'axl' }" (click)="activeTab = 'axl'" *ngIf="formGroup.get('type').value === 'CISCO'">{{ 'CISCO_ADVANCED_SETTINGS' | t }}</div>
       </div>
       <div *ngIf="activeTab === 'cti'" formGroupName="cti">
         <div class="row">
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
-              <mat-label>{{ 'cti_username' | t }}</mat-label>
+              <mat-label>{{ 'CTI_SUBSCRIPTION_USER' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CTI_SUBSCRIPTION_USER_TIP' | t ">help</mat-icon>
               <input matInput type="text" formControlName="username" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
-              <mat-label>{{ 'cti_password' | t }}</mat-label>
+              <mat-label>{{ 'CTI_SUBSCRIPTION_USER_PASSWORD' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CTI_SUBSCRIPTION_USER_PASSWORD_TIP' | t ">help</mat-icon>
               <input matInput type="password" formControlName="password" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
-              <mat-label>{{ 'cti_daily_update_time' | t }}</mat-label>
-              <input matInput type="time" formControlName="dailyUpdateAt" required>
-              <mat-error>{{ errorMessages.required | t }}</mat-error>
+              <mat-label>{{ 'CTI_DOMAIN_PORT' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CTI_DOMAIN_PORT_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="domainPort">
             </mat-form-field>
           </div>
         </div>
         <div class="row">
-          <div class="col-12 col-lg-3">
-            <mat-checkbox class="mb-3" (change)="toggleDialPrefix($event.checked)" [checked]="formGroup.get('cti.dialPrefix').value">{{ 'cti_enable_services' | t }}</mat-checkbox>
-            <mat-form-field class="w-100">
-              <mat-label>{{ 'representative_extension_dial_prefix' | t }}</mat-label>
+          <div class="col-12 col-lg-3 mb-3 margin-fix">
+            <mat-checkbox formControlName="serviceEnable" (change)="toggleDisabledFields($event.checked, ['cti.dialPrefix', 'cti.timeToRefresh'], true)">{{ 'CTI_SERVICE_ENABLE' | t }}</mat-checkbox>
+            <mat-form-field>
+              <mat-label>{{ 'CTI_SERVICE_PORT' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CTI_SERVICE_PORT_TIP' | t ">help</mat-icon>
               <input matInput type="text" formControlName="dialPrefix" [required]="!formGroup.get('cti.dialPrefix').disabled">
               <mat-error *ngIf="formGroup.get('cti.dialPrefix').errors?.required">{{ errorMessages.required | t }}</mat-error>
               <mat-error *ngIf="formGroup.get('cti.dialPrefix').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'TimeToRefreshCTIServicesMS' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'TimeToRefreshCTIServicesMS_TIP' | t ">help</mat-icon>
+              <input matInput type="number" formControlName="timeToRefresh">
+              <mat-error *ngIf="formGroup.get('cti.timeToRefresh').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('cti.timeToRefresh').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3 mb-3 margin-fix">
+            <mat-checkbox class="mb-3" formControlName="updateJtapiDevices" (change)="toggleDisabledField($event.checked, 'cti.dailyUpdateAt')">{{ 'UpdateJtapiDevices' | t }}</mat-checkbox>
+            <mat-form-field>
+              <mat-label>{{ 'JTAPI_CONTROLLED_DEVICE_UPDATE_TIME' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'JTAPI_CONTROLLED_DEVICE_UPDATE_TIME_TIP' | t ">help</mat-icon>
+              <input matInput type="time" formControlName="dailyUpdateAt" [required]="!formGroup.get('cti.dailyUpdateAt').disabled">
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -98,37 +204,98 @@
         <div class="row">
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
-              <mat-label>{{ 'axl_address' | t }}</mat-label>
-              <input matInput type="text" formControlName="address" required>
+              <mat-label>{{ 'AXL_URL' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'AXL_URL_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="url" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
-              <mat-label>{{ 'axl_username' | t }}</mat-label>
+              <mat-label>{{ 'AXL_USER' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'AXL_USER_TIP' | t ">help</mat-icon>
               <input matInput type="text" formControlName="username" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
-              <mat-label>{{ 'axl_password' | t }}</mat-label>
+              <mat-label>{{ 'AXL_PASSWORD' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'AXL_PASSWORD_TIP' | t ">help</mat-icon>
               <input matInput type="password" formControlName="password" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
         </div>
         <div class="row">
-          <div class="col-12 col-lg-3">
-            <mat-checkbox class="mb-3" (ngModelChange)="toggleCdrPullAddress($event)" formControlName="enableCdrPull">{{ 'axl_enable_services' | t }}</mat-checkbox>
+          <div class="col-12 col-lg-3 mb-3">
             <mat-form-field>
-              <mat-label>{{ 'cdr_pull_address' | t }}</mat-label>
-              <input matInput type="text" formControlName="cdrPullAddress">
-              <mat-error>{{ errorMessages.number | t }}</mat-error>
+              <mat-label>{{ 'CDR_FILE_PATH' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CDR_FILE_PATH_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="cdrFilePath">
             </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'AXLAgentsSleepTimeSeconds' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'AXLAgentsSleepTimeSeconds_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="agentsSleepTime">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'CDRSleepTimeSeconds' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CDRSleepTimeSeconds_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="cdrSleepTime">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-checkbox (change)="toggleDisabledField($event.checked, 'axl.cdrMainRepositoryAddress', true)" formControlName="supportCdrClients">{{ 'SupportCDRClients' | t }}</mat-checkbox>
+            <mat-form-field>
+              <mat-label>{{ 'CDRMainRepositoryAddress' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'CDRMainRepositoryAddress_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="cdrMainRepositoryAddress" [required]="!formGroup.get('axl.cdrMainRepositoryAddress').disabled">
+              <mat-error *ngIf="formGroup.get('axl.cdrMainRepositoryAddress').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('axl.cdrMainRepositoryAddress').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3 mb-3 margin-fix">
+            <mat-checkbox (change)="toggleDisabledFields($event.checked, ['axl.risStatusCheckMinutes', 'axl.risExtensionResetMinutes'], true)" formControlName="risDoResetExtensions">{{ 'RisDoResetExtensions' | t }}</mat-checkbox>
+            <mat-form-field>
+              <mat-label>{{ 'RisStatusCheckMinutes' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'RisStatusCheckMinutes_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="risStatusCheckMinutes" [required]="!formGroup.get('axl.risStatusCheckMinutes').disabled">
+              <mat-error *ngIf="formGroup.get('axl.risStatusCheckMinutes').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('axl.risStatusCheckMinutes').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-lg-3 mb-3">
+            <mat-form-field>
+              <mat-label>{{ 'RisExtensionResetMinutes' | t }}</mat-label>
+              <mat-icon matSuffix class="input-tooltip" [matTooltip]="'RisExtensionResetMinutes_TIP' | t ">help</mat-icon>
+              <input matInput type="text" formControlName="risExtensionResetMinutes" [required]="!formGroup.get('axl.risExtensionResetMinutes').disabled">
+              <mat-error *ngIf="formGroup.get('axl.risExtensionResetMinutes').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('axl.risExtensionResetMinutes').errors?.integer">{{ errorMessages.number | t }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <mat-checkbox formControlName="isPartitionSupport">{{ 'IsPartitionSupport' | t }}</mat-checkbox>
+          </div>
+          <div class="col-12 col-lg-3">
+            <mat-checkbox formControlName="useNonPartitionedDuplicateExtension">{{ 'UseNonPartitionedDuplicateExtension' | t }}</mat-checkbox>
+          </div>
+          <div class="col-12 col-lg-3">
+            <mat-checkbox formControlName="useOnlyNonPartitionExtensionsForForwardAll">{{ 'UseOnlyNonPartitionExtensionsForForwardAll' | t }}</mat-checkbox>
           </div>
         </div>
       </div>
     </section>
   </div>
 </form>
+

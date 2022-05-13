@@ -10,7 +10,8 @@ import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
 	selector: 'app-form',
-	templateUrl: './form.component.html'
+	templateUrl: './form.component.html',
+  styles: [`.margin-fix { margin-top: -25px }`]
 })
 export class FormComponent implements OnInit {
 
@@ -46,19 +47,45 @@ export class FormComponent implements OnInit {
       type: this.fb.control(null, Validators.required),
       netAddress: this.fb.control(null, Validators.required),
       dataManager: this.fb.control(null),
+      trunk: this.fb.control(null),
       minimalSeconds: this.fb.control(null, [Validators.required, isInteger]),
+      extraAreaCode: this.fb.control(null),
+      dialAgentPrefix: this.fb.control(null),
+      customerCustomCode: this.fb.control(null),
+      dialNumberPostfix: this.fb.control(null),
+      timeToRefreshInfoMS: this.fb.control(null),
+      failedMonitorRetryIntervalMins: this.fb.control(null),
+      syncClientDateIntervalMins: this.fb.control(null),
+      uniteAdjacentBusyCalls: this.fb.control(null),
+      maxSecondsDiffToUniteAdjacentBusyCalls: this.fb.control({ value: null, disabled: true }),
+      switchTimeDiff: this.fb.control({ value: null, disabled: true }),
+      isDNDSupport: this.fb.control(null),
+      doSwitchRetrieving: this.fb.control(null),
       cti: this.fb.group({
         username: this.fb.control(null, Validators.required),
         password: this.fb.control(null, Validators.required),
-        dailyUpdateAt: this.fb.control(null, Validators.required),
-        dialPrefix: this.fb.control({ value: null, disabled: true })
+        domainPort: this.fb.control(null),
+        serviceEnable: this.fb.control(null),
+        dialPrefix: this.fb.control({ value: null, disabled: true }),
+        timeToRefresh: this.fb.control({ value: null, disabled: true }),
+        updateJtapiDevices: this.fb.control(null),
+        dailyUpdateAt: this.fb.control(null, Validators.required)
       }),
       axl: this.fb.group({
-        address: this.fb.control(null),
+        url: this.fb.control(null),
         username: this.fb.control(null),
         password: this.fb.control(null),
-        enableCdrPull: this.fb.control(null),
-        cdrPullAddress: this.fb.control(null)
+        cdrFilePath: this.fb.control(null),
+        agentsSleepTime: this.fb.control(null),
+        cdrSleepTime: this.fb.control(null),
+        supportCdrClients: this.fb.control(null),
+        cdrMainRepositoryAddress: this.fb.control({ value: null, disabled: true }),
+        risDoResetExtensions: this.fb.control(null),
+        risExtensionResetMinutes: this.fb.control({ value: null, disabled: true }),
+        risStatusCheckMinutes: this.fb.control({ value: null, disabled: true }),
+        isPartitionSupport: this.fb.control(null),
+        useNonPartitionedDuplicateExtension: this.fb.control(null),
+        useOnlyNonPartitionExtensionsForForwardAll: this.fb.control(null)
       })
     });
   }
@@ -78,7 +105,7 @@ export class FormComponent implements OnInit {
 
   toggleAxi(value: string): void {
     const validators = value === 'CISCO' ? [Validators.required] : [];
-    ['address', 'username', 'password'].forEach(control => {
+    ['url', 'username', 'password'].forEach(control => {
       this.formGroup.get('axl.' + control).setValidators(validators);
       this.formGroup.get('axl.' + control).updateValueAndValidity();
     });
@@ -89,27 +116,26 @@ export class FormComponent implements OnInit {
     }
   }
 
-  toggleDialPrefix(checked: boolean): void {
-    const control = this.formGroup.get('cti.dialPrefix');
+  toggleDisabledFields(checked: boolean, fieldNames: string[], validateInteger?: boolean): void {
+    fieldNames.forEach(fieldName => {
+      this.toggleDisabledField(checked, fieldName, validateInteger);
+    })
+  }
+
+  toggleDisabledField(checked: boolean, fieldName: string, validateInteger?: boolean): void {
+    const control = this.formGroup.get(fieldName);
     if (checked) {
-      control.setValidators([Validators.required, isInteger]);
+      const validators = [Validators.required];
+      if (validateInteger) {
+        validators.push(isInteger);
+      }
+
+      control.setValidators(validators);
       control.enable();
     } else {
       control.clearValidators();
       control.disable();
       control.reset();
-    }
-
-    control.updateValueAndValidity();
-  }
-
-  toggleCdrPullAddress(checked: boolean): void {
-    const control = this.formGroup.get('axl.cdrPullAddress');
-    if (checked) {
-      control.disable();
-      control.reset();
-    } else {
-      control.enable();
     }
 
     control.updateValueAndValidity();
@@ -134,11 +160,11 @@ export class FormComponent implements OnInit {
 			this.isSubmitting = true;
 
 			if (this.switchboardId) {
-				this.switchboardService.updateSwitchboard(this.switchboardId, this.formGroup.value).then(response => {
+				this.switchboardService.updateSwitchboard(this.switchboardId, this.formGroup.getRawValue()).then(response => {
           this.handleServerResponse(response);
         });
 			} else {
-				this.switchboardService.newSwitchboard(this.formGroup.value).then(response => {
+				this.switchboardService.newSwitchboard(this.formGroup.getRawValue()).then(response => {
           this.handleServerResponse(response);
         });
 			}

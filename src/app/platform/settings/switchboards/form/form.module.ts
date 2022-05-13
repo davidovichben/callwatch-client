@@ -18,6 +18,7 @@ import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.se
 import { SwitchboardResolve } from 'src/app/_shared/resolves/switchboard.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const routes: Routes = [
 	{
@@ -47,6 +48,7 @@ const routes: Routes = [
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
+    MatTooltipModule,
     TranslateModule
   ],
 	providers: [SwitchboardService, SwitchboardResolve, DeactivateGuard]

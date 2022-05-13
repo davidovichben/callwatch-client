@@ -15,9 +15,9 @@ export class SwitchboardsComponent {
 	@ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
 	readonly columns = [
-		{ name: 'name', label: 'switchboard_name' },
-    { name: 'type', label: 'switchboard_type' },
-    { name: 'netAddress', label: 'net_address' }
+		{ name: 'name', label: 'PBX_NAME' },
+    { name: 'type', label: 'PBX_SWITCH_TYPE' },
+    { name: 'netAddress', label: 'CTI_DOMAIN' }
   ];
 
 	constructor(private notification: NotificationService,
