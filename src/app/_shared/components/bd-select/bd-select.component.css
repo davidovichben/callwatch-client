@@ -10,6 +10,7 @@
   position: relative;
   height: 44px;
   width: 100%;
+  word-break: break-all;
   color: rgba(0, 0, 0, .6);
   border: 1px solid rgba(0, 0, 0, .08);
   border-radius: 5px;

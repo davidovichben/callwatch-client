@@ -20,11 +20,9 @@
         </mat-select>
       </mat-form-field>
       <ng-container *ngIf="message.get('type').value === 'router'">
-        <div class="w-200p">
-          <bd-select [placeholder]="'select_router' | t" formControlName="router">
-            <bd-option *ngFor="let router of formService.routers" [value]="router.id">{{ router.name }}</bd-option>
-          </bd-select>
-        </div>
+        <bd-select [placeholder]="'select_router' | t" formControlName="router">
+          <bd-option *ngFor="let router of formService.routers" [value]="router.id">{{ router.name }}</bd-option>
+        </bd-select>
         <mat-form-field class="flex-grow-1">
           <mat-label>{{ 'description' | t }}</mat-label>
           <input matInput formControlName="description">
