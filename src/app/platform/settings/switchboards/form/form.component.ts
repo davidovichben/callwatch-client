@@ -3,10 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { SwitchboardModel, SwitchboardTypes } from 'src/app/_shared/models/switchboard.model';
+import { SwitchboardModel } from 'src/app/_shared/models/switchboard.model';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({
 	selector: 'app-form',
@@ -17,25 +19,32 @@ export class FormComponent implements OnInit {
 
 	readonly errorMessages = ErrorMessages;
 
-  readonly types = SwitchboardTypes;
-
+  types = [];
   managers = [];
 
   switchboardId: number;
 
   formGroup: FormGroup;
 
+  activeType: SelectItemModel;
   activeTab = 'cti';
+
+  isAdmin = false;
 
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-        private fb: FormBuilder, private switchboardService: SwitchboardService) {}
+              private fb: FormBuilder, private switchboardService: SwitchboardService,
+              private userSession: UserSessionService) {}
 
 	ngOnInit(): void {
     this.setForm();
 
+    this.isAdmin = this.userSession.getUser().isAdmin;
+
     const routeData = this.route.snapshot.data;
+    this.managers = routeData.managers;
+    this.types = routeData.types;
     if (routeData.switchboard) {
       this.patchData(routeData.switchboard);
     }
@@ -45,10 +54,10 @@ export class FormComponent implements OnInit {
     this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       type: this.fb.control(null, Validators.required),
-      netAddress: this.fb.control(null, Validators.required),
-      dataManager: this.fb.control(null),
+      domain: this.fb.control(null, Validators.required),
+      manager: this.fb.control(null),
       trunk: this.fb.control(null),
-      minimalSeconds: this.fb.control(null, [Validators.required, isInteger]),
+      checkSessionElapsedTime: this.fb.control(null, isInteger),
       extraAreaCode: this.fb.control(null),
       dialAgentPrefix: this.fb.control(null),
       customerCustomCode: this.fb.control(null),
@@ -66,16 +75,16 @@ export class FormComponent implements OnInit {
         password: this.fb.control(null, Validators.required),
         domainPort: this.fb.control(null),
         serviceEnable: this.fb.control(null),
-        dialPrefix: this.fb.control({ value: null, disabled: true }),
-        timeToRefresh: this.fb.control({ value: null, disabled: true }),
+        outsideDialPrefix: this.fb.control({ value: null, disabled: true }),
+        timeToRefresh: this.fb.control(null),
         updateJtapiDevices: this.fb.control(null),
-        dailyUpdateAt: this.fb.control(null, Validators.required)
+        jtapiControlledDeviceUpdateTime: this.fb.control({ value: null, disabled: true })
       }),
       axl: this.fb.group({
         url: this.fb.control(null),
         username: this.fb.control(null),
         password: this.fb.control(null),
-        cdrFilePath: this.fb.control(null),
+        cdrFilesPath: this.fb.control(null),
         agentsSleepTime: this.fb.control(null),
         cdrSleepTime: this.fb.control(null),
         supportCdrClients: this.fb.control(null),
@@ -84,8 +93,8 @@ export class FormComponent implements OnInit {
         risExtensionResetMinutes: this.fb.control({ value: null, disabled: true }),
         risStatusCheckMinutes: this.fb.control({ value: null, disabled: true }),
         isPartitionSupport: this.fb.control(null),
-        useNonPartitionedDuplicateExtension: this.fb.control(null),
-        useOnlyNonPartitionExtensionsForForwardAll: this.fb.control(null)
+        useNonPartitionedDuplicateExtension: this.fb.control(true),
+        useOnlyNonPartitionExtensionsForForwardAll: this.fb.control(true)
       })
     });
   }
@@ -94,8 +103,8 @@ export class FormComponent implements OnInit {
     this.switchboardId = switchboard.id;
     this.formGroup.patchValue(switchboard);
 
-    if (this.formGroup.get('cti.dialPrefix').value) {
-      this.formGroup.get('cti.dialPrefix').enable();
+    if (this.formGroup.get('cti.outsideDialPrefix').value) {
+      this.formGroup.get('cti.outsideDialPrefix').enable();
     }
 
     if (this.formGroup.get('axl.enableCdrPull').value) {
@@ -103,14 +112,16 @@ export class FormComponent implements OnInit {
     }
   }
 
-  toggleAxi(value: string): void {
-    const validators = value === 'CISCO' ? [Validators.required] : [];
+  toggleAxi(typeId: number): void {
+    this.activeType = this.types.find(type => type.id === typeId);
+
+    const validators = this.activeType.name === 'CISCO' ? [Validators.required] : [];
     ['url', 'username', 'password'].forEach(control => {
       this.formGroup.get('axl.' + control).setValidators(validators);
       this.formGroup.get('axl.' + control).updateValueAndValidity();
     });
 
-    if (value !== 'CISCO') {
+    if (this.activeType.name !== 'CISCO') {
       this.formGroup.get('axl').reset();
       this.activeTab = 'cti';
     }
@@ -152,7 +163,7 @@ export class FormComponent implements OnInit {
   }
 
 	submit(): void {
-    if (this.formGroup.get('type').value === 'CISCO') {
+    if (this.activeType?.name === 'CISCO') {
       this.toggleInvalidTabs();
     }
 

@@ -8,29 +8,38 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
 import { FormComponent } from 'src/app/platform/settings/switchboards/form/form.component';
 
 import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { SwitchboardResolve } from 'src/app/_shared/resolves/switchboard.resolve';
+import { SwitchboardTypeSelectResolve } from 'src/app/_shared/resolves/switchboard-type-select.resolve';
+import { ManagerSelectResolve } from 'src/app/_shared/resolves/manager-select.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: FormComponent,
+    resolve: {
+      types: SwitchboardTypeSelectResolve,
+      managers: ManagerSelectResolve
+    },
     canDeactivate: [DeactivateGuard]
 	},
 	{
 		path: ':id',
 		component: FormComponent,
 		resolve: {
-			switchboard: SwitchboardResolve
+			switchboard: SwitchboardResolve,
+      types: SwitchboardTypeSelectResolve,
+      managers: ManagerSelectResolve
 		},
     canDeactivate: [DeactivateGuard]
   }
@@ -51,6 +60,13 @@ const routes: Routes = [
     MatTooltipModule,
     TranslateModule
   ],
-	providers: [SwitchboardService, SwitchboardResolve, DeactivateGuard]
+	providers: [
+    SwitchboardService,
+    SelectService,
+    SwitchboardResolve,
+    SwitchboardTypeSelectResolve,
+    ManagerSelectResolve,
+    DeactivateGuard
+  ]
 })
 export class FormModule {}

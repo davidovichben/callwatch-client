@@ -5,4 +5,3 @@ export class SwitchboardModel {
   netAddress: string;
 }
 
-export const SwitchboardTypes = ['CISCO', 'BROADSOFT', 'AVAYA'];

@@ -17,7 +17,7 @@ export class SwitchboardsComponent {
 	readonly columns = [
 		{ name: 'name', label: 'PBX_NAME' },
     { name: 'type', label: 'PBX_SWITCH_TYPE' },
-    { name: 'netAddress', label: 'CTI_DOMAIN' }
+    { name: 'domain', label: 'CTI_DOMAIN' }
   ];
 
 	constructor(private notification: NotificationService,
