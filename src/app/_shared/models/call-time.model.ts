@@ -1,8 +1,8 @@
 export class CallTimeModel {
-  id: number;
-  day?: any; // string || UniqueDayModel
-  startDate: string;
-  endDate: string;
+  id?: number;
+  day?: any;
+  startDate?: string;
+  endDate?: string;
   startTime: string;
   endTime: string;
   allDay: boolean;

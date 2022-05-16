@@ -53,8 +53,6 @@ export class FormComponent {
       this.scheduleId = routeData.schedule.id;
       this.formGroup.patchValue(routeData.schedule);
       this.callTimes = routeData.schedule.callTimes;
-
-      console.log(routeData.schedule.tags)
     }
   }
 
@@ -127,9 +125,15 @@ export class FormComponent {
 
   addCallTime(): void {
     if (this.callTimeForm.valid) {
-
       const callTime = this.callTimeForm.value;
       callTime.isActive = true;
+
+      if (this.checkCallTimesOverlap(callTime)) {
+        const msg = this.t.transform('schedule_times_overlapping_error');
+        this.notification.error(msg);
+        return;
+      }
+
       this.callTimes.push(callTime);
 
       this.allDayChecked(false);
@@ -142,6 +146,12 @@ export class FormComponent {
   confirmTimeUpdate(callTime: CallTimeModel, startTime: string, endTime: string, allDay: boolean): void {
     if ((!startTime && !endTime && !allDay) || (startTime && !endTime) || (!startTime && endTime)) {
       const msg = this.t.transform('schedule_times_missing_error');
+      this.notification.error(msg);
+      return;
+    }
+
+    if (this.checkCallTimesOverlap({ day: callTime.day, startTime, endTime, allDay }, callTime)) {
+      const msg = this.t.transform('schedule_times_overlapping_error');
       this.notification.error(msg);
       return;
     }
@@ -163,6 +173,27 @@ export class FormComponent {
         this.callTimes.splice(index, 1);
       }
     })
+  }
+
+  private checkCallTimesOverlap(callTime: CallTimeModel, ignoredCallTime?: CallTimeModel): boolean {
+    const sameDayCallTimes = this.callTimes.filter(iterated => {
+      return iterated !== ignoredCallTime && iterated.day === callTime.day;
+    });
+    
+    if (sameDayCallTimes.length > 0 && callTime.allDay) {
+      return true;
+    }
+
+    return sameDayCallTimes.some(iterated => {
+      if (callTime.allDay) {
+        return true;
+      }
+
+      const isBefore = callTime.startTime < iterated.startTime && callTime.endTime < iterated.startTime;
+      const isAfter = callTime.startTime > iterated.endTime && callTime.endTime > iterated.endTime;
+
+      return !isBefore && !isAfter;
+    });
   }
 
   submit(): void {
