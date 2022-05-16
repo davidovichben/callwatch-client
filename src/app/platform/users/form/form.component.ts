@@ -66,8 +66,8 @@ export class FormComponent implements OnInit, OnDestroy {
     this.units = routeData.units;
     this.permissions = routeData.permissions;
     this.languages = routeData.languages;
-
     this.user = routeData.user;
+
     if (this.user) {
       this.formGroup.patchValue(this.user);
     }
@@ -84,7 +84,7 @@ export class FormComponent implements OnInit, OnDestroy {
       authType: this.fb.control(null),
       username: this.fb.control(null, Validators.required, this.checkUsernameUnique.bind(this)),
       password: this.fb.control(null, Validators.required),
-      language: this.fb.control(null, Validators.required),
+      language: this.fb.control(this.loggedUser.language?.id, Validators.required),
       permission: this.fb.control(null, Validators.required),
       isRoot: this.fb.control(null),
       units: this.fb.control([], null),

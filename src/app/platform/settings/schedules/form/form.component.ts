@@ -179,7 +179,7 @@ export class FormComponent {
     const sameDayCallTimes = this.callTimes.filter(iterated => {
       return iterated !== ignoredCallTime && iterated.day === callTime.day;
     });
-    
+
     if (sameDayCallTimes.length > 0 && callTime.allDay) {
       return true;
     }

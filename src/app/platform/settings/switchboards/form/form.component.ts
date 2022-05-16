@@ -47,6 +47,8 @@ export class FormComponent implements OnInit {
     this.types = routeData.types;
     if (routeData.switchboard) {
       this.patchData(routeData.switchboard);
+      this.activeType = this.types.find(type => type.id === this.formGroup.get('type').value);
+      console.log(this.activeType)
     }
   }
 
@@ -103,12 +105,25 @@ export class FormComponent implements OnInit {
     this.switchboardId = switchboard.id;
     this.formGroup.patchValue(switchboard);
 
-    if (this.formGroup.get('cti.outsideDialPrefix').value) {
+    if (this.formGroup.get('uniteAdjacentBusyCalls').value) {
+      this.formGroup.get('maxSecondsDiffToUniteAdjacentBusyCalls').enable();
+    }
+
+    if (this.formGroup.get('cti.serviceEnable').value) {
       this.formGroup.get('cti.outsideDialPrefix').enable();
     }
 
-    if (this.formGroup.get('axl.enableCdrPull').value) {
-      this.formGroup.get('axl.cdrPullAddress').disable();
+    if (this.formGroup.get('cti.updateJtapiDevices').value) {
+      this.formGroup.get('cti.jtapiControlledDeviceUpdateTime').enable();
+    }
+
+    if (this.formGroup.get('axl.supportCdrClients').value) {
+      this.formGroup.get('axl.cdrMainRepositoryAddress').enable();
+    }
+
+    if (this.formGroup.get('axl.risDoResetExtensions').value) {
+      this.formGroup.get('axl.risExtensionResetMinutes').enable();
+      this.formGroup.get('axl.risStatusCheckMinutes').enable();
     }
   }
 
