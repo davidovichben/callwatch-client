@@ -55,6 +55,7 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     setTimeout(() => this.setToggledControls(), 0);
     this.setFormSubscriptions();
+    this.setDisabledLanguages();
   }
 
   private setToggledControls(): void {
@@ -75,11 +76,19 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
   removeDialedNumbersGroup(index: number): void {
     (this.routerForm.get('dialedNumbers') as FormArray).removeAt(index);
+    this.setDisabledLanguages();
   }
 
   numbersChange(numbers: string[], index: number): void {
     const validators = numbers && numbers.length > 0 ? Validators.required : [];
     this.routerForm.get('dialedNumbers.' + index + '.language').setValidators(validators);
+  }
+
+  setDisabledLanguages(): void {
+    const numberGroups = this.routerForm.get('dialedNumbers').value;
+    this.languages.forEach(language => {
+      language.disabled = !!numberGroups.find(group => group.language === language.id);
+    });
   }
 
   private toggleControls(toggleName: string): void {

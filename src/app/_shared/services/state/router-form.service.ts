@@ -204,17 +204,19 @@ export class RouterFormService {
       return Promise.resolve(null);
     }
 
-    // let values = control.value;
-    // if (this.router) {
-    //   const existingNumbers = this.router.general.dialedNumbers;
-    //   values = values.filter(value => !existingNumbers.includes(value));
-    // }
-    //
-    // if (values.length === 0) {
-    //   return Promise.resolve(null);
-    // }
+    let values = control.value.numbers;
+    if (this.router) {
+      const existingNumbers = this.router.general.dialedNumbers;
+      existingNumbers.forEach(group => {
+        values = values.filter(value => !group.numbers.includes(value));
+      });
+    }
 
-    return this.routerService.numbersExist(control.value.numbers).then(response => {
+    if (values.length === 0) {
+      return Promise.resolve(null);
+    }
+
+    return this.routerService.numbersExist(values).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }
