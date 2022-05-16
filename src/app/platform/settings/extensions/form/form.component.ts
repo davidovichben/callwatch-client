@@ -93,6 +93,22 @@ export class FormComponent implements OnInit, OnDestroy {
     this.sub.add(sub);
   }
 
+  dialNumberChange(number: string, type: string): void {
+    if (type === 'from') {
+      const numberToControl = this.formGroup.get('general.dialNumbers.to');
+      if (!numberToControl.value) {
+        numberToControl.patchValue(number);
+      }
+    }
+
+    if (type === 'to') {
+      const numberFromControl = this.formGroup.get('general.dialNumbers.from');
+      if (!numberFromControl.value) {
+        numberFromControl.patchValue(number);
+      }
+    }
+  }
+
   private addDialNumbers(): void {
     const group = this.fb.group({
         from: this.fb.control(null, Validators.required),

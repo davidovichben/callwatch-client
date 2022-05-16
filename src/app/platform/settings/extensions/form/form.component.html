@@ -24,12 +24,12 @@
           <div class="d-flex">
             <mat-form-field class="w-50 ps-1">
               <mat-label>{{ 'from' | t }}</mat-label>
-              <input matInput type="text" formControlName="from" required>
+              <input matInput type="text" formControlName="from" (change)="dialNumberChange($event.target.value, 'from')" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
             <mat-form-field class="w-50 pe-1">
               <mat-label>{{ 'until' | t }}</mat-label>
-              <input matInput type="text" formControlName="to" required>
+              <input matInput type="text" formControlName="to" (change)="dialNumberChange($event.target.value, 'to')" required>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
           </div>
