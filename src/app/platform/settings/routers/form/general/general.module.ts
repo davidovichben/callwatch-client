@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
@@ -37,6 +38,7 @@ const routes: Routes = [
     MatDatepickerModule,
     MatChipsModule,
     MatIconModule,
+    MatButtonModule,
     NgxMatDatetimePickerModule, NgxMatTimepickerModule,
     TranslateModule,
     TagsInputModule,

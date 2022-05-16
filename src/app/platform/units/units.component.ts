@@ -86,14 +86,16 @@ export class UnitsComponent implements OnInit, OnDestroy {
         data: units
       });
 
-      this.sub.add(dialog.afterClosed().subscribe(saved => {
-        if (saved) {
+      this.sub.add(dialog.afterClosed().subscribe(unitId => {
+        if (unitId) {
           this.unitService.getUnits().then(response => {
             if (response) {
               this.notifications.success();
               this.rootUnit.units = response;
             }
           })
+
+          this.router.navigate(['/platform', 'units', unitId]);
         }
       }))
     })

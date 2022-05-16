@@ -27,7 +27,7 @@ export class UnitService extends BaseHttpService {
       .then(response => response as UnitModel[])
       .catch(() => []);
   }
-  
+
   getUnit(unitId: number | 'root'): Promise<UnitModel> {
     return this.http.get(this.endPoint + '/' + unitId, this.getTokenRequest())
       .toPromise()
@@ -38,7 +38,7 @@ export class UnitService extends BaseHttpService {
   newUnit(values: object): Promise<any> {
     return this.http.post(this.endPoint, values, this.getTokenRequest())
       .toPromise()
-      .then(() => true)
+      .then(response => response)
       .catch(() => false);
   }
 

@@ -29,21 +29,35 @@
         </mat-select>
       </mat-form-field>
     </div>
-<!--    <div class="col-12 col-lg-3">-->
-<!--      <mat-form-field class="w-100">-->
-<!--        <mat-label>{{ 'system_lang_default' | t }}</mat-label>-->
-<!--        <mat-select formControlName="language" required>-->
-<!--          <mat-option *ngFor="let language of formService.schedules" [value]="language.id">{{ language.name }}</mat-option>-->
-<!--        </mat-select>-->
-<!--        <mat-error>{{ errorMessages.required }}</mat-error>-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
+  </div>
+  <div class="row" formArrayName="dialedNumbers" *ngFor="let control of routerForm.get('dialedNumbers')['controls']; let index = index">
+    <ng-container [formGroupName]="index">
+      <div class="col-12 col-lg-3">
+        <app-chips-input formControlName="numbers" [rules]="{ pattern: '[0-9]', 'length': 15 }" [placeholder]="'dialed_numbers' | t" (ngModelChange)="numbersChange($event, index)"></app-chips-input>
+        <p class="alert alert-danger mb-0 d-block" [@fade]="routerForm.get('dialedNumbers.' + index).errors ? 'active' : 'inactive'">
+          <ng-container *ngIf="routerForm.get('dialedNumbers.' + index).errors?.exists">{{ 'router_dial_numbers_exist' | t }}</ng-container>
+          <ng-container *ngIf="routerForm.get('dialedNumbers.' + index).errors?.formExists">{{ 'router_form_dial_numbers_exist' | t }}</ng-container>
+        </p>
+      </div>
+      <div class="col-12 col-lg-3">
+
+        <mat-form-field class="w-100">
+          <mat-label>{{ 'select_language' | t }}</mat-label>
+          <mat-select formControlName="language" [required]="routerForm.get('dialedNumbers.' + index + '.numbers').value && routerForm.get('dialedNumbers.' + index + '.numbers').value?.length > 0">
+            <mat-option *ngFor="let language of formService.languages" [value]="language.id">{{ language.name }}</mat-option>
+          </mat-select>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="pt-2 col-12 col-lg-3">
+        <button mat-flat-button class="light-green-btn" (click)="formService.addDialNumberGroup()" *ngIf="index === 0 && routerForm.get('dialedNumbers')['controls'].length < formService.languages.length">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-icon (click)="removeDialedNumbersGroup(index)" class="dark-grey-text" *ngIf="index > 0">delete</mat-icon>
+      </div>
+    </ng-container>
   </div>
   <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <app-chips-input formControlName="dialedNumbers" [rules]="{ pattern: '[0-9]', 'length': 15 }" [placeholder]="'dialed_numbers' | t"></app-chips-input>
-      <p class="alert alert-danger d-block" [@fade]="routerForm.get('dialedNumbers').errors ? 'active' : 'inactive'">{{ 'router_dial_numbers_exist' | t }}</p>
-    </div>
     <div class="col-12 col-lg-3">
       <mat-form-field class="w-100">
         <mat-label>{{ 'router_admin_code' | t }}</mat-label>

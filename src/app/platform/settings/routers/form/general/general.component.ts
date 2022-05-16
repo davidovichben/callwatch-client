@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audio-input.component';
@@ -47,6 +47,8 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       if (router.general.queueFile) {
         this.audioFile = { bin: router.general.queueFile, name: router.general.queueFileName };
       }
+    } else {
+      this.formService.addDialNumberGroup();
     }
   }
 
@@ -69,6 +71,15 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.sub.add(sub);
     });
+  }
+
+  removeDialedNumbersGroup(index: number): void {
+    (this.routerForm.get('dialedNumbers') as FormArray).removeAt(index);
+  }
+
+  numbersChange(numbers: string[], index: number): void {
+    const validators = numbers && numbers.length > 0 ? Validators.required : [];
+    this.routerForm.get('dialedNumbers.' + index + '.language').setValidators(validators);
   }
 
   private toggleControls(toggleName: string): void {

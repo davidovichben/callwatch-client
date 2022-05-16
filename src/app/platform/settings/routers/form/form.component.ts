@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
@@ -55,8 +55,12 @@ export class FormComponent implements OnInit, OnDestroy {
       this.helpers.setPageSpinner(true);
 			this.isSubmitting = true;
 
+      const general = (form.get('general') as FormGroup).getRawValue();
+
+      this.setDialedNumbers(general);
+
       const values = {
-        ...(form.get('general') as FormGroup).getRawValue(),
+        ...general,
         messages: { ...form.value.messages },
         keys: { ...form.value.keys }
       };
@@ -83,6 +87,17 @@ export class FormComponent implements OnInit, OnDestroy {
         return;
       }
     });
+  }
+
+  private setDialedNumbers(general: any): void {
+    const dialedNumbers = {};
+    general.dialedNumbers.forEach(group => {
+      if (group.numbers?.length > 0) {
+        dialedNumbers[group.language] = group.numbers;
+      }
+    });
+
+    general.dialedNumbers = Object.keys(dialedNumbers).length > 0 ? dialedNumbers : null;
   }
 
 	private handleServerResponse(response: boolean): void {

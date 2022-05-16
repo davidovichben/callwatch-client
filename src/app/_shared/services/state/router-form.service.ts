@@ -39,7 +39,7 @@ export class RouterFormService {
         irregularTimingActive: this.fb.control({ value: null, disabled: true }),
         irregularTimingFrom: this.fb.control({ value: null, disabled: true }),
         irregularTimingTo: this.fb.control({ value: null, disabled: true }),
-        dialedNumbers: this.fb.control(null, [], this.checkNumbersExists.bind(this)),
+        dialedNumbers: this.fb.array([]),
         adminCode: this.fb.control(null),
         defaultSelectionDuration: this.fb.control(4, isInteger.bind(this)),
         vipEnabled: this.fb.control(null),
@@ -48,7 +48,7 @@ export class RouterFormService {
         queuePositionReading: this.fb.control({ value: null, disabled: true }),
         queueWaitingTime: this.fb.control({ value: null, disabled: true }, isInteger),
         queueFile: this.fb.control(null),
-          queueFileName: this.fb.control(null)
+        queueFileName: this.fb.control(null)
       }),
       messages: this.fb.group({
         active: this.fb.array([]),
@@ -62,6 +62,8 @@ export class RouterFormService {
   }
 
   patchForm(): void {
+    this.router.general.dialedNumbers.forEach(() => this.addDialNumberGroup());
+
     this.routerForm.get('general').patchValue(this.router.general);
     this.patchMessages();
     this.patchKeys();
@@ -146,6 +148,19 @@ export class RouterFormService {
     });
   }
 
+  addDialNumberGroup(): void {
+    const group = this.fb.group({
+      numbers: this.fb.control(null),
+      language: this.fb.control(null)
+    });
+
+    setTimeout(() => {
+      group.addAsyncValidators([this.checkFormNumbersExist.bind(this), this.checkNumbersExists.bind(this) ]);
+    }, 0);
+
+    (this.routerForm.get('general.dialedNumbers') as FormArray).push(group);
+  }
+
   checkNameExists(control: FormControl): Promise<object> {
     if (this.router && this.router.general.name === control.value) {
       return Promise.resolve(null);
@@ -160,22 +175,46 @@ export class RouterFormService {
     })
   }
 
+  checkFormNumbersExist(control: FormGroup): Promise<object> {
+    let exist = false;
+    const numberGroups = (this.routerForm.get('general.dialedNumbers') as FormArray).controls;
+    if (numberGroups.length > 1) {
+      exist = numberGroups.some(group => {
+        if (group !== control) {
+          if (!control.value.numbers || !group.value.numbers) {
+            return null;
+          }
+
+          return control.value.numbers.some(number => {
+            if (group.value.numbers.includes(number)) {
+              return true;
+            }
+
+            return null;
+          });
+        }
+      });
+    }
+
+    return !exist ? Promise.resolve(null) : Promise.resolve({ formExists: true });
+  }
+
   checkNumbersExists(control: FormControl): Promise<object> {
-    if (!control.value) {
+    if (!control.value.numbers) {
       return Promise.resolve(null);
     }
 
-    let values = control.value;
-    if (this.router) {
-      const existingNumbers = this.router.general.dialedNumbers;
-      values = values.filter(value =>!existingNumbers.includes(value));
-    }
+    // let values = control.value;
+    // if (this.router) {
+    //   const existingNumbers = this.router.general.dialedNumbers;
+    //   values = values.filter(value => !existingNumbers.includes(value));
+    // }
+    //
+    // if (values.length === 0) {
+    //   return Promise.resolve(null);
+    // }
 
-    if (values.length === 0) {
-      return Promise.resolve(null);
-    }
-
-    return this.routerService.numbersExist(values).then(response => {
+    return this.routerService.numbersExist(control.value.numbers).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }
