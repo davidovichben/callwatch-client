@@ -47,7 +47,9 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       if (router.general.queueFile) {
         this.audioFile = { bin: router.general.queueFile, name: router.general.queueFileName };
       }
-    } else {
+    }
+
+    if (this.routerForm.get('dialedNumbers').value.length === 0) {
       this.formService.addDialNumberGroup();
     }
   }
