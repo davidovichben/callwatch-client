@@ -32,12 +32,9 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
 
   isRootUnit = false;
 
-  constructor(private route: ActivatedRoute, private router: Router,
-              private userSession: UserSessionService,
-              private notifications: NotificationService,
-              private unitService: UnitService,
-              private unitStateService: UnitStateService,
-              private dialog: MatDialog) {}
+  constructor(private route: ActivatedRoute, private router: Router, private userSession: UserSessionService,
+              private notifications: NotificationService, private unitService: UnitService,
+              private unitStateService: UnitStateService, private dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
     const route = this.route.parent.parent;
@@ -47,6 +44,8 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
       this.unit = route.snapshot.data.unit;
       this.units = route.snapshot.data.units;
       this.isRootUnit = this.unit.id === 'root';
+
+      this.unitStateService.unitLoaded.next(this.unit);
     }));
 
     this.organizationName = this.userSession.getUser().organization;

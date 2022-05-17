@@ -26,17 +26,20 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
 
   readonly sub = new Subscription();
 
-  activeUnitId: number | string;
+  activeUnit;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private notifications: NotificationService,
-              private unitService: UnitService,
-              private unitStateService: UnitStateService,
-              private t: TranslatePipe) {}
+              private notifications: NotificationService, private unitService: UnitService,
+              private unitStateService: UnitStateService, private t: TranslatePipe) {}
 
   ngOnInit(): void {
-    this.sub.add(this.route.params.subscribe(params => {
-      this.activeUnitId = params.id;
+    this.sub.add(this.unitStateService.unitLoaded.subscribe(unit => {
+      this.activeUnit = unit;
+
+      let branchUnit = null;
+      this.activeUnit.ancestors.forEach(ancestor => {
+        branchUnit = this.toggleActiveBranch(ancestor.id, branchUnit);
+      });
     }));
 
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(changedUnit => {
@@ -69,6 +72,17 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       unit.units = response;
       unit.toggled = true;
     });
+  }
+
+  private toggleActiveBranch(ancestorId: number, branchUnit?: UnitModel): UnitModel {
+    const units = branchUnit ? branchUnit.units : this.rootUnit.units;
+    const unit = units.find(unit => unit.id === ancestorId);
+    if (unit) {
+      unit.toggled = true;
+      return unit;
+    }
+
+    return null;
   }
 
   unitClicked(unit: UnitModel): void {
