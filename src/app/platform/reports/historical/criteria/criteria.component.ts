@@ -124,24 +124,23 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   private sanitizeValues(values: ReportCriteriaModel): ReportCriteriaModel {
     values.weekDays = Object.keys(values.weekDays).filter(day => !!day);
-    if (!values.dates.from || !values.dates.to) {
-      delete values.dates;
-    } else {
-      values.dates.from = values.dates.from.indexOf('T') === -1 ? values.dates.from : values.dates.from.substring(0, values.dates.from.indexOf('T'));
-      values.dates.to = values.dates.to.indexOf('T') === -1 ? values.dates.to : values.dates.to.substring(0, values.dates.to.indexOf('T'));
-    }
 
-    if (!values.ignoreDates.from || !values.ignoreDates.to) {
-      delete values.ignoreDates;
-    } else {
-      // values.ignoreDates.from = values.ignoreDates.from.indexOf('T') === -1 ? values.ignoreDates.from : values.ignoreDates.from.substring(0, values.ignoreDates.from.indexOf('T'));
-      // values.ignoreDates.to = values.ignoreDates.to.indexOf('T') === -1 ? values.ignoreDates.to : values.ignoreDates.to.substring(0, values.ignoreDates.to.indexOf('T'));
-    }
+    this.sanitizeDates(values, 'dates');
+    this.sanitizeDates(values, 'ignoreDates')
 
     values.times = values.times.filter((time) => time.from && time.to);
     values.sort = values.sort.filter((sort) => sort.column && sort.direction);
 
     return values;
+  }
+
+  private sanitizeDates(values: object, type: string): void {
+    if (!values[type].from || !values[type].to) {
+      delete values[type];
+    } else {
+      values[type].from = typeof values[type].from === 'string' ? values[type].from : (values[type].from as any).format('yy-MM-DD');
+      values[type].to = typeof values[type].to === 'string' ? values[type].to : (values[type].to as any).format('yy-MM-DD');
+    }
   }
 
   ngOnDestroy(): void {

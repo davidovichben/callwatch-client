@@ -2,7 +2,7 @@
   <p class="h1">
     <ng-container *ngIf="dates && dates.from && dates.to">
       <span>{{ 'example_report_for_dates' | t }} </span>
-      <span>{{ dates.from|date: 'd/MM/Y' }} - {{ dates.to|date: 'd/MM/Y' }}</span>
+      <span>{{ dates.from|date: 'dd/MM/Y' }} - {{ dates.to|date: 'dd/MM/Y' }}</span>
     </ng-container>
   </p>
   <div>
