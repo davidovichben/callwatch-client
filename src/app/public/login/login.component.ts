@@ -22,6 +22,7 @@ export class LoginComponent {
   isSubmitting = false;
 
   hasLoginError: boolean;
+  loginNotAllowed: boolean;
 
   constructor(private router: Router, private userSession: UserSessionService,
               private appHttp: AppHttpService, private localeService: LocaleService) {}
@@ -32,14 +33,18 @@ export class LoginComponent {
       this.hasLoginError = false;
 
       this.appHttp.login(form.value.username, form.value.password).then(response => {
-        if (response) {
+        if (response.token) {
           this.localeService.setLocale(response.language.code);
           this.userSession.setUser({ extension: form.value.extension, ...response });
 
           const url = response.isAdmin ? ['/admin'] : ['/platform'];
           this.router.navigate(url);
         } else {
-          this.hasLoginError = true;
+          if (response.error?.errorCode) {
+            this.loginNotAllowed = true;
+          } else {
+            this.hasLoginError = true;
+          }
         }
 
         this.isSubmitting = false;

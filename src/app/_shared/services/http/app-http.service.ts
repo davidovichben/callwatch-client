@@ -12,11 +12,11 @@ export class AppHttpService extends BaseHttpService {
     super();
   }
 
-  login(username: string, password: string): Promise<UserModel> {
+  login(username: string, password: string): Promise<any> {
     return this.http.post(this.apiUrl + '/login', { username, password }, { headers: { noLoader: 'true' }})
       .toPromise()
       .then(response => response as UserModel)
-      .catch(() => null);
+      .catch(response => response);
   }
 
   logout(): Promise<boolean> {
