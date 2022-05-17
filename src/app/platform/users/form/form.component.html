@@ -2,7 +2,8 @@
   <div class="form-header">
     <p class="h1">{{ user ? ('edit_user' | t) : ('add_user' | t) }}</p>
     <div>
-      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'users']">{{ 'cancel' | t }}</button>
+      <button class="btn red-btn" type="button" (click)="deleteUser()" *ngIf="user && userSession.hasPermission('users', 'delete') && user.id !== loggedUser.id">{{ 'delete' | t }}</button>
+      <button type="button" class="mx-2 btn grey-btn" [routerLink]="['/platform', 'users']">{{ 'cancel' | t }}</button>
       <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
     </div>
   </div>
@@ -129,9 +130,6 @@
           </div>
         </div>
       </section>
-      <div class="mt-3" *ngIf="user && userSession.hasPermission('users', 'delete') && user.id !== loggedUser.id">
-        <button class="btn red-btn" type="button" (click)="deleteUser()">{{ 'delete' | t }}</button>
-      </div>
     </div>
   </div>
 </form>
