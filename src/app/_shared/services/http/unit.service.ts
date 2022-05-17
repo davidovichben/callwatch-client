@@ -64,7 +64,7 @@ export class UnitService extends BaseHttpService {
   transferUnit(unit: number, parent: number): Promise<any> {
     return this.http.put(this.endPoint + '/' + unit + '/transfer', { parent }, this.getTokenRequest())
       .toPromise()
-      .then(() => true)
+      .then(response => response)
       .catch(response => response);
   }
 }

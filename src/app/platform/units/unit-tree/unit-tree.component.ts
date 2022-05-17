@@ -34,12 +34,11 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(this.unitStateService.unitLoaded.subscribe(unit => {
-      this.activeUnit = unit;
+      this.setActiveUnit(unit);
+    }));
 
-      let branchUnit = null;
-      this.activeUnit.ancestors.forEach(ancestor => {
-        branchUnit = this.toggleActiveBranch(ancestor.id, branchUnit);
-      });
+    this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => {
+      this.setActiveUnit(unit);
     }));
 
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(changedUnit => {
@@ -71,6 +70,15 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     this.unitService.getUnits(unit.id).then(response => {
       unit.units = response;
       unit.toggled = true;
+    });
+  }
+
+  private setActiveUnit(unit: UnitModel): void {
+    this.activeUnit = unit;
+
+    let branchUnit = null;
+    this.activeUnit.ancestors.forEach(ancestor => {
+      branchUnit = this.toggleActiveBranch(ancestor.id, branchUnit);
     });
   }
 
@@ -135,10 +143,9 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
                 this.notifications.error(msg);
               }
             } else {
-              this.unitStateService.unitTransferred.next(transferredUnit);
-
               this.unitService.getUnits().then(units => {
                 this.rootUnit.units = units;
+                this.unitStateService.unitTransferred.next(response.resource);
               });
             }
           }
