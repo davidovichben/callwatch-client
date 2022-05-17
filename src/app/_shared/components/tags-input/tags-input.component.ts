@@ -16,6 +16,7 @@ export class TagsInputComponent implements ControlValueAccessor {
 
   @Input() placeholder: string;
   @Input() type: string;
+  @Input() limit: number;
 
   @ViewChild('searchInput') searchInput: ElementRef;
 
@@ -30,6 +31,10 @@ export class TagsInputComponent implements ControlValueAccessor {
   constructor(private tagService: TagService) {}
 
   addTag(tag: SelectItemModel, index?: number): void {
+    if (this.limit && this.selectedTags.length === this.limit) {
+      return;
+    }
+
     if (index) {
       this.suggestedTags.splice(index, 1);
     }
@@ -63,6 +68,10 @@ export class TagsInputComponent implements ControlValueAccessor {
   }
 
   openList(event: MouseEvent): void {
+    if (this.limit && this.selectedTags.length === this.limit) {
+      return;
+    }
+
     event.stopPropagation();
     this.isListToggled = !this.isListToggled;
 

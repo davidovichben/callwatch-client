@@ -35,11 +35,9 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
   loadingUnits: boolean;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router, private dialog: MatDialog,
-              public userSession: UserSessionService,
-              private unitService: UnitService,
-              private notifications: NotificationService,
+  constructor(private route: ActivatedRoute, private router: Router,
+              private dialog: MatDialog, public userSession: UserSessionService,
+              private unitService: UnitService, private notifications: NotificationService,
               private unitStateService: UnitStateService) {}
 
   ngOnInit(): void {
@@ -61,7 +59,6 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
     this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => {
       this.activeUnit = unit;
-      console.log(unit)
     }));
 
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
