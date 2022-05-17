@@ -99,12 +99,15 @@
             </mat-form-field>
           </div>
           <div class="col-12 col-lg-6 col-xxl-5 mb-3">
-            <mat-form-field class="disabled large-suffix">
-              <mat-label>{{ ('password' | t) }}</mat-label>
+            <mat-form-field class="disabled large-suffix" *ngIf="!user || formGroup.get('password').value">
+              <mat-label>{{ 'password' | t }}</mat-label>
               <input matInput type="password" formControlName="password" tabindex="-1" required>
-              <span matSuffix class="enabled link pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
+              <span matSuffix class="enabled f-12 underline pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
+            <ng-container *ngIf="user && !formGroup.get('password').value">
+              <span class="f-12 underline pointer" (click)="openPasswordDialog()">{{ 'change_password' | t }}</span>
+            </ng-container>
           </div>
           <div class="col-12 col-lg-6 col-xxl-5 mb-3">
             <mat-form-field>

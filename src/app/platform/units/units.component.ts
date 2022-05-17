@@ -61,6 +61,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
     this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => {
       this.activeUnit = unit;
+      console.log(unit)
     }));
 
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
@@ -100,30 +101,6 @@ export class UnitsComponent implements OnInit, OnDestroy {
       }))
     })
   }
-
-  // private setModules(): void {
-  //   const user = this.userSession.getUser();
-  //   if (user.admin) {
-  //     return;
-  //   }
-  //
-  //   const permissions = user.permissions;
-  //   if (permissions === 'root') {
-  //     return;
-  //   }
-  //
-  //   this.modules = this.modules.filter(module => {
-  //     return this.checkAllowedModule(module.name)
-  //   });
-  // }
-  //
-  // private checkAllowedModule(moduleName: string) {
-  //   if (moduleName === 'general') {
-  //     return true;
-  //   }
-  //
-  //   return this.userSession.hasPermission(moduleName, 'read');
-  // }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

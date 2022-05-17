@@ -2,10 +2,12 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-set-password',
-  templateUrl: './set-password.component.html'
+  templateUrl: './set-password.component.html',
+  animations: [Fade]
 })
 export class SetPasswordComponent implements OnInit {
 
@@ -25,14 +27,10 @@ export class SetPasswordComponent implements OnInit {
   ngOnInit() {
     this.passwordForm = this.fb.group({
       password: this.fb.control(this.password, Validators.required),
-      repeatPassword: this.fb.control(this.password)
+      repeatPassword: this.fb.control(this.password, Validators.required)
     });
 
-    this.setValidators();
-  }
-
-  private setValidators(): void {
-    this.passwordForm.get('repeatPassword').setValidators([Validators.required, this.comparePasswords.bind(this)]);
+    this.passwordForm.setValidators(this.comparePasswords.bind(this));
   }
 
   private comparePasswords(): object {
@@ -42,7 +40,6 @@ export class SetPasswordComponent implements OnInit {
 
     return {};
   }
-
 
   submit(): void {
     if (this.passwordForm.valid) {

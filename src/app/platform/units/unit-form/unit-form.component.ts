@@ -31,7 +31,6 @@ export class UnitFormComponent {
 
       this.unitService.newUnit(form.value).then(response => {
         if (response) {
-          console.log(response)
           this.dialogRef.close(response.resource.id);
         }
 

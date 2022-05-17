@@ -70,6 +70,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
     if (this.user) {
       this.formGroup.patchValue(this.user);
+      this.formGroup.get('password').setValidators(null);
     }
   }
 
@@ -123,8 +124,6 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   openPasswordDialog(): void {
-    console.log(this.formGroup.get('password').value)
-
     const dialog = this.dialog.open(PasswordComponent,{
       width: '400px',
       data: this.formGroup.get('password').value
@@ -133,6 +132,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.sub.add(dialog.afterClosed().subscribe(password => {
       if (password) {
         this.formGroup.get('password').patchValue(password);
+        this.formGroup.get('password').setValidators(Validators.required);
       }
     }));
   }
