@@ -20,6 +20,7 @@ import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { SwitchboardResolve } from 'src/app/_shared/resolves/switchboard.resolve';
 import { SwitchboardTypeSelectResolve } from 'src/app/_shared/resolves/switchboard-type-select.resolve';
 import { ManagerSelectResolve } from 'src/app/_shared/resolves/manager-select.resolve';
+import { SwitchboardDefaultsResolve } from 'src/app/_shared/resolves/switchboard-defaults.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
 
@@ -29,7 +30,8 @@ const routes: Routes = [
 		component: FormComponent,
     resolve: {
       types: SwitchboardTypeSelectResolve,
-      managers: ManagerSelectResolve
+      managers: ManagerSelectResolve,
+      defaults: SwitchboardDefaultsResolve
     },
     canDeactivate: [DeactivateGuard]
 	},
@@ -40,7 +42,7 @@ const routes: Routes = [
 			switchboard: SwitchboardResolve,
       types: SwitchboardTypeSelectResolve,
       managers: ManagerSelectResolve
-		},
+    },
     canDeactivate: [DeactivateGuard]
   }
 ];
@@ -66,6 +68,7 @@ const routes: Routes = [
     SwitchboardResolve,
     SwitchboardTypeSelectResolve,
     ManagerSelectResolve,
+    SwitchboardDefaultsResolve,
     DeactivateGuard
   ]
 })

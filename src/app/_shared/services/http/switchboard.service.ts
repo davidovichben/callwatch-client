@@ -53,4 +53,11 @@ export class SwitchboardService extends BaseHttpService {
 			.then(() => true)
 			.catch(() => false);
 	}
+
+  getSwitchboardDefaults(): Promise<object> {
+    return this.http.get(this.endPoint + '/defaults', this.getTokenRequest())
+      .toPromise()
+      .then(response => response)
+      .catch(() => null);
+  }
 }

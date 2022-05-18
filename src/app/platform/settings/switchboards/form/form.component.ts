@@ -45,11 +45,16 @@ export class FormComponent implements OnInit {
     const routeData = this.route.snapshot.data;
     this.managers = routeData.managers;
     this.types = routeData.types;
+
     if (routeData.switchboard) {
-      this.patchData(routeData.switchboard);
+      this.switchboardId = routeData.switchboard.id;
+      this.formGroup.patchValue(routeData.switchboard);
       this.activeType = this.types.find(type => type.id === this.formGroup.get('type').value);
-      console.log(this.activeType)
+    } else {
+      this.formGroup.patchValue(routeData.defaults);
     }
+
+    this.toggleInputs();
   }
 
   private setForm(): void {
@@ -95,16 +100,13 @@ export class FormComponent implements OnInit {
         risExtensionResetMinutes: this.fb.control({ value: null, disabled: true }),
         risStatusCheckMinutes: this.fb.control({ value: null, disabled: true }),
         isPartitionSupport: this.fb.control(null),
-        useNonPartitionedDuplicateExtension: this.fb.control(true),
-        useOnlyNonPartitionExtensionsForForwardAll: this.fb.control(true)
+        useNonPartitionedDuplicateExtension: this.fb.control(null),
+        useOnlyNonPartitionExtensionsForForwardAll: this.fb.control(null)
       })
     });
   }
 
-  private patchData(switchboard: SwitchboardModel): void {
-    this.switchboardId = switchboard.id;
-    this.formGroup.patchValue(switchboard);
-
+  private toggleInputs(): void {
     if (this.formGroup.get('uniteAdjacentBusyCalls').value) {
       this.formGroup.get('maxSecondsDiffToUniteAdjacentBusyCalls').enable();
     }
