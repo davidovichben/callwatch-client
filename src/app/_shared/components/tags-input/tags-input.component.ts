@@ -105,10 +105,14 @@ export class TagsInputComponent implements ControlValueAccessor {
     }
   }
 
-  writeValue(tagIds?: number[]): void {
-    if (tagIds) {
+  writeValue(value?: number | number[]): void {
+    if (value) {
       this.tagService.getTags(this.type, []).then(tags => {
-        this.selectedTags = tags.filter(tag => tagIds.includes(tag.id));
+        if (Array.isArray(value)) {
+          this.selectedTags = tags.filter(tag => value.includes(tag.id));
+        } else {
+          this.selectedTags = tags.filter(tag => tag.id === value);
+        }
       });
     }
   }

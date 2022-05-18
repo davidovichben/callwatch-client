@@ -100,11 +100,7 @@ export class RouterFormService {
               conditionResult = action.conditionResult;
               group.get('isFirstCondition').patchValue(true);
             }
-
-            if (action.tag) {
-              group.get('tag').patchValue([action.tag]);
-            }
-
+            
             actions.push(group);
           });
 
