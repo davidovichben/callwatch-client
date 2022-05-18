@@ -42,14 +42,14 @@ export class TagsInputComponent implements ControlValueAccessor {
     this.selectedTags.push(tag);
     this.isListToggled = false;
 
-    this.propagateChange(this.selectedTags.map(tag => tag.id));
+    this.emitChange();
   }
 
   removeTag(index: number, event: MouseEvent): void {
     event.stopPropagation();
 
     this.selectedTags.splice(index, 1);
-    this.propagateChange(this.selectedTags.map(tag => tag.id));
+    this.emitChange();
   }
 
   createTag(): void {
@@ -94,6 +94,14 @@ export class TagsInputComponent implements ControlValueAccessor {
 
         this.isLoading = false;
       });
+    }
+  }
+
+  emitChange(): void {
+    if (this.limit === 1) {
+      this.propagateChange(this.selectedTags[0]?.id);
+    } else {
+      this.propagateChange(this.selectedTags.map(tag => tag.id));
     }
   }
 

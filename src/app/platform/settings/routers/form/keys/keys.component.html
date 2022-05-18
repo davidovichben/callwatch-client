@@ -101,7 +101,7 @@
         </div>
       </div>
       <div class="mx-1 w-250p">
-        <app-tags-input [placeholder]="'data_documenting' | t" [limit]="1" type="router_key" formControlName="tags" *ngIf="action.get('activityTypeName').value !== 'Condition'"></app-tags-input>
+        <app-tags-input [placeholder]="'data_documenting' | t" [limit]="1" type="router_key" formControlName="tag" *ngIf="action.get('activityTypeName').value !== 'Condition'"></app-tags-input>
       </div>
       <div class="d-flex w-200p">
         <div class="w-50 text-center pointer" (click)="openActivityDialog(action)" *ngIf="index === 0">
