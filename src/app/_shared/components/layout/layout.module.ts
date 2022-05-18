@@ -10,16 +10,18 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ContentComponent } from './content/content.component';
 
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [SidebarComponent, ContentComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    TranslateModule,
-    MatIconModule,
-    MatMenuModule
-  ],
+	imports: [
+		CommonModule,
+		RouterModule,
+		TranslateModule,
+		MatIconModule,
+		MatMenuModule,
+		MatButtonModule
+	],
   exports: [SidebarComponent, ContentComponent],
   providers: [AppHttpService]
 })

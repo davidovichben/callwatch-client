@@ -12,6 +12,8 @@ export class LocaleService {
   localeChanged: Subject<string> = new Subject();
   translationLoaded: Subject<boolean> = new Subject();
 
+  showTranslationKeys = false;
+
   constructor() {
     this.activeLocale = this.getLocale();
     this.dir = this.activeLocale === 'en' ? 'ltr' : 'rtl';

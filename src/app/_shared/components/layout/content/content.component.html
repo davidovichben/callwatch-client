@@ -1,6 +1,9 @@
-<header [ngClass]="{ 'flex-between': isAdminViewing, 'flex-end': !isAdminViewing }">
-  <div *ngIf="isAdminViewing">
-    <a [routerLink]="['/admin', 'organizations']">{{ 'back_to_organizations' | t }}</a>
+<header [ngClass]="{ 'flex-between': user.isAdmin, 'flex-end': !user.isAdmin }">
+  <div *ngIf="user.isAdmin">
+    <button mat-raised-button [routerLink]="['/admin', 'organizations']" *ngIf="isAdminViewing">{{ 'back_to_organizations' | t }}</button>
+    <button mat-raised-button class="mx-3 blue-btn" (click)="locale.showTranslationKeys = !locale.showTranslationKeys">
+      {{ !locale.showTranslationKeys ? ('show_translation_keys' | t) : ('hide_translation_keys' | t) }}
+    </button>
   </div>
   <div *ngIf="user.extension">
     <span class="ms-2 bold">{{ 'extension' | t }}:</span>

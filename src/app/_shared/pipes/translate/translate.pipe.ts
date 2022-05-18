@@ -19,6 +19,10 @@ export class TranslatePipe implements PipeTransform {
   }
 
   transform(key: string) {
+    if (this.localeService.showTranslationKeys) {
+      return this.translations[key.toLowerCase()] + ' (' + key + ')';
+    }
+
     return this.translations[key.toLowerCase()] || key;
   }
 }
