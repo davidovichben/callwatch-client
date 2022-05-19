@@ -21,6 +21,7 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -45,6 +46,7 @@ const appearance: MatFormFieldDefaultOptions = {
     NgChartsModule
   ],
   providers: [
+    AppStateService,
     UserSessionService,
     NotificationService,
     HelpersService,

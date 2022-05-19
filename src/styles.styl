@@ -607,20 +607,20 @@ app-data-table
       width: 300px
       margin-top: 19px
 
-  app-pagination
+app-pagination
+  .page-link
+    border-color: transparent !important
+    color: BlueColor !important
+    font-size: 12px
+
+  .page-item.active
     .page-link
-      border-color: transparent !important
-      color: BlueColor !important
-      font-size: 12px
+      background-color: BlueColor !important
+      color: #fff !important
 
-    .page-item.active
-      .page-link
-        background-color: BlueColor !important
-        color: #fff !important
-
-    .page-item.disabled
-      .page-link
-        color: LightColor
+  .page-item.disabled
+    .page-link
+      color: LightColor
 
 .ltr app-pagination
     i

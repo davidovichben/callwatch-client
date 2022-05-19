@@ -4,8 +4,8 @@ import { NavigationEnd, Router, ChildActivationStart } from '@angular/router';
 import { Fade } from 'src/app/_shared/constants/animations';
 
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +20,7 @@ export class AppComponent implements OnInit {
   isLoading = false;
 
   constructor(private router: Router, private renderer: Renderer2,
-              private helpers: HelpersService,
-              private genericService: GenericService,
+              private genericService: GenericService, private appState: AppStateService,
               public localeService: LocaleService) {}
 
   ngOnInit() {
@@ -57,7 +56,7 @@ export class AppComponent implements OnInit {
       })
     })
 
-    this.helpers.pageSpinnerShown.subscribe(showSpinner => this.isLoading = showSpinner);
+    this.appState.pageSpinnerShown.subscribe(showSpinner => this.isLoading = showSpinner);
   }
 
   private setDirection(): void {
@@ -68,15 +67,17 @@ export class AppComponent implements OnInit {
 
   private listenRouterEvents(): void {
     this.router.events.forEach(event => {
-
       if (event instanceof ChildActivationStart) {
         this.isLoading = true;
       }
 
       if (event instanceof NavigationEnd) {
         this.isLoading = false;
-        this.helpers.urlChanged.next(event.urlAfterRedirects);
-        window.scrollTo(0, 0);
+        this.appState.urlChanged.next(event.urlAfterRedirects);
+
+        if (!this.appState.routeScrollDisabled) {
+          window.scrollTo(0, 0);
+        }
       }
     });
   }

@@ -14,6 +14,8 @@ import { ReportFormats, ReportTemplateModel } from 'src/app/_shared/models/repor
 import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
 import { isNumeric } from 'rxjs/internal-compatibility';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
+import { PaginationData } from 'src/app/_shared/components/data-table/classes/pagination-data';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 @Component({
   selector: 'app-results',
@@ -38,9 +40,16 @@ export class ResultsComponent implements OnInit, OnDestroy {
       columns: [],
       columnTypes: [],
     },
-    rows: [];
+    rows: {
+      items: [],
+      total: number,
+      lastPage: number
+    },
+    pageTotals: [],
     totals: []
   }
+
+  paginationData: PaginationData;
 
   styles = [];
 
@@ -48,19 +57,38 @@ export class ResultsComponent implements OnInit, OnDestroy {
   isDownloading = false;
 
   constructor(private route: ActivatedRoute, private dialog: MatDialog,
-              private reportService: ReportTemplateService,
+              private appState: AppStateService, private reportService: ReportTemplateService,
               private reportStateService: HistoricalReportsService,
               private fileSaver: FileSaverService) {}
 
   ngOnInit(): void {
+    this.setRouteData();
+    this.setActiveColumns();
+    this.setStyles();
+    this.appState.routeScrollDisabled = true;
+
+    this.sub.add(this.route.queryParams.subscribe(params => {
+      if (this.paginationData.currentPage !== +params.page) {
+        this.paginationData.currentPage = +params.page;
+
+        this.produce();
+      }
+    }));
+  }
+
+  private setRouteData(): void {
     this.results = this.route.snapshot.data.results;
     this.dates = this.reportStateService.dates;
     this.reportTemplate = this.reportStateService.getReportTemplate();
     this.timeSpace = this.reportStateService.getCriteria().timeSpace;
     this.criteria = this.reportStateService.getCriteria();
 
-    this.setActiveColumns();
-    this.setStyles();
+    this.paginationData = {
+      totalPages: this.results.rows.lastPage,
+      totalItems: this.results.rows.total,
+      currentPage: +this.route.snapshot.queryParams.page,
+      limit: 50
+    };
   }
 
   private setActiveColumns(): void {
@@ -103,7 +131,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
       this.isProducing = true;
 
       const reportTemplateId = this.reportStateService.getReportTemplate()?.id;
-      this.reportService.produceReport(reportTemplateId, this.criteria).then(response => {
+      this.reportService.produceReport(reportTemplateId, this.criteria, this.paginationData.currentPage).then(response => {
         if (response) {
           this.results = response;
           this.setStyles();
@@ -130,7 +158,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   setStyles(): void {
-    this.results.rows.forEach((row: any[], rowIndex) => {
+    this.results.rows.items.forEach((row: any[], rowIndex) => {
       const rowStyle = [];
 
       for (let index = 1; index < row.length; index++) {
@@ -172,6 +200,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.appState.routeScrollDisabled = false;
     this.sub.unsubscribe();
   }
 }

@@ -2,21 +2,20 @@ import { Injectable } from '@angular/core';
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/internal/operators';
 
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
   constructor(private userSession: UserSessionService,
               private notificationService: NotificationService,
-              private helpers: HelpersService) {}
+              private appState: AppStateService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const noLoader = req.headers.get('NoLoader');
@@ -30,7 +29,7 @@ export class AppInterceptor implements HttpInterceptor {
       return next.handle(authReq);
     }
 
-    // this.helpers.setPageSpinner(true);
+    // this.appState.setPageSpinner(true);
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -43,7 +42,7 @@ export class AppInterceptor implements HttpInterceptor {
         return throwError(error);
       }),
       finalize(() => {
-        // this.helpers.setPageSpinner(false);
+        // this.appState.setPageSpinner(false);
       })
     );
   }

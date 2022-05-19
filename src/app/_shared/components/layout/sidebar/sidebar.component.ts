@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 import { AdminModules, PlatformModules } from 'src/app/_shared/constants/modules';
 import { ModuleModel } from 'src/app/_shared/models/module.model';
@@ -30,11 +31,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   pageDirection: 'rtl' | 'ltr';
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private helpers: HelpersService,
-              private userSession: UserSessionService,
-              private localeService: LocaleService) {}
+  constructor(private router: Router, private route: ActivatedRoute,
+              private helpers: HelpersService, private appState: AppStateService,
+              private userSession: UserSessionService, private localeService: LocaleService) {}
 
   ngOnInit(): void {
     this.setMenu();
@@ -45,7 +44,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.pageDirection = this.localeService.dir;
     }));
 
-    this.sub.add(this.helpers.urlChanged.subscribe(() => {
+    this.sub.add(this.appState.urlChanged.subscribe(() => {
       this.setActiveModule();
     }));
   }

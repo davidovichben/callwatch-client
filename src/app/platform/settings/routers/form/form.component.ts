@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { RouterFormService } from 'src/app/_shared/services/state/router-form.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 @Component({
 	selector: 'app-form',
@@ -26,7 +26,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute,
               private routerService: RouterService, public formService: RouterFormService,
-              private helpers: HelpersService) {}
+              private appState: AppStateService) {}
 
 	ngOnInit(): void {
     this.formService.makeForm();
@@ -52,7 +52,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
 		if (form.valid && !this.isSubmitting) {
-      this.helpers.setPageSpinner(true);
+      this.appState.setPageSpinner(true);
 			this.isSubmitting = true;
 
       const general = (form.get('general') as FormGroup).getRawValue();
@@ -104,7 +104,7 @@ export class FormComponent implements OnInit, OnDestroy {
 		if (response) {
 			this.router.navigate(['/platform', 'settings', 'routers']);
 		} else {
-      this.helpers.setPageSpinner(false);
+      this.appState.setPageSpinner(false);
       this.isSubmitting = false;
     }
 	}

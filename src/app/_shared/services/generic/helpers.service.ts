@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 
 @Injectable()
 export class HelpersService {
-  pageSpinnerShown: Subject<boolean> = new Subject();
-  urlChanged: Subject<string> = new Subject();
-
-  setPageSpinner(isShown: boolean): void {
-    setTimeout(() => this.pageSpinnerShown.next(isShown), 0);
-  }
 
   getEntityType(url: string): string {
     const entityType = url.split('/')[2];

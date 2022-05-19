@@ -10,6 +10,7 @@ import { FileSaverModule } from 'ngx-filesaver';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
+import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 
 import { ResultsComponent } from './results.component';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
@@ -41,7 +42,8 @@ const routes: Routes = [
     MatMenuModule,
     FileSaverModule,
     TranslateModule,
-    DualGroupsSelectModule
+    DualGroupsSelectModule,
+    DataTableModule
   ],
   providers: [ReportTemplateService, HistoricalReportResultsResolve]
 })

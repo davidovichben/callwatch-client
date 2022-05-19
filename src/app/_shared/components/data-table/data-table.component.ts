@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 import { PaginationData } from './classes/pagination-data';
 import { DataTableCriteria } from './classes/data-table-criteria';
@@ -71,7 +71,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   columnLength = 0;
 
   constructor(protected router: Router, protected route: ActivatedRoute,
-              protected helpers: HelpersService) {}
+              protected appState: AppStateService) {}
 
   ngOnInit() {
     this.checkSavedItem('saved-item');
@@ -88,13 +88,13 @@ export class DataTableComponent implements OnInit, OnDestroy {
   }
 
   loadItems(): void {
-    this.helpers.setPageSpinner(true);
+    this.appState.setPageSpinner(true);
     this.isLoading = true;
     this.fetchItems.emit(this.isActive);
   }
 
   setItems(response: DataTableResponse): void {
-    this.helpers.setPageSpinner(false);
+    this.appState.setPageSpinner(false);
     this.isLoading = false;
 
     this.paginationData.totalItems = response && response.total ? response.total : 0;

@@ -31,8 +31,7 @@
     </mat-menu>
   </div>
 </div>
-<div class="loader inline" *ngIf="isProducing"></div>
-<table class="table" *ngIf="!isProducing">
+<table class="table">
   <thead>
   <tr *ngIf="results.labels.titles.length > 0">
     <th></th>
@@ -54,8 +53,15 @@
     <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name | t }}</th>
   </tr>
   </thead>
-  <tbody>
-  <tr *ngFor="let row of results.rows; let rowIndex = index">
+  <tbody *ngIf="isProducing">
+  <tr>
+    <td class="loader-cell" [colSpan]="results.labels.columns.length">
+      <div class="loader inline"></div>
+    </td>
+  </tr>
+  </tbody>
+  <tbody *ngIf="!isProducing">
+  <tr *ngFor="let row of results.rows.items; let rowIndex = index">
     <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">
 <!--      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}-->
       {{ value }}
@@ -64,8 +70,13 @@
   </tbody>
   <tfoot>
   <tr>
-    <td></td>
+    <td>{{ 'total_for_page' | t }}</td>
+    <td *ngFor="let total of results.pageTotals">{{ total ?? 0 }}</td>
+  </tr>
+  <tr>
+    <td>{{ 'total' | t }}</td>
     <td *ngFor="let total of results.totals">{{ total ?? 0 }}</td>
   </tr>
   </tfoot>
 </table>
+<app-pagination [data]="paginationData"></app-pagination>
