@@ -68,7 +68,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.appState.routeScrollDisabled = true;
 
     this.sub.add(this.route.queryParams.subscribe(params => {
-      if (this.paginationData.currentPage !== +params.page) {
+      if (params.page && this.paginationData.currentPage !== +params.page) {
         this.paginationData.currentPage = +params.page;
 
         this.produce();
@@ -86,7 +86,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.paginationData = {
       totalPages: this.results.rows.lastPage,
       totalItems: this.results.rows.total,
-      currentPage: +this.route.snapshot.queryParams.page,
+      currentPage: this.route.snapshot.queryParams.page ? +this.route.snapshot.queryParams.page : 1,
       limit: 50
     };
   }

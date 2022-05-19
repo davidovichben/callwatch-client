@@ -18,9 +18,11 @@ import { ColumnSettingsComponent } from './column-settings/column-settings.compo
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
+import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { ReportTemplateResolve } from 'src/app/_shared/resolves/report-template.resolve';
 import { ReportModulesSelectResolve } from 'src/app/_shared/resolves/report-modules-select.resolve';
+import { UnitLevelsResolve } from 'src/app/_shared/resolves/unit-levels.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
 
@@ -30,13 +32,20 @@ const routes: Routes = [
   {
     path: '',
     component: FormComponent,
-    resolve: { modules: ReportModulesSelectResolve },
+    resolve: {
+      modules: ReportModulesSelectResolve,
+      levels: UnitLevelsResolve
+    },
     canDeactivate: [DeactivateGuard]
   },
   {
     path: ':id',
     component: FormComponent,
-    resolve: { modules: ReportModulesSelectResolve, reportTemplate: ReportTemplateResolve },
+    resolve: {
+      modules: ReportModulesSelectResolve,
+      levels: UnitLevelsResolve,
+      reportTemplate: ReportTemplateResolve
+    },
     canDeactivate: [DeactivateGuard]
   }
 ];
@@ -60,8 +69,10 @@ const routes: Routes = [
   providers: [
     ReportTemplateService,
     SelectService,
+    UnitService,
     ReportTemplateResolve,
     ReportModulesSelectResolve,
+    UnitLevelsResolve,
     DeactivateGuard,
     TranslatePipe
   ]

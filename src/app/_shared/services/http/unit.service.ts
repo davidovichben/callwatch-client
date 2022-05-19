@@ -67,4 +67,11 @@ export class UnitService extends BaseHttpService {
       .then(response => response)
       .catch(response => response);
   }
+
+  getUnitLevels(): Promise<number[]> {
+    return this.http.get(this.endPoint + '/levels', this.getTokenRequest())
+      .toPromise()
+      .then(response => response as number[])
+      .catch(() => []);
+  }
 }

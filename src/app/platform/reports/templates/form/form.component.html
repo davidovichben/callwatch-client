@@ -24,6 +24,16 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-12 col-md-8 col-lg-6 col-xxl-3 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'unit_levels' | t }}</mat-label>
+            <mat-select formControlName="unitLevels" multiple>
+              <mat-option [value]="level" *ngFor="let level of unitLevels">{{ level }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-12 col-md-8 col-lg-6 mb-3">
           <mat-form-field>
             <mat-label>{{ 'description' | t }}</mat-label>

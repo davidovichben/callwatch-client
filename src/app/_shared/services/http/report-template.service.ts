@@ -69,10 +69,7 @@ export class ReportTemplateService extends BaseHttpService {
   }
 
   produceReport(reportTemplateId: number, criteria: object, page?: number): Promise<any> {
-    const params = {};
-    if (page) {
-      params['page'] = page;
-    }
+    const params = { page: page ?? 1 };
 
     return this.http.post(this.endPoint + '/' + reportTemplateId + '/produce', criteria, this.getTokenRequest(params))
       .toPromise()

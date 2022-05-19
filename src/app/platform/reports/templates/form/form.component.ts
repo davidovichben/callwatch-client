@@ -35,6 +35,8 @@ export class FormComponent implements OnInit, OnDestroy {
   modules: SelectItemModel[] = [];
   columns = [];
 
+  unitLevels = [];
+
   formGroup: FormGroup;
 
   reportTemplate: ReportTemplateModel;
@@ -50,12 +52,14 @@ export class FormComponent implements OnInit, OnDestroy {
     this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
       module: this.fb.control(null, Validators.required),
+      unitLevels: this.fb.control(null),
       description: this.fb.control(null),
       columns: this.fb.control(null, Validators.required)
     });
 
     const routeData = this.route.snapshot.data;
     this.modules = routeData.modules;
+    this.unitLevels = routeData.levels;
     this.reportTemplate = routeData.reportTemplate;
     if (this.reportTemplate) {
       this.getModuleColumns(this.reportTemplate.module).then(() => {
