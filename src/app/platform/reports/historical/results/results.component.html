@@ -43,9 +43,9 @@
   </tr>
   <tr>
     <th>{{ 'date' | t }}</th>
-    <th *ngFor="let column of results.labels.columns" [colSpan]="column.length">
+    <th *ngFor="let column of results.labels.columns" [colSpan]="column.length ?? 1">
       <span>{{ column.level ? ('level' | t) + ' ' + column.level : column.name | t }}</span>
-      <span *ngIf="column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
+      <span *ngIf="column.dataSource && column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
     </th>
   </tr>
   <tr *ngIf="results.labels.columnTypes.length > 0">

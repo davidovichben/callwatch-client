@@ -1,19 +1,20 @@
 export class ReportColumnModel {
-  id: number;
-  name: string;
-  type: string;
-  description: string;
-  title: string;
-  subTitle: string;
-  totalType: string;
-  dataType: string;
-  showExternal: boolean;
-  showInternal: boolean;
-  formula: {
+  id?: any;
+  name?: string;
+  level?: number;
+  type?: string;
+  description?: string;
+  title?: string;
+  subTitle?: string;
+  totalType?: string;
+  dataType?: string;
+  showExternal?: boolean;
+  showInternal?: boolean;
+  formula?: {
     columns: string[];
     operators: string[];
   };
-  conditionalDesign: {
+  conditionalDesign?: {
     equalTo?: DesignObj,
     greaterThan?: DesignObj,
     lessThan?: DesignObj,

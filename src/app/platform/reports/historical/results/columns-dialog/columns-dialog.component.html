@@ -2,7 +2,7 @@
   <span>{{ 'select_columns' | t }}</span>
   <i class="la la-times" mat-dialog-close></i>
 </div>
-<app-dual-groups-select [items]="columns.available" [ngModel]="columns.selected" #columnsInput="ngModel"></app-dual-groups-select>
+<app-dual-groups-select [items]="formattedColumns" [ngModel]="columns.selected" #columnsInput="ngModel"></app-dual-groups-select>
 <p class="mt-1 alert alert-danger d-block" [@fade]="hasColumnsError ? 'active' : 'inactive'">{{ 'no_column_selected_error' | t }}.</p>
 <div class="text-center">
   <button class="btn blue-btn" type="submit" (click)="submit(columnsInput.value)">{{ 'save' | t }}</button>

@@ -5,6 +5,7 @@ export class ReportTemplateModel {
   name: string;
   module: number;
   description: string;
+  unitLevels: number[];
   columns: ReportColumnModel[];
 }
 

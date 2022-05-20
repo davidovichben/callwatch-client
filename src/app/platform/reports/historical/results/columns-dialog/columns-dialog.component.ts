@@ -1,5 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
@@ -7,12 +10,22 @@ import { Fade } from 'src/app/_shared/constants/animations';
   templateUrl: './columns-dialog.component.html',
   animations: [Fade]
 })
-export class ColumnsDialogComponent {
+export class ColumnsDialogComponent implements OnInit {
+
+  formattedColumns = [];
 
   hasColumnsError = false;
 
   constructor(private dialogRef: MatDialogRef<ColumnsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public columns) {}
+              @Inject(MAT_DIALOG_DATA) public columns,
+              private t: TranslatePipe) {}
+
+  ngOnInit(): void {
+    this.formattedColumns = this.columns.available.map(column => {
+      const name = column.level ? this.t.transform('level') + ' ' + column.level : this.t.transform(column.name);
+      return { id: column.id, name };
+    });
+  }
 
   submit(currentColumns: number[]): void {
     this.hasColumnsError = false;
