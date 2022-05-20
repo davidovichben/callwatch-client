@@ -42,9 +42,9 @@
     <th *ngFor="let subTitle of results.labels.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>
   </tr>
   <tr>
-    <th></th>
+    <th>{{ 'date' | t }}</th>
     <th *ngFor="let column of results.labels.columns" [colSpan]="column.length">
-      <span>{{ column.name | t }}</span>
+      <span>{{ column.level ? ('level' | t) + ' ' + column.level : column.name | t }}</span>
       <span *ngIf="column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
     </th>
   </tr>
