@@ -106,6 +106,9 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     ele.style.backgroundColor = '#fff';
     ele.style.width = '200px';
     ele.style.padding = '8px';
+    ele.style.position = 'absolute';
+    ele.style.top = 0;
+    ele.style.zIndex = 99999;
 
     document.body.style.cursor = 'pointer';
 
@@ -120,6 +123,10 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
   drop(event: DragEvent, destinationUnit: UnitModel): void {
     event.stopPropagation();
     event.preventDefault();
+
+    if (!event.dataTransfer.getData('transferredUnit')) {
+      return;
+    }
 
     const transferredUnit = JSON.parse(event.dataTransfer.getData('transferredUnit'));
     if (transferredUnit.id === destinationUnit.id) {

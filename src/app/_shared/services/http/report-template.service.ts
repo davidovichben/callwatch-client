@@ -61,7 +61,7 @@ export class ReportTemplateService extends BaseHttpService {
       .catch(() => []);
   }
 
-  getReportByModule(module: number): Promise<ReportTemplateModel[]> {
+  getReportTemplatesByModule(module: number): Promise<ReportTemplateModel[]> {
     return this.http.get(this.endPoint + '/byModule', this.getTokenRequest({ module }))
       .toPromise()
       .then(response => response as ReportTemplateModel[])

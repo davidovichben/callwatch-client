@@ -48,7 +48,7 @@ export class HistoricalComponent implements OnInit {
 
     this.activeModule = module;
 
-    this.reportService.getReportByModule(module.id).then(response => {
+    this.reportService.getReportTemplatesByModule(module.id).then(response => {
       this.isLoadingReports = false;
 
       this.reportTemplates = response;
