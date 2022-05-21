@@ -73,8 +73,16 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private setActiveUnit(unit: UnitModel): void {
+  private setActiveUnit(unit?: UnitModel): void {
+    if (!unit) {
+      return;
+    }
+
     this.activeUnit = unit;
+
+    if (!this.activeUnit.ancestors) {
+      return;
+    }
 
     let branchUnit = null;
     this.activeUnit.ancestors.forEach(ancestor => {
