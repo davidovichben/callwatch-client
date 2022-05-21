@@ -26,7 +26,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   @ViewChild('dropdownEle') dropdownEle: ElementRef;
   @ViewChild('widthElement') widthElement: ElementRef;
 
-  @Input() units: UnitModel[] = [];
+  @Input() units: any[] = [];
   @Input() placeholder;
   @Input() ignoredUnit: UnitModel;
   @Input() multiple = false;
@@ -38,7 +38,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   isOpened = false;
 
   filterValue: string;
-  filteredUnits: UnitModel[] =[];
+  filteredUnits: UnitModel[] = [];
 
   selected: any;
 
@@ -55,7 +55,8 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
       this.placeholder = this.t.transform(keyword);
     }
 
-    this.filteredUnits = this.units;
+    this.loadUnits();
+
     if (this.multiple) {
       this.selected = [];
     }
@@ -65,6 +66,19 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     if (this.ignoredUnit) {
       this.ignoreUnit(this.filteredUnits);
     }
+  }
+
+  loadUnits(): void {
+    let start = 0;
+    const interval = setInterval(() => {
+      this.filteredUnits = this.filteredUnits.concat(this.units.slice(start, start + 100));
+
+      if (start >= this.units.length) {
+        clearInterval(interval);
+      }
+
+      start += 100;
+    }, 1);
   }
 
   ngOnChanges(): void {

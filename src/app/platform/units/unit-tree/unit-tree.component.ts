@@ -108,15 +108,14 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     ele.style.padding = '8px';
     ele.style.position = 'absolute';
     ele.style.top = 0;
+    ele.style.right = '50px';
     ele.style.zIndex = 99999;
-
-    document.body.style.cursor = 'pointer';
 
     ele.append(unit.name);
 
     document.body.appendChild(ele);
 
-    event.dataTransfer.setDragImage(ele, 0, 0);
+    event.dataTransfer.setDragImage(ele, 100, 25);
     event.dataTransfer.setData('transferredUnit', JSON.stringify(unit));
   }
 
