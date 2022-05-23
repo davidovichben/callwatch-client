@@ -44,8 +44,6 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
       this.unit = route.snapshot.data.unit;
       this.units = route.snapshot.data.units;
       this.isRootUnit = this.unit.id === 'root';
-
-      this.unitStateService.unitLoaded.next(this.unit);
     }));
 
     this.organizationName = this.userSession.getUser().organization;

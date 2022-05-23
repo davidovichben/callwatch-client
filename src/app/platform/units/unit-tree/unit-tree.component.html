@@ -1,7 +1,7 @@
 <div class="loader" *ngIf="loadingUnits"></div>
 <ul id="tree" *ngIf="!loadingUnits" (dragover)="allowDrop($event)">
   <li (drop)="drop($event, rootUnit)">
-    <span (dragover)="allowDrop($event)" [ngClass]="{ 'active': activeUnit.id === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
+    <span (dragover)="allowDrop($event)" [ngClass]="{ 'active': activeUnit?.id === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
   </li>
   <ul id="mainBranch">
     <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>

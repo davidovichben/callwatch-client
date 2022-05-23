@@ -21,12 +21,12 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
 
   @Input() rootUnit: UnitModel;
   @Input() loadingUnits: boolean;
+  @Input() activeUnit;
 
   @Output() loadedUnits = new EventEmitter();
 
   readonly sub = new Subscription();
 
-  activeUnit;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private notifications: NotificationService, private unitService: UnitService,
@@ -59,6 +59,8 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
         }
       });
     }));
+
+    this.setActiveBranch();
   }
 
   toggleUnit(unit: UnitModel): void {
@@ -80,6 +82,10 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
 
     this.activeUnit = unit;
 
+    this.setActiveBranch();
+  }
+
+  private setActiveBranch(): void {
     if (!this.activeUnit.ancestors) {
       return;
     }
