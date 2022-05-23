@@ -31,6 +31,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
   dates: { from: string, to: string };
   timeSpace: string;
   criteria: ReportCriteriaModel;
+
+  hasDateColumn = true;
   activeColumns: ReportColumnModel[];
 
   results: {
@@ -62,7 +64,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
               private fileSaver: FileSaverService) {}
 
   ngOnInit(): void {
-    this.setRouteData();
+    this.setData();
     this.setActiveColumns();
     this.setStyles();
     this.appState.routeScrollDisabled = true;
@@ -76,7 +78,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     }));
   }
 
-  private setRouteData(): void {
+  private setData(): void {
     this.results = this.route.snapshot.data.results;
     this.dates = this.reportStateService.dates;
     this.reportTemplate = this.reportStateService.getReportTemplate();
@@ -92,8 +94,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   private setActiveColumns(): void {
+    this.hasDateColumn = true;
     if (this.criteria.columns) {
       this.activeColumns = this.reportTemplate.columns.filter(column => this.criteria.columns.includes(column.id));
+      this.hasDateColumn = !!this.activeColumns.find(column => column.id === 'date');
     } else {
       this.activeColumns = this.reportTemplate.columns;
     }
@@ -115,10 +119,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
     const sub = dialog.afterClosed().subscribe(newColumns => {
       if (newColumns) {
-        this.criteria.columns = newColumns;
         this.setActiveColumns();
-
-        this.reportStateService.setCriteria(this.criteria);
         this.produce();
       }
     });
@@ -197,6 +198,11 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
       this.styles[rowIndex] = rowStyle;
     })
+  }
+
+  sort(column: string, direction: 'desc' | 'asc'): void {
+    this.criteria.sort = [{ column: column, direction }];
+    this.produce();
   }
 
   ngOnDestroy(): void {

@@ -8,16 +8,45 @@
 .mat-menu-item
   text-align: center
 
+.table-container
+  max-width: 1485px
+  overflow-x: auto
+
 .table
   th, td
     direction: ltr
     text-align: center
 
   th
+    width: 150px
     background-color: BlueColor
     color: WhiteColor
     border-right: 1px solid
     border-left: 1px solid
+
+    .sort-container
+      display: inline-flex
+      flex-direction: column
+      margin: 0 5px
+      cursor: pointer
+      vertical-align: middle
+
+      .triangle-up, .triangle-down
+        border: 6px solid transparent
+
+      .triangle-up
+        margin-bottom: 2px
+        border-bottom: 6px solid #dbe0e6
+
+      .triangle-down
+        margin-top: 2px
+        border-top: 6px solid #dbe0e6
+
+      .triangle-up.selected
+        border-bottom-color: #5f5f5f
+
+      .triangle-down.selected
+        border-top-color: #5f5f5f
 
   thead, tbody, tfoot
     tr

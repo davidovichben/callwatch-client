@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
@@ -24,19 +26,12 @@ export class HistoricalComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
               private reportService: ReportTemplateService,
-              private reportStateService: HistoricalReportsService) {}
+              private reportStateService: HistoricalReportsService,
+              private t: TranslatePipe) {}
 
   ngOnInit(): void {
     this.modules = this.route.snapshot.data.modules;
-    let activeModule = this.modules[0];
-
-    const reportTemplate = this.reportStateService.getReportTemplate();
-    if (reportTemplate) {
-      activeModule = this.modules.find(module => module.id === reportTemplate.module);
-      this.activeReport = reportTemplate;
-    }
-
-    this.setActiveModule(activeModule);
+    this.setActiveModule(this.modules[0]);
   }
 
   setActiveModule(module: SelectItemModel): void {
@@ -62,8 +57,10 @@ export class HistoricalComponent implements OnInit {
   setActiveReport(reportTemplate: ReportTemplateModel): void {
     this.activeReport = reportTemplate;
     if (this.activeReport.unitLevels) {
+      this.activeReport.columns.push({ id: 'date', name: this.t.transform('date') });
+
       this.activeReport.unitLevels.forEach(level => {
-        this.activeReport.columns.push({ id: 'level_' + level, level });
+        this.activeReport.columns.push({ id: 'level_' + level, name: this.t.transform('level') + ' ' + level, level });
       });
     }
 

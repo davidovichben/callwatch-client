@@ -12,6 +12,8 @@ import { HistoricalReportsService } from 'src/app/_shared/services/state/histori
 
 import { ReportModulesSelectResolve } from 'src/app/_shared/resolves/report-modules-select.resolve';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 const routes: Routes = [
   {
     path: '',
@@ -39,6 +41,7 @@ const routes: Routes = [
     ReportTemplateService,
     SelectService,
     ReportModulesSelectResolve,
+    TranslatePipe
   ]
 })
 export class HistoricalModule {}

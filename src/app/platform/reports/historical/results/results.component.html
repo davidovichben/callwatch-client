@@ -31,52 +31,65 @@
     </mat-menu>
   </div>
 </div>
-<table class="table">
-  <thead>
-  <tr *ngIf="results.labels.titles.length > 0">
-    <th></th>
-    <th *ngFor="let title of results.labels.titles" [colSpan]="title.length">{{ title.name }}</th>
-  </tr>
-  <tr *ngIf="results.labels.subTitles.length > 0">
-    <th></th>
-    <th *ngFor="let subTitle of results.labels.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>
-  </tr>
-  <tr>
-    <th>{{ 'date' | t }}</th>
-    <th *ngFor="let column of results.labels.columns" [colSpan]="column.length ?? 1">
-      <span>{{ column.level ? ('level' | t) + ' ' + column.level : column.name | t }}</span>
-      <span *ngIf="column.dataSource && column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
-    </th>
-  </tr>
-  <tr *ngIf="results.labels.columnTypes.length > 0">
-    <th></th>
-    <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name | t }}</th>
-  </tr>
-  </thead>
-  <tbody *ngIf="isProducing">
-  <tr>
-    <td class="loader-cell" [colSpan]="results.labels.columns.length">
-      <div class="loader inline"></div>
-    </td>
-  </tr>
-  </tbody>
-  <tbody *ngIf="!isProducing">
-  <tr *ngFor="let row of results.rows.items; let rowIndex = index">
-    <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">
-<!--      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}-->
-      {{ value }}
-    </td>
-  </tr>
-  </tbody>
-  <tfoot>
-  <tr>
-    <td>{{ 'total_for_page' | t }}</td>
-    <td *ngFor="let total of results.pageTotals">{{ total ?? 0 }}</td>
-  </tr>
-  <tr>
-    <td>{{ 'total' | t }}</td>
-    <td *ngFor="let total of results.totals">{{ total ?? 0 }}</td>
-  </tr>
-  </tfoot>
-</table>
+<div class="table-container">
+  <table class="table">
+    <thead>
+    <tr *ngIf="results.labels.titles.length > 0">
+      <th></th>
+      <th *ngFor="let title of results.labels.titles" [colSpan]="title.length">{{ title.name }}</th>
+    </tr>
+    <tr *ngIf="results.labels.subTitles.length > 0">
+      <th></th>
+      <th *ngFor="let subTitle of results.labels.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>
+    </tr>
+    <tr>
+      <th>
+        <span>{{ hasDateColumn ? ('date' | t) : '' }}</span>
+        <div class="sort-container" *ngIf="hasDateColumn">
+          <div class="triangle-up" (click)="sort('date', 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'desc' }"></div>
+          <div class="triangle-down" (click)="sort('date', 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'asc' }"></div>
+        </div>
+      </th>
+      <th *ngFor="let column of results.labels.columns" [colSpan]="column.length ?? 1">
+        <div class="sort-container">
+          <div class="triangle-up" (click)="sort(column.id, 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'desc' }"></div>
+          <div class="triangle-down" (click)="sort(column.id, 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'asc' }"></div>
+        </div>
+        <span>{{ column.level ? ('level' | t) + ' ' + column.level : column.name | t }}</span>
+        <span *ngIf="column.dataSource && column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
+      </th>
+    </tr>
+    <tr *ngIf="results.labels.columnTypes.length > 0">
+      <th></th>
+      <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name | t }}</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="isProducing">
+    <tr>
+      <td class="loader-cell" [colSpan]="results.labels.columns.length">
+        <div class="loader inline"></div>
+      </td>
+    </tr>
+    </tbody>
+    <tbody *ngIf="!isProducing">
+    <tr *ngFor="let row of results.rows.items; let rowIndex = index">
+      <td *ngIf="!hasDateColumn"></td>
+      <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">
+        <!--      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}-->
+        {{ value }}
+      </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td>{{ 'total_for_page' | t }}</td>
+      <td *ngFor="let total of results.pageTotals">{{ total ?? 0 }}</td>
+    </tr>
+    <tr>
+      <td>{{ 'total' | t }}</td>
+      <td *ngFor="let total of results.totals">{{ total ?? 0 }}</td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
 <app-pagination [data]="paginationData"></app-pagination>

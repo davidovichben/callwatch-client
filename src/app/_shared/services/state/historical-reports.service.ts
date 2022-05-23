@@ -8,6 +8,7 @@ import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.mode
 export class HistoricalReportsService {
 
   reportTemplateChanged = new Subject();
+  reportTemplate: ReportTemplateModel;
 
   dates: { from: string, to: string };
 
@@ -22,11 +23,11 @@ export class HistoricalReportsService {
   }
 
   setReportTemplate(reportTemplate: ReportTemplateModel): void {
-    localStorage.setItem('report-template', JSON.stringify(reportTemplate));
+    this.reportTemplate = reportTemplate;
     this.reportTemplateChanged.next(true);
   }
 
   getReportTemplate(): ReportTemplateModel {
-    return JSON.parse(localStorage.getItem('report-template'));
+    return this.reportTemplate;
   }
 }
