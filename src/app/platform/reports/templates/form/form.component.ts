@@ -85,7 +85,11 @@ export class FormComponent implements OnInit, OnDestroy {
     return this.selectService.select('reportModuleColumn', { moduleId }).then(columns => {
       if (columns) {
         columns = columns.map(column => {
-          return { id: column.id, name: this.t.transform('col_' + column.name.toLowerCase()) }
+          return {
+            id: column.id,
+            name: this.t.transform('col_' + column.name.toLowerCase()),
+            description: this.t.transform('col_' + column.name.toLowerCase() + '_tip')
+          }
         })
 
         this.columns = columns;
