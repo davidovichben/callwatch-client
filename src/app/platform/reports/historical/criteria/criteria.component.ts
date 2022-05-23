@@ -35,14 +35,12 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.units = this.route.snapshot.data.units;
 
-    this.reportTemplate = this.reportStateService.getReportTemplate();
     const sub = this.reportStateService.reportTemplateChanged.subscribe(() => {
       this.reportTemplate = this.reportStateService.getReportTemplate();
+      this.makeForm();
     })
 
     this.sub.add(sub);
-
-    this.makeForm();
   }
 
   private makeForm(): void {
@@ -75,7 +73,10 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     const criteria = this.reportStateService.getCriteria();
     if (criteria) {
       criteria.times.forEach(() => this.addTime());
-      criteria.sort.forEach(() => this.addSortColumn());
+      criteria.sort.forEach(values => {
+        this.addSortColumn();
+        this.setColumnDisabled(values.column, true);
+      });
 
       this.formGroup.patchValue(criteria);
     }
@@ -112,7 +113,31 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   removeSortColumn(index: number): void {
+    const columnId = this.formGroup.get('sort.' + index + '.column').value;
+    if (columnId) {
+      this.setColumnDisabled(columnId, false);
+    }
+
     (this.formGroup.get('sort') as FormArray).removeAt(index);
+  }
+
+  sortColumnSelected(value: string, index: number): void {
+    if (value) {
+      this.setColumnDisabled(value, true);
+    } else {
+      const columnId = this.formGroup.get('sort.' + index + '.column').value;
+      this.setColumnDisabled(columnId, false);
+    }
+
+    const direction = value ? 'desc' : null;
+    this.formGroup.get('sort.' + index + '.direction').patchValue(direction);
+  }
+
+  setColumnDisabled(columnId: string, disabled: boolean): void {
+    const column = this.reportTemplate.columns.find(column => column.id === columnId);
+    if (column) {
+      column.disabled = disabled;
+    }
   }
 
   submit(): void {

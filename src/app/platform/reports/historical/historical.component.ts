@@ -56,13 +56,6 @@ export class HistoricalComponent implements OnInit {
 
   setActiveReport(reportTemplate: ReportTemplateModel): void {
     this.activeReport = reportTemplate;
-    if (this.activeReport.unitLevels) {
-      this.activeReport.columns.push({ id: 'date', name: this.t.transform('date') });
-
-      this.activeReport.unitLevels.forEach(level => {
-        this.activeReport.columns.push({ id: 'level_' + level, name: this.t.transform('level') + ' ' + level, level });
-      });
-    }
 
     this.reportStateService.setReportTemplate(reportTemplate);
 

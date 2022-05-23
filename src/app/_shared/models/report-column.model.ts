@@ -20,6 +20,7 @@ export class ReportColumnModel {
     lessThan?: DesignObj,
     between?: DesignObj
   };
+  disabled?: boolean;
 }
 
 class DesignObj { value?: string; values?: { from: number, to: number }; color: string }
