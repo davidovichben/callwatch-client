@@ -40,7 +40,9 @@ export class ExtensionsGroupsComponent implements OnInit {
 
   ngOnInit(): void {
     this.parentRoute = this.route.parent.parent;
-    this.sub.add(this.parentRoute.data.subscribe(() => this.setUnit()));
+    this.sub.add(this.parentRoute.data.subscribe(() => {
+      this.setUnit();
+    }));
 
     this.selects = this.route.snapshot.data.selects;
   }
