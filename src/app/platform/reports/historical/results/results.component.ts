@@ -119,6 +119,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
     const sub = dialog.afterClosed().subscribe(newColumns => {
       if (newColumns) {
+        this.criteria.columns = newColumns;
+
         this.setActiveColumns();
         this.produce();
       }

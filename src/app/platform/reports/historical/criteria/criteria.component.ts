@@ -153,8 +153,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     this.sanitizeDates(values, 'dates');
     this.sanitizeDates(values, 'ignoreDates')
 
-    values.times = values.times.filter((time) => time.from && time.to);
-    values.sort = values.sort.filter((sort) => sort.column && sort.direction);
+    values.times = values.times.filter(time => time.from && time.to);
+    values.sort = values.sort.filter(sort => sort.column && sort.direction);
 
     return values;
   }

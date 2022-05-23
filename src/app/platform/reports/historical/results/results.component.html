@@ -46,14 +46,14 @@
       <th>
         <span>{{ hasDateColumn ? ('date' | t) : '' }}</span>
         <div class="sort-container" *ngIf="hasDateColumn">
-          <div class="triangle-up" (click)="sort('date', 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'desc' }"></div>
-          <div class="triangle-down" (click)="sort('date', 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'asc' }"></div>
+          <div class="triangle-up" (click)="sort('date', 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'asc' }"></div>
+          <div class="triangle-down" (click)="sort('date', 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'desc' }"></div>
         </div>
       </th>
       <th *ngFor="let column of results.labels.columns" [colSpan]="column.length ?? 1">
         <div class="sort-container">
-          <div class="triangle-up" (click)="sort(column.id, 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'desc' }"></div>
-          <div class="triangle-down" (click)="sort(column.id, 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'asc' }"></div>
+          <div class="triangle-up" (click)="sort(column.id, 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'asc' }"></div>
+          <div class="triangle-down" (click)="sort(column.id, 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'desc' }"></div>
         </div>
         <span>{{ column.level ? ('level' | t) + ' ' + column.level : column.name | t }}</span>
         <span *ngIf="column.dataSource && column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
