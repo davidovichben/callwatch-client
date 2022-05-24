@@ -4,7 +4,7 @@
   </div>
   <div class="row">
     <div class="col-12 col-lg-6">
-      <bd-select [ngModel]="extensionGroup.switchboard" name="switchboard" [placeholder]="'select_switchboard' | t">
+      <bd-select [ngModel]="extensionGroup.switchboard" name="switchboard" (ngModelChange)="switchboardSelected($event)" [placeholder]="'select_switchboard' | t">
         <bd-option [value]="switchboard.id" *ngFor="let switchboard of selects.switchboards">{{ switchboard.name }}</bd-option>
       </bd-select>
     </div>
@@ -14,16 +14,19 @@
       </bd-select>
     </div>
   </div>
-  <ng-container *ngIf="form.value.switchboard">
+  <div *ngIf="selects.acds" [@fade]="isAcdsExtensionLoading ? 'inactive' : 'active'">
+    <p class="bold light-black-text">{{ 'extensions' | t }}</p>
     <app-dual-groups-select [ngModel]="extensionGroup.extensions" name="extensions" [items]="selects.extensions">
       <ng-template let-item #row>
         <span>{{ item.name }} ({{ item.number }})</span>
       </ng-template>
     </app-dual-groups-select>
+    <p class="bold light-black-text">{{ 'acds' | t }}</p>
     <app-dual-groups-select [ngModel]="extensionGroup.acds" name="acds" [items]="selects.acds">
       <ng-template let-item #row>
         <span>{{ item.name }} ({{ item.number }})</span>
       </ng-template>
     </app-dual-groups-select>
-  </ng-container>
+  </div>
+  <div class="loader inline" [@fade]="isAcdsExtensionLoading ? 'active' : 'inactive'"></div>
 </form>

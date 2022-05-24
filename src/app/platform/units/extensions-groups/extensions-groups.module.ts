@@ -15,6 +15,7 @@ import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { ExtensionGroupFormSelectResolve } from 'src/app/_shared/resolves/extension-group-form-select.resolve';
 import { ExtensionGroupResolve } from 'src/app/_shared/resolves/extension-group.resolve';
+import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
   providers: [
     ExtensionGroupService,
     SelectService,
+    SwitchboardService,
     ExtensionGroupResolve,
     ExtensionGroupFormSelectResolve
   ]

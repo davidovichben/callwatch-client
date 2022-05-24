@@ -7,6 +7,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { SwitchboardModel } from 'src/app/_shared/models/switchboard.model';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
 export class SwitchboardService extends BaseHttpService {
@@ -58,6 +59,13 @@ export class SwitchboardService extends BaseHttpService {
     return this.http.get(this.endPoint + '/defaults', this.getTokenRequest())
       .toPromise()
       .then(response => response)
+      .catch(() => null);
+  }
+
+  getExtensionsAndAcds(switchboardId: number): Promise<{ extensions: SelectItemModel[], acds: SelectItemModel[] }> {
+    return this.http.get(this.endPoint + '/' + switchboardId + '/extensionsAcds', this.getTokenRequest())
+      .toPromise()
+      .then(response => response as { extensions: SelectItemModel[], acds: SelectItemModel[]})
       .catch(() => null);
   }
 }

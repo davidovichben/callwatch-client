@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
@@ -8,7 +8,7 @@ export class ExtensionGroupFormSelectResolve implements Resolve<object> {
 
   constructor(private selectService: SelectService) {}
 
-  resolve() {
-    return this.selectService.groupExtensionForm().then(response => response);
+  resolve(snapshot: ActivatedRouteSnapshot) {
+    return this.selectService.groupExtensionForm(+snapshot.parent.parent.params.id).then(response => response);
   }
 }

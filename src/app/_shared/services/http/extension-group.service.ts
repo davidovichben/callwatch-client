@@ -5,6 +5,7 @@ import { BaseHttpService } from './base-http.service';
 import { UserSessionService } from '../state/user-session.service';
 
 import { ExtensionGroupModel } from 'src/app/_shared/models/extension-group.model';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
 export class ExtensionGroupService extends BaseHttpService {
