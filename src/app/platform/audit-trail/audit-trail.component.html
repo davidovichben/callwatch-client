@@ -12,8 +12,8 @@
       <span class="bold" *ngIf="item.resourceType && item.action === 'delete'">{{ item.resourceName | t }}</span>
     </td>
     <td>{{ item.ip }}</td>
-    <td *ngIf="item.action === 'update'">
-      <mat-icon (click)="openChangesDialog(item.id)" class="pointer link">library_books</mat-icon>
+    <td>
+      <mat-icon (click)="openChangesDialog(item.id)" class="pointer link" *ngIf="item.action === 'update'">library_books</mat-icon>
     </td>
   </tr>
 </app-data-table>

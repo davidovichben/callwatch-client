@@ -105,7 +105,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   openInformationDialog(): void {
     this.dialog.open(InformationDialogComponent, {
-      data: this.reportTemplate
+      data: this.reportTemplate,
+      width: '600px'
     });
   }
 

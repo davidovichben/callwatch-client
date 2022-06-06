@@ -13,8 +13,8 @@
   <tbody>
     <tr *ngFor="let change of changes">
       <td>{{ change.attribute | t }}</td>
-      <td>{{ change.newValue }}</td>
       <td>{{ change.oldValue }}</td>
+      <td>{{ change.newValue }}</td>
     </tr>
   </tbody>
 </table>

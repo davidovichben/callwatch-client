@@ -41,6 +41,11 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     })
 
     this.sub.add(sub);
+
+    this.reportTemplate = this.reportStateService.getReportTemplate();
+    if (this.reportTemplate) {
+      this.makeForm();
+    }
   }
 
   private makeForm(): void {

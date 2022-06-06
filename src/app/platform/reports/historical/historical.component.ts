@@ -26,8 +26,7 @@ export class HistoricalComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
               private reportService: ReportTemplateService,
-              private reportStateService: HistoricalReportsService,
-              private t: TranslatePipe) {}
+              private reportStateService: HistoricalReportsService) {}
 
   ngOnInit(): void {
     this.modules = this.route.snapshot.data.modules;

@@ -20,6 +20,7 @@ export class ReportColumnModel {
     lessThan?: DesignObj,
     between?: DesignObj
   };
+  isFixed?: boolean;
   disabled?: boolean;
 }
 

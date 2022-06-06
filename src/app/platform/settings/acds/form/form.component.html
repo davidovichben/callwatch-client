@@ -23,6 +23,7 @@
           <mat-form-field>
             <mat-label>{{ 'group_type' | t }}</mat-label>
             <mat-select formControlName="type">
+              <mat-option>-------</mat-option>
               <mat-option *ngFor="let type of selects.types" [value]="type.id">{{ type.name }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -106,7 +107,11 @@
       </div>
     </section>
     <section [hidden]="activeTab !== 'extensions'">
-      <app-dual-groups-select formControlName="extensions" [items]="selects.extensions"></app-dual-groups-select>
+      <app-dual-groups-select formControlName="extensions" [items]="selects.extensions">
+        <ng-template let-item #row>
+          <span>{{ item.name }} ({{ item.number }})</span>
+        </ng-template>
+      </app-dual-groups-select>
     </section>
     <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
       <div class="row">

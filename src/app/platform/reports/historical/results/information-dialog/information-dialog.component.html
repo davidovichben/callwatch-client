@@ -8,6 +8,7 @@
 <p class="mb-5 f-16" *ngIf="reportTemplate.description">{{ reportTemplate.description }}</p>
 <p class="mb-3 f-16">{{ 'report_columns_information' | t }}:</p>
 <p *ngFor="let column of reportTemplate.columns">
-  <span class="bold">{{ column.name }}</span>
+  <span class="bold">{{ column.isFixed ? (column.name | t) : column.name }}</span>
+  <span *ngIf="column.level"> {{ column.level }}</span>
   <span *ngIf="column.description">- {{ column.description }}</span>
 </p>
