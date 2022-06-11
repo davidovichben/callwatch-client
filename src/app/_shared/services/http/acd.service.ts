@@ -54,8 +54,8 @@ export class AcdService extends BaseHttpService {
 			.catch(() => false);
 	}
 
-  checkExists(unit: number, type: string, value: string): Promise<any> {
-    return this.http.get(this.endPoint + '/exists', this.getTokenRequest({ unit, type, value }, true))
+  checkExists(switchboard: number, type: string, value: string): Promise<any> {
+    return this.http.get(this.endPoint + '/exists', this.getTokenRequest({ switchboard, type, value }, true))
       .toPromise()
       .then(response => response)
       .catch(() => false);

@@ -33,7 +33,7 @@ export class FormComponent implements OnInit, OnDestroy {
   selects = {
     extensions: [],
     types: [],
-    units: [],
+    switchboards: [],
     callbacks: [],
     routers: []
   };
@@ -64,7 +64,7 @@ export class FormComponent implements OnInit, OnDestroy {
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
         type: this.fb.control(null),
-        unit: this.fb.control(null, Validators.required),
+        switchboard: this.fb.control(null, Validators.required),
         description: this.fb.control(null)
       }),
       switchboard: this.fb.group({
@@ -95,8 +95,8 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   checkExists(args: object, control: FormControl): Promise<{ exists: boolean }> {
-    const unitId = this.formGroup.get('general.unit').value;
-    if (!unitId) {
+    const switchboardId = this.formGroup.get('general.switchboard').value;
+    if (!switchboardId) {
       return Promise.resolve(null);
     }
 
@@ -104,7 +104,7 @@ export class FormComponent implements OnInit, OnDestroy {
       return Promise.resolve(null);
     }
 
-    return this.acdService.checkExists(unitId, args[0], control.value).then(response => {
+    return this.acdService.checkExists(switchboardId, args[0], control.value).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }

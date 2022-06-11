@@ -47,7 +47,6 @@ export class MessagesComponent extends SharedComponent implements OnInit, OnDest
   dropMessage(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.formArray.controls, event.previousIndex, event.currentIndex);
     moveItemInArray(this.formArray.value, event.previousIndex, event.currentIndex);
-    console.log(this.formService.routerForm.controls)
   }
 
   deleteMessage(index: number): void {

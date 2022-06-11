@@ -1,10 +1,17 @@
-<div class="mb-3 flex-between">
-  <p class="h1">
-    <ng-container *ngIf="dates && dates.from && dates.to">
+<div class="d-flex justify-content-between" [ngClass]="{ 'mb-3': !criteria.times || criteria.times.length === 0 }">
+  <div>
+    <p class="h1" *ngIf="dates && dates.from && dates.to">
       <span>{{ 'example_report_for_dates' | t }} </span>
       <span>{{ dates.from|date: 'dd/MM/Y' }} - {{ dates.to|date: 'dd/MM/Y' }}</span>
-    </ng-container>
-  </p>
+    </p>
+    <p class="h3" *ngIf="criteria.times && criteria.times.length > 0">
+      <span>{{ 'for_hours' | t }}: </span>
+      <span *ngFor="let time of criteria.times; let last = last">
+        <span>{{ time.from }} - {{ time.to }}</span>
+        <span *ngIf="!last">,</span>
+      </span>
+    </p>
+  </div>
   <div>
     <button mat-flat-button class="ms-2 action-btn" (click)="openInformationDialog()">
       <mat-icon class="ms-1">error_outline</mat-icon>
@@ -72,6 +79,9 @@
     </tr>
     </tbody>
     <tbody *ngIf="!isProducing">
+    <tr *ngIf="results.rows.items.length === 0" class="h-100">
+      <td [colspan]="results.labels.columns.length" class="text-center align-baseline">.{{ 'no_rows_found' | t }}</td>
+    </tr>
     <tr *ngFor="let row of results.rows.items; let rowIndex = index">
       <td *ngIf="!hasDateColumn"></td>
       <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">
@@ -92,4 +102,4 @@
     </tfoot>
   </table>
 </div>
-<app-pagination [data]="paginationData"></app-pagination>
+<app-pagination [data]="paginationData" *ngIf="results.rows.items.length > 0"></app-pagination>

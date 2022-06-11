@@ -31,7 +31,7 @@ export class FormComponent implements OnInit, OnDestroy {
   selects = {
     acds: [],
     types: [],
-    units: [],
+    switchboards: [],
     callbacks: [],
     routers: []
   };
@@ -70,7 +70,7 @@ export class FormComponent implements OnInit, OnDestroy {
       general: this.fb.group({
         name: this.fb.control(null, Validators.required),
         type: this.fb.control(null),
-        unit: this.fb.control(null, Validators.required),
+        switchboard: this.fb.control(null, Validators.required),
         description: this.fb.control(null)
       }),
       acds: this.fb.control(null),
@@ -85,7 +85,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private setFormSubscriptions(): void {
-    const sub = this.formGroup.get('general.unit').valueChanges.subscribe(() => {
+    const sub = this.formGroup.get('general.switchboard').valueChanges.subscribe(() => {
       const controlName = this.extension ? 'dialNumber' : 'dialNumbers';
       this.formGroup.get('general.' + controlName).updateValueAndValidity();
     });
@@ -155,12 +155,12 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private checkDialNumbersExist(group: FormGroup): Promise<object> {
-    const unitId = this.formGroup.get('general.unit').value;
-    if (!unitId || !group.value.from || !group.value.to) {
+    const switchboardId = this.formGroup.get('general.switchboard').value;
+    if (!switchboardId || !group.value.from || !group.value.to) {
       return Promise.resolve(null);
     }
 
-    return this.extensionService.checkDialNumbersUnique(group.value.from, group.value.to, unitId).then(response => {
+    return this.extensionService.checkDialNumbersUnique(group.value.from, group.value.to, switchboardId).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }
@@ -170,8 +170,8 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private checkDialNumberExist(control: FormControl): Promise<object> {
-    const unitId = this.formGroup.get('general.unit').value;
-    if (!unitId || !control.value) {
+    const switchboardId = this.formGroup.get('general.switchboard').value;
+    if (!switchboardId || !control.value) {
       return Promise.resolve(null);
     }
 
@@ -179,7 +179,7 @@ export class FormComponent implements OnInit, OnDestroy {
       return Promise.resolve(null);
     }
 
-    return this.extensionService.checkDialNumbersUnique(control.value, control.value, unitId).then(response => {
+    return this.extensionService.checkDialNumbersUnique(control.value, control.value, switchboardId).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;
       }

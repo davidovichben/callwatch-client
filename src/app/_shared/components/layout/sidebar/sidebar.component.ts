@@ -53,12 +53,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.menuType = this.router.url.substr(1, 5) === 'admin' ? 'admin' : 'platform';
     const modules = this.menuType === 'admin' ? [...AdminModules] : [...PlatformModules];
     this.modules = JSON.parse(JSON.stringify(modules));
-    
+
     if (this.menuType === 'platform') {
       this.setModules();
     }
-
-    console.log(this.modules)
   }
 
   private setModules(): void {
@@ -70,7 +68,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
 
     this.modules = this.modules.filter(module => {
-      if (module.subModules && module.isOpen) {
+      if (module.subModules) {
         module.subModules = module.subModules.filter(subModule => this.checkAllowedModule(permissions, subModule));
         return module.subModules.length > 0;
       }

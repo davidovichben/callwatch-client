@@ -3,19 +3,19 @@ export const PlatformModules = [
   { name: 'units', permission: 'units', icon: 'account_tree' },
   {
     name: 'reports',
+    permission: 'reports',
     icon: 'assignment',
     subModules: [
-      { name: 'templates', label: 'templates' },
+      { name: 'templates', permission: 'reports', label: 'templates' },
       // { name: 'sets', label: 'report_sets' },
-      { name: 'timings', label: 'timed_reports' },
-      { name: 'historical', label: 'historical_reports' }
+      { name: 'timings', permission: 'timed_reports', label: 'timed_reports' },
+      { name: 'historical', permission: 'reports', label: 'historical_reports' }
     ]
   },
   { name: 'users', permission: 'users', icon: 'group' },
   {
     name: 'settings',
     icon: 'settings',
-    isOpen: true,
     subModules: [
       { name: 'permissions' },
       { name: 'schedules', permission: 'schedules' },

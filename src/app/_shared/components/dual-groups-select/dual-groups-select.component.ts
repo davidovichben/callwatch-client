@@ -1,5 +1,7 @@
-import { Component, ContentChild, ElementRef, forwardRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
@@ -81,9 +83,8 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   search(type: string, event?: KeyboardEvent): void {
-    if (event.key === 'Enter') {
+    if (event && event.key === 'Enter') {
       event.cancelBubble = true;
-      event.returnValue = false;
 
       if (event.stopPropagation) {
         event.stopPropagation();
@@ -94,9 +95,9 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     const items = type === 'available' ? this.items : this.selectedItems.all;
     const keyword = type === 'available' ? this.searchInputs.available : this.searchInputs.selected;
     if (type === 'available') {
-      this.availableItems = items.filter(item => item.name.indexOf(keyword) !== -1);
+      this.availableItems = items.filter(item => item.name.includes(keyword));
     } else {
-      this.selectedItems.filtered = items.filter(item => item.name.indexOf(keyword) !== -1);
+      this.selectedItems.filtered = items.filter(item => item.name.includes(keyword));
     }
   }
 

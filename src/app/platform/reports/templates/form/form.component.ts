@@ -84,16 +84,27 @@ export class FormComponent implements OnInit, OnDestroy {
   private getModuleColumns(moduleId: number): Promise<any> {
     return this.selectService.select('reportModuleColumn', { moduleId }).then(columns => {
       if (columns) {
-        columns = columns.map(column => {
+        const mapped = columns.map(column => {
           return {
             id: column.id,
             name: this.t.transform('col_' + column.name.toLowerCase()),
             description: this.t.transform('col_' + column.name.toLowerCase() + '_tip')
           }
-        })
+        });
 
-        this.columns = columns;
-        this.dualGroupsComponent.availableItems = columns;
+        this.columns = mapped.sort((a, b) => {
+          switch (true) {
+            case a.name < b.name:
+              return -1;
+            case a.name > b.name:
+              return 1;
+            default:
+              return 0;
+          }
+        });
+
+        this.dualGroupsComponent.items = this.columns;
+        this.dualGroupsComponent.availableItems = this.columns;
       }
     })
   }
