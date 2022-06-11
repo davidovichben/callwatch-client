@@ -1,0 +1,44 @@
+@import '~src/assets/variables';
+
+:host
+  display: flex
+
+.calendar
+  margin: 0 10px
+  width: 245px
+
+.month-title
+  color: BlueColor
+  text-align: center
+  font-size: 16px
+  font-weight: bold
+
+.week-day, .month-day
+  width: 35px
+  text-align: center
+
+.week-day
+  font-size: 12px
+
+.week-day.weekend
+  color: LighterBlueColor
+
+.month-day
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 35px
+  font-size: 14px
+  color: DarkBlueColor
+  font-weight: bold
+
+  .start-date, .end-date
+    padding: 5px 7px
+    background-color: LighterBlueColor
+    color: #fff
+    border-radius: 50%
+
+.month-day.in-range
+  background-color: #e6f2ff
+
+

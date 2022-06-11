@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgChartsModule } from 'ng2-charts';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { DatePickerModule } from 'src/app/_shared/components/date-picker/date-picker.module';
 
 import { DashboardComponent } from './dashboard.component';
 
@@ -26,13 +27,14 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatIconModule,
-    NgChartsModule,
-    TranslateModule
-  ],
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		MatIconModule,
+		NgChartsModule,
+		TranslateModule,
+		DatePickerModule
+	],
   providers: [ReportWidgetService, ReportWidgetsResolve]
 })
 export class DashboardModule {}
