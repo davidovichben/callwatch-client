@@ -1,0 +1,85 @@
+@import '~src/assets/variables';
+
+:host > div
+  padding: 10px
+  flex-direction: column
+  background-color: #fff
+  border: 1px solid rgba(0, 0, 0, 0.05)
+
+.calendar
+  width: 245px
+
+.month-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 10px
+
+  .month-title
+    margin-bottom: 0
+    color: BlueColor
+    text-align: center
+    font-size: 16px
+    font-weight: bold
+
+  mat-icon
+    cursor: pointer
+
+.ltr :host mat-icon
+  transform: rotate(180deg)
+
+.calendar:first-of-type .month-header:after
+  content: ""
+
+.calendar:nth-child(2) .month-header:before
+  content: ""
+
+.week-day, .month-day
+  width: 35px
+  text-align: center
+
+.week-day
+  font-size: 12px
+
+.week-day.weekend
+  color: LighterBlueColor
+
+.month-day
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 35px
+  font-size: 14px
+  color: DarkBlueColor
+  font-weight: bold
+  cursor: pointer
+
+  .selected
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    height: 28px
+    width: 28px
+    background-color: LighterBlueColor
+    color: #fff
+    border-radius: 50%
+
+.month-day.in-range
+  background-color: #e6f2ff
+
+.quick-selection
+  padding: 20px 10px
+
+  p
+    color: DarkGreyColor
+    font-size: 14px
+    font-weight: bold
+
+  .label
+    width: 80px
+    margin: 0 4px
+    padding: 4px 0
+    text-align: center
+    border-radius: 8px
+    background-color: #e6f2ff
+    cursor: pointer
