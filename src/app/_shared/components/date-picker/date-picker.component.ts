@@ -1,60 +1,74 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import * as moment from 'moment/moment';
-
-import { WeekDays } from 'src/app/_shared/constants/general';
+import { SlideDown } from 'src/app/_shared/constants/animations';
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.styl']
+  styleUrls: ['./date-picker.component.styl'],
+  animations: [SlideDown],
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }
+  ]
 })
-export class DatePickerComponent implements OnInit {
-
-  readonly weekDays = WeekDays;
-
-  firstMonth = {
-    year: null,
-    month: null,
-    monthName: null,
-    days: null
-  }
-
-  secondMonth = {
-    year: null,
-    month: null,
-    monthName: null,
-    days: null
-  }
+export class DatePickerComponent {
 
   selected = {
-    start: null,
-    end: null
+    start: null
   }
 
-  ngOnInit(): void {
-    this.firstMonth.year = moment().year();
-    this.firstMonth.month = moment().month();
-    this.firstMonth.monthName = moment().format('MMMM');
-    this.firstMonth.days = new Array(moment().daysInMonth());
+  calendarOpened = false;
 
-    console.log(this.firstMonth)
+  private propagateChange = (_: any) => {};
 
-    const nextMonthDate = moment().add(1, 'M');
+  constructor(private elementRef: ElementRef) {}
 
-    this.secondMonth.year = nextMonthDate.year();
-    this.secondMonth.month = nextMonthDate.month();
-    this.secondMonth.monthName = nextMonthDate.format('MMMM');
-    this.secondMonth.days = new Array(nextMonthDate.daysInMonth());
-  }
-
-  selectDate(day: number, date): void {
-    const momentDate = moment(day + '-' + (date.month + 1) + '-' + date.year, 'D-MM-YYYY');
-
-    if (!this.selected.start) {
-      this.selected.start = momentDate;
+  dateSelected(momentObj: any): void {
+    if (!momentObj) {
+      this.selected.start = null;
+      this.propagateChange(null);
     } else {
-      this.selected.end = momentDate;
+      this.selected.start = momentObj.format('DD/MM/YYYY');
+      this.propagateChange(momentObj.format('YYYY-MM-DD'));
+    }
+  }
+
+  writeValue(value: any): void {
+
+  }
+
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+
+  }
+
+  @HostListener('document:click', ['$event'])
+  documentClicked(e: PointerEvent): void {
+    if (!this.calendarOpened) {
+      return;
+    }
+
+    let clickedComponent: any = e.target;
+    let inside = false;
+
+    do {
+      if (clickedComponent === this.elementRef.nativeElement) {
+        inside = true;
+      }
+
+      clickedComponent = clickedComponent.parentNode;
+    } while (clickedComponent) {
+      if (!inside) {
+        this.calendarOpened = false;
+      }
     }
   }
 }

@@ -1,22 +1,5 @@
-<div class="calendar">
-  <p class="month-title">{{ firstMonth.monthName | t }} {{ firstMonth.year }}</p>
-  <div class="mb-3 d-flex">
-    <span class="week-day" [ngClass]="{ 'weekend': i > 4 }" *ngFor="let day of weekDays; let i = index">{{ day | t }}</span>
-  </div>
-  <div class="d-flex flex-wrap">
-    <span class="month-day" [ngClass]="{ 'in-range': false }" *ngFor="let day of firstMonth.days; let i = index">
-      <span [ngClass]="{ 'start-date': false }" (click)="selectDate(i + 1, firstMonth)">{{ i + 1 }}</span>
-    </span>
-  </div>
-</div>
-<div class="calendar">
-  <p class="month-title">{{ secondMonth.monthName | t }} {{ secondMonth.year }}</p>
-  <div class="mb-3 d-flex">
-    <span class="week-day" [ngClass]="{ 'weekend': i > 4 }" *ngFor="let day of weekDays; let i = index">{{ day | t }}</span>
-  </div>
-  <div class="d-flex flex-wrap">
-    <span class="month-day" [ngClass]="{ 'in-range': false }" *ngFor="let day of secondMonth.days; let i = index">
-      <span [ngClass]="{ 'start-date': false }">{{ i + 1 }}</span>
-    </span>
-  </div>
-</div>
+<mat-form-field>
+  <input matInput [value]="selected.start">
+  <mat-icon matSuffix (click)="calendarOpened = !calendarOpened">today</mat-icon>
+</mat-form-field>
+<app-calendar [@slideDown]="calendarOpened ? 'active' : 'inactive'" (close)="calendarOpened = false" (dateSelected)="dateSelected($event)"></app-calendar>

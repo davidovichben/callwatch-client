@@ -43,8 +43,6 @@ export const Placeholder = trigger('placeholder', [
   transition('inactive => active', animate('200ms'))
 ]);
 
-
-
 export const SlideToggle = trigger('slideToggle', [
   state('inactive', style({
     display: 'none',
