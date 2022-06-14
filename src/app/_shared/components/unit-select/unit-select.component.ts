@@ -310,22 +310,9 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
       return;
     }
 
-    let clickedComponent: any = e.target;
-    let inside = false;
-
-    do {
-      if (clickedComponent === this.elementRef.nativeElement) {
-        inside = true;
-      }
-
-      clickedComponent = clickedComponent.parentNode;
-    } while (clickedComponent) {
-      if (!inside) {
-        this.isOpened = false;
-        setTimeout(() => {
-         this.resetFilter()
-        }, 500);
-      }
+    if (!this.elementRef.nativeElement.contains(e.target)) {
+      this.isOpened = false;
+      setTimeout(() => this.resetFilter(), 500);
     }
   }
 }

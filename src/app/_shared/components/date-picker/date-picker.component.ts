@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SlideDown } from 'src/app/_shared/constants/animations';
@@ -6,16 +6,19 @@ import { SlideDown } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.styl'],
+  styles: [`:host { position: relative } mat-icon { cursor: pointer }`],
   animations: [SlideDown],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }
   ]
 })
-export class DatePickerComponent {
+export class DatePickerComponent implements OnInit {
+
+  @Input() placeholder: string;
 
   selected = {
-    start: null
+    start: null,
+    end: null
   }
 
   calendarOpened = false;
@@ -23,6 +26,12 @@ export class DatePickerComponent {
   private propagateChange = (_: any) => {};
 
   constructor(private elementRef: ElementRef) {}
+
+  ngOnInit() {
+    if (!this.placeholder) {
+      this.placeholder = 'select_date';
+    }
+  }
 
   dateSelected(momentObj: any): void {
     if (!momentObj) {
@@ -56,19 +65,6 @@ export class DatePickerComponent {
       return;
     }
 
-    let clickedComponent: any = e.target;
-    let inside = false;
-
-    do {
-      if (clickedComponent === this.elementRef.nativeElement) {
-        inside = true;
-      }
-
-      clickedComponent = clickedComponent.parentNode;
-    } while (clickedComponent) {
-      if (!inside) {
-        this.calendarOpened = false;
-      }
-    }
+    this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
   }
 }

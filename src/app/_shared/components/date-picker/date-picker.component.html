@@ -1,4 +1,5 @@
 <mat-form-field>
+  <mat-label>{{ placeholder | t }}</mat-label>
   <input matInput [value]="selected.start">
   <mat-icon matSuffix (click)="calendarOpened = !calendarOpened">today</mat-icon>
 </mat-form-field>

@@ -227,24 +227,13 @@ export class BdSelectComponent implements ControlValueAccessor, AfterContentInit
 
 	}
 
-  @HostListener('document:click')
-  documentClicked() {
+  @HostListener('document:click', ['$event'])
+  documentClicked(e: PointerEvent) {
     if (!this.isSelectOpened) {
       return;
     }
 
-    let clickedComponent = event.target;
-    let inside = false;
-
-    do {
-      if (clickedComponent === this.elementRef.nativeElement) {
-        inside = true;
-      }
-
-      clickedComponent = clickedComponent['parentNode'];
-    } while (clickedComponent);
-
-    if (!inside) {
+    if (!this.elementRef.nativeElement.contains(e.target)) {
       this.isSelectOpened = false;
       setTimeout(() => {
         this.filterValue = '';

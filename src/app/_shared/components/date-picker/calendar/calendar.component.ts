@@ -18,8 +18,7 @@ export class CalendarComponent implements OnInit {
 
   readonly quickSelectionLabels = ['today', 'yesterday'];
 
-  monthObjects = [];
-  daysInMonths = [];
+  months: { object: Moment, days: boolean[] }[] = [];
 
   selected = {
     start: null,
@@ -30,42 +29,44 @@ export class CalendarComponent implements OnInit {
     this.setMonthObjects(moment());
   }
 
-  slideMonths(action: 'add' | 'subtract'): void {
-    const obj = this.monthObjects[0][action](1, 'M');
+  slideMonths(action: 'next' | 'previous'): void {
+    const obj = moment(this.months[0].object);
+    action === 'next' ? obj.add(1, 'M') : obj.subtract(1, 'M');
+
     this.setMonthObjects(obj);
   }
 
   setMonthObjects(monthObj: Moment): void {
-    this.monthObjects[0] = monthObj;
-    this.monthObjects[1] = moment(monthObj).add(1, 'M');
+    this.months[0].object = monthObj;
+    this.months[0].object = moment(monthObj).add(1, 'M');
 
-    this.monthObjects.forEach((obj, index) => {
-      this.daysInMonths[index] = new Array(obj.daysInMonth());
+    this.months.forEach((month, index) => {
+      month.days = new Array(month.object.daysInMonth()).fill(false);
     });
 
     if (this.selected.start) {
       const selected = this.selected.start;
 
-      const monthObjectIndex = this.monthObjects.findIndex(monthObj => {
-        return selected.obj.year() === monthObj.year() && selected.obj.month() === monthObj.month();
+      const monthIndex = this.months.findIndex(month => {
+        return selected.obj.year() === month.object.year() && selected.obj.month() === month.object.month();
       });
 
-      if (monthObjectIndex !== -1) {
-        this.daysInMonths[monthObjectIndex][selected.day] = true;
+      if (monthIndex !== -1) {
+        this.months[monthIndex].days[selected.day] = true;
       }
     }
   }
 
   selectDate(dayIndex: number, monthIndex: number): void {
-    const monthObj = this.monthObjects[monthIndex];
+    const month = this.months[monthIndex];
 
     this.resetMonthDays();
 
-    this.daysInMonths[monthIndex][dayIndex] = true;
+    month.days[dayIndex] = true;
 
-    this.selected.start = { day: dayIndex, obj: monthObj };
+    this.selected.start = { object: month.object, day: dayIndex };
 
-    const output = moment((dayIndex + 1) + '-' + (monthObj.month() + 1) + '-' + monthObj.year(), 'DD-MM-YYYY');
+    const output = moment((dayIndex + 1) + '-' + (month.object.month() + 1) + '-' + month.object.year(), 'DD-MM-YYYY');
 
     this.dateSelected.emit(output);
   }
@@ -81,24 +82,26 @@ export class CalendarComponent implements OnInit {
 
     this.resetMonthDays();
 
-    let monthObjectIndex = this.monthObjects.findIndex(monthObj => {
-      return obj.year() === monthObj.year() && obj.month() === monthObj.month();
+    let monthIndex = this.months.findIndex(month => {
+      return obj.year() === month.object.year() && obj.month() === month.object.month();
     });
 
-    if (monthObjectIndex === -1) {
+    if (monthIndex === -1) {
       this.setMonthObjects(obj);
-      monthObjectIndex = 0;
+      monthIndex = 0;
     }
 
-    this.selectDate(obj.date(), monthObjectIndex);
+    this.selectDate(obj.date(), monthIndex);
   }
 
   resetMonthDays(): void {
-    this.daysInMonths.forEach(days => days.fill(false));
+    this.months.forEach(month => month.days.fill(false));
   }
 
   closeCalendar(save: boolean): void {
     if (!save) {
+      this.resetMonthDays();
+      this.selected = { start: null, end: null };
       this.dateSelected.emit(null);
     }
 
