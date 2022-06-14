@@ -9,7 +9,7 @@
       <span class="week-day" [ngClass]="{ 'weekend': weekDayIndex > 4 }" *ngFor="let day of weekDays; let weekDayIndex = index">{{ day | t }}</span>
     </div>
     <div class="d-flex flex-wrap">
-      <span class="month-day" [ngClass]="{ 'in-range': false }" (click)="selectDate(i, monthIndex)" *ngFor="let day of month.days; let dayIndex = index">
+      <span class="month-day" [ngClass]="{ 'in-range': false }" (click)="selectDay(month, dayIndex)" *ngFor="let day of month.days; let dayIndex = index">
         <span [ngClass]="{ 'selected': day }">{{ dayIndex + 1 }}</span>
       </span>
     </div>
@@ -22,7 +22,7 @@
   </div>
 </div>
 <div class="mt-3 flex-between">
-  <button mat-flat-button class="blue-btn" (click)="closeCalendar(true)">{{ 'select' | t }}</button>
-  <button mat-flat-button class="grey-btn" (click)="closeCalendar(false)">{{ 'cancel' | t }}</button>
+  <button mat-flat-button type="button" class="blue-btn" (click)="closeCalendar(true)">{{ 'select' | t }}</button>
+  <button mat-flat-button type="button" class="grey-btn" (click)="closeCalendar(false)">{{ 'cancel' | t }}</button>
 </div>
 

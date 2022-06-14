@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment/moment';
 
@@ -11,8 +11,12 @@ import { WeekDays } from 'src/app/_shared/constants/general';
 })
 export class CalendarComponent implements OnInit {
 
+  @Input() selected = {
+    start: null,
+    end: null
+  }
+
   @Output() dateSelected = new EventEmitter;
-  @Output() close = new EventEmitter;
 
   readonly weekDays = WeekDays;
 
@@ -20,91 +24,71 @@ export class CalendarComponent implements OnInit {
 
   months: { object: Moment, days: boolean[] }[] = [];
 
-  selected = {
-    start: null,
-    end: null
-  }
-
   ngOnInit(): void {
-    this.setMonthObjects(moment());
+    if (this.selected.start) {
+      this.setMonths(this.selected.start, true);
+    } else {
+      this.setMonths();
+    }
   }
 
   slideMonths(action: 'next' | 'previous'): void {
     const obj = moment(this.months[0].object);
     action === 'next' ? obj.add(1, 'M') : obj.subtract(1, 'M');
 
-    this.setMonthObjects(obj);
+    setTimeout(() => this.setMonths(obj, true), 0);
   }
 
-  setMonthObjects(monthObj: Moment): void {
-    this.months[0].object = monthObj;
-    this.months[0].object = moment(monthObj).add(1, 'M');
-
-    this.months.forEach((month, index) => {
-      month.days = new Array(month.object.daysInMonth()).fill(false);
-    });
-
-    if (this.selected.start) {
-      const selected = this.selected.start;
-
-      const monthIndex = this.months.findIndex(month => {
-        return selected.obj.year() === month.object.year() && selected.obj.month() === month.object.month();
-      });
-
-      if (monthIndex !== -1) {
-        this.months[monthIndex].days[selected.day] = true;
-      }
-    }
-  }
-
-  selectDate(dayIndex: number, monthIndex: number): void {
-    const month = this.months[monthIndex];
-
+  selectDay(month: { object: Moment, days: boolean[] }, dayIndex: number): void {
     this.resetMonthDays();
 
     month.days[dayIndex] = true;
 
-    this.selected.start = { object: month.object, day: dayIndex };
+    this.selected.start = moment(month.object).set('date', dayIndex + 1);
 
-    const output = moment((dayIndex + 1) + '-' + (month.object.month() + 1) + '-' + month.object.year(), 'DD-MM-YYYY');
-
-    this.dateSelected.emit(output);
+    this.dateSelected.emit(this.selected.start);
   }
 
   quickSelect(label: string): void {
-    let obj = moment();
+    const obj = moment();
 
     switch (label) {
       case 'yesterday':
-        obj = moment().subtract(1, 'days');
+        obj.subtract(1, 'days');
         break;
     }
 
-    this.resetMonthDays();
+    this.setMonths(obj);
 
-    let monthIndex = this.months.findIndex(month => {
-      return obj.year() === month.object.year() && obj.month() === month.object.month();
-    });
-
-    if (monthIndex === -1) {
-      this.setMonthObjects(obj);
-      monthIndex = 0;
-    }
-
-    this.selectDate(obj.date(), monthIndex);
-  }
-
-  resetMonthDays(): void {
-    this.months.forEach(month => month.days.fill(false));
+    this.selectDay(this.months[0], obj.date());
   }
 
   closeCalendar(save: boolean): void {
     if (!save) {
-      this.resetMonthDays();
+      this.setMonths();
       this.selected = { start: null, end: null };
-      this.dateSelected.emit(null);
     }
 
-    this.close.emit(true);
+    this.dateSelected.emit(this.selected.start);
+  }
+
+  setMonths(monthObj = moment(), selectDate?: boolean): void {
+    this.months[0] = { object: monthObj, days: [] };
+    this.months[1] = { object: moment(monthObj).add(1, 'M'), days: [] };
+
+    this.months.forEach(month => {
+      month.days = new Array(month.object.daysInMonth()).fill(false);
+
+      if (selectDate && this.selected.start) {
+        const selected = this.selected.start;
+        if (selected.month() === month.object.month() && selected.year() === month.object.year()) {
+          month.days[selected.date() - 1] = true;
+        }
+      }
+    });
+  }
+
+  private resetMonthDays(): void {
+    this.months.forEach(month => month.days.fill(false));
   }
 }

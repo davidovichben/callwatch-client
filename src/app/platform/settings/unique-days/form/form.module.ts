@@ -6,10 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { DatePickerModule } from 'src/app/_shared/components/date-picker/date-picker.module';
 
 import { FormComponent } from 'src/app/platform/settings/unique-days/form/form.component';
 
@@ -18,7 +18,6 @@ import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.servi
 import { UniqueDayResolve } from 'src/app/_shared/resolves/unique-day.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
-import { TimeInputModule } from 'src/app/_shared/components/time-input/time-input.module';
 
 const routes: Routes = [
 	{
@@ -46,10 +45,9 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatDatepickerModule,
-    TranslateModule,
     MatCheckboxModule,
-    TimeInputModule
+    TranslateModule,
+    DatePickerModule
   ],
 	providers: [UniqueDayService, UniqueDayResolve, DeactivateGuard]
 })
