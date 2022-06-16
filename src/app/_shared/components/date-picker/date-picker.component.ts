@@ -10,7 +10,7 @@ import { SlideToggle } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
-  styles: [`:host { position: relative } mat-icon { cursor: pointer }`],
+  styles: [`:host { position: relative; width: 240px; } mat-icon { cursor: pointer }`],
   animations: [SlideToggle],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }
@@ -28,6 +28,8 @@ export class DatePickerComponent implements OnInit {
     end: null
   }
 
+  value: string = null;
+
   calendarOpened = false;
 
   private propagateChange = (_: any) => {};
@@ -40,15 +42,24 @@ export class DatePickerComponent implements OnInit {
     }
   }
 
-  dateSelected(momentObj: Moment): void {
-    if (!momentObj) {
+  dateSelected(selected: { start: Moment, end?: Moment }): void {
+    if (!selected.start) {
       this.selected.start = null;
+      this.selected.end = null;
       this.propagateChange(null);
-      this.calendarOpened = false;
     } else {
-      this.selected.start = momentObj;
-      this.propagateChange(momentObj.format('YYYY-MM-DD'));
+      this.selected.start = selected.start;
+      this.selected.end = selected.end;
+
+      this.value = this.selected.start.format('DD/MM/YYYY');
+      if (this.isRange && this.selected.end) {
+        this.value += ' - ' + this.selected.end.format('DD/MM/YYYY');
+      }
+
+      this.propagateChange(this.selected.start.format('YYYY-MM-DD'));
     }
+
+    this.calendarOpened = false;
   }
 
   writeValue(value: any): void {
@@ -69,12 +80,12 @@ export class DatePickerComponent implements OnInit {
 
   }
 
-  @HostListener('document:click', ['$event'])
-  documentClicked(e: PointerEvent): void {
-    if (!this.calendarOpened) {
-      return;
-    }
-
-    this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
-  }
+  // @HostListener('document:click', ['$event'])
+  // documentClicked(e: PointerEvent): void {
+  //   if (!this.calendarOpened) {
+  //     return;
+  //   }
+  //
+  //   this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
+  // }
 }

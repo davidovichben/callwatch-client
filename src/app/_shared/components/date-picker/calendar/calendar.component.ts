@@ -20,7 +20,10 @@ export class CalendarComponent implements OnInit {
 
   readonly weekDays = WeekDays;
 
-  readonly quickSelectionLabels = ['today', 'yesterday'];
+  readonly quickSelectionLabels = {
+    base: ['today', 'yesterday'],
+    range: ['current_week', 'last_week', 'current_month', 'last_month']
+  };
 
   months: CalendarMonth[] = [];
 
@@ -66,16 +69,35 @@ export class CalendarComponent implements OnInit {
 
   quickSelect(label: string): void {
     const obj = moment();
-
-    switch (label) {
-      case 'yesterday':
-        obj.subtract(1, 'days');
-        break;
+    if (label === 'yesterday') {
+      obj.subtract(1, 'days');
     }
 
-    this.setMonths(obj);
-
     this.selectDay(this.months[0], obj.date());
+  }
+
+  quickSelectRange(label: string): void {
+    this.resetMonthDays();
+
+    switch (label) {
+      case 'current_week':
+        this.selected.start = moment().startOf('week');
+        this.selected.end = moment().endOf('week');
+        break;
+      case 'last_week':
+        this.selected.start = moment().subtract(1, 'week').startOf('week');
+        this.selected.end = moment().subtract(1, 'week').endOf('week');
+        break;
+      case 'current_month':
+        this.selected.start = moment().startOf('month');
+        this.selected.end = moment().endOf('month');
+        break;
+      case 'last_month':
+        this.selected.start = moment().subtract(1, 'month').startOf('month');
+        this.selected.end = moment().subtract(1, 'month').endOf('month');
+    }
+
+    this.selectDaysInRange();
   }
 
   closeCalendar(save: boolean): void {
@@ -84,7 +106,7 @@ export class CalendarComponent implements OnInit {
       this.selected = { start: null, end: null };
     }
 
-    this.dateSelected.emit(this.selected.start);
+    this.dateSelected.emit(this.selected);
   }
 
   setMonths(monthObj = moment(), selectDate?: boolean): void {

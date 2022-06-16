@@ -1,6 +1,6 @@
-<mat-form-field>
+<mat-form-field class="w-100">
   <mat-label>{{ placeholder | t }}</mat-label>
-  <input matInput [value]="selected.start ? selected.start.format('DD/MM/YYYY') : null">
+  <input matInput [value]="value">
   <mat-icon matSuffix (click)="calendarOpened = !calendarOpened">today</mat-icon>
 </mat-form-field>
 <app-calendar [@slideToggle]="calendarOpened ? 'active' : 'inactive'" [selected]="selected" [isRange]="isRange" (dateSelected)="dateSelected($event)"></app-calendar>
