@@ -37,8 +37,11 @@
 .calendar:first-of-type .month-header:after
   content: ""
 
-.calendar:nth-child(2) .month-header:before
+.calendar:nth-child(3) .month-header:before
   content: ""
+
+mat-divider
+  margin: 0 15px
 
 .week-day, .month-day
   width: 35px
@@ -60,15 +63,16 @@
   font-weight: bold
   cursor: pointer
 
-  .selected
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    height: 28px
-    width: 28px
-    background-color: LighterBlueColor
-    color: #fff
-    border-radius: 50%
+.month-day.selected
+    span
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      height: 28px
+      width: 28px
+      background-color: LighterBlueColor
+      color: #fff
+      border-radius: 50%
 
 .month-day.in-range
   background-color: #e6f2ff

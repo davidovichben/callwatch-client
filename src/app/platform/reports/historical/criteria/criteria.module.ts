@@ -6,12 +6,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { DatePickerModule } from 'src/app/_shared/components/date-picker/date-picker.module';
 
 import { CriteriaComponent } from './criteria.component';
 
@@ -39,11 +39,11 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatDatepickerModule,
     MatButtonModule,
     MatIconModule,
     UnitSelectModule,
     TranslateModule,
+    DatePickerModule
   ],
   providers: [UnitService, UnitsSelectResolve]
 })

@@ -2,14 +2,15 @@
   <p class="mb-3 f-20 blue-text">{{ 'data_filtering' | t }}</p>
   <div class="criterion">
     <span class="d-flex align-items-center">{{ 'show_values_in_date_range' | t }}:</span>
-    <mat-form-field class="mx-3 no-space">
-      <mat-date-range-input formGroupName="dates" [rangePicker]="picker">
-        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">
-        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">
-      </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
+    <app-date-picker [isRange]="true"></app-date-picker>
+<!--    <mat-form-field class="mx-3 no-space">-->
+<!--      <mat-date-range-input formGroupName="dates" [rangePicker]="picker">-->
+<!--        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">-->
+<!--        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">-->
+<!--      </mat-date-range-input>-->
+<!--      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--      <mat-date-range-picker #picker></mat-date-range-picker>-->
+<!--    </mat-form-field>-->
   </div>
   <div class="criterion">
     <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>
@@ -32,8 +33,6 @@
           </button>
         </div>
       </div>
-
-
     </div>
   </div>
   <div class="criterion" formGroupName="weekDays">
@@ -102,14 +101,14 @@
   </div>
   <div class="criterion">
     <span class="d-flex align-items-center">{{ 'ignore_dates' | t }}:</span>
-    <mat-form-field class="mx-3 no-space">
-      <mat-date-range-input formGroupName="ignoreDates" [rangePicker]="ignorePicker">
-        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">
-        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">
-      </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="ignorePicker"></mat-datepicker-toggle>
-      <mat-date-range-picker #ignorePicker></mat-date-range-picker>
-    </mat-form-field>
+<!--    <mat-form-field class="mx-3 no-space">-->
+<!--      <mat-date-range-input formGroupName="ignoreDates" [rangePicker]="ignorePicker">-->
+<!--        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">-->
+<!--        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">-->
+<!--      </mat-date-range-input>-->
+<!--      <mat-datepicker-toggle matSuffix [for]="ignorePicker"></mat-datepicker-toggle>-->
+<!--      <mat-date-range-picker #ignorePicker></mat-date-range-picker>-->
+<!--    </mat-form-field>-->
   </div>
   <p class="mb-3 f-20 blue-text">{{ 'units_to_show' | t }}</p>
   <div class="mb-4">

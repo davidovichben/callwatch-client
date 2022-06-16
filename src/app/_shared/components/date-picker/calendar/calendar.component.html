@@ -1,19 +1,22 @@
 <div class="d-flex">
-  <div class="calendar" *ngFor="let month of months; let monthIndex = index">
-    <div class="month-header">
-      <mat-icon (click)="slideMonths('previous')" *ngIf="monthIndex === 0">chevron_right</mat-icon>
-      <p class="month-title">{{ month.object.format('MMMM') | t }} {{ month.object.year() }}</p>
-      <mat-icon (click)="slideMonths('next')" *ngIf="monthIndex === 1">chevron_left</mat-icon>
-    </div>
-    <div class="mb-2 d-flex">
-      <span class="week-day" [ngClass]="{ 'weekend': weekDayIndex > 4 }" *ngFor="let day of weekDays; let weekDayIndex = index">{{ day | t }}</span>
-    </div>
-    <div class="d-flex flex-wrap">
-      <span class="month-day" [ngClass]="{ 'in-range': false }" (click)="selectDay(month, dayIndex)" *ngFor="let day of month.days; let dayIndex = index">
-        <span [ngClass]="{ 'selected': day }">{{ dayIndex + 1 }}</span>
+  <ng-container *ngFor="let month of months; let monthIndex = index">
+    <div class="calendar">
+      <div class="month-header">
+        <mat-icon (click)="slideMonths('previous')" *ngIf="monthIndex === 0">chevron_right</mat-icon>
+        <p class="month-title">{{ month.object.format('MMMM') | t }} {{ month.object.year() }}</p>
+        <mat-icon (click)="slideMonths('next')" *ngIf="monthIndex === 1">chevron_left</mat-icon>
+      </div>
+      <div class="mb-2 d-flex">
+        <span class="week-day" [ngClass]="{ 'weekend': weekDayIndex > 4 }" *ngFor="let day of weekDays; let weekDayIndex = index">{{ day | t }}</span>
+      </div>
+      <div class="d-flex flex-wrap">
+      <span [class]="'month-day ' + state" (click)="isRange && selected.start ? selectRange(month, dayIndex) : selectDay(month, dayIndex)" *ngFor="let state of month.days; let dayIndex = index">
+        <span>{{ dayIndex + 1 }}</span>
       </span>
+      </div>
     </div>
-  </div>
+    <mat-divider [vertical]="true" *ngIf="monthIndex === 0"></mat-divider>
+  </ng-container>
   <div class="quick-selection">
     <p>{{ 'quick_selection' | t }}</p>
     <div class="d-flex labels">

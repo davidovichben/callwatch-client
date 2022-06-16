@@ -4,6 +4,8 @@ import * as moment from 'moment/moment';
 
 import { WeekDays } from 'src/app/_shared/constants/general';
 
+type CalendarMonth = { object: Moment, days: string[] };
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -11,10 +13,8 @@ import { WeekDays } from 'src/app/_shared/constants/general';
 })
 export class CalendarComponent implements OnInit {
 
-  @Input() selected = {
-    start: null,
-    end: null
-  }
+  @Input() isRange: boolean;
+  @Input() selected = { start: null, end: null }
 
   @Output() dateSelected = new EventEmitter;
 
@@ -22,7 +22,7 @@ export class CalendarComponent implements OnInit {
 
   readonly quickSelectionLabels = ['today', 'yesterday'];
 
-  months: { object: Moment, days: boolean[] }[] = [];
+  months: CalendarMonth[] = [];
 
   ngOnInit(): void {
     if (this.selected.start) {
@@ -39,14 +39,29 @@ export class CalendarComponent implements OnInit {
     setTimeout(() => this.setMonths(obj, true), 0);
   }
 
-  selectDay(month: { object: Moment, days: boolean[] }, dayIndex: number): void {
+  selectDay(month: CalendarMonth, dayIndex: number): void {
     this.resetMonthDays();
 
-    month.days[dayIndex] = true;
+    month.days[dayIndex] = 'selected';
 
     this.selected.start = moment(month.object).set('date', dayIndex + 1);
 
     this.dateSelected.emit(this.selected.start);
+  }
+
+  selectRange(month: CalendarMonth, dayIndex: number): void {
+    const selected = moment(month.object).set('date', dayIndex + 1);
+
+    if (selected.isBefore(this.selected.start)) {
+      this.selected.end = moment(this.selected.start);
+      this.selected.start = selected;
+    } else {
+      this.selected.end = selected;
+    }
+
+    this.resetMonthDays();
+
+    this.selectDaysInRange();
   }
 
   quickSelect(label: string): void {
@@ -77,18 +92,43 @@ export class CalendarComponent implements OnInit {
     this.months[1] = { object: moment(monthObj).add(1, 'M'), days: [] };
 
     this.months.forEach(month => {
-      month.days = new Array(month.object.daysInMonth()).fill(false);
+      month.days = new Array(month.object.daysInMonth()).fill('');
 
       if (selectDate && this.selected.start) {
-        const selected = this.selected.start;
-        if (selected.month() === month.object.month() && selected.year() === month.object.year()) {
-          month.days[selected.date() - 1] = true;
+        if (this.isRange && this.selected.end) {
+          this.selectDaysInRange();
+        } else {
+          const selected = this.selected.start;
+          if (selected.month() === month.object.month() && selected.year() === month.object.year()) {
+            month.days[selected.date() - 1] = 'selected';
+          }
         }
       }
     });
   }
 
   private resetMonthDays(): void {
-    this.months.forEach(month => month.days.fill(false));
+    this.months.forEach(month => month.days.fill(''));
+  }
+
+  private selectDaysInRange(): void {
+    const start = this.selected.start;
+    const end = this.selected.end;
+
+    this.months.some((month, monthIndex) => {
+      return month.days.some((day, index) => {
+        const date = month.object.set('date', index + 1);
+
+        if (date.isBetween(start, end)) {
+          month.days[index] = 'in-range';
+        }
+
+        if (date.isSame(start) || date.isSame(end)) {
+          month.days[index] = 'selected';
+        }
+
+        return date.isSame(end);
+      });
+    });
   }
 }

@@ -21,6 +21,7 @@ export class DatePickerComponent implements OnInit {
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
 
   @Input() placeholder: string;
+  @Input() isRange: boolean;
 
   selected = {
     start: null,
@@ -35,7 +36,7 @@ export class DatePickerComponent implements OnInit {
 
   ngOnInit() {
     if (!this.placeholder) {
-      this.placeholder = 'select_date';
+      this.placeholder = this.isRange ? 'select_dates' : 'select_date';
     }
   }
 
@@ -75,8 +76,5 @@ export class DatePickerComponent implements OnInit {
     }
 
     this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
-    if (!this.calendarOpened) {
-      this.calendar.setMonths();
-    }
   }
 }
