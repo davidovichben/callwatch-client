@@ -64,7 +64,23 @@ mat-divider
   cursor: pointer
 
 .month-day.selected
-    span
+  position: relative
+
+  span:first-child
+    position: absolute
+    top: 0
+    height: 100%
+    width: 50%
+    z-index: -1
+    background-color: #e6f2ff
+
+  span:first-child.start
+    right: 50%
+
+  span:first-child.end
+    left: 50%
+
+  span:last-child
       display: inline-flex
       align-items: center
       justify-content: center
@@ -74,7 +90,7 @@ mat-divider
       color: #fff
       border-radius: 50%
 
-.month-day.in-range
+.month-day.between
   background-color: #e6f2ff
 
 .quick-selection

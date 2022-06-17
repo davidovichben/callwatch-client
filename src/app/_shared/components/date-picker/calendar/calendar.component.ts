@@ -4,7 +4,15 @@ import * as moment from 'moment/moment';
 
 import { WeekDays } from 'src/app/_shared/constants/general';
 
-type CalendarMonth = { object: Moment, days: string[] };
+type CalendarMonth = { object: Moment, days: number[] };
+
+export enum DayStates {
+  NOT_SELECTED = 0,
+  BETWEEN = 1,
+  SELECTED = 2,
+  START = 3,
+  END = 4
+}
 
 @Component({
   selector: 'app-calendar',
@@ -19,6 +27,7 @@ export class CalendarComponent implements OnInit {
   @Output() dateSelected = new EventEmitter;
 
   readonly weekDays = WeekDays;
+  readonly dayStates = DayStates;
 
   readonly quickSelectionLabels = {
     base: ['today', 'yesterday'],
@@ -45,7 +54,7 @@ export class CalendarComponent implements OnInit {
   selectDay(month: CalendarMonth, dayIndex: number): void {
     this.resetMonthDays();
 
-    month.days[dayIndex] = 'selected';
+    month.days[dayIndex] = this.dayStates.SELECTED;
 
     this.selected.start = moment(month.object).set('date', dayIndex + 1);
 
@@ -114,7 +123,7 @@ export class CalendarComponent implements OnInit {
     this.months[1] = { object: moment(monthObj).add(1, 'M'), days: [] };
 
     this.months.forEach(month => {
-      month.days = new Array(month.object.daysInMonth()).fill('');
+      month.days = new Array(month.object.daysInMonth()).fill(this.dayStates.NOT_SELECTED);
 
       if (selectDate && this.selected.start) {
         if (this.isRange && this.selected.end) {
@@ -122,7 +131,7 @@ export class CalendarComponent implements OnInit {
         } else {
           const selected = this.selected.start;
           if (selected.month() === month.object.month() && selected.year() === month.object.year()) {
-            month.days[selected.date() - 1] = 'selected';
+            month.days[selected.date() - 1] = this.dayStates.SELECTED;
           }
         }
       }
@@ -130,24 +139,31 @@ export class CalendarComponent implements OnInit {
   }
 
   private resetMonthDays(): void {
-    this.months.forEach(month => month.days.fill(''));
+    this.months.forEach(month => month.days.fill(this.dayStates.NOT_SELECTED));
   }
 
   private selectDaysInRange(): void {
-    const start = this.selected.start;
-    const end = this.selected.end;
+    const start = this.selected.start.startOf('day')
+    const end = this.selected.end.startOf('day');
 
     this.months.some((month, monthIndex) => {
       return month.days.some((day, index) => {
-        const date = month.object.set('date', index + 1);
+        const date = month.object.set('date', index + 1).startOf('day');
 
-        if (date.isBetween(start, end)) {
-          month.days[index] = 'in-range';
+        let stateCode = 0;
+
+        switch (true) {
+          case date.isBetween(start, end):
+            stateCode = this.dayStates.BETWEEN;
+            break;
+          case date.isSame(start):
+            stateCode = this.dayStates.START;
+            break;
+          case date.isSame(end):
+            stateCode = this.dayStates.END;
         }
 
-        if (date.isSame(start) || date.isSame(end)) {
-          month.days[index] = 'selected';
-        }
+        month.days[index] = stateCode;
 
         return date.isSame(end);
       });
