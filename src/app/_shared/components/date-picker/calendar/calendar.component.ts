@@ -4,7 +4,7 @@ import * as moment from 'moment/moment';
 
 import { WeekDays } from 'src/app/_shared/constants/general';
 
-type CalendarMonth = { object: Moment, days: number[] };
+type CalendarMonth = { object: Moment, days: number[], previousDays: number[] };
 
 export enum DayStates {
   NOT_SELECTED = 0,
@@ -57,15 +57,16 @@ export class CalendarComponent implements OnInit {
     month.days[dayIndex] = this.dayStates.SELECTED;
 
     this.selected.start = moment(month.object).set('date', dayIndex + 1);
-
-    this.dateSelected.emit(this.selected.start);
   }
 
   selectRange(month: CalendarMonth, dayIndex: number): void {
     const selected = moment(month.object).set('date', dayIndex + 1);
 
     if (selected.isBefore(this.selected.start)) {
-      this.selected.end = moment(this.selected.start);
+      if (!this.selected.end) {
+        this.selected.end = moment(this.selected.start);
+      }
+      
       this.selected.start = selected;
     } else {
       this.selected.end = selected;
@@ -119,11 +120,18 @@ export class CalendarComponent implements OnInit {
   }
 
   setMonths(monthObj = moment(), selectDate?: boolean): void {
-    this.months[0] = { object: monthObj, days: [] };
-    this.months[1] = { object: moment(monthObj).add(1, 'M'), days: [] };
+    this.months[0] = { object: monthObj, days: [], previousDays: [] };
+    this.months[1] = { object: moment(monthObj).add(1, 'M'), days: [], previousDays: [] };
 
     this.months.forEach(month => {
       month.days = new Array(month.object.daysInMonth()).fill(this.dayStates.NOT_SELECTED);
+
+      const startOfMonth = moment(month.object).startOf('month');
+      let startWeekDay = startOfMonth.weekday();
+      for (let i = 0; i < startWeekDay; startWeekDay--) {
+        const previousDay = startOfMonth.subtract(1, 'days').date();
+        month.previousDays.unshift(previousDay);
+      }
 
       if (selectDate && this.selected.start) {
         if (this.isRange && this.selected.end) {
@@ -168,5 +176,6 @@ export class CalendarComponent implements OnInit {
         return date.isSame(end);
       });
     });
+    console.log('bbb')
   }
 }
