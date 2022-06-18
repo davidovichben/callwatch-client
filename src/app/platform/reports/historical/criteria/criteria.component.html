@@ -101,7 +101,8 @@
   </div>
   <div class="criterion">
     <span class="d-flex align-items-center">{{ 'ignore_dates' | t }}:</span>
-<!--    <mat-form-field class="mx-3 no-space">-->
+    <app-date-picker [isRange]="true"></app-date-picker>
+    <!--    <mat-form-field class="mx-3 no-space">-->
 <!--      <mat-date-range-input formGroupName="ignoreDates" [rangePicker]="ignorePicker">-->
 <!--        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">-->
 <!--        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">-->

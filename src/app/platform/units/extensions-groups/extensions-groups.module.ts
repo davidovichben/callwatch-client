@@ -12,10 +12,10 @@ import { ExtensionsGroupsComponent } from './extensions-groups.component';
 
 import { ExtensionGroupService } from 'src/app/_shared/services/http/extension-group.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
+import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 import { ExtensionGroupFormSelectResolve } from 'src/app/_shared/resolves/extension-group-form-select.resolve';
 import { ExtensionGroupResolve } from 'src/app/_shared/resolves/extension-group.resolve';
-import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 const routes: Routes = [
   {

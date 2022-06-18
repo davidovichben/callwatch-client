@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -39,7 +38,6 @@ const routes: Routes = [
     MatDialogModule,
     MatRadioModule,
     MatButtonModule,
-    MatDatepickerModule,
     DragDropModule,
     TranslateModule,
     BdSelectModule,

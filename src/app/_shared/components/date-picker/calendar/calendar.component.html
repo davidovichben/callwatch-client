@@ -23,7 +23,9 @@
     <p>{{ 'quick_selection' | t }}</p>
     <div class="d-flex flex-wrap labels">
       <div class="label" (click)="quickSelect(label)" *ngFor="let label of quickSelectionLabels.base">{{ label | t }}</div>
-      <div class="label" (click)="quickSelectRange(label)" *ngFor="let label of quickSelectionLabels.range">{{ label | t }}</div>
+      <ng-container *ngIf="isRange">
+        <div class="label" (click)="quickSelectRange(label)" *ngFor="let label of quickSelectionLabels.range">{{ label | t }}</div>
+      </ng-container>
     </div>
   </div>
 </div>

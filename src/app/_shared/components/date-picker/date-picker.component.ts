@@ -69,11 +69,15 @@ export class DatePickerComponent implements OnInit {
 
   writeValue(value: any): void {
     if (value) {
+      this.selected.start = moment(value, 'YYYY-MM-DD');
+
+      this.value = this.selected.start.format('DD/MM/YYYY');
+
       if (this.isRange) {
-        this.selected.start = moment(value.start, 'YYYY-MM-DD');
         this.selected.end = moment(value.end, 'YYYY-MM-DD');
-      } else {
-        this.selected.start = moment(value, 'YYYY-MM-DD');
+        if (this.selected.end) {
+          this.value += ' - ' + this.selected.end.format('DD/MM/YYYY');
+        }
       }
     }
   }
