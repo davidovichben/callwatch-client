@@ -46,7 +46,7 @@ export class DatePickerComponent implements OnInit {
     if (!selected.start) {
       this.selected.start = null;
       this.selected.end = null;
-      this.propagateChange(null);
+      this.propagateChange(this.isRange ? this.selected : null);
     } else {
       this.selected.start = selected.start;
       this.selected.end = selected.end;
@@ -56,7 +56,12 @@ export class DatePickerComponent implements OnInit {
         this.value += ' - ' + this.selected.end.format('DD/MM/YYYY');
       }
 
-      this.propagateChange(this.selected.start.format('YYYY-MM-DD'));
+      let output = this.selected.start.format('YYYY-MM-DD');
+      if (this.isRange) {
+        output = { start: output, end: this.selected.end.format('YYYY-MM-DD') };
+      }
+
+      this.propagateChange(output);
     }
 
     this.calendarOpened = false;
@@ -64,7 +69,12 @@ export class DatePickerComponent implements OnInit {
 
   writeValue(value: any): void {
     if (value) {
-      this.selected.start = moment(value, 'YYYY-MM-DD');
+      if (this.isRange) {
+        this.selected.start = moment(value.start, 'YYYY-MM-DD');
+        this.selected.end = moment(value.end, 'YYYY-MM-DD');
+      } else {
+        this.selected.start = moment(value, 'YYYY-MM-DD');
+      }
     }
   }
 
