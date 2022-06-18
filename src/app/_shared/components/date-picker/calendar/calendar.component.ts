@@ -138,7 +138,7 @@ export class CalendarComponent implements OnInit {
         const previousDay = startOfMonth.subtract(1, 'days').date();
         month.previousDays.unshift(previousDay);
       }
-      
+
       if (selectDate && this.selected.start) {
         if (this.isRange && this.selected.end) {
           this.selectDaysInRange();
@@ -150,6 +150,10 @@ export class CalendarComponent implements OnInit {
         }
       }
     });
+  }
+
+  drop(data): void {
+    console.log(data)
   }
 
   private resetMonthDays(): void {
@@ -168,14 +172,22 @@ export class CalendarComponent implements OnInit {
   private selectRange(selectedObj: Moment): void {
     this.resetMonthDays();
 
-    if (selectedObj.isBefore(this.selected.start)) {
-      if (!this.selected.end) {
-        this.selected.end = moment(this.selected.start);
-      }
+    const start = this.selected.start;
+    const end = this.selected.end;
+    
+    switch (true) {
+      case selectedObj.isBetween(start, end) && selectedObj.diff(start, 'd') < selectedObj.diff(end, 'd') * -1:
+        this.selected.start = selectedObj;
+        break;
+      case selectedObj.isBefore(start):
+        if (!end) {
+          this.selected.end = moment(start);
+        }
 
-      this.selected.start = selectedObj;
-    } else {
-      this.selected.end = selectedObj;
+        this.selected.start = selectedObj;
+      break;
+      default:
+        this.selected.end = selectedObj;
     }
 
     this.selectDaysInRange();
