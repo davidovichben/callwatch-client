@@ -1,0 +1,6 @@
+<div class="date-range-picker">
+  <ng-content select="[startInput]"></ng-content>
+  <ng-content select="[endInput]"></ng-content>
+  <mat-icon matSuffix (click)="calendarOpened = !calendarOpened">today</mat-icon>
+</div>
+<app-calendar [@slideToggle]="calendarOpened ? 'active' : 'inactive'" (dateSelected)="dateSelected($event)"></app-calendar>

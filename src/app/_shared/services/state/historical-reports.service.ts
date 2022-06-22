@@ -10,7 +10,7 @@ export class HistoricalReportsService {
   reportTemplateChanged = new Subject();
   reportTemplate: ReportTemplateModel;
 
-  dates: { from: string, to: string };
+  dates: { start: string, end: string };
 
   setCriteria(values: ReportCriteriaModel): void {
     this.dates = values.dates;

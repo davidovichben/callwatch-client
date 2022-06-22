@@ -2,15 +2,10 @@
   <p class="mb-3 f-20 blue-text">{{ 'data_filtering' | t }}</p>
   <div class="criterion">
     <span class="d-flex align-items-center">{{ 'show_values_in_date_range' | t }}:</span>
-    <app-date-picker [isRange]="true"></app-date-picker>
-<!--    <mat-form-field class="mx-3 no-space">-->
-<!--      <mat-date-range-input formGroupName="dates" [rangePicker]="picker">-->
-<!--        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">-->
-<!--        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">-->
-<!--      </mat-date-range-input>-->
-<!--      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--      <mat-date-range-picker #picker></mat-date-range-picker>-->
-<!--    </mat-form-field>-->
+    <app-date-range-picker formGroupName="dates">
+      <app-date-range-input formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>
+      <app-date-range-input formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>
+    </app-date-range-picker>
   </div>
   <div class="criterion">
     <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>
@@ -18,11 +13,11 @@
       <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
         <mat-form-field class="mx-3 no-space">
           <mat-label>{{ 'from_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="from">
+          <input matInput type="time" formControlName="start">
         </mat-form-field>
         <mat-form-field class="mx-3 no-space">
           <mat-label>{{ 'to_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="to">
+          <input matInput type="time" formControlName="end">
         </mat-form-field>
         <div class="d-flex align-items-center">
           <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">
@@ -101,15 +96,10 @@
   </div>
   <div class="criterion">
     <span class="d-flex align-items-center">{{ 'ignore_dates' | t }}:</span>
-    <app-date-picker [isRange]="true"></app-date-picker>
-    <!--    <mat-form-field class="mx-3 no-space">-->
-<!--      <mat-date-range-input formGroupName="ignoreDates" [rangePicker]="ignorePicker">-->
-<!--        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">-->
-<!--        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">-->
-<!--      </mat-date-range-input>-->
-<!--      <mat-datepicker-toggle matSuffix [for]="ignorePicker"></mat-datepicker-toggle>-->
-<!--      <mat-date-range-picker #ignorePicker></mat-date-range-picker>-->
-<!--    </mat-form-field>-->
+    <app-date-range-picker formGroupName="ignoreDates">
+      <app-date-range-input formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>
+      <app-date-range-input formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>
+    </app-date-range-picker>
   </div>
   <p class="mb-3 f-20 blue-text">{{ 'units_to_show' | t }}</p>
   <div class="mb-4">

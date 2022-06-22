@@ -99,8 +99,8 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
         abandonTime: this.fb.control(null),
         sort: this.fb.array([]),
         ignoreDates: this.fb.group({
-          from: this.fb.control(null),
-          to: this.fb.control(null),
+          start: this.fb.control(null),
+          end: this.fb.control(null),
         })
       }),
       distribution: this.fb.group({
@@ -165,11 +165,11 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private sanitizeCriteria(criteria: ReportCriteriaModel): ReportCriteriaModel {
     criteria.weekDays = Object.keys(criteria.weekDays).filter(day => !!criteria.weekDays[day]);
-    if (!criteria.ignoreDates.from || !criteria.ignoreDates.to) {
+    if (!criteria.ignoreDates.start || !criteria.ignoreDates.end) {
       delete criteria.ignoreDates;
     }
 
-    criteria.times = criteria.times.filter((time) => time.from && time.to);
+    criteria.times = criteria.times.filter((time) => time.start && time.end);
     criteria.sort = criteria.sort.filter((sort) => sort.column && sort.direction);
 
     return criteria;

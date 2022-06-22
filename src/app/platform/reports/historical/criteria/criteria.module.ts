@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { DateRangePickerModule } from 'src/app/_shared/components/date-range-picker/date-range-picker.module';
 
 import { CriteriaComponent } from './criteria.component';
 
@@ -41,7 +42,8 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule,
     UnitSelectModule,
-    TranslateModule
+    TranslateModule,
+    DateRangePickerModule
   ],
   providers: [UnitService, UnitsSelectResolve]
 })

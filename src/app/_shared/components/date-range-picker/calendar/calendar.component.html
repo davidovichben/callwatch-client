@@ -11,7 +11,8 @@
       </div>
       <div class="d-flex flex-wrap">
         <span class="month-day previous" *ngFor="let day of month.previousDays"></span>
-        <span class="month-day" [ngClass]="{ selected: selected }" (click)="selectDay(month, dayIndex)" *ngFor="let selected of month.days; let dayIndex = index">
+        <span class="month-day" [ngClass]="{ selected: state >= dayStates.SELECTED, between: state === dayStates.BETWEEN }" (click)="dayClicked(month, dayIndex)" *ngFor="let state of month.days; let dayIndex = index">
+          <span [ngClass]="{ start: state === dayStates.START, end: state === dayStates.END }" *ngIf="state > dayStates.SELECTED"></span>
           <span>{{ dayIndex + 1 }}</span>
         </span>
       </div>
@@ -21,7 +22,7 @@
   <div class="quick-selection">
     <p>{{ 'quick_selection' | t }}</p>
     <div class="d-flex flex-wrap labels">
-      <div class="label" [ngClass]="{ 'ms-3': first }" (click)="quickSelect(label)" *ngFor="let label of quickSelectionLabels; let first = first">{{ label | t }}</div>
+      <div class="label" [ngClass]="{ 'ms-3': even }" (click)="index > 1 ? quickSelectRange(label) : quickSelect(label)" *ngFor="let label of quickSelectionLabels; let index = index; let even = even">{{ label | t }}</div>
     </div>
   </div>
 </div>

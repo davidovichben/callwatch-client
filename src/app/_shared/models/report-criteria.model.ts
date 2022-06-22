@@ -1,6 +1,6 @@
 export class ReportCriteriaModel {
-  dates: { from: string, to: string };
-  times: { from: string, to: string }[];
+  dates: { start: string, end: string };
+  times: { start: string, end: string }[];
   weekDays: string[];
   callingNumber: string;
   calledNumber: string;
@@ -9,7 +9,7 @@ export class ReportCriteriaModel {
   abandonTime: number;
   timeSpace: string;
   sort: { column: string, direction: 'desc' | 'asc' }[];
-  ignoreDates: { from: string, to: string };
+  ignoreDates: { start: string, end: string };
   columns: number[];
 }
 

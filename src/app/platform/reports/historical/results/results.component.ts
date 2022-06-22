@@ -28,7 +28,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   readonly formats = ReportFormats;
 
   reportTemplate: ReportTemplateModel;
-  dates: { from: string, to: string };
+  dates: { start: string, end: string };
   timeSpace: string;
   criteria: ReportCriteriaModel;
 

@@ -3,4 +3,4 @@
   <input matInput [value]="value">
   <mat-icon matSuffix (click)="calendarOpened = !calendarOpened">today</mat-icon>
 </mat-form-field>
-<app-calendar [@slideToggle]="calendarOpened ? 'active' : 'inactive'" [selected]="selected" [isRange]="isRange" (dateSelected)="dateSelected($event)"></app-calendar>
+<app-calendar [@slideToggle]="calendarOpened ? 'active' : 'inactive'" [selected]="selected" (dateSelected)="dateSelected($event)"></app-calendar>

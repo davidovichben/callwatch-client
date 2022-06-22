@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Moment } from 'moment';
 import * as moment from 'moment/moment';
@@ -16,17 +16,13 @@ import { SlideToggle } from 'src/app/_shared/constants/animations';
     { provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }
   ]
 })
-export class DatePickerComponent implements OnInit {
+export class DatePickerComponent {
 
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
 
-  @Input() placeholder: string;
-  @Input() isRange: boolean;
+  @Input() placeholder = 'select_date';
 
-  selected = {
-    start: null,
-    end: null
-  }
+  selected: Moment = null;
 
   value: string = null;
 
@@ -36,31 +32,16 @@ export class DatePickerComponent implements OnInit {
 
   constructor(private elementRef: ElementRef) {}
 
-  ngOnInit() {
-    if (!this.placeholder) {
-      this.placeholder = this.isRange ? 'select_dates' : 'select_date';
-    }
-  }
-
-  dateSelected(selected: { start: Moment, end?: Moment }): void {
-    if (!selected.start) {
-      this.selected.start = null;
-      this.selected.end = null;
-      this.propagateChange(this.isRange ? this.selected : null);
+  dateSelected(selected: Moment): void {
+    if (!selected) {
+      this.selected = null;
+      this.propagateChange(null);
     } else {
-      this.selected.start = selected.start;
-      this.selected.end = selected.end;
+      this.selected = selected;
 
-      this.value = this.selected.start.format('DD/MM/YYYY');
-      if (this.isRange && this.selected.end) {
-        this.value += ' - ' + this.selected.end.format('DD/MM/YYYY');
-      }
+      this.value = this.selected.format('DD/MM/YYYY');
 
-      let output = this.selected.start.format('YYYY-MM-DD');
-      if (this.isRange) {
-        output = { start: output, end: this.selected.end.format('YYYY-MM-DD') };
-      }
-
+      const output = this.selected.format('YYYY-MM-DD');
       this.propagateChange(output);
     }
 
@@ -69,16 +50,8 @@ export class DatePickerComponent implements OnInit {
 
   writeValue(value: any): void {
     if (value) {
-      this.selected.start = moment(value, 'YYYY-MM-DD');
-
-      this.value = this.selected.start.format('DD/MM/YYYY');
-
-      if (this.isRange) {
-        this.selected.end = moment(value.end, 'YYYY-MM-DD');
-        if (this.selected.end) {
-          this.value += ' - ' + this.selected.end.format('DD/MM/YYYY');
-        }
-      }
+      this.value = this.selected.format('DD/MM/YYYY');
+      this.selected = moment(value, 'YYYY-MM-DD');
     }
   }
 
@@ -94,12 +67,12 @@ export class DatePickerComponent implements OnInit {
 
   }
 
-  // @HostListener('document:click', ['$event'])
-  // documentClicked(e: PointerEvent): void {
-  //   if (!this.calendarOpened) {
-  //     return;
-  //   }
-  //
-  //   this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
-  // }
+  @HostListener('document:click', ['$event'])
+  documentClicked(e: PointerEvent): void {
+    if (!this.calendarOpened) {
+      return;
+    }
+
+    this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
+  }
 }

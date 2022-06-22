@@ -8,20 +8,21 @@ import { MatDividerModule } from '@angular/material/divider';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
-import { DatePickerComponent } from './date-picker.component';
+import { DateRangePickerComponent } from './date-range-picker.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { DateRangeInputComponent } from './date-range-input/date-range-input.component';
 
 @NgModule({
-	declarations: [DatePickerComponent, CalendarComponent],
-	exports: [DatePickerComponent],
+  declarations: [DateRangePickerComponent, CalendarComponent, DateRangeInputComponent],
+  exports: [DateRangePickerComponent, DateRangeInputComponent],
   imports: [
     CommonModule,
     TranslateModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    MatDividerModule
   ]
 })
-export class DatePickerModule {}
+export class DateRangePickerModule {}

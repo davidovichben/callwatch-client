@@ -32,11 +32,11 @@
       <div class="d-flex" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
         <mat-form-field class="ms-3 no-space">
           <mat-label>{{ 'from_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="from">
+          <input matInput type="time" formControlName="start">
         </mat-form-field>
         <mat-form-field class="mx-3 no-space">
           <mat-label>{{ 'to_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="to">
+          <input matInput type="time" formControlName="end">
         </mat-form-field>
         <div class="d-flex align-items-center">
           <button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">
@@ -118,8 +118,8 @@
     <span class="d-flex align-items-center">{{ 'ignore_dates' | t }}:</span>
     <mat-form-field class="mx-3 no-space">
       <mat-date-range-input formGroupName="ignoreDates" [rangePicker]="ignorePicker">
-        <input matStartDate formControlName="from" [placeholder]="'start_date' | t">
-        <input matEndDate formControlName="to" [placeholder]="'end_date' | t">
+        <input matStartDate formControlName="start" [placeholder]="'start_date' | t">
+        <input matEndDate formControlName="end" [placeholder]="'end_date' | t">
       </mat-date-range-input>
       <mat-datepicker-toggle matSuffix [for]="ignorePicker"></mat-datepicker-toggle>
       <mat-date-range-picker #ignorePicker></mat-date-range-picker>

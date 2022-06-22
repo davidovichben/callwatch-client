@@ -51,8 +51,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   private makeForm(): void {
     this.formGroup = this.fb.group({
       dates: this.fb.group({
-        from: this.fb.control(null),
-        to: this.fb.control(null),
+        start: this.fb.control(null),
+        end: this.fb.control(null),
       }),
       times: this.fb.array([]),
       weekDays: this.fb.group({}),
@@ -64,8 +64,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       timeSpace: this.fb.control('hour'),
       sort: this.fb.array([]),
       ignoreDates: this.fb.group({
-        from: this.fb.control(null),
-        to: this.fb.control(null),
+        start: this.fb.control(null),
+        end: this.fb.control(null),
       }),
       units: this.fb.control(null)
     });
@@ -97,8 +97,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   addTime(): void {
     const group = this.fb.group({
-      from: this.fb.control(null),
-      to: this.fb.control(null)
+      start: this.fb.control(null),
+      end: this.fb.control(null)
     });
 
     (this.formGroup.get('times') as FormArray).push(group);
@@ -158,18 +158,18 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     this.sanitizeDates(values, 'dates');
     this.sanitizeDates(values, 'ignoreDates')
 
-    values.times = values.times.filter(time => time.from && time.to);
+    values.times = values.times.filter(time => time.start && time.end);
     values.sort = values.sort.filter(sort => sort.column && sort.direction);
 
     return values;
   }
 
   private sanitizeDates(values: object, type: string): void {
-    if (!values[type].from || !values[type].to) {
+    if (!values[type].start || !values[type].end) {
       delete values[type];
     } else {
-      values[type].from = typeof values[type].from === 'string' ? values[type].from : (values[type].from as any).format('yy-MM-DD');
-      values[type].to = typeof values[type].to === 'string' ? values[type].to : (values[type].to as any).format('yy-MM-DD');
+      values[type].start = typeof values[type].start === 'string' ? values[type].start : (values[type].start as any).format('yy-MM-DD');
+      values[type].end = typeof values[type].end === 'string' ? values[type].end : (values[type].end as any).format('yy-MM-DD');
     }
   }
 

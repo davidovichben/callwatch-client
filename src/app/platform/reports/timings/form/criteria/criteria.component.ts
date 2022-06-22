@@ -50,10 +50,10 @@ export class CriteriaComponent implements OnInit {
     }
   }
 
-  addTime(time?: { from: string, to: string }): void {
+  addTime(time?: { start: string, end: string }): void {
     const group = this.fb.group({
-      from: this.fb.control(time ? time.from : null),
-      to: this.fb.control(time ? time.to : null)
+      start: this.fb.control(time ? time.start : null),
+      end: this.fb.control(time ? time.end : null)
     });
 
     (this.formGroup.get('times') as FormArray).push(group);
