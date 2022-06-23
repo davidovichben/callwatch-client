@@ -33,38 +33,37 @@ export class CalendarComponent implements OnInit {
   months: CalendarMonth[] = [];
 
   ngOnInit(): void {
-    if (this.selected.start) {
-      this.setMonths(this.selected.start, true);
-    } else {
-      this.setMonths();
-    }
+    this.setMonths();
   }
 
-  slideMonths(action: 'next' | 'previous'): void {
-    const obj = moment(this.months[0].object);
-    action === 'next' ? obj.add(1, 'M') : obj.subtract(1, 'M');
+  public writeValue(value: { start?: Moment, end?: Moment }): void {
+    this.selected.start = value.start;
+    this.selected.end = value.end;
 
+    this.setMonths(this.selected.start, true);
+  }
+
+  slideMonths(slideAmount: number): void {
+    const obj = moment(this.months[0].object).add(slideAmount);
     setTimeout(() => this.setMonths(obj, true), 0);
   }
 
   dayClicked(month: CalendarMonth, dayIndex: number): void {
     const selectedObj = moment(month.object).set('date', dayIndex + 1);
 
-    if (!this.selected.start) {
-      this.selectDay(month, dayIndex);
-      return;
+    switch (true) {
+      case !this.selected.start:
+        this.selectDay(month, dayIndex);
+        break;
+      case this.selected.start.isSame(selectedObj):
+        if (!this.selected.end) {
+          this.resetMonthDays();
+          this.selected.start = null;
+        }
+        break;
+      default:
+        this.selectRange(selectedObj);
     }
-
-    if (this.selected.start.isSame(selectedObj)) {
-      if (!this.selected.end) {
-        this.resetMonthDays();
-        this.selected.start = null;
-      }
-
-      return;
-    }
-
-    this.selectRange(selectedObj);
   }
 
   quickSelect(label: string): void {
@@ -117,12 +116,23 @@ export class CalendarComponent implements OnInit {
     this.dateSelected.emit(this.selected);
   }
 
-  setMonths(monthObj = moment(), selectDate?: boolean): void {
-    this.months[0] = { object: moment(monthObj).set('date', 1), days: [], previousDays: [] };
-    this.months[1] = { object: moment(monthObj.add(1, 'months').endOf('month')), days: [], previousDays: [] };
+  private setMonths(monthObj = moment(), selectDate?: boolean): void {
+    this.months[0] = {
+      object: moment(monthObj).set('date', 1),
+      days: [],
+      previousDays: []
+    };
+
+    this.months[1] = {
+      object: moment(monthObj.add(1, 'months').endOf('month')),
+      days: [],
+      previousDays: []
+    };
 
     this.months.forEach(month => {
       month.days = new Array(month.object.daysInMonth()).fill(this.dayStates.NOT_SELECTED);
+
+      // Filling previous month days to align the week days with this month's dates
 
       const startOfMonth = moment(month.object).startOf('month');
       let startWeekDay = startOfMonth.weekday();

@@ -31,10 +31,8 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  slideMonths(action: 'next' | 'previous'): void {
-    const obj = moment(this.months[0].object);
-    action === 'next' ? obj.add(1, 'M') : obj.subtract(1, 'M');
-
+  slideMonths(slideAmount: number): void {
+    const obj = moment(this.months[0].object).add(slideAmount);
     setTimeout(() => this.setMonths(obj, true), 0);
   }
 

@@ -34,16 +34,17 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   constructor(private elementRef: ElementRef) {}
 
   ngAfterContentInit(): void {
-    this.calendar.selected.start = this.inputs.first.value;
-    this.calendar.selected.end = this.inputs.last.value;
+    this.writeCalendarValue();
 
-    this.sub.add(this.inputs.first.dateChange.subscribe(date => {
-      this.calendar.selected.start = moment(date);
-      console.log(this.calendar.selected.start)
-      this.calendar.setMonths(this.calendar.selected.start, true);
-    }));
+    this.sub.add(this.inputs.first.dateChange.subscribe(() => this.writeCalendarValue()));
+    this.sub.add(this.inputs.last.dateChange.subscribe(() => this.writeCalendarValue()));
+  }
 
-    this.sub.add(this.inputs.last.dateChange.subscribe(date => this.calendar.selected.end = date));
+  writeCalendarValue(): void {
+    const start = moment(this.inputs.first.value);
+    const end = moment(this.inputs.last.value);
+
+    this.calendar.writeValue({ start, end });
   }
 
   dateSelected(selected: { start: Moment, end?: Moment }): void {
