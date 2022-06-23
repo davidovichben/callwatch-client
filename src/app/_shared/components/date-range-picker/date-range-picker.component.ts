@@ -41,10 +41,12 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   }
 
   writeCalendarValue(): void {
-    const start = moment(this.inputs.first.value);
-    const end = moment(this.inputs.last.value);
+    const values = {
+      start: this.inputs.first.value ? moment(this.inputs.first.value) : null,
+      end: this.inputs.first.value ? moment(this.inputs.last.value) : null,
+    };
 
-    this.calendar.writeValue({ start, end });
+    this.calendar.writeValue(values);
   }
 
   dateSelected(selected: { start: Moment, end?: Moment }): void {

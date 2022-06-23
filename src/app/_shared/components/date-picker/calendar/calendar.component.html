@@ -2,9 +2,9 @@
   <ng-container *ngFor="let month of months; let monthIndex = index">
     <div class="calendar">
       <div class="month-header">
-        <mat-icon (click)="slideMonths(-1)" *ngIf="monthIndex === 0">chevron_right</mat-icon>
+        <mat-icon (click)="slideMonths('previous')" *ngIf="monthIndex === 0">chevron_right</mat-icon>
         <p class="month-title">{{ month.object.format('MMMM') | t }} {{ month.object.year() }}</p>
-        <mat-icon (click)="slideMonths(1)" *ngIf="monthIndex === 1">chevron_left</mat-icon>
+        <mat-icon (click)="slideMonths('next')" *ngIf="monthIndex === 1">chevron_left</mat-icon>
       </div>
       <div class="mb-2 d-flex">
         <span class="week-day" [ngClass]="{ 'weekend': weekDayIndex > 4 }" *ngFor="let day of weekDays; let weekDayIndex = index">{{ day | t }}</span>

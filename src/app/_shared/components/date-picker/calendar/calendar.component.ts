@@ -31,11 +31,12 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  slideMonths(slideAmount: number): void {
-    const obj = moment(this.months[0].object).add(slideAmount);
+  slideMonths(action: 'next' | 'previous'): void {
+    const obj = moment(this.months[0].object);
+    action === 'next' ? obj.add(1, 'M') : obj.subtract(1, 'M');
+
     setTimeout(() => this.setMonths(obj, true), 0);
   }
-
   selectDay(month: CalendarMonth, dayIndex: number): void {
     this.resetMonthDays();
 

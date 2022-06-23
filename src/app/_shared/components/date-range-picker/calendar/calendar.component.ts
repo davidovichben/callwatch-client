@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment/moment';
 
@@ -19,7 +19,7 @@ export enum DayStates {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.styl']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent {
 
   @Output() dateSelected = new EventEmitter;
 
@@ -32,19 +32,21 @@ export class CalendarComponent implements OnInit {
 
   months: CalendarMonth[] = [];
 
-  ngOnInit(): void {
-    this.setMonths();
-  }
-
   public writeValue(value: { start?: Moment, end?: Moment }): void {
     this.selected.start = value.start;
     this.selected.end = value.end;
 
-    this.setMonths(this.selected.start, true);
+    if (value.start) {
+      this.setMonths(this.selected.start, true);
+    } else {
+      this.setMonths();
+    }
   }
 
-  slideMonths(slideAmount: number): void {
-    const obj = moment(this.months[0].object).add(slideAmount);
+  slideMonths(action: 'next' | 'previous'): void {
+    const obj = moment(this.months[0].object);
+    action === 'next' ? obj.add(1, 'M') : obj.subtract(1, 'M');
+
     setTimeout(() => this.setMonths(obj, true), 0);
   }
 
@@ -72,11 +74,17 @@ export class CalendarComponent implements OnInit {
       obj.subtract(1, 'days');
     }
 
+    // Setting new months if date isn't in displayed months
+
+    let month;
     if (!obj.isBetween(this.months[0].object, this.months[1].object)) {
       this.setMonths(obj);
+      month = this.months[0];
+    } else {
+      month = this.months[0].object.month() === obj.month() ? this.months[0] : this.months[1];
     }
 
-    this.selectDay(this.months[0], obj.date());
+    this.selectDay(month, obj.date());
   }
 
   quickSelectRange(label: string): void {
@@ -99,6 +107,8 @@ export class CalendarComponent implements OnInit {
         this.selected.start = moment().subtract(1, 'month').startOf('month').endOf('day');
         this.selected.end = moment().subtract(1, 'month').endOf('month');
     }
+
+    // Setting new months if date isn't in displayed months
 
     if (!this.selected.start.isBetween(this.months[0].object, this.months[1].object)) {
       this.setMonths(this.selected.start);
@@ -124,7 +134,7 @@ export class CalendarComponent implements OnInit {
     };
 
     this.months[1] = {
-      object: moment(monthObj.add(1, 'months').endOf('month')),
+      object: moment(monthObj).add(1, 'months').endOf('month'),
       days: [],
       previousDays: []
     };
