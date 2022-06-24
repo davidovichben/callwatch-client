@@ -37,6 +37,7 @@ export class CalendarComponent implements OnInit {
 
     setTimeout(() => this.setMonths(obj, true), 0);
   }
+
   selectDay(month: CalendarMonth, dayIndex: number): void {
     this.resetMonthDays();
 
@@ -46,18 +47,20 @@ export class CalendarComponent implements OnInit {
   }
 
   quickSelect(label: string): void {
-    this.resetMonthDays();
-
     const obj = moment();
     if (label === 'yesterday') {
       obj.subtract(1, 'days');
     }
 
+    // Setting new months if date isn't in displayed months
+
+    let month = this.months[0].object.month() === obj.month() ? this.months[0] : this.months[1];
     if (!obj.isBetween(this.months[0].object, this.months[1].object)) {
       this.setMonths(obj);
+      month = this.months[0];
     }
 
-    this.selectDay(this.months[0], obj.date());
+    this.selectDay(month, obj.date());
   }
 
   closeCalendar(save: boolean): void {

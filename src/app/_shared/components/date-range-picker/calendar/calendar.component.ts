@@ -76,12 +76,10 @@ export class CalendarComponent {
 
     // Setting new months if date isn't in displayed months
 
-    let month;
+    let month = this.months[0].object.month() === obj.month() ? this.months[0] : this.months[1];
     if (!obj.isBetween(this.months[0].object, this.months[1].object)) {
       this.setMonths(obj);
       month = this.months[0];
-    } else {
-      month = this.months[0].object.month() === obj.month() ? this.months[0] : this.months[1];
     }
 
     this.selectDay(month, obj.date());

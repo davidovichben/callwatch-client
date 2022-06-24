@@ -29,6 +29,11 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
 
   readonly sub = new Subscription();
 
+  selected = {
+    start: null,
+    end: null
+  }
+
   calendarOpened = false;
 
   constructor(private elementRef: ElementRef) {}
@@ -36,32 +41,35 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   ngAfterContentInit(): void {
     this.writeCalendarValue();
 
-    this.sub.add(this.inputs.first.dateChange.subscribe(() => this.writeCalendarValue()));
-    this.sub.add(this.inputs.last.dateChange.subscribe(() => this.writeCalendarValue()));
+    this.sub.add(this.inputs.first.dateChange.subscribe(value => this.writeCalendarValue(value, 'start')));
+    this.sub.add(this.inputs.last.dateChange.subscribe(value => this.writeCalendarValue(value, 'end')));
   }
 
-  writeCalendarValue(): void {
-    const values = {
-      start: this.inputs.first.value ? moment(this.inputs.first.value) : null,
-      end: this.inputs.first.value ? moment(this.inputs.last.value) : null,
-    };
+  writeCalendarValue(value?: Moment, type?: string): void {
+    if (value && type) {
+      this.selected[type] = value;
 
-    this.calendar.writeValue(values);
+      const inputType = type === 'start' ? this.inputs.first : this.inputs.last;
+
+      inputType.hasDateRangeError = this.selected.start.isAfter(this.selected.end);
+      if (inputType.hasDateRangeError) {
+        return;
+      }
+    }
+
+    this.calendar.writeValue(this.selected);
   }
 
   dateSelected(selected: { start: Moment, end?: Moment }): void {
-    const start = selected.start ? selected.start.format('YYYY-MM-DD') : null;
-    const end = selected.end ? selected.end.format('YYYY-MM-DD') : null;
-
-    if (start) {
-      this.inputs.first.writeValue(start);
-      this.inputs.first.propagateChange(start);
-    }
-
-    if (end) {
-      this.inputs.last.writeValue(end);
-      this.inputs.last.propagateChange(end);
-    }
+    ['start', 'end'].forEach(valueType => {
+      const value = selected[valueType] ? selected[valueType].format('YYYY-MM-DD') : null;
+      if (value) {
+        const input = valueType === 'start' ? this.inputs.first : this.inputs.last;
+        input.writeValue(value);
+        input.propagateChange(value);
+        input.hasDateRangeError = false;
+      }
+    });
 
     this.calendarOpened = false;
   }

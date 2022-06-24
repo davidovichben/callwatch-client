@@ -17,12 +17,12 @@ import { DateRangeInputComponent } from './date-range-input/date-range-input.com
   exports: [DateRangePickerComponent, DateRangeInputComponent],
   imports: [
     CommonModule,
-    TranslateModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    TranslateModule
   ]
 })
 export class DateRangePickerModule {}

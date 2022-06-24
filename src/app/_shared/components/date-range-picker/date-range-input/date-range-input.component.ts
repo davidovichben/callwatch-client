@@ -12,18 +12,28 @@ import * as moment from 'moment/moment';
 export class DateRangeInputComponent implements ControlValueAccessor {
 
   @Input() placeholder: string;
+
   @Output() dateChange = new EventEmitter();
 
   value = null;
+
+  hasInvalidDateError = false;
+  hasDateRangeError = false;
 
   public propagateChange = (_: any) => {};
 
   dateChanged(date: string): void {
     if (date) {
-      const dateObj = moment(date);
+      const momentObj = moment(date, 'DD/MM/YYYY');
+      if (!momentObj.isValid()) {
+        this.hasInvalidDateError = true;
+        return;
+      }
 
-      this.propagateChange(dateObj.format('YYYY-MM-DD'));
-      this.dateChange.emit(dateObj)
+      this.hasInvalidDateError = false;
+
+      this.propagateChange(momentObj.format('YYYY-MM-DD'));
+      this.dateChange.emit(momentObj)
     }
   }
 
