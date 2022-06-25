@@ -8,7 +8,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { Moment } from 'moment';
-import * as moment from 'moment/moment';
 
 import { CalendarComponent } from './calendar/calendar.component';
 import { DateRangeInputComponent } from './date-range-input/date-range-input.component';
@@ -52,14 +51,14 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   }
 
   writeCalendarValue(value?: Moment, type?: string): void {
-    if (value && type) {
+    if (type) {
       this.selected[type] = value;
 
       const inputType = type === 'start' ? this.inputs.first : this.inputs.last;
 
       inputType.hasDateRangeError = this.selected.start && this.selected.start.isAfter(this.selected.end);
       if (inputType.hasDateRangeError) {
-        return;
+        this.selected[type] = null;
       }
     }
 
@@ -73,7 +72,7 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
         const input = valueType === 'start' ? this.inputs.first : this.inputs.last;
         input.writeValue(value);
         input.propagateChange(value);
-        input.hasDateRangeError = false;
+        input.clearErrors();
       }
     });
 
