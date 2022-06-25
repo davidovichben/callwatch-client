@@ -39,7 +39,7 @@ export class DateRangeInputComponent implements ControlValueAccessor {
 
   writeValue(value: string): void {
     if (value) {
-      this.value = moment(value, 'YYYY-MM-DD').format('DD/MM/YYYY');
+      this.value = moment(value, 'YYYY-MM-DD');
     }
   }
 

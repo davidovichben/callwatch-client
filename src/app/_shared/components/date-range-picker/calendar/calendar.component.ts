@@ -36,7 +36,12 @@ export class CalendarComponent {
     this.selected.start = value.start;
     this.selected.end = value.end;
 
-    if (value.start) {
+    if (!this.selected.start && this.selected.end) {
+      this.selected.start = value.end;
+      this.selected.end = null;
+    }
+
+    if (this.selected.start) {
       this.setMonths(this.selected.start, true);
     } else {
       this.setMonths();

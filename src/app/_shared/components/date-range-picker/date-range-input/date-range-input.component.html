@@ -1,6 +1,6 @@
 <mat-form-field [class.mat-form-field-invalid]="hasInvalidDateError">
   <mat-label>{{ placeholder }}</mat-label>
-  <input matInput type="text" [value]="value" (change)="dateChanged($event.target.value)">
+  <input matInput type="text" [value]="value ? value.format('DD/MM/YYYY') : null" (change)="dateChanged($event.target.value)">
   <mat-hint>dd/mm/yy</mat-hint>
   <p class="mat-error" *ngIf="hasInvalidDateError">{{ 'invalid_date' | t }}</p>
   <p class="mat-error" *ngIf="hasDateRangeError">{{ 'invalid_date_range' | t }}</p>

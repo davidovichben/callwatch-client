@@ -39,10 +39,16 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   constructor(private elementRef: ElementRef) {}
 
   ngAfterContentInit(): void {
+    const first = this.inputs.first;
+    const last = this.inputs.last;
+
+    this.selected.start = first.value;
+    this.selected.end = last.value;
+
     this.writeCalendarValue();
 
-    this.sub.add(this.inputs.first.dateChange.subscribe(value => this.writeCalendarValue(value, 'start')));
-    this.sub.add(this.inputs.last.dateChange.subscribe(value => this.writeCalendarValue(value, 'end')));
+    this.sub.add(first.dateChange.subscribe(value => this.writeCalendarValue(value, 'start')));
+    this.sub.add(last.dateChange.subscribe(value => this.writeCalendarValue(value, 'end')));
   }
 
   writeCalendarValue(value?: Moment, type?: string): void {
@@ -51,7 +57,7 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
 
       const inputType = type === 'start' ? this.inputs.first : this.inputs.last;
 
-      inputType.hasDateRangeError = this.selected.start.isAfter(this.selected.end);
+      inputType.hasDateRangeError = this.selected.start && this.selected.start.isAfter(this.selected.end);
       if (inputType.hasDateRangeError) {
         return;
       }
