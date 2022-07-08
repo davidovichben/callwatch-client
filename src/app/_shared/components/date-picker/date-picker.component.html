@@ -1,6 +1,8 @@
-<mat-form-field class="w-100">
+<mat-form-field class="w-100" [class.mat-form-field-invalid]="hasInvalidDateError">
   <mat-label>{{ placeholder | t }}</mat-label>
-  <input matInput [value]="value">
+  <input matInput [value]="value ? value.format('DD/MM/YYYY') : null" (change)="dateChanged($event.target.value)">
   <mat-icon matSuffix (click)="calendarOpened = !calendarOpened">today</mat-icon>
+  <mat-hint>dd/mm/yyyy</mat-hint>
+  <p class="mat-error" *ngIf="hasInvalidDateError">{{ 'invalid_date' | t }}</p>
 </mat-form-field>
-<app-calendar [@slideToggle]="calendarOpened ? 'active' : 'inactive'" [selected]="selected" (dateSelected)="dateSelected($event)"></app-calendar>
+<app-calendar [@slideToggle]="calendarOpened ? 'active' : 'inactive'"  (dateSelected)="dateSelected($event)"></app-calendar>

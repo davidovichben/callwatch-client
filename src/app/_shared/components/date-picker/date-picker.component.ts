@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Moment } from 'moment';
 import * as moment from 'moment/moment';
@@ -10,21 +10,21 @@ import { SlideToggle } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
-  styles: [`:host { position: relative; width: 240px; } mat-icon { cursor: pointer }`],
+  styleUrls: ['./date-picker.component.styl'],
   animations: [SlideToggle],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }
   ]
 })
-export class DatePickerComponent {
+export class DatePickerComponent implements AfterViewInit {
 
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
 
   @Input() placeholder = 'select_date';
 
-  selected: Moment = null;
+  hasInvalidDateError = false;
 
-  value: string = null;
+  value: Moment = null;
 
   calendarOpened = false;
 
@@ -32,17 +32,37 @@ export class DatePickerComponent {
 
   constructor(private elementRef: ElementRef) {}
 
+  ngAfterViewInit(): void {
+    this.calendar.writeValue(this.value);
+  }
+
+  dateChanged(date: string): void {
+    this.hasInvalidDateError = false;
+    let change = null;
+    let momentObj = null;
+
+    if (date) {
+      momentObj = moment(date, 'DD/MM/YYYY');
+      if (!momentObj.isValid()) {
+        this.hasInvalidDateError = true;
+        return;
+      }
+
+      change = momentObj.format('YYYY-MM-DD');
+    }
+
+    this.calendar.writeValue(momentObj);
+    this.propagateChange(change);
+  }
+
   dateSelected(selected: Moment): void {
+    this.hasInvalidDateError = false;
     if (!selected) {
-      this.selected = null;
+      this.value = null;
       this.propagateChange(null);
     } else {
-      this.selected = selected;
-
-      this.value = this.selected.format('DD/MM/YYYY');
-
-      const output = this.selected.format('YYYY-MM-DD');
-      this.propagateChange(output);
+      this.value = moment(selected);
+      this.propagateChange(this.value.format('YYYY-MM-DD'));
     }
 
     this.calendarOpened = false;
@@ -50,8 +70,7 @@ export class DatePickerComponent {
 
   writeValue(value: any): void {
     if (value) {
-      this.value = this.selected.format('DD/MM/YYYY');
-      this.selected = moment(value, 'YYYY-MM-DD');
+      this.value = moment(value);
     }
   }
 

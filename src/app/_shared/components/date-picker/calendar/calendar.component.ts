@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment/moment';
 
@@ -11,21 +11,23 @@ type CalendarMonth = { object: Moment, days: boolean[], previousDays: number[] }
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.styl']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent {
 
-  @Input() selected = null;
-
-  @Output() dateSelected = new EventEmitter;
+  @Output() dateSelected = new EventEmitter();
 
   readonly weekDays = WeekDays;
 
   readonly quickSelectionLabels = ['today', 'yesterday'];
 
+  selected = null;
+
   months: CalendarMonth[] = [];
 
-  ngOnInit(): void {
+  public writeValue(value?: Moment): void {
+    this.selected = value;
+
     if (this.selected) {
-      this.setMonths(moment(), true);
+      this.setMonths(this.selected.start, true);
     } else {
       this.setMonths();
     }
