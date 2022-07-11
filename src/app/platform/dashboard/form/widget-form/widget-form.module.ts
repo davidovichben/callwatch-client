@@ -15,17 +15,17 @@ import { ConditionalDesignComponent } from './conditional-design/conditional-des
 
 @NgModule({
   declarations: [WidgetFormComponent, ConditionalDesignComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDialogModule,
-    MatIconModule,
-    TranslateModule,
-    MatCheckboxModule
-  ],
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatSelectModule,
+      MatDialogModule,
+      MatIconModule,
+      TranslateModule,
+      MatCheckboxModule
+    ],
   exports: [WidgetFormComponent, ConditionalDesignComponent]
 })
 export class WidgetFormModule {}

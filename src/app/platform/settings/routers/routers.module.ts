@@ -22,15 +22,18 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [RoutersComponent, DuplicationDialogComponent],
-	imports: [
-		RouterModule.forChild(routes),
-		ReactiveFormsModule,
-		MatDialogModule,
-		DataTableModule,
-		TranslateModule,
-		ChipsInputModule
-	],
-	providers: [RouterService, GenericService]
+    declarations: [RoutersComponent, DuplicationDialogComponent],
+    imports: [
+        RouterModule.forChild(routes),
+        ReactiveFormsModule,
+        MatDialogModule,
+        DataTableModule,
+        TranslateModule,
+        ChipsInputModule
+    ],
+    exports: [
+        RoutersComponent
+    ],
+    providers: [RouterService, GenericService]
 })
 export class RoutersModule {}

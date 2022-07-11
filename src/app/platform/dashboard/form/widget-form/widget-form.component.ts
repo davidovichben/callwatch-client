@@ -107,6 +107,7 @@ export class WidgetFormComponent implements OnInit {
   }
 
   submit(): void {
+    console.log(this.formGroup)
     if (this.formGroup.valid) {
       this.widgetService.newReportWidget(this.formGroup.value).then(response => {
         if (response) {

@@ -21,7 +21,7 @@
           <mat-form-field class="w-100">
             <mat-label>{{ 'select_color' | t }}</mat-label>
             <mat-select formControlName="color">
-              <mat-option *ngFor="let color of colors" [value]="color">{{ color | t }}</mat-option>
+              <mat-option *ngFor="let color of colors" [value]="color">{{ color.label | t }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -107,7 +107,7 @@
           <mat-form-field class="w-100">
             <mat-label>{{ 'select_color' | t }}</mat-label>
             <mat-select formControlName="color">
-              <mat-option *ngFor="let color of colors" [value]="color">{{ color | t }}</mat-option>
+              <mat-option *ngFor="let color of colors" [value]="color">{{ color.label | t }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

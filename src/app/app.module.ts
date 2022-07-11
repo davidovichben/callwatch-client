@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { NgChartsModule } from 'ng2-charts';
+import { ChartModule } from 'src/app/_shared/components/chart/charts.module';
 
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle';
@@ -43,7 +43,7 @@ const appearance: MatFormFieldDefaultOptions = {
     HttpClientModule,
     MatMomentDateModule,
     NgxMatMomentModule,
-    NgChartsModule
+    ChartModule
   ],
   providers: [
     AppStateService,
