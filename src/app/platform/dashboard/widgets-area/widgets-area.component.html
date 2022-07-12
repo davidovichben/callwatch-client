@@ -1,5 +1,5 @@
 <main>
-  <section class="area" id="drag-resize-area" #dragResizeArea style="z-index: 1">
+  <section class="area" id="drag-resize-area">
     <div *ngFor="let widget of widgets; let index = index" class="rect offset-small move"
          ngxDrag
          ngxDragPositionStrategy="relative"
@@ -9,36 +9,27 @@
          [ngxResizeMinHeight]="50"
          [style.top.px]="widget.top"
          [style.left.px]="widget.left"
+         [style.z-index]="widget.zindex"
          [style.width.px]="widget.width"
          [style.height.px]="widget.height"
-         ngxResizeBoundary="#drag-resize-area" (ngxResized)="resized($event, element, index)" #element (mousedown)="startDrag(element)"
-         (mouseup)="drop(element, index)"
-         (ngxDragged)="allowDrop ? dragged($event, index) : null">
-      <div [ngxResizeHandle]="handleType.TopLeft" data-resize-handle='TopLeft'></div>
-      <div [ngxResizeHandle]="handleType.Top" data-resize-handle='Top'></div>
+         ngxResizeBoundary="#drag-resize-area" (mousedown)="startDrag(element, index)" (ngxResized)="resizing = true" #element
+         (mouseup)="adjust(element, index)">
       <div [ngxResizeHandle]="handleType.TopRight" data-resize-handle='TopRight'></div>
+      <div [ngxResizeHandle]="handleType.Top" data-resize-handle='Top'></div>
+      <div [ngxResizeHandle]="handleType.TopLeft" data-resize-handle='TopLeft'></div>
       <div [ngxResizeHandle]="handleType.Right" data-resize-handle='Right'></div>
       <div [ngxResizeHandle]="handleType.BottomRight" data-resize-handle='BottomRight'></div>
       <div [ngxResizeHandle]="handleType.Bottom" data-resize-handle='Bottom'></div>
       <div [ngxResizeHandle]="handleType.BottomLeft" data-resize-handle='BottomLeft'></div>
       <div [ngxResizeHandle]="handleType.Left" data-resize-handle='Left'></div>
-      <app-widget #el (dragstart)="drag($event, el)" [type]="widget.type"></app-widget>
-      {{ widget.top }}
+      <app-widget class="widget" #el [type]="widget.type"></app-widget>
     </div>
   </section>
 </main>
 <main>
-  <section class="grid-area" id="grid">
+  <section class="grid-area" id="grid" #gridArea>
     <div *ngFor="let tile of tiles" class="d-flex justify-content-center align-items-center">
       <div class="grid-tile"></div>
     </div>
-<!--    <div class="d-flex" *ngFor="let row of rows; let rowIndex = index">-->
-<!--      <div class="grid-tile" *ngFor="let col of columns">-->
-<!--      </div>-->
-<!--    </div>-->
   </section>
 </main>
-
-<!--<div *ngFor="let widget of widgets; let index = index">-->
-<!--  <app-widget class="drag1" draggable="true" #el  [type]="widget.type"></app-widget>-->
-<!--</div>-->
