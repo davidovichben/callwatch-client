@@ -1,5 +1,10 @@
 <main>
   <section class="area" id="drag-resize-area">
+    <section class="grid-area" id="grid" #gridArea>
+      <div *ngFor="let tile of tiles" class="d-flex justify-content-center align-items-center">
+        <div class="grid-tile"></div>
+      </div>
+    </section>
     <div *ngFor="let widget of widgets; let index = index" class="rect offset-small move"
          ngxDrag
          ngxDragPositionStrategy="relative"
@@ -22,14 +27,9 @@
       <div [ngxResizeHandle]="handleType.Bottom" data-resize-handle='Bottom'></div>
       <div [ngxResizeHandle]="handleType.BottomLeft" data-resize-handle='BottomLeft'></div>
       <div [ngxResizeHandle]="handleType.Left" data-resize-handle='Left'></div>
-      <app-widget class="widget" #el [type]="widget.type"></app-widget>
-    </div>
-  </section>
-</main>
-<main>
-  <section class="grid-area" id="grid" #gridArea>
-    <div *ngFor="let tile of tiles" class="d-flex justify-content-center align-items-center">
-      <div class="grid-tile"></div>
+      {{ widget.height }}
+      {{ widget.width }}
+      <app-widget class="widget" [type]="widget.type" [width]="widget.width" [height]="widget.height"></app-widget>
     </div>
   </section>
 </main>

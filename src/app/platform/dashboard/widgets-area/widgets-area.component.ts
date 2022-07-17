@@ -19,7 +19,7 @@ export class WidgetsAreaComponent implements AfterViewInit {
   readonly TILES_IN_ROW_COUNT = 7;
   readonly TILES_IN_COL_COUNT = 8;
 
-  occupiedTiles = [];
+  occupiedTiles: any[];
 
   resizing = false;
 
@@ -33,8 +33,6 @@ export class WidgetsAreaComponent implements AfterViewInit {
       left: 185.38,
       width: 358.89,
       height: 278.003,
-      color: 'green',
-      position: 'absolute',
       top: 0.6,
       zindex: 1
     },
@@ -43,8 +41,6 @@ export class WidgetsAreaComponent implements AfterViewInit {
       left: 248.316,
       width: 433.333,
       height: 288.333,
-      color: '#bb1a1b',
-      position: 'absolute',
       top: 0.6,
       zindex: 1
     }];
@@ -60,6 +56,8 @@ export class WidgetsAreaComponent implements AfterViewInit {
 
     this.tileWidth = width / this.TILES_IN_COL_COUNT;
     this.tileHeight = height / this.TILES_IN_ROW_COUNT;
+    console.log(this.tileWidth);
+    console.log(this.tileHeight);
   }
 
   buildGrid(): any {
@@ -90,29 +88,28 @@ export class WidgetsAreaComponent implements AfterViewInit {
   }
 
   adjustLocation(element: HTMLDivElement | any, widgetIndex: number): void {
-    const widget = this.widgets[widgetIndex];
-    element = this.checkOverlap(element, widgetIndex) ? this.prevLocation : element;
-    console.log(this.occupiedTiles)
+    const overlap = this.overlap(element, widgetIndex);
+    element = overlap ? this.prevLocation : element;
+
     const elementValues = this.elementValues(element)
 
-    console.log(this.resizing)
-    const col = this.resizing ? elementValues.col + 1 : elementValues.col;
-    const newTop = (elementValues.row * this.tileHeight) + 5;
-    let newLeft = (col * this.tileWidth);
-    newLeft = (col * this.tileWidth) + 1;
+    const newTop = elementValues.row * this.tileHeight;
+    const newLeft = elementValues.col * this.tileWidth;
+
+    const widget = this.widgets[widgetIndex];
 
     widget.left = newLeft;
     widget.top = newTop;
 
     setTimeout(() => {
-      widget.top = newTop - 1;
-      widget.left = newLeft - 6;
+      widget.top = newTop + 5;
+      widget.left = newLeft + 5;
     })
 
     this.resizing = false;
   }
 
-  checkOverlap(element: HTMLDivElement, widgetIndex: number): boolean {
+  overlap(element: HTMLDivElement, widgetIndex: number): boolean {
     const elementValues = this.elementValues(element)
     let overlap = false;
 
@@ -121,17 +118,17 @@ export class WidgetsAreaComponent implements AfterViewInit {
       for (let col = 0; col < this.TILES_IN_COL_COUNT; col++) {
         tempTilesGrid[row][col] = this.occupiedTiles[row][col];
         const tileContent = this.occupiedTiles[row][col];
+        const elementIsInColumn = col >= elementValues.col && col < elementValues.col + elementValues.width;
+        const elementIsInRow = row >= elementValues.row && row < elementValues.row + elementValues.height;
+        const emptyTile = tileContent === null
 
-        if (col >= elementValues.col && col < elementValues.col + elementValues.width && row >= elementValues.row && row < elementValues.row + elementValues.height) {
-          if (tileContent !== null && tileContent != widgetIndex) {
-            console.log(row, col)
-            overlap = true
+        if (elementIsInColumn && elementIsInRow) {
+          if (!emptyTile && tileContent != widgetIndex) {
+            overlap = true;
+          } else {
+            this.occupiedTiles[row][col] = widgetIndex;
           }
-
-          this.occupiedTiles[row][col] = widgetIndex;
-        }
-
-        if (tileContent == widgetIndex) {
+        } else if (tileContent === widgetIndex) {
           this.occupiedTiles[row][col] = null;
         }
       }
@@ -147,8 +144,8 @@ export class WidgetsAreaComponent implements AfterViewInit {
   //todo add model
   elementValues(element): any {
     return {
-      row: Math.floor(element.offsetTop / this.tileHeight),
-      col: Math.floor(element.offsetLeft / this.tileWidth),
+      row: Math.round(element.offsetTop / this.tileHeight),
+      col: Math.round(element.offsetLeft / this.tileWidth),
       width: Math.round(element.offsetWidth / this.tileWidth),
       height: Math.round(element.offsetHeight / this.tileHeight)
     }

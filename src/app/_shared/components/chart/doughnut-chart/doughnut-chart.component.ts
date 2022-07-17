@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ChartType } from 'chart.js';
-import { MultiDataSet, Label, Color, Colors } from 'ng2-charts';
+import { MultiDataSet, Colors, Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-doughnut-chart',
@@ -8,6 +8,9 @@ import { MultiDataSet, Label, Color, Colors } from 'ng2-charts';
   styleUrls: ['./doughnut-chart.component.less']
 })
 export class DoughnutChartComponent {
+  @Input() width: number;
+  @Input() height: number;
+
   @Input() doughnutChartLabels: Label[] = ['BMW', 'Ford', 'Tesla'];
   @Input() doughnutChartData: MultiDataSet = [
     [55, 25, 20]
