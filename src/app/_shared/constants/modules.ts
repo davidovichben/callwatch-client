@@ -31,7 +31,8 @@ export const PlatformModules = [
 ];
 
 export const AdminModules = [
-  { name: 'organizations' }
+  { name: 'organizations' },
+  { name: 'exceptions-log' }
 ];
 
 export const UnitModules = [

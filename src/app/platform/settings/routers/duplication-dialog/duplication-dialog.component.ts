@@ -10,7 +10,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
   selector: 'app-duplication-dialog',
   templateUrl: './duplication-dialog.component.html'
 })
-export class DuplicationDialogComponent implements OnInit{
+export class DuplicationDialogComponent implements OnInit {
 
   readonly errorMessages = ErrorMessages;
 

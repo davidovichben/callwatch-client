@@ -13,6 +13,10 @@ const routes: Routes = [
         loadChildren: () => import('./organizations/organizations.module').then(m => m.OrganizationsModule)
       },
       {
+        path: 'exceptions-log',
+        loadChildren: () => import('src/app/admin/exceptions/exceptions.module').then(m => m.ExceptionsModule)
+      },
+      {
         path: '**',
         redirectTo: 'organizations'
       }
