@@ -21,10 +21,10 @@ export class ExceptionsComponent {
   readonly columns = [
     { label: 'username', name: 'username' },
     { label: 'code', name: 'code' },
-    { label: 'file', name: 'file_name' },
+    { label: 'path', name: 'path' },
     { label: 'line', name: 'line' },
-    { label: 'created_at', name: 'createdAt' },
-    { label: 'url', name: 'url' }
+    { label: 'url', name: 'url' },
+    { label: 'created_at', name: 'createdAt' }
   ];
 
   constructor(private router: Router, private exceptionService: ExceptionsService,

@@ -1,9 +1,12 @@
 :host
-  direction ltr
+  direction: ltr
+  display: grid
+  grid-template-columns: auto auto
+  padding: 5px
 
 ::-webkit-scrollbar
   width: 5px
-  height 5px
+  height: 5px
 
 ::-webkit-scrollbar-track
   background: #f1f1f1
@@ -14,18 +17,15 @@
 ::-webkit-scrollbar-thumb:hover
   background: #9f9d9d
 
-.long-text
-  overflow-y: auto
-  max-height: 150px
-  font-size: 14px
-
-.grid-container
-  display: grid
-  grid-template-columns: auto auto
-  padding: 5px
-
-.grid-container span
+span
   border: 1px solid #dadada
   padding: 10px
   text-align: center
 
+span:nth-child(odd)
+  font-weight: bold
+
+span.long-text
+  overflow-y: auto
+  max-height: 150px
+  font-size: 14px

@@ -124,7 +124,12 @@ export class AudioInputComponent implements AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.loadedUnlistener();
-    this.timeUnlistener()
+    if (this.loadedUnlistener) {
+      this.loadedUnlistener();
+    }
+
+    if (this.timeUnlistener) {
+      this.timeUnlistener();
+    }
   }
 }

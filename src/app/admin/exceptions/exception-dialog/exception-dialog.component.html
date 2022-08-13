@@ -1,18 +1,16 @@
-<div class="grid-container">
-  <span class="bold">Username</span>
-  <span>{{ exception.username }}</span>
-  <span class="bold">Error code</span>
-  <span>{{ exception.code }}</span>
-  <span class="bold">File</span>
-  <span>{{ exception.file }}</span>
-  <span class="bold">Line</span>
-  <span>{{ exception.line }}</span>
-  <span class="bold">Url</span>
-  <span>{{ exception.url }}</span>
-  <span class="bold">Content</span>
-  <span class="long-text">{{ exception.content }}</span>
-  <span class="bold">Trace</span>
-  <span class="long-text">{{ exception.trace }}</span>
-  <span class="bold">Created at</span>
-  <span>{{ exception.createdAt }}</span>
-</div>
+<span>Username</span>
+<span>{{ exception.username ?? 'Not logged in' }}</span>
+<span>Error code</span>
+<span>{{ exception.code }}</span>
+<span>Path</span>
+<span>{{ exception.path }}</span>
+<span>Line</span>
+<span>{{ exception.line }}</span>
+<span>Url</span>
+<span>{{ exception.url }}</span>
+<span>Content</span>
+<span class="long-text">{{ exception.content }}</span>
+<span>Trace</span>
+<span class="long-text">{{ exception.trace }}</span>
+<span>Created at</span>
+<span>{{ exception.createdAt }}</span>

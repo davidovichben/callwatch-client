@@ -5,7 +5,7 @@ export class ExceptionModel {
   username: string;
   code: string;
   line: string;
-  file: string;
+  path: string;
   trace: string;
   content: string;
   createdAt: string;
