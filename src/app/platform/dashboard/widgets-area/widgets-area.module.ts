@@ -8,7 +8,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 
 import { WidgetsAreaComponent } from './widgets-area.component';
 
-
+import { WidgetService } from 'src/app/_shared/services/http/widget.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,7 @@ import { WidgetsAreaComponent } from './widgets-area.component';
     ChartModule,
     MatGridListModule,
     DragDropModule
-  ]
+  ],
+  providers: [WidgetService]
 })
 export class WidgetsAreaModule {}
