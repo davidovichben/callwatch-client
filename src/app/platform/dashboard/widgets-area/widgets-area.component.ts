@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
+import { SocketService } from 'src/app/_shared/services/generic/socket.service';
+
 import { NgxResizeHandleType } from 'ngx-drag-resize';
 
 
@@ -45,7 +47,9 @@ export class WidgetsAreaComponent implements AfterViewInit {
       zindex: 1
     }];
 
-  constructor() {
+  constructor(private socketService: SocketService) {
+    this.socketService.socketIo()
+
     this.occupiedTiles = this.buildGrid();
   }
 
@@ -66,6 +70,7 @@ export class WidgetsAreaComponent implements AfterViewInit {
   }
 
   startDrag(element: HTMLDivElement, index: number): void {
+    this.socketService.sendMessage('message from client');
     this.widgets[index].zindex++;
 
     this.widgets.map((el, elIndex) => {
