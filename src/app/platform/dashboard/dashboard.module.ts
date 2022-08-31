@@ -8,11 +8,6 @@ import { DatePickerModule } from 'src/app/_shared/components/date-picker/date-pi
 
 import { DashboardComponent } from './dashboard.component';
 
-import { ReportWidgetService } from 'src/app/_shared/services/http/report-widget.service';
-
-import { ReportWidgetsResolve } from 'src/app/_shared/resolves/report-widgets.resolve';
-import { WidgetsAreaModule } from 'src/app/platform/dashboard/widgets-area/widgets-area.module';
-
 const routes: Routes = [
   {
     path: '',
@@ -32,9 +27,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatIconModule,
     TranslateModule,
-    DatePickerModule,
-    WidgetsAreaModule
-  ],
-  providers: [ReportWidgetService, ReportWidgetsResolve]
+    DatePickerModule
+  ]
 })
 export class DashboardModule {}

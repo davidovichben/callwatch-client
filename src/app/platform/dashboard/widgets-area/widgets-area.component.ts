@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+
+import { WidgetService } from 'src/app/_shared/services/http/widget.service';
 
 import { NgxResizeHandleType } from 'ngx-drag-resize';
+import { WidgetModel } from 'src/app/_shared/models/widget.model';
 
 
 @Component({
@@ -8,7 +11,7 @@ import { NgxResizeHandleType } from 'ngx-drag-resize';
   templateUrl: './widgets-area.component.html',
   styleUrls: ['./widgets-area.component.scss']
 })
-export class WidgetsAreaComponent implements AfterViewInit {
+export class WidgetsAreaComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gridArea') gridEl: ElementRef;
 
@@ -28,25 +31,18 @@ export class WidgetsAreaComponent implements AfterViewInit {
 
   prevLocation = { offsetTop: 0, offsetLeft: 0, offsetWidth: 0, offsetHeight: 0 };
 
-  widgets = [{
-      type: 'doughnut',
-      left: 185.38,
-      width: 358.89,
-      height: 278.003,
-      top: 0.6,
-      zindex: 1
-    },
-    {
-      type: 'bar',
-      left: 248.316,
-      width: 433.333,
-      height: 288.333,
-      top: 0.6,
-      zindex: 1
-    }];
+  widgets: WidgetModel[];
 
-  constructor() {
+  constructor(private widgetService: WidgetService) {}
+
+  ngOnInit(): void {
     this.occupiedTiles = this.buildGrid();
+    this.widgetService.getWidgets().then(widgets => {
+      this.widgets = widgets.map(w => {
+        w.zindex = 1
+        return w;
+      });
+    })
   }
 
   ngAfterViewInit(): void {
@@ -104,6 +100,10 @@ export class WidgetsAreaComponent implements AfterViewInit {
     setTimeout(() => {
       widget.top = newTop + 5;
       widget.left = newLeft + 5;
+
+      this.widgetService.updateWidget(widget).then(() => {
+        console.log('updated')
+      })
     })
 
     this.resizing = false;
