@@ -59,12 +59,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() isSelectable = false;
 
   @Output() fetchItems = new EventEmitter<boolean>();
+  @Output() openMultipleEdit = new EventEmitter<boolean>();
 
   items: {}[] = [];
   sub = new Subscription();
   criteria = new DataTableCriteria();
   paginationData = new PaginationData(this.limit);
-  showFilters = false;
   isLoading: boolean;
   isActive = true;
   savedItem: string;
@@ -168,23 +168,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   checkItem(item: any, isChecked: boolean): void {
     item.checked = isChecked;
-    if (this.criteria.isCheckAll) {
-      if (isChecked) {
-        this.removeFromCheckedItemsList(item);
-      } else {
-        this.addToCheckedItemsList(item);
-      }
+    if (item.checked) {
+      this.criteria.checkedItems.push(item);
     } else {
-      if (isChecked) {
-        this.addToCheckedItemsList(item);
-      } else {
-        this.removeFromCheckedItemsList(item);
-      }
+      this.criteria.isCheckAll = false;
+      this.removeFromCheckedItemsList(item);
     }
-  }
-
-  private addToCheckedItemsList(item: any): void {
-    this.criteria.checkedItems.push(item);
   }
 
   private removeFromCheckedItemsList(item: any): void {

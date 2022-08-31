@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { MultipleEditModule } from './multiple-edit/multiple-edit.module';
 
 import { CallbacksComponent } from 'src/app/platform/settings/callbacks/callbacks.component';
 
@@ -21,7 +23,9 @@ const routes: Routes = [
 	imports: [
 		RouterModule.forChild(routes),
 		DataTableModule,
-    TranslateModule
+    MatDialogModule,
+    TranslateModule,
+    MultipleEditModule
 	],
 	providers: [CallbackService]
 })

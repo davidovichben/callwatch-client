@@ -1,0 +1,12 @@
+<div class="dialog-header">
+  <span>{{ 'multiple_edit' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<div class="d-flex checked-items">
+  <div class="checked-item" *ngFor="let item of checkedItems; let index = index">
+    <div class="ms-1 remove-item" (click)="removeItem(index)">
+      <mat-icon>close</mat-icon>
+    </div>
+    <span class="blue-text">{{ item.name | truncate: 60 }}</span>
+  </div>
+</div>

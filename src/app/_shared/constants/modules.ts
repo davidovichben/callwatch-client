@@ -7,7 +7,6 @@ export const PlatformModules = [
     icon: 'assignment',
     subModules: [
       { name: 'templates', permission: 'reports', label: 'templates' },
-      // { name: 'sets', label: 'report_sets' },
       { name: 'timings', permission: 'timed_reports', label: 'timed_reports' },
       { name: 'historical', permission: 'reports', label: 'historical_reports' }
     ]
@@ -32,7 +31,7 @@ export const PlatformModules = [
 
 export const AdminModules = [
   { name: 'organizations' },
-  { name: 'exceptions-log' }
+  { name: 'exceptions', label: 'exception_log' }
 ];
 
 export const UnitModules = [

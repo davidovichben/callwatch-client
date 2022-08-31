@@ -1,4 +1,4 @@
-<p class="h1 mb-3">{{ 'exceptions_log' | t }}</p>
+<p class="h1 mb-3">{{ 'exception_log' | t }}</p>
 <app-data-table [columns]="columns" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <tr *ngFor="let item of dataTable.items">
     <td>{{ item.username ?? 'Not logged in' }}</td>

@@ -13,11 +13,13 @@
       <mat-slide-toggle (change)="toggleActiveStatus($event.checked)" [checked]="isActive">{{ activeSwitch }}</mat-slide-toggle>
     </div>
   </div>
-  <ng-content select=".data-table-menus"></ng-content>
+  <div *ngIf="hasCheckColumn">
+    <mat-menu #actionMenu>
+      <div mat-menu-item (click)="openMultipleEdit.emit(true)" class="text-center">{{ 'edit' | t }}</div>
+    </mat-menu>
+    <button class="btn blue-btn" [matMenuTriggerFor]="actionMenu">{{ 'actions' | t }}</button>
+  </div>
 </div>
-<!--<div [@slideToggle]="showFilters ? 'active' : 'inactive'">-->
-<!--  <app-side-filters [columns]="columns" (searchSubmitted)="extendedSearch($event)"></app-side-filters>-->
-<!--</div>-->
 <p class="alert alert-success mb-3" *ngIf="savedItem">
   <span> {{ savedItem }}</span>
   <span>{{ 'saved_successfully' | t }}</span>

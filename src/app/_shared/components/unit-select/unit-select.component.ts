@@ -78,7 +78,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
       }
 
       start += 100;
-    }, 1);
+    }, 200);
   }
 
   ngOnChanges(): void {
@@ -214,8 +214,8 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     }
   }
 
-  checkAll(checked: boolean): void {
-    this.units.forEach(unit => this.checkUnit(checked, unit));
+  checkAll(isChecked: boolean): void {
+    this.units.forEach(unit => this.checkUnit(isChecked, unit));
     this.selected = [];
     this.units.forEach(unit => this.setMultipleSelected(unit));
   }

@@ -4,7 +4,7 @@ export class DataTableCriteria {
 	page: number;
 	keyword: string;
 	isCheckAll: boolean;
-	checkedItems: { id: number }[];
+	checkedItems: any[];
 
 	constructor() {
 		this.filters = {};

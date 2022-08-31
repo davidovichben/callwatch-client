@@ -11,8 +11,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html',
-  styles: [`::ng-deep .close-circle { width: 18px !important }`]
+  templateUrl: './form.component.html'
 })
 export class FormComponent {
 
