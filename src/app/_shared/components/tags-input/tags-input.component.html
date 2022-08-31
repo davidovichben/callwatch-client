@@ -15,7 +15,9 @@
       <div *ngFor="let tag of suggestedTags; let index = index" class="suggested-tag" (click)="addTag(tag, index)">{{ tag.name }}</div>
       <p class="my-1 text-center" *ngIf="suggestedTags.length === 0">{{ 'no_tags_found' | t }}.</p>
     </ng-container>
-    <div class="loader" *ngIf="isLoading"></div>
+    <div class="d-flex justify-content-center">
+      <div class="loader" *ngIf="isLoading"></div>
+    </div>
   </div>
   <div class="create-tag" (click)="createTag()" *ngIf="unmatchedKeyword && !isLoading">
     <mat-icon class="ms-1">add_circle</mat-icon>
