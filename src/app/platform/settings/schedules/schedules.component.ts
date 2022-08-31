@@ -66,6 +66,7 @@ export class SchedulesComponent implements OnInit {
     const sub = dialog.afterClosed().subscribe(updated => {
       if (updated) {
         this.fetchItems();
+        this.dataTable.criteria.checkedItems = [];
         this.notification.success()
       }
     });
