@@ -1,0 +1,25 @@
+<div class="dialog-header">
+  <span>{{ 'multiple_edit' | t }}</span>
+  <i class="la la-times" mat-dialog-close></i>
+</div>
+<form (ngSubmit)="submit()" #form [formGroup]="formGroup">
+  <app-checked-items [checkedItems]="checkedItems" (itemRemoved)="checkedItems = $event"></app-checked-items>
+  <div class="d-flex">
+   <mat-form-field class="w-50 ms-3">
+      <mat-label>{{ 'verification_type' | t }}</mat-label>
+      <mat-select formControlName="authType">
+        <mat-option>-------</mat-option>
+        <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="w-50">
+      <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="formGroup.get('permission').errors && form.submitted" [required]="true">
+        <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
+      </bd-select>
+      <div class="input-error" [@fade]="formGroup.get('permission').errors && form.submitted ? 'active' : 'inactive'">{{ errorMessages.required | t }}</div>
+    </div>
+  </div>
+  <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
+  <app-unit-select formControlName="units" [units]="units" [toggleUp]="true" [multiple]="true"></app-unit-select>
+  <button type="submit" class="btn blue-btn mt-5">{{ 'update' | t }}</button>
+</form>

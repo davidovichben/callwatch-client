@@ -11,8 +11,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 
 @Component({
   selector: 'app-multiple-edit',
-  templateUrl: './multiple-edit.component.html',
-  styleUrls: ['./multiple-edit.component.styl']
+  templateUrl: './multiple-edit.component.html'
 })
 export class MultipleEditComponent implements OnInit {
 
@@ -46,10 +45,6 @@ export class MultipleEditComponent implements OnInit {
       email: this.fb.control(null, Validators.pattern(EmailPattern)),
       dialerCallerID: this.fb.control(null)
     })
-  }
-
-  removeItem(index: number): void {
-    this.checkedItems.splice(index, 1);
   }
 
   submit(): void {

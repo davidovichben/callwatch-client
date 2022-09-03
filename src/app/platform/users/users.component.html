@@ -5,13 +5,17 @@
     <span>{{ 'add_user' | t }}</span>
   </button>
 </div>
-<app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('users')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+<app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('users')" (fetchItems)="fetchItems()"
+                [hasCheckColumn]="userSession.hasPermission('users', 'update')" (openMultipleEdit)="openMultipleEdit()">
   <div class="data-table-filters">
     <bd-select [(ngModel)]="dataTable.criteria.filters['permissionId']" (ngModelChange)="dataTable.loadItems()" [placeholder]="'select_permission' | t">
       <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
     </bd-select>
   </div>
   <tr *ngFor="let item of dataTable.items">
+    <td *ngIf="userSession.hasPermission('users', 'update')">
+      <mat-checkbox (change)="dataTable.checkItem(item, $event.checked)" [checked]="item.checked"></mat-checkbox>
+    </td>
     <td>
       <a [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('users', 'update')">{{ item.name }}</a>
       <span *ngIf="!userSession.hasPermission('users', 'update')">{{ item.name }}</span>

@@ -9,8 +9,7 @@ import { ScheduleModel } from 'src/app/_shared/models/schedule.model';
 
 @Component({
   selector: 'app-multiple-edit',
-  templateUrl: './multiple-edit.component.html',
-  styleUrls: ['./multiple-edit.component.styl']
+  templateUrl: './multiple-edit.component.html'
 })
 export class MultipleEditComponent implements OnInit {
 
@@ -32,10 +31,6 @@ export class MultipleEditComponent implements OnInit {
       tags: this.fb.control(null),
       uniqueSchedule: this.fb.control(null)
     });
-  }
-
-  removeItem(index: number): void {
-    this.checkedItems.splice(index, 1);
   }
 
   submit(): void {

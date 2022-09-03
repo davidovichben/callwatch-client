@@ -8,12 +8,14 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { TruncateModule } from 'src/app/_shared/pipes/truncate/truncate.module';
-import { CheckedItemsModule } from 'src/app/_shared/components/multiple-edit/checked-items/checked-items.module';
 
-import { MultipleEditComponent } from './multiple-edit.component';
+import { CheckedItemsComponent } from './checked-items.component';
 
 @NgModule({
-  declarations: [MultipleEditComponent],
+  declarations: [CheckedItemsComponent],
+  exports: [
+    CheckedItemsComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -22,9 +24,7 @@ import { MultipleEditComponent } from './multiple-edit.component';
     MatSelectModule,
     MatInputModule,
     TranslateModule,
-    TruncateModule,
-    CheckedItemsModule
-  ],
-  exports: [MultipleEditComponent]
+    TruncateModule
+  ]
 })
-export class MultipleEditModule {}
+export class CheckedItemsModule {}

@@ -9,11 +9,17 @@ import { MultipleEditModule } from './multiple-edit/multiple-edit.module';
 import { CallbacksComponent } from 'src/app/platform/settings/callbacks/callbacks.component';
 
 import { CallbackService } from 'src/app/_shared/services/http/callback.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
+
+import { ScheduleSelectResolve } from 'src/app/_shared/resolves/schedule-select.resolve';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: CallbacksComponent
+		component: CallbacksComponent,
+    resolve: {
+      schedules: ScheduleSelectResolve
+    }
 	},
 	{ path: 'form', loadChildren: () => import('src/app/platform/settings/callbacks/form/form.module').then(m => m.FormModule) }
 ];
@@ -27,6 +33,6 @@ const routes: Routes = [
     TranslateModule,
     MultipleEditModule
 	],
-	providers: [CallbackService]
+	providers: [CallbackService, ScheduleSelectResolve, SelectService]
 })
 export class CallbacksModule {}

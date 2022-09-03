@@ -10,6 +10,7 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 import { TruncateModule } from 'src/app/_shared/pipes/truncate/truncate.module';
 
 import { MultipleEditComponent } from './multiple-edit.component';
+import { CheckedItemsModule } from 'src/app/_shared/components/multiple-edit/checked-items/checked-items.module';
 
 @NgModule({
   declarations: [MultipleEditComponent],
@@ -21,7 +22,8 @@ import { MultipleEditComponent } from './multiple-edit.component';
     MatSelectModule,
     MatInputModule,
     TranslateModule,
-    TruncateModule
+    TruncateModule,
+    CheckedItemsModule
   ],
   exports: [MultipleEditComponent]
 })
