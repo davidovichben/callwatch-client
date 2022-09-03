@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,7 +18,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
   selector: 'app-schedules',
   templateUrl: './schedules.component.html'
 })
-export class SchedulesComponent implements OnInit {
+export class SchedulesComponent implements OnInit, OnDestroy {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 

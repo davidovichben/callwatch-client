@@ -47,6 +47,13 @@ export class ExtensionService extends BaseHttpService {
 			.catch(() => false);
 	}
 
+  multipleUpdate(checkedItems: any[], values: object): Promise<boolean> {
+    return this.http.put(this.endPoint + '/multipleUpdate', { checkedItems, ...values }, this.getTokenRequest())
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
+
 	deleteExtension(extensionId: number): Promise<boolean> {
 		return this.http.delete(this.endPoint + '/' + extensionId, this.getTokenRequest())
 			.toPromise()
