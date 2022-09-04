@@ -29,7 +29,8 @@ export class MultipleEditComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       tags: this.fb.control(null),
-      uniqueSchedule: this.fb.control(null)
+      uniqueSchedule: this.fb.control(null),
+      overrideWithNull: this.fb.control(null)
     });
   }
 

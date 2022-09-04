@@ -59,16 +59,16 @@ export class SchedulesComponent implements OnInit, OnDestroy {
         checkedItems,
         uniqueSchedules: this.uniqueSchedules
       },
-      width: '600px',
-      height: '600px'
+      width: '600px'
     })
 
     const sub = dialog.afterClosed().subscribe(updated => {
       if (updated) {
         this.fetchItems();
-        this.dataTable.criteria.checkedItems = [];
         this.notification.success()
       }
+
+      this.dataTable.criteria.checkedItems = [];
     });
 
     this.sub.add(sub);

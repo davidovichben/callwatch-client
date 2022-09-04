@@ -67,8 +67,7 @@ export class ExtensionsComponent implements OnInit, OnDestroy {
         checkedItems,
         selects: this.selects
       },
-      width: '600px',
-      height: '600px'
+      width: '600px'
     })
 
     const sub = dialog.afterClosed().subscribe(updated => {

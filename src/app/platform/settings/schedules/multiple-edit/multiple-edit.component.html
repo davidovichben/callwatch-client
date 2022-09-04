@@ -4,13 +4,14 @@
 </div>
 <form (ngSubmit)="submit()" [formGroup]="formGroup">
   <app-checked-items [checkedItems]="checkedItems" (itemRemoved)="checkedItems = $event"></app-checked-items>
-  <mat-form-field class="mt-5">
+  <mat-form-field class="mt-4">
     <mat-label>{{ 'unique_schedule' | t }}</mat-label>
     <mat-select formControlName="uniqueSchedule">
       <mat-option>-------</mat-option>
       <mat-option *ngFor="let schedule of uniqueSchedules" [value]="schedule.id">{{ schedule.name }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <app-tags-input class="mt-5" [placeholder]="'tags' | t" [type]="'schedule'" formControlName="tags"></app-tags-input>
-  <button type="submit" class="btn blue-btn mt-5">{{ 'update' | t }}</button>
+  <app-tags-input class="mt-4" [placeholder]="'tags' | t" [type]="'schedule'" formControlName="tags"></app-tags-input>
+  <mat-checkbox class="my-3 w-100" formControlName="overrideWithNull">{{ 'override_with_empty_values' | t }}</mat-checkbox>
+  <button type="submit" class="btn blue-btn mt-4">{{ 'update' | t }}</button>
 </form>

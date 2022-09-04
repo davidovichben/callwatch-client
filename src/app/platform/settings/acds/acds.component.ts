@@ -73,9 +73,10 @@ export class AcdsComponent implements OnInit, OnDestroy {
     const sub = dialog.afterClosed().subscribe(updated => {
       if (updated) {
         this.fetchItems();
-        this.dataTable.criteria.checkedItems = [];
         this.notification.success()
       }
+
+      this.dataTable.criteria.checkedItems = [];
     });
 
     this.sub.add(sub);

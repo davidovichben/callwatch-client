@@ -2,7 +2,7 @@
   <span>{{ 'multiple_edit' | t }}</span>
   <i class="la la-times" mat-dialog-close></i>
 </div>
-<form (ngSubmit)="submit()" #form [formGroup]="formGroup">
+<form (ngSubmit)="submit()" #form="ngForm" [formGroup]="formGroup">
   <app-checked-items [checkedItems]="checkedItems" (itemRemoved)="checkedItems = $event"></app-checked-items>
   <div class="d-flex">
    <mat-form-field class="w-50 ms-3">
@@ -21,5 +21,6 @@
   </div>
   <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
   <app-unit-select formControlName="units" [units]="units" [toggleUp]="true" [multiple]="true"></app-unit-select>
+  <mat-checkbox class="my-3 w-100" formControlName="overrideWithNull">{{ 'override_with_empty_values' | t }}</mat-checkbox>
   <button type="submit" class="btn blue-btn mt-5">{{ 'update' | t }}</button>
 </form>
