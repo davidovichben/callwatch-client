@@ -13,9 +13,7 @@ import { CheckedItemsComponent } from './checked-items.component';
 
 @NgModule({
   declarations: [CheckedItemsComponent],
-  exports: [
-    CheckedItemsComponent
-  ],
+  exports: [CheckedItemsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

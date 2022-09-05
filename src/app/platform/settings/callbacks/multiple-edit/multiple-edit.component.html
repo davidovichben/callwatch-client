@@ -27,24 +27,28 @@
       <mat-error>{{ errorMessages.required | t }}</mat-error>
     </mat-form-field>
   </div>
-  <div class="d-flex">
-    <mat-form-field class="w-50 ms-3">
-      <mat-label>{{ 'call_attempts_intervals' | t }}</mat-label>
-      <input matInput type="number" formControlName="dialAttemptIntervals">
-      <mat-error>{{ errorMessages.number | t }}</mat-error>
-    </mat-form-field>
-    <mat-form-field class="w-50">
-      <mat-label>{{ 'number_of_call_attempts' | t }}</mat-label>
-      <input matInput type="number" formControlName="dialAttempts">
-      <mat-error>{{ errorMessages.number | t }}</mat-error>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field class="w-50">
-      <mat-label>{{ 'min_number_of_digits_for_request' | t }}</mat-label>
-      <input matInput type="number" formControlName="minDigitsForRequest">
-      <mat-error>{{ errorMessages.number | t }}</mat-error>
-    </mat-form-field>
+  <div class="d-flex flex-wrap">
+    <div class="w-50 px-1">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'call_attempts_intervals' | t }}</mat-label>
+        <input matInput type="number" formControlName="dialAttemptIntervals">
+        <mat-error>{{ errorMessages.number | t }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="w-50 px-1">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'number_of_call_attempts' | t }}</mat-label>
+        <input matInput type="number" formControlName="dialAttempts">
+        <mat-error>{{ errorMessages.number | t }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="w-50 px-1">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'min_number_of_digits_for_request' | t }}</mat-label>
+        <input matInput type="number" formControlName="minDigitsForRequest">
+        <mat-error>{{ errorMessages.number | t }}</mat-error>
+      </mat-form-field>
+    </div>
   </div>
   <mat-checkbox class="my-3 w-100" formControlName="overrideWithNull">{{ 'override_with_empty_values' | t }}</mat-checkbox>
   <button type="submit" class="btn blue-btn mt-4">{{ 'update' | t }}</button>

@@ -85,7 +85,7 @@ export class UsersComponent {
       if (updated) {
         this.fetchItems();
         this.dataTable.criteria.checkedItems = [];
-        this.notificationService.success()
+        this.notificationService.success();
       }
     });
 

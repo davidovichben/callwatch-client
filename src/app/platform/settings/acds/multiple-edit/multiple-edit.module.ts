@@ -15,18 +15,18 @@ import { MultipleEditComponent } from './multiple-edit.component';
 
 @NgModule({
   declarations: [MultipleEditComponent],
-    imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      MatDialogModule,
-      MatIconModule,
-      MatSelectModule,
-      MatInputModule,
-      TranslateModule,
-      TruncateModule,
-      CheckedItemsModule,
-      MatCheckboxModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatIconModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCheckboxModule,
+    TranslateModule,
+    TruncateModule,
+    CheckedItemsModule,
+  ],
   exports: [MultipleEditComponent]
 })
 export class MultipleEditModule {}
