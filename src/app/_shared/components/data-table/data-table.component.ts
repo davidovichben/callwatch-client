@@ -1,15 +1,19 @@
 import { Component, Input, Output, OnDestroy, OnInit, EventEmitter, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { NgModel } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { PaginationData } from './classes/pagination-data';
 import { DataTableCriteria } from './classes/data-table-criteria';
 import { DataTableResponse } from './classes/data-table-response';
 import { DataTableColumn } from './classes/data-table-column';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 @Component({
   selector: 'app-data-table',
@@ -71,7 +75,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
   columnLength = 0;
 
   constructor(protected router: Router, protected route: ActivatedRoute,
-              protected appState: AppStateService) {}
+              protected appState: AppStateService,
+              protected notifications: NotificationService,
+              protected t: TranslatePipe,
+              protected dialog: MatDialog) {}
 
   ngOnInit() {
     this.checkSavedItem('saved-item');
@@ -192,6 +199,32 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.criteria.checkedItems = [];
     this.criteria.isCheckAll = false;
     this.loadItems();
+  }
+
+  openMultipleEditDialog(dialogComponent, data): void {
+    const checkedItems = this.criteria.checkedItems;
+
+    if (checkedItems.length === 0) {
+      this.notifications.error(this.t.transform('no_items_selected'));
+      return;
+    }
+
+    const dialog = this.dialog.open(dialogComponent, {
+      data: { checkedItems, ...data },
+      width: '600px'
+    })
+
+    const sub = dialog.afterClosed().subscribe(updated => {
+      if (updated) {
+        this.fetchItems.emit(this.isActive);
+        this.notifications.success()
+      }
+
+      this.criteria.checkedItems = [];
+      this.checkAll(false);
+    });
+
+    this.sub.add(sub);
   }
 
   ngOnDestroy() {

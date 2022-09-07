@@ -44,7 +44,7 @@ export class MultipleEditComponent implements OnInit {
       overflowNumber: this.fb.control(null, isInteger),
       email: this.fb.control(null, Validators.pattern(EmailPattern)),
       dialerCallerID: this.fb.control(null),
-      overrideWithNull: this.fb.control(null)
+      forceEmpty: this.fb.control(null)
     })
   }
 

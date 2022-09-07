@@ -64,32 +64,13 @@ export class UsersComponent {
   }
 
   openMultipleEdit(): void {
-    const checkedItems = this.dataTable.criteria.checkedItems;
-
-    if (checkedItems.length === 0) {
-      this.notificationService.error(this.t.transform('no_items_selected'));
-      return;
+    const data = {
+      units: this.units,
+      permissions: this.permissions,
+      loggedUser: this.currentUser
     }
 
-    const dialog = this.dialog.open(MultipleEditComponent, {
-      data: {
-        checkedItems,
-        units: this.units,
-        permissions: this.permissions,
-        loggedUser: this.currentUser
-      },
-      width: '600px'
-    })
-
-    const sub = dialog.afterClosed().subscribe(updated => {
-      if (updated) {
-        this.fetchItems();
-        this.dataTable.criteria.checkedItems = [];
-        this.notificationService.success();
-      }
-    });
-
-    this.sub.add(sub);
+    this.dataTable.openMultipleEditDialog(MultipleEditComponent, data)
   }
 
   deleteItem(userId: number): void {

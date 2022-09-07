@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 
-import { AcdModel } from 'src/app/_shared/models/acd.model';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
@@ -14,6 +13,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-multiple-edit',
   templateUrl: './multiple-edit.component.html',
+  styleUrls: ['../../../_shared/components/multiple-edit/multiple-edit.component.styl'],
   animations: [Fade]
 })
 export class MultipleEditComponent implements OnInit {
@@ -24,7 +24,7 @@ export class MultipleEditComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  checkedItems: AcdModel[];
+  checkedItems: any[];
 
   loggedUser: UserModel;
 
@@ -46,13 +46,17 @@ export class MultipleEditComponent implements OnInit {
       authType: this.fb.control(null),
       permission: this.fb.control(null, Validators.required),
       units: this.fb.control([], null),
-      overrideWithNull: this.fb.control(null)
+      forceEmpty: this.fb.control(null)
     });
   }
 
   submit(): void {
     if (this.formGroup.valid) {
-      this.userService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => this.dialogRef.close(response));
+      this.userService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => {
+        if (response) {
+          this.dialogRef.close(response)
+        }
+      });
     }
   }
 }

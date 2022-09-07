@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { MultipleEditComponent } from 'src/app/platform/settings/acds/multiple-edit/multiple-edit.component';
@@ -10,17 +8,13 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { AcdService } from 'src/app/_shared/services/http/acd.service';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
 @Component({
 	selector: 'app-acds',
 	templateUrl: './acds.component.html'
 })
-export class AcdsComponent implements OnInit, OnDestroy {
+export class AcdsComponent implements OnInit {
 
 	@ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
-
-  readonly sub = new Subscription();
 
   readonly columns = [
     { label: 'group_name', name: 'name' },
@@ -40,9 +34,7 @@ export class AcdsComponent implements OnInit, OnDestroy {
 	constructor(private notification: NotificationService,
               private route: ActivatedRoute,
               private acdService: AcdService,
-              public userSession: UserSessionService,
-              private t: TranslatePipe,
-              private dialog: MatDialog) {}
+              public userSession: UserSessionService) {}
 
   ngOnInit(): void {
     this.selects = this.route.snapshot.data.selects;
@@ -55,31 +47,8 @@ export class AcdsComponent implements OnInit, OnDestroy {
 	}
 
   openMultipleEdit(): void {
-    const checkedItems = this.dataTable.criteria.checkedItems;
-
-    if (checkedItems.length === 0) {
-      this.notification.error(this.t.transform('no_items_selected'));
-      return;
-    }
-
-    const dialog = this.dialog.open(MultipleEditComponent, {
-      data: {
-        checkedItems,
-        selects: this.selects
-      },
-      width: '700px'
-    })
-
-    const sub = dialog.afterClosed().subscribe(updated => {
-      if (updated) {
-        this.fetchItems();
-        this.notification.success();
-      }
-
-      this.dataTable.criteria.checkedItems = [];
-    });
-
-    this.sub.add(sub);
+    const data = { selects: this.selects }
+    this.dataTable.openMultipleEditDialog(MultipleEditComponent, data)
   }
 
 	deleteItem(acdId: number): void {
@@ -92,8 +61,4 @@ export class AcdsComponent implements OnInit, OnDestroy {
 			}
 		});
 	}
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
 }

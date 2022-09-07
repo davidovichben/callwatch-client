@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -17,18 +16,17 @@ import { ScheduleService } from 'src/app/_shared/services/http/schedule.service'
 
 @NgModule({
   declarations: [MultipleEditComponent],
-    imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      TranslateModule,
-      TruncateModule,
-      MatDialogModule,
-      MatIconModule,
-      MatSelectModule,
-      TagsInputModule,
-      CheckedItemsModule,
-      MatCheckboxModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    TruncateModule,
+    MatDialogModule,
+    MatSelectModule,
+    TagsInputModule,
+    CheckedItemsModule,
+    MatCheckboxModule
+  ],
   providers: [ScheduleService],
   exports: [MultipleEditComponent]
 })

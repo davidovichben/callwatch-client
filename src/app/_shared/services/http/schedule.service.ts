@@ -49,7 +49,7 @@ export class ScheduleService extends BaseHttpService {
   }
 
   multipleUpdate(checkedItems: any[], values: object): Promise<boolean> {
-    return this.http.put(this.endPoint + '/multipleUpdate', { values, checkedItems }, this.getTokenRequest())
+    return this.http.put(this.endPoint + '/multipleUpdate', { checkedItems, ...values }, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);

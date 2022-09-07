@@ -55,30 +55,8 @@ export class ExtensionsComponent implements OnInit, OnDestroy {
   }
 
   openMultipleEdit(): void {
-    const checkedItems = this.dataTable.criteria.checkedItems;
-
-    if (checkedItems.length === 0) {
-      this.notification.error(this.t.transform('no_items_selected'));
-      return;
-    }
-
-    const dialog = this.dialog.open(MultipleEditComponent, {
-      data: {
-        checkedItems,
-        selects: this.selects
-      },
-      width: '600px'
-    })
-
-    const sub = dialog.afterClosed().subscribe(updated => {
-      if (updated) {
-        this.fetchItems();
-        this.dataTable.criteria.checkedItems = [];
-        this.notification.success()
-      }
-    });
-
-    this.sub.add(sub);
+    const data = { selects: this.selects }
+    this.dataTable.openMultipleEditDialog(MultipleEditComponent, data)
   }
 
   deleteItem(extensionId: number): void {

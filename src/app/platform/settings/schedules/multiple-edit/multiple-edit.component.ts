@@ -5,17 +5,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-import { ScheduleModel } from 'src/app/_shared/models/schedule.model';
 
 @Component({
   selector: 'app-multiple-edit',
-  templateUrl: './multiple-edit.component.html'
+  templateUrl: './multiple-edit.component.html',
+  styleUrls: ['../../../../_shared/components/multiple-edit/multiple-edit.component.styl'],
 })
 export class MultipleEditComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  checkedItems: ScheduleModel[]
+  checkedItems: any[]
 
   uniqueSchedules: SelectItemModel[] = [];
 
@@ -30,7 +30,7 @@ export class MultipleEditComponent implements OnInit {
     this.formGroup = this.fb.group({
       tags: this.fb.control(null),
       uniqueSchedule: this.fb.control(null),
-      overrideWithNull: this.fb.control(null)
+      forceEmpty: this.fb.control(null)
     });
   }
 

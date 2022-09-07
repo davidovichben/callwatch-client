@@ -42,7 +42,7 @@ export class MultipleEditComponent {
       dialAttemptIntervals: this.fb.control({ value: null, disabled: true }, isInteger),
       minDigitsForRequest: this.fb.control({ value: 7, disabled: true }, isInteger),
       mailCallback: this.fb.control(null),
-      overrideWithNull: this.fb.control(null)
+      forceEmpty: this.fb.control(null)
     });
   }
 
