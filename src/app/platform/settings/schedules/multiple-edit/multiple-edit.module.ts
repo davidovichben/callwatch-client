@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { TruncateModule } from 'src/app/_shared/pipes/truncate/truncate.module';
-import { MatSelectModule } from '@angular/material/select';
 import { TagsInputModule } from 'src/app/_shared/components/tags-input/tags-input.module';
 import { CheckedItemsModule } from 'src/app/_shared/components/multiple-edit/checked-items/checked-items.module';
 
@@ -20,7 +19,6 @@ import { ScheduleService } from 'src/app/_shared/services/http/schedule.service'
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
-    TruncateModule,
     MatDialogModule,
     MatSelectModule,
     TagsInputModule,

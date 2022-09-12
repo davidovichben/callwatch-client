@@ -5,9 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CallbackService } from 'src/app/_shared/services/http/callback.service';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
-import { CallbackModel } from 'src/app/_shared/models/callback.model';
-import { isInteger } from 'src/app/_shared/validators/integer.validator';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
+import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
   selector: 'app-multiple-edit',
@@ -21,9 +20,11 @@ export class MultipleEditComponent {
 
   formGroup: FormGroup;
 
-  checkedItems: CallbackModel[]
+  checkedItems: any[]
 
   schedules: SelectItemModel[] = [];
+
+  isSubmitting = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
               private dialogRef: MatDialogRef<MultipleEditComponent>,
@@ -49,7 +50,13 @@ export class MultipleEditComponent {
   enableDialerChecked(checked: boolean): void {
     this.optionalDialerControls.forEach(controlName => {
       const control = this.formGroup.get(controlName);
-      checked ? control.enable() : control.disable();
+
+      if (checked) {
+        control.enable();
+      } else {
+        control.reset();
+        control.disable();
+      }
     })
 
     const validators = checked ? Validators.required : null;
@@ -57,8 +64,15 @@ export class MultipleEditComponent {
   }
 
   submit(): void {
-    if (this.formGroup.valid) {
-      this.callbackService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => this.dialogRef.close(response));
+    if (this.formGroup.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      this.callbackService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => {
+        this.isSubmitting = false;
+
+        if (response) {
+          this.dialogRef.close(response)
+        }
+      });
     }
   }
 }

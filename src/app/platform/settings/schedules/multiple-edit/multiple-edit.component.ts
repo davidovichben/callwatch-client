@@ -19,6 +19,8 @@ export class MultipleEditComponent implements OnInit {
 
   uniqueSchedules: SelectItemModel[] = [];
 
+  isSubmitting = false;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
               private dialogRef: MatDialogRef<MultipleEditComponent>,
               private scheduleService: ScheduleService) {}
@@ -35,8 +37,15 @@ export class MultipleEditComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.formGroup.valid) {
-      this.scheduleService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => this.dialogRef.close(response));
+    if (this.formGroup.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      this.scheduleService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => {
+        this.isSubmitting = false;
+
+        if (response) {
+          this.dialogRef.close(response)
+        }
+      });
     }
   }
 }
