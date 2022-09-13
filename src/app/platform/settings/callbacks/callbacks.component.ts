@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { MultipleEditComponent } from './multiple-edit/multiple-edit.component';
@@ -12,28 +10,23 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
 @Component({
 	selector: 'app-callbacks',
 	templateUrl: './callbacks.component.html'
 })
-export class CallbacksComponent implements OnInit, OnDestroy {
+export class CallbacksComponent implements OnInit {
 
 	@ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
-  readonly sub = new Subscription();
-
   readonly columns = [
 		{ name: 'name', label: 'callback_name' },
-    { name: 'schedule', label: 'schedule' },
+    { name: 'schedule', label: 'schedule' }
   ];
 
   schedules: SelectItemModel[] = [];
 
   constructor(private notification: NotificationService, private callbackService: CallbackService,
-              private dialog: MatDialog, public userSession: UserSessionService,
-              private t: TranslatePipe, private route: ActivatedRoute) {}
+              public userSession: UserSessionService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.schedules = this.route.snapshot.data.schedules;
@@ -60,8 +53,4 @@ export class CallbacksComponent implements OnInit, OnDestroy {
 			}
 		});
 	}
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
 }

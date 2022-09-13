@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,16 +6,14 @@ import { DataTableComponent } from 'src/app/_shared/components/data-table/data-t
 import { MultipleEditComponent } from 'src/app/platform/settings/extensions/multiple-edit/multiple-edit.component';
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
-import { ExtensionService } from 'src/app/_shared/services/http/extension.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
-
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+import { ExtensionService } from 'src/app/_shared/services/http/extension.service';
 
 @Component({
   selector: 'app-extensions',
   templateUrl: './extensions.component.html'
 })
-export class ExtensionsComponent implements OnInit, OnDestroy {
+export class ExtensionsComponent implements OnInit {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
@@ -38,10 +35,8 @@ export class ExtensionsComponent implements OnInit, OnDestroy {
   };
 
   constructor(private notification: NotificationService,
-              private extensionService: ExtensionService,
               public userSession: UserSessionService,
-              private t: TranslatePipe,
-              private dialog: MatDialog,
+              private extensionService: ExtensionService,
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -68,9 +63,5 @@ export class ExtensionsComponent implements OnInit, OnDestroy {
         });
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 }

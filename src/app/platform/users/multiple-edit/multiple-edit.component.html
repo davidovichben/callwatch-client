@@ -5,7 +5,7 @@
 <form (ngSubmit)="submit()" #form="ngForm" [formGroup]="formGroup">
   <app-checked-items [checkedItems]="checkedItems" (itemRemoved)="checkedItems = $event"></app-checked-items>
   <div class="d-flex">
-   <mat-form-field class="w-50 ms-3">
+   <mat-form-field class="ms-3">
       <mat-label>{{ 'verification_type' | t }}</mat-label>
       <mat-select formControlName="authType">
         <mat-option>-------</mat-option>

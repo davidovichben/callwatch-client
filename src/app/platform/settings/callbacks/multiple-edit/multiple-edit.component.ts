@@ -10,7 +10,8 @@ import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
   selector: 'app-multiple-edit',
-  templateUrl: './multiple-edit.component.html'
+  templateUrl: './multiple-edit.component.html',
+  styleUrls: ['../../../../_shared/components/multiple-edit/multiple-edit.component.styl']
 })
 export class MultipleEditComponent {
 

@@ -16,9 +16,7 @@ const routes: Routes = [
   {
     path: '',
     component: ExtensionsComponent,
-    resolve: {
-      selects: AcdFormSelectResolve
-    },
+    resolve: { selects: AcdFormSelectResolve },
   },
   { path: 'form', loadChildren: () => import('src/app/platform/settings/extensions/form/form.module').then(m => m.FormModule) }
 ];

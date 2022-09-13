@@ -17,9 +17,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: CallbacksComponent,
-    resolve: {
-      schedules: ScheduleSelectResolve
-    }
+    resolve: { schedules: ScheduleSelectResolve }
 	},
 	{ path: 'form', loadChildren: () => import('src/app/platform/settings/callbacks/form/form.module').then(m => m.FormModule) }
 ];

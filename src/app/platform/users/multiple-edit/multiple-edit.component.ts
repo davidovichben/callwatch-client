@@ -31,6 +31,8 @@ export class MultipleEditComponent implements OnInit {
   units: UnitModel[] = [];
   permissions: SelectItemModel[] = [];
 
+  isSubmitting = false;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
               private dialogRef: MatDialogRef<MultipleEditComponent>,
               private userService: UserService) {}
@@ -51,8 +53,11 @@ export class MultipleEditComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.formGroup.valid) {
+    if (this.formGroup.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
       this.userService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => {
+        this.isSubmitting = false;
+
         if (response) {
           this.dialogRef.close(response)
         }

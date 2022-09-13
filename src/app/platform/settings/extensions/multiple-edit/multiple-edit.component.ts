@@ -1,17 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 import { ExtensionService } from 'src/app/_shared/services/http/extension.service';
 
-import { AcdModel } from 'src/app/_shared/models/acd.model';
 import { EmailPattern } from 'src/app/_shared/constants/patterns';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
+import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
 @Component({
   selector: 'app-multiple-edit',
-  templateUrl: './multiple-edit.component.html'
+  templateUrl: './multiple-edit.component.html',
+  styleUrls: ['../../../../_shared/components/multiple-edit/multiple-edit.component.styl']
 })
 export class MultipleEditComponent implements OnInit {
 
@@ -19,7 +19,7 @@ export class MultipleEditComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  checkedItems: AcdModel[]
+  checkedItems: any[]
 
   selects = {
     extensions: [],
@@ -28,6 +28,8 @@ export class MultipleEditComponent implements OnInit {
     callbacks: [],
     routers: []
   };
+
+  isSubmitting = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
               private dialogRef: MatDialogRef<MultipleEditComponent>,
@@ -49,8 +51,15 @@ export class MultipleEditComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.formGroup.valid) {
-      this.extensionService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => this.dialogRef.close(response));
+    if (this.formGroup.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      this.extensionService.multipleUpdate(this.checkedItems, this.formGroup.value).then(response => {
+        this.isSubmitting = false;
+
+        if (response) {
+          this.dialogRef.close(response)
+        }
+      });
     }
   }
 }

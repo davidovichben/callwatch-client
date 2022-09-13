@@ -1,7 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { MultipleEditComponent } from './multiple-edit/multiple-edit.component';
@@ -14,17 +12,13 @@ import { UserModel } from 'src/app/_shared/models/user.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html'
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
-
-  readonly sub = new Subscription();
 
   readonly columns = [
     { label: 'full_name', name: 'name' },
@@ -43,9 +37,7 @@ export class UsersComponent {
   constructor(private route: ActivatedRoute,
     public userSession: UserSessionService,
     private userService: UserService,
-    private notificationService: NotificationService,
-    private t: TranslatePipe,
-    private dialog: MatDialog) {}
+    private notificationService: NotificationService) {}
 
   ngOnInit() {
     const routeData = this.route.snapshot.data;
@@ -84,9 +76,5 @@ export class UsersComponent {
         });
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 }
