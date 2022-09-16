@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
@@ -18,7 +19,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     DataTableModule,
-    TranslateModule
+    TranslateModule,
+    MatDialogModule
   ],
   providers: [ReportTimingService]
 })
