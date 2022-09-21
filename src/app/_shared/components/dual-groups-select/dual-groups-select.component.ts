@@ -1,8 +1,6 @@
 import { Component, ContentChild, ElementRef, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Component({

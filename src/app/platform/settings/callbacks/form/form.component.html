@@ -34,15 +34,15 @@
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <mat-form-field>
             <mat-label>{{ 'request_duration_in_days' | t }}</mat-label>
-            <input matInput type="number" formControlName="requestDuration">
-            <mat-error>{{ errorMessages.number | t }}</mat-error>
+            <input matInput type="number" max="180" formControlName="requestDuration">
+            <mat-error>{{ 'max_number_allowed_is' | t }} 180</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <mat-form-field>
             <mat-label>{{ 'request_answer_calculation_s' | t }}</mat-label>
-            <input matInput type="number" formControlName="answerCalculation">
-            <mat-error>{{ errorMessages.number | t }}</mat-error>
+            <input matInput type="number" max="60" formControlName="answerCalculation">
+            <mat-error>{{ 'max_number_allowed_is' | t }} 60</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -69,15 +69,15 @@
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <mat-form-field>
             <mat-label>{{ 'call_attempts_intervals' | t }}</mat-label>
-            <input matInput type="number" formControlName="dialAttemptIntervals">
-            <mat-error>{{ errorMessages.number | t }}</mat-error>
+            <input matInput type="number" max="1000" formControlName="dialAttemptIntervals">
+            <mat-error>{{ 'max_number_allowed_is' | t }} 1000</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 col-md-6 col-xxl-3 mb-4">
           <mat-form-field>
             <mat-label>{{ 'number_of_call_attempts' | t }}</mat-label>
-            <input matInput type="number" formControlName="dialAttempts">
-            <mat-error>{{ errorMessages.number | t }}</mat-error>
+            <input matInput type="number" max="60" formControlName="dialAttempts">
+            <mat-error>{{ 'max_number_allowed_is' | t }} 60</mat-error>
           </mat-form-field>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { SwitchboardsComponent } from 'src/app/platform/settings/switchboards/switchboards.component';
 
@@ -18,7 +19,8 @@ const routes: Routes = [
 	imports: [
 		RouterModule.forChild(routes),
 		DataTableModule,
-    TranslateModule
+    TranslateModule,
+    MatDialogModule
 	],
 	providers: [SwitchboardService]
 })

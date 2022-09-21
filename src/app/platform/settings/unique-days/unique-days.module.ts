@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { UniqueDaysComponent } from 'src/app/platform/settings/unique-days/unique-days.component';
 
@@ -21,7 +22,8 @@ const routes: Routes = [
 	imports: [
 		RouterModule.forChild(routes),
 		DataTableModule,
-    TranslateModule
+    TranslateModule,
+    MatDialogModule
 	],
 	providers: [UniqueDayService]
 })

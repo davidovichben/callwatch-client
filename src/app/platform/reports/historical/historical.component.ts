@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 

@@ -1,18 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.service';
-import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 
+import { isDateGreaterOrEqual } from 'src/app/_shared/validators/date-greater-equal.validator';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { UniqueDayModel, UniqueDayTypes } from 'src/app/_shared/models/unique-day.model';
-import { isDateGreaterOrEqual } from 'src/app/_shared/validators/date-greater-equal.validator';
+import { Fade } from 'src/app/_shared/constants/animations';
 
 @Component({
 	selector: 'app-form',
-	templateUrl: './form.component.html'
+	templateUrl: './form.component.html',
+  animations: [Fade]
 })
 export class FormComponent implements OnInit, OnDestroy {
 
@@ -27,8 +28,7 @@ export class FormComponent implements OnInit, OnDestroy {
 	isSubmitting = false;
 
 	constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private uniqueDayService: UniqueDayService,
-              private helpers: HelpersService) {}
+              private fb: FormBuilder, private uniqueDayService: UniqueDayService) {}
 
 	ngOnInit(): void {
     this.setForm();
@@ -81,7 +81,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
 	submit(): void {
-		if (this.formGroup.valid && !this.isSubmitting) {
+    if (this.formGroup.valid && !this.isSubmitting) {
 			this.isSubmitting = true;
 
       if (this.uniqueDay) {

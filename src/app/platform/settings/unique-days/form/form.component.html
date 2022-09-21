@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit()" [formGroup]="formGroup">
+<form (ngSubmit)="submit()" #form="ngForm" [formGroup]="formGroup">
   <div class="form-header">
     <p class="h1">{{ uniqueDay ? ('edit_unique_day' | t) : ('add_unique_day' | t) }}</p>
     <div>
@@ -20,6 +20,7 @@
       </div>
       <div class="col-12 col-md-6 col-xl-4 col-xxl-3 mb-3">
         <app-date-picker formControlName="endDate" placeholder="to_date"></app-date-picker>
+        <div class="input-error" [@fade]="formGroup.get('endDate').errors && form.submitted ? 'active' : 'inactive'">{{ errorMessages.dateRange | t }}</div>
       </div>
     </div>
     <div class="row">
