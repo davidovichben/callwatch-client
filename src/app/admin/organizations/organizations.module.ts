@@ -7,6 +7,7 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 import { OrganizationsComponent } from './organizations.component';
 
 import { OrganizationService } from 'src/app/_shared/services/http/organization.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     DataTableModule,
-    TranslateModule
+    TranslateModule,
+    MatDialogModule
   ],
   providers: [OrganizationService]
 })

@@ -1,15 +1,15 @@
 <div class="mb-3 flex-between">
   <p class="h1">{{ 'callbacks' | t }}</p>
   <div>
-    <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('callbacks', 'create')">
+    <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('calls', 'create')">
       <i class="la la-plus ms-1"></i>
       <span>{{ 'add_callback' | t }}</span>
     </button>
   </div>
 </div>
-<app-data-table [columns]="columns" [hasCheckColumn]="userSession.hasPermission('callbacks', 'update')" (fetchItems)="fetchItems()" (openMultipleEdit)="openMultipleEdit()">
+<app-data-table [columns]="columns" [hasCheckColumn]="userSession.hasPermission('calls', 'update')" (fetchItems)="fetchItems()" (openMultipleEdit)="openMultipleEdit()">
   <tr *ngFor="let item of dataTable.items">
-    <td *ngIf="userSession.hasPermission('callbacks', 'update')">
+    <td *ngIf="userSession.hasPermission('calls', 'update')">
       <mat-checkbox (change)="dataTable.checkItem(item, $event.checked)" [checked]="item.checked"></mat-checkbox>
     </td>
     <td>
