@@ -33,7 +33,7 @@
           <span>{{ 'edit' | t }}</span>
         </button>
         <button mat-menu-item class="row-action" (click)="deleteItem(item.id)"
-                *ngIf="userSession.hasPermission('users', 'delete') && item.id !== userSession.getUser().id">
+                *ngIf="userSession.hasPermission('users', 'delete') && item.id !== userSession.getUserId()">
           <mat-icon>delete</mat-icon>
           <span>{{ 'delete' | t }}</span>
         </button>

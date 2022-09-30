@@ -20,7 +20,7 @@ export const PlatformModules = [
       { name: 'schedules', permission: 'schedules' },
       { name: 'uniqueDays', permission: 'schedules', label: 'unique_days' },
       { name: 'switchboards', permission: 'switchboards' },
-      { name: 'callbacks', permission: 'callback'  },
+      { name: 'callbacks', permission: 'calls'  },
       { name: 'routers', permission: 'routers' },
       { name: 'acds', permission: 'switchboards' },
       { name: 'extensions', permission: 'switchboards' }
