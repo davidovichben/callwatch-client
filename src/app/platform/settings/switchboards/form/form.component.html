@@ -186,7 +186,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="activeType?.name === 'CISCO'">
           <div class="col-12 col-lg-3 mb-3 margin-fix">
             <mat-checkbox class="mb-3" formControlName="updateJtapiDevices" (change)="toggleDisabledField($event.checked, 'cti.jtapiControlledDeviceUpdateTime')">{{ 'UpdateJtapiDevices' | t }}</mat-checkbox>
             <mat-form-field>

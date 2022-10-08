@@ -1,5 +1,4 @@
 import { Component, ElementRef, forwardRef, HostListener, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
@@ -7,6 +6,7 @@ import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { Placeholder, SlideToggle } from 'src/app/_shared/constants/animations';
+import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Component({
   selector: 'app-unit-select',
@@ -62,16 +62,16 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     }
 
     this.title = this.placeholder;
-
-    if (this.ignoredUnit) {
-      this.ignoreUnit(this.filteredUnits);
-    }
   }
 
   loadUnits(): void {
     let start = 0;
     const interval = setInterval(() => {
       this.filteredUnits = this.filteredUnits.concat(this.units.slice(start, start + 100));
+
+      if (this.ignoredUnit) {
+        this.ignoreUnit(this.filteredUnits);
+      }
 
       if (start >= this.units.length) {
         clearInterval(interval);
@@ -173,6 +173,11 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     if (unit.units) {
       unit.units.forEach(unit => this.checkUnit(checked, unit));
     }
+  }
+
+  hasMoreUnits(unit: UnitModel): boolean {
+    const hasOnlyIgnoredUnit = unit.units.length === 1 && unit.units[0].ignore;
+    return unit.units.length > 0 && !hasOnlyIgnoredUnit;
   }
 
   selectUnitById(unitId: number, units: UnitModel[]): void {

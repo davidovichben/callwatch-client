@@ -68,7 +68,7 @@
     </tr>
     <tr *ngIf="results.labels.columnTypes.length > 0">
       <th></th>
-      <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name | t }}</th>
+      <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name ? (type.name | t) : '' }}</th>
     </tr>
     </thead>
     <tbody *ngIf="isProducing">

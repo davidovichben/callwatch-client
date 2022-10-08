@@ -63,7 +63,7 @@ export class FormComponent implements OnInit {
       type: this.fb.control(null, Validators.required),
       domain: this.fb.control(null, Validators.required),
       manager: this.fb.control(null),
-      trunk: this.fb.control(null),
+      trunk: this.fb.control({ value: '', disabled: true }),
       checkSessionElapsedTime: this.fb.control(null, isInteger),
       extraAreaCode: this.fb.control(null),
       dialAgentPrefix: this.fb.control(null),

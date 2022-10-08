@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
@@ -129,10 +129,10 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   sortColumnSelected(value: string, index: number): void {
     if (value) {
       this.setColumnDisabled(value, true);
-    } else {
-      const columnId = this.formGroup.get('sort.' + index + '.column').value;
-      this.setColumnDisabled(columnId, false);
     }
+
+    const columnId = this.formGroup.get('sort.' + index + '.column').value;
+    this.setColumnDisabled(columnId, false);
 
     const direction = value ? 'desc' : null;
     this.formGroup.get('sort.' + index + '.direction').patchValue(direction);

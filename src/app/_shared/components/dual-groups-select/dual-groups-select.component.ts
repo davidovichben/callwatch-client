@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, ContentChild, forwardRef, Input, OnChanges, OnInit, SimpleChanges, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
@@ -15,7 +15,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
     }
   ]
 })
-export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
+export class DualGroupsSelectComponent implements OnInit, OnChanges, ControlValueAccessor {
 
   @ContentChild('row', { static: false }) rowTemplateRef: TemplateRef<any>;
   @ContentChild('available', { static: false }) availableTemplateRef: TemplateRef<any>;
@@ -39,6 +39,14 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.availableItems = [...this.items];
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.availableItems = [...changes.items.currentValue];
+    this.resetSearch('available');
+
+    this.selectedItems.all = [];
+    this.selectedItems.filtered = [];
   }
 
   addItems(): void {
@@ -93,7 +101,12 @@ export class DualGroupsSelectComponent implements OnInit, ControlValueAccessor {
     const items = type === 'available' ? this.items : this.selectedItems.all;
     const keyword = type === 'available' ? this.searchInputs.available : this.searchInputs.selected;
     if (type === 'available') {
-      this.availableItems = items.filter(item => item.name.includes(keyword));
+      this.availableItems = items.filter(item => {
+        const includesNumber = item.number && item.number.includes(keyword);
+        const includesName = item.name.includes(keyword);
+
+        return includesNumber || includesName
+      });
     } else {
       this.selectedItems.filtered = items.filter(item => item.name.includes(keyword));
     }

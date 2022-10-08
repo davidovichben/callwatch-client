@@ -98,10 +98,12 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
   }
 
   deleteUnit(assignedUnitId?: number): void {
-    this.unitService.deleteUnit(this.unit.id, assignedUnitId).then(() => {
-      this.notifications.success();
-      this.router.navigate(['/platform', 'units', 'root']);
-      this.unitStateService.refreshTree.next();
+    this.unitService.deleteUnit(this.unit.id, assignedUnitId).then((response) => {
+      if (response) {
+        this.notifications.success();
+        this.router.navigate(['/platform', 'units', 'root']);
+        this.unitStateService.refreshTree.next();
+      }
     })
   }
 

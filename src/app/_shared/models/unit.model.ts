@@ -13,4 +13,5 @@ export class UnitModel {
   parent?: UnitModel;
   ancestors?: UnitModel[];
   hasUnits?: boolean;
+  ignore?: boolean;
 }
