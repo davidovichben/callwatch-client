@@ -10,6 +10,7 @@ import { EmailPattern } from 'src/app/_shared/constants/patterns';
 import { ExtensionModel } from 'src/app/_shared/models/extension.model';
 import { Fade } from 'src/app/_shared/constants/animations';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
+import { values } from 'pusher-js/types/src/core/utils/collections';
 
 @Component({
   selector: 'app-form',
@@ -94,19 +95,23 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   dialNumberChange(number: string, type: string): void {
+    const numberFromControl = this.formGroup.get('general.dialNumbers.from');
+    const numberToControl = this.formGroup.get('general.dialNumbers.to');
+
     if (type === 'from') {
-      const numberToControl = this.formGroup.get('general.dialNumbers.to');
       if (!numberToControl.value) {
         numberToControl.patchValue(number);
       }
     }
 
     if (type === 'to') {
-      const numberFromControl = this.formGroup.get('general.dialNumbers.from');
       if (!numberFromControl.value) {
         numberFromControl.patchValue(number);
       }
     }
+
+    const hasRangeError = +numberFromControl.value > +numberToControl.value;
+    this.formGroup.get('general.dialNumbers').setErrors({ range : hasRangeError });
   }
 
   private addDialNumbers(): void {

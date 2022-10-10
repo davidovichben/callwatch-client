@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
@@ -78,10 +78,10 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     const criteria = this.reportStateService.getCriteria();
     if (criteria) {
       criteria.times.forEach(() => this.addTime());
-      criteria.sort.forEach(values => {
-        this.addSortColumn();
-        this.setColumnDisabled(values.column, true);
-      });
+      // criteria.sort.forEach(values => {
+      //   this.addSortColumn();
+      //   this.setColumnDisabled(values.column, true);
+      // });
 
       this.formGroup.patchValue(criteria);
     }

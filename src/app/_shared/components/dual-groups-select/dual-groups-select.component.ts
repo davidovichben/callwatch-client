@@ -105,7 +105,7 @@ export class DualGroupsSelectComponent implements OnInit, OnChanges, ControlValu
         const includesNumber = item.number && item.number.includes(keyword);
         const includesName = item.name.includes(keyword);
 
-        return includesNumber || includesName
+        return includesNumber || includesName;
       });
     } else {
       this.selectedItems.filtered = items.filter(item => item.name.includes(keyword));
@@ -149,7 +149,7 @@ export class DualGroupsSelectComponent implements OnInit, OnChanges, ControlValu
       this.writeObjectValue(values);
     } else {
       this.availableItems.forEach(item => {
-        if (values.includes(item.id)) {
+        if (values.includes(item.id.toString())) {
           item.selected = true;
         }
       })
