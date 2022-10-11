@@ -27,7 +27,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="dual-groups-container">
+      <div class="dual-groups-container mt-3">
         <app-dual-groups-select [items]="columns" formControlName="columns" #columnsInput></app-dual-groups-select>
         <p class="alert alert-danger d-block" [@fade]="formGroup.get('general.columns').touched && formGroup.get('general.columns').errors ? 'active' : 'inactive'">{{ errorMessages.required | t }}</p>
       </div>
