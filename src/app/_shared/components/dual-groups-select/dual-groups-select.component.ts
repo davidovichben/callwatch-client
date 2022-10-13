@@ -98,17 +98,20 @@ export class DualGroupsSelectComponent implements OnInit, OnChanges, ControlValu
       }
     }
 
-    const items = type === 'available' ? this.items : this.selectedItems.all;
+    let items = type === 'available' ? this.items : this.selectedItems.all;
     const keyword = type === 'available' ? this.searchInputs.available : this.searchInputs.selected;
-    if (type === 'available') {
-      this.availableItems = items.filter(item => {
-        const includesNumber = item.number && item.number.includes(keyword);
-        const includesName = item.name.includes(keyword);
 
-        return includesNumber || includesName;
-      });
+    items = items.filter(item => {
+      const includesNumber = item.number && item.number.includes(keyword);
+      const includesName = item.name.includes(keyword);
+
+      return includesNumber || includesName;
+    });
+
+    if (type === 'available') {
+      this.availableItems = items;
     } else {
-      this.selectedItems.filtered = items.filter(item => item.name.includes(keyword));
+      this.selectedItems.filtered = items;
     }
   }
 
@@ -149,7 +152,7 @@ export class DualGroupsSelectComponent implements OnInit, OnChanges, ControlValu
       this.writeObjectValue(values);
     } else {
       this.availableItems.forEach(item => {
-        if (values.includes(item.id.toString())) {
+        if (values.includes(item.id) || values.includes(item.id.toString())) {
           item.selected = true;
         }
       })
