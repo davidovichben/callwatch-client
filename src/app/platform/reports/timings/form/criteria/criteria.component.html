@@ -93,8 +93,8 @@
       <div class="d-flex" [formGroupName]="i" *ngFor="let control of formGroup.get('sort')['controls']; let i = index; let first = first; let last = last">
         <mat-form-field class="mx-3 no-space">
           <mat-label>{{ 'select_column' | t }}</mat-label>
-          <mat-select formControlName="column">
-            <mat-option [value]="column.id" *ngFor="let column of columns">{{ column.name }}</mat-option>
+          <mat-select formControlName="column" (valueChange)="sortColumnSelected($event, i)">
+            <mat-option [value]="column.id" [disabled]="column.disabled" *ngFor="let column of columns">{{ column.name }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="mx-3 no-space">
@@ -104,7 +104,7 @@
           </mat-select>
         </mat-form-field>
         <div class="d-flex align-items-center">
-          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addSortColumn()" *ngIf="last">
+          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addSortColumn()" *ngIf="last && columns?.length > (i + 1)">
             <mat-icon class="f-16">add</mat-icon>
           </button>
           <button mat-flat-button type="button" class="blue-btn" (click)="removeSortColumn(i)" *ngIf="!first">

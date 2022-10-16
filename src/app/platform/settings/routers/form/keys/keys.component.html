@@ -64,11 +64,13 @@
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngSwitchCase="'SetSMS'">
-          <mat-label>{{ 'sms_content' | t }}</mat-label>
-          <input matInput required [value]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (change)="setSMS(action, $event.target.value)" [hidden]="activeLang !== language.id" *ngFor="let language of languages">
-          <mat-error>{{ errorMessages.required | t }}</mat-error>
-        </mat-form-field>
+        <div *ngSwitchCase="'SetSMS'">
+          <mat-form-field *ngFor="let language of languages" [hidden]="activeLang !== language.id">
+            <mat-label>{{ 'sms_content' | t }}</mat-label>
+            <input matInput [value]="action.get('activityValue').value && action.get('activityValue').value[language.id] ? action.get('activityValue').value[language.id] : null" (change)="setSMS(action, $event.target.value)">
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
 
         <div *ngSwitchCase="'TransferAnotherRouter'">
           <bd-select class="w-100" [placeholder]="'select_router' | t" formControlName="activityValue" required>
@@ -100,7 +102,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="mx-1 w-250p">
+      <div class="mx-3 w-250p">
         <app-tags-input [placeholder]="'data_documenting' | t" [limit]="1" type="router_key" formControlName="tag" *ngIf="action.get('activityTypeName').value !== 'Condition'"></app-tags-input>
       </div>
       <div class="d-flex w-200p">
