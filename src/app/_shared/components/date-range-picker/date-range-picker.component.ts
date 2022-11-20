@@ -66,6 +66,10 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   }
 
   dateSelected(selected: { start: Moment, end?: Moment }): void {
+    if (selected.start && !selected.end) {
+      selected.end = selected.start;
+    }
+
     ['start', 'end'].forEach(valueType => {
       const value = selected[valueType] ? selected[valueType].format('YYYY-MM-DD') : null;
       if (value) {
