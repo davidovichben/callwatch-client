@@ -10,7 +10,6 @@ import { EmailPattern } from 'src/app/_shared/constants/patterns';
 import { ExtensionModel } from 'src/app/_shared/models/extension.model';
 import { Fade } from 'src/app/_shared/constants/animations';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
-import { values } from 'pusher-js/types/src/core/utils/collections';
 
 @Component({
   selector: 'app-form',
