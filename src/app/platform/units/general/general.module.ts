@@ -12,10 +12,13 @@ import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-se
 
 import { GeneralComponent } from './general.component';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
   {
     path: '',
-    component: GeneralComponent
+    component: GeneralComponent,
+    canDeactivate: [DeactivateGuard]
   }
 ];
 
@@ -31,6 +34,7 @@ const routes: Routes = [
     TranslateModule,
     ReassignDialogModule,
     UnitSelectModule
-  ]
+  ],
+  providers: [DeactivateGuard]
 })
 export class GeneralModule {}

@@ -32,6 +32,8 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
 
   isRootUnit = false;
 
+  isSubmitting = false;
+
   constructor(private route: ActivatedRoute, private router: Router, private userSession: UserSessionService,
               private notifications: NotificationService, private unitService: UnitService,
               private unitStateService: UnitStateService, private dialog: MatDialog) {}
@@ -54,6 +56,7 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
   }
 
   submit(): void {
+    this.isSubmitting = true;
     this.unitService.updateUnit(this.unit.id, this.form.value).then(response => {
       if (response) {
         this.notifications.success();
@@ -68,6 +71,10 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
           this.unitStateService.unitTransferred.next(this.unit);
           this.unitStateService.refreshTree.next(true);
         }
+
+        this.form.form.markAsPristine();
+
+        this.isSubmitting = false;
       }
     })
   }

@@ -15,23 +15,24 @@ import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
 import { UnitResolve } from 'src/app/_shared/resolves/unit.resolve';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
 
 const routes: Routes = [
   {
     path: ':id',
-    component: UnitsComponent,
-    resolve: {
-      unit: UnitResolve,
-      units: UnitsResolve
-    },
     pathMatch: '',
+    component: UnitsComponent,
     data: { noPadding: true },
     children: [
       { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
       { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
       { path: 'groups', loadChildren: () => import('./extensions-groups/extensions-groups.module').then(m => m.ExtensionsGroupsModule) },
       { path: '', redirectTo: 'general' }
-    ]
+    ],
+    resolve: {
+      unit: UnitResolve,
+      units: UnitsResolve
+    },
   },
   {
     path: '',
@@ -48,13 +49,12 @@ const routes: Routes = [
     TranslateModule,
     UnitFormModule
   ],
-  exports: [
-    UnitTreeComponent
-  ],
+  exports: [UnitTreeComponent],
   providers: [
     UnitService,
     UnitResolve,
     UnitsResolve,
+    DeactivateGuard,
     TranslatePipe
   ]
 })

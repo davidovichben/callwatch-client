@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -19,6 +19,8 @@ import { Fade } from 'src/app/_shared/constants/animations';
   animations: [Fade]
 })
 export class ExtensionsGroupsComponent implements OnInit {
+
+  @ViewChild('form') form: NgForm;
 
   readonly sub = new Subscription();
 
@@ -69,13 +71,14 @@ export class ExtensionsGroupsComponent implements OnInit {
   switchboardSelected(switchboardId: number): void {
     if (switchboardId) {
       this.isAcdsExtensionLoading = true;
-      this.switchboardService.getExtensionsAndAcds(switchboardId).then(response => {
+      this.switchboardService.getExtensionsAndAcds(switchboardId, this.unitId).then(response => {
         if (response) {
           this.selects.extensions = response.extensions;
           this.selects.acds = response.acds;
         }
 
         this.isAcdsExtensionLoading = false;
+        setTimeout(() => this.form.form.markAsPristine(), 1000);
       })
     } else {
       this.selects.extensions = null;
@@ -91,6 +94,7 @@ export class ExtensionsGroupsComponent implements OnInit {
           this.notificationService.success();
         }
 
+        this.form.form.markAsPristine();
         this.isSubmitting = false;
       })
     }

@@ -17,6 +17,8 @@ import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.se
 import { ExtensionGroupFormSelectResolve } from 'src/app/_shared/resolves/extension-group-form-select.resolve';
 import { ExtensionGroupResolve } from 'src/app/_shared/resolves/extension-group.resolve';
 
+import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -24,7 +26,8 @@ const routes: Routes = [
     resolve: {
       extensionGroup: ExtensionGroupResolve,
       selects: ExtensionGroupFormSelectResolve
-    }
+    },
+    canDeactivate: [DeactivateGuard]
   }
 ];
 
@@ -44,7 +47,8 @@ const routes: Routes = [
     SelectService,
     SwitchboardService,
     ExtensionGroupResolve,
-    ExtensionGroupFormSelectResolve
+    ExtensionGroupFormSelectResolve,
+    DeactivateGuard
   ]
 })
 export class ExtensionsGroupsModule {}

@@ -69,8 +69,13 @@ export class SwitchboardService extends BaseHttpService {
       .catch(() => []);
   }
 
-  getExtensionsAndAcds(switchboardId: number): Promise<{ extensions: SelectItemModel[], acds: SelectItemModel[] }> {
-    return this.http.get(this.endPoint + '/' + switchboardId + '/extensionsAcds', this.getTokenRequest())
+  getExtensionsAndAcds(switchboardId: number, unitToAssign = null): Promise<{ extensions: SelectItemModel[], acds: SelectItemModel[] }> {
+    const params = {};
+    if (unitToAssign) {
+      params['unitToAssign'] = unitToAssign;
+    }
+
+    return this.http.get(this.endPoint + '/' + switchboardId + '/extensionsAcds', this.getTokenRequest(params))
       .toPromise()
       .then(response => response as { extensions: SelectItemModel[], acds: SelectItemModel[]})
       .catch(() => null);
