@@ -15,6 +15,7 @@ import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-se
 import { FormComponent } from 'src/app/platform/settings/extensions/form/form.component';
 
 import { ExtensionService } from 'src/app/_shared/services/http/extension.service';
+import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { AcdFormSelectResolve } from 'src/app/_shared/resolves/acd-form-select.resolve';
@@ -59,6 +60,7 @@ const routes: Routes = [
   ],
   providers: [
     ExtensionService,
+    SwitchboardService,
     SelectService,
     ExtensionResolve,
     AcdFormSelectResolve,

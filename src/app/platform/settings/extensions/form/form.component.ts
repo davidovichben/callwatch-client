@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { ExtensionService } from 'src/app/_shared/services/http/extension.service';
+import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { EmailPattern } from 'src/app/_shared/constants/patterns';
-import { ExtensionModel } from 'src/app/_shared/models/extension.model';
 import { Fade } from 'src/app/_shared/constants/animations';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
@@ -29,7 +29,6 @@ export class FormComponent implements OnInit, OnDestroy {
   readonly errorMessages = ErrorMessages;
 
   selects = {
-    acds: [],
     types: [],
     switchboards: [],
     callbacks: [],
@@ -39,12 +38,19 @@ export class FormComponent implements OnInit, OnDestroy {
   activeTab = 'general';
 
   formGroup: FormGroup;
-  extension: ExtensionModel;
+  extension;
 
+  switchboardUnits = [];
+  switchboardAcds = [];
+
+  acdsLoaded = true;
+
+  isLoadingUnits = false;
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private extensionService: ExtensionService) {}
+              private fb: FormBuilder, private extensionService: ExtensionService,
+              private switchboardService: SwitchboardService) {}
 
   ngOnInit(): void {
     this.makeForm();
@@ -56,8 +62,25 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     if (this.extension) {
+      this.acdsLoaded = false;
+
       this.addDialNumber();
       this.formGroup.patchValue(this.extension);
+
+      this.formGroup.get('general.switchboard').disable();
+
+      this.isLoadingUnits = true;
+
+      this.switchboardService.getSwitchboardUnits(this.extension.general.switchboard).then(response => {
+        this.switchboardUnits = response;
+        this.isLoadingUnits = false;
+      });
+
+      this.switchboardService.getExtensionsAndAcds(this.extension.general.switchboard).then(response => {
+        this.switchboardAcds = response.acds;
+        this.acdsLoaded = true;
+      });
+
     } else {
       this.addDialNumbers();
     }
@@ -71,6 +94,7 @@ export class FormComponent implements OnInit, OnDestroy {
         name: this.fb.control(null, Validators.required),
         type: this.fb.control(null),
         switchboard: this.fb.control(null, Validators.required),
+        unit: this.fb.control(null),
         description: this.fb.control(null)
       }),
       acds: this.fb.control(null),
@@ -91,6 +115,21 @@ export class FormComponent implements OnInit, OnDestroy {
     });
 
     this.sub.add(sub);
+  }
+
+  fetchSwitchboardUnits(switchboardId) {
+    this.isLoadingUnits = true;
+
+    this.switchboardService.getSwitchboardUnits(switchboardId).then(response => {
+      this.switchboardUnits = response;
+      this.isLoadingUnits = false;
+    });
+
+    this.switchboardService.getExtensionsAndAcds(switchboardId).then(response => {
+      this.formGroup.get('acds').reset();
+
+      this.switchboardAcds = response.acds;
+    });
   }
 
   dialNumberChange(number: string, type: string): void {

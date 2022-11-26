@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { DualGroupsSelectModule } from 'src/app/_shared/components/dual-groups-select/dual-groups-select.module';
@@ -15,6 +16,7 @@ import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-se
 import { FormComponent } from 'src/app/platform/settings/acds/form/form.component';
 
 import { AcdService } from 'src/app/_shared/services/http/acd.service';
+import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { AcdResolve } from 'src/app/_shared/resolves/acd.resolve';
@@ -53,12 +55,14 @@ const routes: Routes = [
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatIconModule,
     TranslateModule,
     UnitSelectModule,
     DualGroupsSelectModule
   ],
 	providers: [
     AcdService,
+    SwitchboardService,
     SelectService,
     AcdResolve,
     AcdFormSelectResolve,

@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup" (ngSubmit)="submit()" #form="ngForm">
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
   <div class="form-header">
     <p class="h1">{{ extension ? ('edit_extension' | t) : ('add_extension' | t) }}</p>
     <div>
@@ -57,10 +57,20 @@
         <div class="col-12 col-lg-3">
           <mat-form-field>
             <mat-label>{{ 'select_switchboard' | t }}</mat-label>
-            <mat-select formControlName="switchboard" required>
+            <mat-select formControlName="switchboard" (valueChange)="fetchSwitchboardUnits($event)" required>
               <mat-option *ngFor="let switchboard of selects.switchboards" [value]="switchboard.id">{{ switchboard.name }}</mat-option>
             </mat-select>
             <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3">
+          <mat-form-field>
+            <mat-label>{{ 'select_unit' | t }}</mat-label>
+            <mat-select formControlName="unit" [ngClass]="{ 'hide-arrow': isLoadingUnits }">
+              <mat-option *ngFor="let unit of switchboardUnits" [value]="unit.id">{{ unit.name }}</mat-option>
+            </mat-select>
+            <mat-hint>{{ 'select_a_switchboard_to_show_units' | t }}</mat-hint>
+            <div class="loader inline m-1" matSuffix *ngIf="isLoadingUnits"></div>
           </mat-form-field>
         </div>
       </div>
@@ -74,7 +84,7 @@
       </div>
     </section>
     <section [hidden]="activeTab !== 'acds'">
-      <app-dual-groups-select formControlName="acds" [items]="selects.acds"></app-dual-groups-select>
+      <app-dual-groups-select formControlName="acds" [items]="switchboardAcds" *ngIf="!extension || (extension && acdsLoaded)"></app-dual-groups-select>
     </section>
     <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
       <div class="row">

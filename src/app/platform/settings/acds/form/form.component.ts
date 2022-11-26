@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AcdService } from 'src/app/_shared/services/http/acd.service';
+import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { EmailPattern } from 'src/app/_shared/constants/patterns';
-import { AcdModel } from 'src/app/_shared/models/acd.model';
 import { Fade } from 'src/app/_shared/constants/animations';
 import { isInteger } from 'src/app/_shared/validators/integer.validator';
 
@@ -31,22 +31,28 @@ export class FormComponent implements OnInit, OnDestroy {
   readonly uniqueControlNames = ['number', 'huntPilot', 'secondaryHuntPilot'];
 
   selects = {
-    extensions: [],
     types: [],
     switchboards: [],
     callbacks: [],
     routers: []
   };
 
+  switchboardUnits = [];
+  switchboardExtensions = [];
+
   activeTab = 'general';
 
   formGroup: FormGroup;
-  acd: AcdModel;
+  acd;
 
+  extensionsLoaded = true;
+
+  isLoadingUnits = false;
 	isSubmitting = false;
 
 	constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private acdService: AcdService) {}
+              private fb: FormBuilder, private acdService: AcdService,
+              private switchboardService: SwitchboardService) {}
 
 	ngOnInit(): void {
     this.makeForm();
@@ -54,8 +60,23 @@ export class FormComponent implements OnInit, OnDestroy {
     const routeData = this.route.snapshot.data;
     this.selects = routeData.selects;
     if (routeData.acd) {
+      this.extensionsLoaded = false;
+      this.isLoadingUnits = true;
+
       this.acd = routeData.acd;
       this.formGroup.patchValue(this.acd);
+
+      this.formGroup.get('general.switchboard').disable();
+
+      this.switchboardService.getSwitchboardUnits(this.acd.general.switchboard).then(response => {
+        this.switchboardUnits = response;
+        this.isLoadingUnits = false;
+      });
+
+      this.switchboardService.getExtensionsAndAcds(this.acd.general.switchboard).then(response => {
+        this.switchboardExtensions = response.extensions;
+        this.extensionsLoaded = true;
+      });
     }
 	}
 
@@ -65,6 +86,7 @@ export class FormComponent implements OnInit, OnDestroy {
         name: this.fb.control(null, Validators.required),
         type: this.fb.control(null),
         switchboard: this.fb.control(null, Validators.required),
+        unit: this.fb.control(null),
         description: this.fb.control(null)
       }),
       switchboard: this.fb.group({
@@ -92,6 +114,20 @@ export class FormComponent implements OnInit, OnDestroy {
     this.uniqueControlNames.forEach(controlName => {
       this.formGroup.get('switchboard.' + controlName).setAsyncValidators(this.checkExists.bind(this, [controlName]))
     })
+  }
+
+  fetchSwitchboardUnits(switchboardId) {
+    this.isLoadingUnits = true;
+
+    this.switchboardService.getSwitchboardUnits(switchboardId).then(response => {
+      this.switchboardUnits = response;
+      this.isLoadingUnits = false;
+    });
+
+    this.switchboardService.getExtensionsAndAcds(switchboardId).then(response => {
+      this.formGroup.get('extensions').reset();
+      this.switchboardExtensions = response.extensions;
+    });
   }
 
   checkExists(args: object, control: FormControl): Promise<{ exists: boolean }> {
