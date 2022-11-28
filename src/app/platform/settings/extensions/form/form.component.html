@@ -67,6 +67,7 @@
           <mat-form-field>
             <mat-label>{{ 'select_unit' | t }}</mat-label>
             <mat-select formControlName="unit" [ngClass]="{ 'hide-arrow': isLoadingUnits }">
+              <mat-option>-------</mat-option>
               <mat-option *ngFor="let unit of switchboardUnits" [value]="unit.id">{{ unit.name }}</mat-option>
             </mat-select>
             <mat-hint>{{ 'select_a_switchboard_to_show_units' | t }}</mat-hint>
