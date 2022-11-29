@@ -29,10 +29,7 @@ const routes: Routes = [
       { path: 'groups', loadChildren: () => import('./extensions-groups/extensions-groups.module').then(m => m.ExtensionsGroupsModule) },
       { path: '', redirectTo: 'general' }
     ],
-    resolve: {
-      unit: UnitResolve,
-      units: UnitsResolve
-    },
+    runGuardsAndResolvers: 'always',
   },
   {
     path: '',
