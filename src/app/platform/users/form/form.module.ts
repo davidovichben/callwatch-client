@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.module';
@@ -66,6 +67,7 @@ const routes: Routes = [
     MatCheckboxModule,
     MatDialogModule,
     MatIconModule,
+    MatButtonModule,
     TranslateModule,
     BdSelectModule,
     UnitSelectModule,

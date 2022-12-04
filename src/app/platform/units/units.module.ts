@@ -30,6 +30,10 @@ const routes: Routes = [
       { path: '', redirectTo: 'general' }
     ],
     runGuardsAndResolvers: 'always',
+    resolve: {
+      unit: UnitResolve,
+      units: UnitsResolve
+    },
   },
   {
     path: '',

@@ -1,9 +1,18 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+
+import { ReassignDialogComponent } from 'src/app/platform/settings/permissions/reassign-dialog/reassign-dialog.component';
 
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
+import { SelectService } from 'src/app/_shared/services/http/select.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { PermissionActions, PermissionModel, PermissionModules } from 'src/app/_shared/models/permission.model';
@@ -13,7 +22,9 @@ import { PermissionActions, PermissionModel, PermissionModules } from 'src/app/_
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.styl']
 })
-export class FormComponent implements OnInit, AfterViewInit {
+export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  readonly sub = new Subscription();
 
   readonly errorMessages = ErrorMessages;
   readonly actions =  PermissionActions;
@@ -26,7 +37,9 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
               private fb: FormBuilder, private permissionService: PermissionService,
-              private genericService: GenericService) {}
+              private genericService: GenericService, public userSession: UserSessionService,
+              private selectService: SelectService, private notificationService: NotificationService,
+              private t: TranslatePipe, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.makeForm();
@@ -102,6 +115,52 @@ export class FormComponent implements OnInit, AfterViewInit {
     }
   }
 
+  confirmDeletePermission(): void {
+    if (this.permission.userCount > 0) {
+      this.reassignPermission();
+      return;
+    }
+
+    this.notificationService.warning().then(confirmation => {
+      if (confirmation.value) {
+        this.deletePermission();
+      }
+    });
+  }
+
+  private reassignPermission(): void {
+    this.selectService.select('permission').then(permissions => {
+      permissions = permissions.filter(permission => permission.id !== this.permission.id);
+
+      if (permissions.length === 0) {
+        const msg = this.t.transform('create_delete_permission_s');
+        this.notificationService.error(msg);
+        return;
+      }
+
+      const dialog = this.dialog.open(ReassignDialogComponent, {
+        data: { permissions, userCount: this.permission.userCount },
+        width: '500px',
+        panelClass: 'no-overflow'
+      });
+
+      this.sub.add(dialog.afterClosed().subscribe(newPermissionId => {
+        if (newPermissionId) {
+          this.deletePermission(newPermissionId);
+        }
+      }));
+    });
+  }
+
+  private deletePermission(newPermissionId?): void {
+    this.permissionService.deletePermission(this.permission.id, newPermissionId).then(response => {
+      if (response) {
+        this.notificationService.success();
+        this.router.navigate(['/platform', 'settings', 'permissions']);
+      }
+    });
+  }
+
   submit(): void {
     if (this.formGroup.valid && !this.isSubmitting) {
       this.isSubmitting = true;
@@ -134,5 +193,9 @@ export class FormComponent implements OnInit, AfterViewInit {
 
       return null;
     })
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

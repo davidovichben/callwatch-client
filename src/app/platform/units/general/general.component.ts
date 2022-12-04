@@ -55,30 +55,6 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
     return this.userSession.hasPermission(module, action);
   }
 
-  submit(): void {
-    this.isSubmitting = true;
-    this.unitService.updateUnit(this.unit.id, this.form.value).then(response => {
-      if (response) {
-        this.notifications.success();
-
-        if (this.unit.name !== this.form.value.name) {
-          this.unit.name = this.form.value.name;
-          this.unitStateService.unitNameChanged.next(this.unit);
-        }
-
-        if (this.unit.parent !== this.form.value.parent) {
-          this.unit = response.resource;
-          this.unitStateService.unitTransferred.next(this.unit);
-          this.unitStateService.refreshTree.next(true);
-        }
-
-        this.form.form.markAsPristine();
-
-        this.isSubmitting = false;
-      }
-    })
-  }
-
   reassignUnit(): void {
     if (this.unit.hasUnits) {
       this.unitService.getUnits().then(units => {
@@ -112,6 +88,32 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
         this.unitStateService.refreshTree.next();
       }
     })
+  }
+
+  submit(): void {
+    if (!this.isSubmitting) {
+      this.isSubmitting = true;
+      this.unitService.updateUnit(this.unit.id, this.form.value).then(response => {
+        if (response) {
+          this.notifications.success();
+
+          if (this.unit.name !== this.form.value.name) {
+            this.unit.name = this.form.value.name;
+            this.unitStateService.unitNameChanged.next(this.unit);
+          }
+
+          if (this.unit.parent !== this.form.value.parent) {
+            this.unit = response.resource;
+            this.unitStateService.unitTransferred.next(this.unit);
+            this.unitStateService.refreshTree.next(true);
+          }
+
+          this.form.form.markAsPristine();
+
+          this.isSubmitting = false;
+        }
+      })
+    }
   }
 
   ngOnDestroy(): void {

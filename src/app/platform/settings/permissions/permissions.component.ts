@@ -58,10 +58,7 @@ export class PermissionsComponent {
 
   reassignPermission(permissionId: number, userCount: number): void {
     this.selectService.select('permission').then(permissions => {
-      const index = permissions.findIndex(permission => permission.id === permissionId);
-      if (index !== -1) {
-        permissions.splice(index, 1);
-      }
+      permissions = permissions.filter(permission => permission.id !== permissionId);
 
       if (permissions.length === 0) {
         const msg = this.t.transform('create_delete_permission_s');
@@ -71,7 +68,8 @@ export class PermissionsComponent {
 
       const dialog = this.dialog.open(ReassignDialogComponent, {
         data: { permissions, userCount },
-        width: '500px'
+        width: '500px',
+        panelClass: 'no-overflow'
       });
 
       this.sub.add(dialog.afterClosed().subscribe(newPermissionId => {
