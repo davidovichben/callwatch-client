@@ -7,7 +7,7 @@
     </button>
   </div>
 </div>
-<app-data-table [columns]="columns"  [hasCheckColumn]="userSession.hasPermission('schedules', 'update') && dataTable.hasItems" (openMultipleEdit)="openMultipleEdit()"
+<app-data-table tableUrl="schedules" [columns]="columns" [hasCheckColumn]="userSession.hasPermission('schedules', 'update') && dataTable.hasItems" (openMultipleEdit)="openMultipleEdit()"
                 [hasActionsHeader]="userSession.canModify('schedules')" (fetchItems)="fetchItems()">
   <tr *ngFor="let item of dataTable.items">
     <td *ngIf="userSession.hasPermission('schedules', 'update')">

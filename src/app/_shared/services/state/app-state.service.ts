@@ -7,6 +7,7 @@ export class AppStateService {
   pageSpinnerShown: Subject<boolean> = new Subject();
 
   routeScrollDisabled = false;
+  previousUrl: string;
 
   setPageSpinner(isShown: boolean): void {
     setTimeout(() => this.pageSpinnerShown.next(isShown), 0);

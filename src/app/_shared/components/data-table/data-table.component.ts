@@ -52,6 +52,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   @HostBinding('class') class = 'data-table';
 
+  @Input() tableUrl: string;
   @Input() columns: DataTableColumn[] = [];
   @Input() formUrl: string;
   @Input() activeSwitch: string;
@@ -81,7 +82,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
               protected dialog: MatDialog) {}
 
   ngOnInit() {
-    this.checkSavedItem('saved-item');
+    this.handleSavedSearch();
 
     this.columnLength = this.columns.length + +this.hasCheckColumn + +this.hasActionsHeader;
 
@@ -92,6 +93,17 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.criteria.page = (this.route.snapshot.queryParams.page) ? +this.route.snapshot.queryParams.page : 1;
     this.paginationData.currentPage = this.criteria.page;
     this.loadItems();
+  }
+
+  private handleSavedSearch() {
+    const isRoutedFromForm = this.appState.previousUrl.includes(this.tableUrl + '/form');
+    if (!isRoutedFromForm) {
+      sessionStorage.removeItem(this.tableUrl + '_criteria');
+    }
+
+    if (isRoutedFromForm && sessionStorage.getItem(this.tableUrl + '_criteria')) {
+      this.criteria = JSON.parse(sessionStorage.getItem(this.tableUrl + '_criteria'));
+    }
   }
 
   loadItems(): void {
@@ -118,17 +130,13 @@ export class DataTableComponent implements OnInit, OnDestroy {
     // });
   }
 
-  checkSavedItem(key: string): void {
-    if (sessionStorage.getItem(key)) {
-      this.savedItem = sessionStorage.getItem(key);
-      sessionStorage.removeItem(key);
-    }
-  }
-
   search(keyword: string, event?: KeyboardEvent): void {
     if (((event && (event.code === 'Enter' || event.code === 'NumpadEnter')) || !event) && !this.isLoading) {
       this.criteria.keyword = keyword;
       this.loadItems();
+
+
+      sessionStorage.setItem(this.tableUrl + '_criteria', JSON.stringify(this.criteria));
     }
   }
 
@@ -138,25 +146,22 @@ export class DataTableComponent implements OnInit, OnDestroy {
       this.criteria.keyword = '';
       this.loadItems();
     }
+
+    sessionStorage.setItem(this.tableUrl + '_criteria', JSON.stringify(this.criteria));
   }
 
-  // extendedSearch(values: object): void {
-  //   this.criteria.filters = values;
-  //
-  //   if (this.criteria.page  > 1) {
-  //     this.criteria.page = 1;
-  //     this.paginationData.currentPage = this.criteria.page;
-  //
-  //     const url: string = this.router.url.substring(0, this.router.url.indexOf('?'));
-  //     this.router.navigateByUrl(url);
-  //   } else {
-  //     this.search();
-  //   }
-  // }
+  criteriaChange() {
+    sessionStorage.setItem(this.tableUrl + '_criteria', JSON.stringify(this.criteria));
+
+    this.loadItems();
+  }
 
   sort(column: DataTableColumn , dir: 'asc' | 'desc'): void {
     this.criteria.sort.column = column.name;
     this.criteria.sort.direction = dir;
+
+    sessionStorage.setItem(this.tableUrl + '_criteria', JSON.stringify(this.criteria));
+
     this.loadItems();
   }
 
@@ -171,6 +176,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
         this.criteria.checkedItems.push(item);
       }
     });
+
+    sessionStorage.setItem(this.tableUrl + '_criteria', JSON.stringify(this.criteria));
   }
 
   checkItem(item: any, isChecked: boolean): void {
@@ -181,6 +188,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
       this.criteria.isCheckAll = false;
       this.removeFromCheckedItemsList(item);
     }
+
+    sessionStorage.setItem(this.tableUrl + '_criteria', JSON.stringify(this.criteria));
   }
 
   private removeFromCheckedItemsList(item: any): void {

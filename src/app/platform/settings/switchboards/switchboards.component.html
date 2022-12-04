@@ -7,7 +7,7 @@
     </button>
   </div>
 </div>
-<app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('switchboards')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+<app-data-table tableUrl="switchboards" [columns]="columns" [hasActionsHeader]="userSession.canModify('switchboards')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
 	<tr *ngFor="let item of dataTable.items">
 		<td>
       <a [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('switchboards', 'update')">{{ item.name }}</a>

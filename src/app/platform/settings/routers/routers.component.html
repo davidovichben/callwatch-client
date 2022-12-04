@@ -7,9 +7,9 @@
     </button>
   </div>
 </div>
-<app-data-table [columns]="columns" [hasActionsHeader]="userSession.canModify('routers')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+<app-data-table tableUrl="routers" [columns]="columns" [hasActionsHeader]="userSession.canModify('routers')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <div class="data-table-filters">
-    <app-chips-input [placeholder]="'search_dialed_numbers' | t" (change)="fetchItems()" [(ngModel)]="dataTable.criteria.filters['dialedNumbers']"></app-chips-input>
+    <app-chips-input [placeholder]="'search_dialed_numbers' | t" (ngModelChange)="dataTable.criteriaChange()" [(ngModel)]="dataTable.criteria.filters['dialedNumbers']"></app-chips-input>
   </div>
   <tr *ngFor="let item of dataTable.items">
     <td>

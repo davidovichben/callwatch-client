@@ -7,7 +7,7 @@
     </button>
   </div>
 </div>
-<app-data-table [columns]="columns" [hasCheckColumn]="userSession.hasPermission('calls', 'update') && dataTable.hasItems" (fetchItems)="fetchItems()" (openMultipleEdit)="openMultipleEdit()">
+<app-data-table tableUrl="callbacks" [columns]="columns" [hasCheckColumn]="userSession.hasPermission('calls', 'update') && dataTable.hasItems" (fetchItems)="fetchItems()" (openMultipleEdit)="openMultipleEdit()">
   <tr *ngFor="let item of dataTable.items">
     <td *ngIf="userSession.hasPermission('calls', 'update')">
       <mat-checkbox (change)="dataTable.checkItem(item, $event.checked)" [checked]="item.checked"></mat-checkbox>

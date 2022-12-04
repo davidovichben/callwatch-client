@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
   private listenRouterEvents(): void {
     this.router.events.forEach(event => {
       if (event instanceof ChildActivationStart) {
+        this.appState.previousUrl = this.router.url;
         this.isLoading = true;
       }
 

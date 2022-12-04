@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { AppHttpService } from 'src/app/_shared/services/http/app-http.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 import { UserModel } from 'src/app/_shared/models/user.model';
-import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 @Component({
   selector: 'app-content',
@@ -63,10 +63,11 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.router.navigate(['/']).then(confirm => {
-      if (confirm) {
+      // console.log(confirm);
+      // if (confirm) {
         this.appHttp.logout();
         this.userSession.unsetUser();
-      }
+      // }
     });
   }
 
