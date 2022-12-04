@@ -227,6 +227,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.sub.add(sub);
   }
 
+  get hasItems(): boolean {
+    return this.items.length > 0;
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

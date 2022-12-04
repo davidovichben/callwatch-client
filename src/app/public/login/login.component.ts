@@ -37,6 +37,11 @@ export class LoginComponent {
           this.localeService.setLocale(response.language.code);
           this.userSession.setUser({ extension: form.value.extension, ...response });
 
+          setTimeout(() => {
+            console.log('ff');
+            this.logout();
+          }, 5000);
+
           const url = response.isAdmin ? ['/admin'] : ['/platform'];
           this.router.navigate(url);
         } else {
@@ -50,5 +55,15 @@ export class LoginComponent {
         this.isSubmitting = false;
       })
     }
+  }
+
+  logout(): void {
+    console.log('out')
+    this.router.navigate(['/']).then(confirm => {
+      if (confirm) {
+        this.appHttp.logout();
+        this.userSession.unsetUser();
+      }
+    });
   }
 }
