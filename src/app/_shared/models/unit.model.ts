@@ -14,4 +14,5 @@ export class UnitModel {
   ancestors?: UnitModel[];
   hasUnits?: boolean;
   ignore?: boolean;
+  playCallback?: boolean;
 }

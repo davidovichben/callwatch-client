@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { ReassignDialogModule } from './reassign-dialog/reassign-dialog.module';
@@ -24,17 +25,18 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [GeneralComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    TranslateModule,
-    ReassignDialogModule,
-    UnitSelectModule
-  ],
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		FormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatSelectModule,
+		TranslateModule,
+		ReassignDialogModule,
+		UnitSelectModule,
+		MatCheckboxModule
+	],
   providers: [DeactivateGuard]
 })
 export class GeneralModule {}

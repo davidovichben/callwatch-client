@@ -98,8 +98,8 @@ export class FormComponent implements OnInit, OnDestroy {
         noAgentOverflow: this.fb.control({ value: null, disabled: true }),
         noAnswerRedirection: this.fb.control({ value: null, disabled: true }),
         busyRedirection: this.fb.control({ value: null, disabled: true }),
-        isBroadcast: this.fb.control(null),
-        hasQueue: this.fb.control(null)
+        isBroadcast: this.fb.control({ value: null, disabled: true }),
+        hasQueue: this.fb.control({ value: null, disabled: true })
       }),
       extensions: this.fb.control(null),
       callback: this.fb.group({
@@ -147,6 +147,10 @@ export class FormComponent implements OnInit, OnDestroy {
 
       return null;
     });
+  }
+
+  resetCallback() {
+    this.formGroup.get('callback').reset();
   }
 
 	submit(): void {
