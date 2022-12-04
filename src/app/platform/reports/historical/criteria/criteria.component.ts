@@ -7,7 +7,12 @@ import { HistoricalReportsService } from 'src/app/_shared/services/state/histori
 
 import { SortDirections, WeekDays } from 'src/app/_shared/constants/general';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
-import { AbandonTimes, ReportCriteriaModel, ReportTimeSpaces } from 'src/app/_shared/models/report-criteria.model';
+import {
+  AbandonTimes, Hours,
+  MinutesInterval,
+  ReportCriteriaModel,
+  ReportTimeSpaces
+} from 'src/app/_shared/models/report-criteria.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
 @Component({
@@ -26,6 +31,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   readonly abandonTimes = AbandonTimes;
   readonly timeSpaces = ReportTimeSpaces;
   readonly sortDirections = SortDirections;
+  readonly minutesInterval = MinutesInterval;
+  readonly hours = Hours;
 
   formGroup: FormGroup;
 
@@ -96,9 +103,14 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   addTime(): void {
+    let time = this.fb.group({
+      hour: null,
+      minute: null
+    })
+
     const group = this.fb.group({
-      start: this.fb.control(null),
-      end: this.fb.control(null)
+      start: time,
+      end: time
     });
 
     (this.formGroup.get('times') as FormArray).push(group);
@@ -158,7 +170,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     this.sanitizeDates(values, 'dates');
     this.sanitizeDates(values, 'ignoreDates')
 
-    values.times = values.times.filter(time => time.start && time.end);
+    this.sanitizeTime(values)
+
     values.sort = values.sort.filter(sort => sort.column && sort.direction);
 
     return values;
@@ -171,6 +184,19 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       values[type].start = typeof values[type].start === 'string' ? values[type].start : (values[type].start as any).format('yy-MM-DD');
       values[type].end = typeof values[type].end === 'string' ? values[type].end : (values[type].end as any).format('yy-MM-DD');
     }
+  }
+
+  private sanitizeTime(values: any): any {
+    return values.times = values.times.map(time => {
+      if (time.start && time.end) {
+        return {
+          start: time.start.hour + ':' + time.start.minute,
+          end: time.end.hour + ':' + time.end.minute
+        }
+      }
+
+      return false;
+    });
   }
 
   ngOnDestroy(): void {

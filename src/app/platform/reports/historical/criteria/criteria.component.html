@@ -11,14 +11,32 @@
     <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>
     <div formArrayName="times">
       <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
-        <mat-form-field class="mx-3 no-space">
+        <div formGroupName="start" class="mx-3">
           <mat-label>{{ 'from_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="start">
-        </mat-form-field>
-        <mat-form-field class="mx-3 no-space">
+          <mat-form-field class="mx-2 no-space w-100p">
+            <mat-select formControlName="minute">
+              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mx-2 no-space w-100p">
+            <mat-select formControlName="hour">
+              <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div formGroupName="end" class="mx-3">
           <mat-label>{{ 'to_hour' | t }}</mat-label>
-          <input matInput type="time" formControlName="end">
-        </mat-form-field>
+          <mat-form-field class="mx-2 no-space w-100p">
+            <mat-select formControlName="minute">
+              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mx-2 no-space w-100p">
+            <mat-select formControlName="hour">
+              <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <div class="d-flex align-items-center">
           <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">
             <mat-icon class="f-16">add</mat-icon>

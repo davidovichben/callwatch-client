@@ -50,14 +50,4 @@ export class LoginComponent {
       })
     }
   }
-
-  logout(): void {
-    console.log('out')
-    this.router.navigate(['/']).then(confirm => {
-      if (confirm) {
-        this.appHttp.logout();
-        this.userSession.unsetUser();
-      }
-    });
-  }
 }
