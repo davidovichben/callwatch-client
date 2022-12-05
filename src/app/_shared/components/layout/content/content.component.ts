@@ -62,13 +62,10 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.router.navigate(['/']).then(confirm => {
-      // console.log(confirm);
-      // if (confirm) {
-        this.appHttp.logout();
-        this.userSession.unsetUser();
-      // }
-    });
+    this.appHttp.logout();
+    this.userSession.unsetUser();
+
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {
