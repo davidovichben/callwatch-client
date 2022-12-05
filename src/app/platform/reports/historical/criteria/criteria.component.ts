@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { MatRadioChange } from '@angular/material/radio';
 import { Subscription } from 'rxjs';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
@@ -57,6 +58,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   private makeForm(): void {
     this.formGroup = this.fb.group({
+      dateType: this.fb.control(null),
       dates: this.fb.group({
         start: this.fb.control(null),
         end: this.fb.control(null),
@@ -187,15 +189,15 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   private sanitizeTime(values: any): any {
-    return values.times = values.times.map(time => {
-      if (time.start && time.end) {
-        return {
-          start: time.start.hour + ':' + time.start.minute,
-          end: time.end.hour + ':' + time.end.minute
-        }
-      }
+    const times = values.times.filter(time => {
+      return (time.start?.hour || time.start?.minute) && (time.end?.hour || time.end?.minute);
+    });
 
-      return false;
+    return values.times = times.map(time => {
+      return {
+        start: time.start.hour + ':' + time.start.minute,
+        end: time.end.hour + ':' + time.end.minute
+      }
     });
   }
 

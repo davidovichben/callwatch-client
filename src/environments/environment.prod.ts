@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://172.30.0.144/Pamaya/callwatch-api/public/api'
+  apiUrl: 'https://ng.pamaya.co.il/Pamaya/callwatch-api/public/api'
+
 };

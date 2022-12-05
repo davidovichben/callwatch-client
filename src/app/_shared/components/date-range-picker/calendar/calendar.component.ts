@@ -88,6 +88,7 @@ export class CalendarComponent {
     }
 
     this.selectDay(month, obj.date());
+    this.closeCalendar(true);
   }
 
   quickSelectRange(label: string): void {

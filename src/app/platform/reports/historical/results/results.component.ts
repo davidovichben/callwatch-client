@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FileSaverService } from 'ngx-filesaver';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment/moment';
 
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.component';
@@ -34,6 +35,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   hasDateColumn = true;
   activeColumns: ReportColumnModel[];
+  todayDate: string;
 
   results: {
     labels: {
@@ -84,6 +86,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.reportTemplate = this.reportStateService.getReportTemplate();
     this.timeSpace = this.reportStateService.getCriteria().timeSpace;
     this.criteria = this.reportStateService.getCriteria();
+
+    this.todayDate = moment().format('DD/MM/yy');
 
     this.paginationData = {
       totalPages: this.results.rows.lastPage,

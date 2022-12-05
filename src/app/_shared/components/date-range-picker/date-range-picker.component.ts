@@ -89,6 +89,10 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
       return;
     }
 
+    if (e.target['className'].includes('month-day')) {
+      return;
+    }
+
     this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
   }
 

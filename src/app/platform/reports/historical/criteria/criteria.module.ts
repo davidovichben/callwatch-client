@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
@@ -31,20 +32,21 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [CriteriaComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    UnitSelectModule,
-    TranslateModule,
-    DateRangePickerModule
-  ],
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatSelectModule,
+		MatCheckboxModule,
+		MatButtonModule,
+		MatIconModule,
+		UnitSelectModule,
+		TranslateModule,
+		DateRangePickerModule,
+		MatRadioModule
+	],
   providers: [UnitService, UnitsSelectResolve]
 })
 export class CriteriaModule {}

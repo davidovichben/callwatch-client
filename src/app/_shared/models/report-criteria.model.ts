@@ -1,4 +1,5 @@
 export class ReportCriteriaModel {
+  dateType: string;
   dates: { start: string, end: string };
   times: { start: any, end: any }[];
   weekDays: string[];

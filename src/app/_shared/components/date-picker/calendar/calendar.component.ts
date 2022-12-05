@@ -63,6 +63,7 @@ export class CalendarComponent {
     }
 
     this.selectDay(month, obj.date());
+    this.closeCalendar(true);
   }
 
   closeCalendar(save: boolean): void {

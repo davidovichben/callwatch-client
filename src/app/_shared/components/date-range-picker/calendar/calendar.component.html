@@ -13,7 +13,7 @@
         <span class="month-day previous" *ngFor="let day of month.previousDays"></span>
         <span class="month-day" [ngClass]="{ selected: state >= dayStates.SELECTED, between: state === dayStates.BETWEEN }" (click)="dayClicked(month, dayIndex)" *ngFor="let state of month.days; let dayIndex = index">
           <span [ngClass]="{ start: state === dayStates.START, end: state === dayStates.END }" *ngIf="state > dayStates.SELECTED"></span>
-          <span>{{ dayIndex + 1 }}</span>
+          <span class="month-day-number">{{ dayIndex + 1 }}</span>
         </span>
       </div>
     </div>

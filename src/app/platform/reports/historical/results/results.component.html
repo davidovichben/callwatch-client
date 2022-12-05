@@ -1,8 +1,9 @@
 <div class="d-flex justify-content-between" [ngClass]="{ 'mb-3': !criteria.times || criteria.times.length === 0 }">
   <div>
-    <p class="h1" *ngIf="dates && dates.start && dates.end">
-      <span>{{ 'example_report_for_dates' | t }} </span>
-      <span>{{ dates.start|date: 'dd/MM/Y' }} - {{ dates.end|date: 'dd/MM/Y' }}</span>
+    <p class="h1" *ngIf="criteria.dateType">
+      <span>{{ (criteria.dateType === 'today' ? 'example_report_for_today' : 'example_report_for_dates') | t }} </span>
+      <span *ngIf="criteria.dateType === 'today'"> - {{ todayDate }}</span>
+      <span *ngIf="criteria.dateType === 'range' && dates && dates.start && dates.end">{{ dates.start|date: 'dd/MM/Y' }} - {{ dates.end|date: 'dd/MM/Y' }}</span>
     </p>
     <p class="h3" *ngIf="criteria.times && criteria.times.length > 0">
       <span>{{ 'for_hours' | t }}: </span>
