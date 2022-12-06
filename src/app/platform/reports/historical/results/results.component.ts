@@ -7,6 +7,7 @@ import * as moment from 'moment/moment';
 
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.component';
+import { QueryDialogComponent } from './query-dialog/query-dialog.component';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
@@ -17,6 +18,7 @@ import { isNumeric } from 'rxjs/internal-compatibility';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 import { PaginationData } from 'src/app/_shared/components/data-table/classes/pagination-data';
 import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 @Component({
   selector: 'app-results',
@@ -60,12 +62,18 @@ export class ResultsComponent implements OnInit, OnDestroy {
   isProducing = false;
   isDownloading = false;
 
+  query: string;
+
+  isAdmin = false;
+
   constructor(private route: ActivatedRoute, private dialog: MatDialog,
               private appState: AppStateService, private reportService: ReportTemplateService,
               private reportStateService: HistoricalReportsService,
-              private fileSaver: FileSaverService) {}
+              private fileSaver: FileSaverService, private userSession: UserSessionService) {}
 
   ngOnInit(): void {
+    this.isAdmin = this.userSession.getUser().isAdmin;
+
     this.setData();
     this.setActiveColumns();
     this.setStyles();
@@ -81,7 +89,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   private setData(): void {
-    this.results = this.route.snapshot.data.results;
+    const results = this.route.snapshot.data.results;
+    this.results = results.report;
+    this.query = results.query;
+
     this.dates = this.reportStateService.dates;
     this.reportTemplate = this.reportStateService.getReportTemplate();
     this.timeSpace = this.reportStateService.getCriteria().timeSpace;
@@ -132,6 +143,14 @@ export class ResultsComponent implements OnInit, OnDestroy {
     });
 
     this.sub.add(sub);
+  }
+
+  openQueryDialog(): void {
+    this.dialog.open(QueryDialogComponent, {
+      data: this.query,
+      width: '600px',
+      maxHeight: '600px'
+    });
   }
 
   produce(): void {

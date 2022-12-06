@@ -19,9 +19,9 @@ export const ReportProductionTimeRanges = ['day', 'week', 'month', 'last_year', 
 export const ReportTimeSpaces = ['15_minutes', 'hour', 'hour_in_day', 'day', 'day_in_week', 'week', 'month', 'year'];
 export const MinutesInterval = ['00', '15', '30', '45'];
 
-export const Hours = Array.from({ length: 23 }, (_, i) => {
-  if (i < 9) {
-    return '0' + (i + 1).toString();
+export const Hours = Array.from({ length: 24 }, (_, i) => {
+  if (i < 10) {
+    return '0' + (i).toString();
   }
-  return  i + 1;
+  return  i;
 });

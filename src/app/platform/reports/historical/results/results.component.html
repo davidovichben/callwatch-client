@@ -30,9 +30,13 @@
       <mat-icon class="ms-1">settings</mat-icon>
       <span>{{ 'settings' | t }}</span>
     </button>
-    <button mat-flat-button class="action-btn" [matMenuTriggerFor]="downloadMenu">
+    <button mat-flat-button class="ms-2 action-btn" [matMenuTriggerFor]="downloadMenu">
       <mat-icon class="ms-1">download</mat-icon>
       <span>{{ 'download' | t }}</span>
+    </button>
+    <button mat-flat-button class="action-btn" (click)="openQueryDialog()" *ngIf="isAdmin">
+      <mat-icon class="ms-1">code</mat-icon>
+      <span>SQL</span>
     </button>
     <mat-menu #downloadMenu="matMenu">
       <button mat-menu-item (click)="download(format)" *ngFor="let format of formats">{{ format }}</button>
