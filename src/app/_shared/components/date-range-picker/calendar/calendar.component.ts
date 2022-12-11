@@ -60,7 +60,7 @@ export class CalendarComponent {
 
     switch (true) {
       case !this.selected.start:
-        this.selectDay(month, dayIndex);
+        this.selectDay(month, dayIndex, true);
         break;
       case this.selected.start.isSame(selectedObj):
         if (!this.selected.end) {
@@ -173,12 +173,13 @@ export class CalendarComponent {
     this.months.forEach(month => month.days.fill(this.dayStates.NOT_SELECTED));
   }
 
-  private selectDay(month: CalendarMonth, dayIndex: number): void {
+  private selectDay(month: CalendarMonth, dayIndex: number, increaseDayIndex = false): void {
     this.resetMonthDays();
 
     month.days[dayIndex] = this.dayStates.SELECTED;
 
-    this.selected.start = moment(month.object).set('date', dayIndex + 1);
+    dayIndex = increaseDayIndex ? dayIndex + 1 : dayIndex;
+    this.selected.start = moment(month.object).set('date', dayIndex);
     this.selected.end = null;
   }
 
