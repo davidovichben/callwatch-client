@@ -15,6 +15,7 @@ import { DataTableModule } from 'src/app/_shared/components/data-table/data-tabl
 import { ResultsComponent } from './results.component';
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.component';
+import { QueryDialogComponent } from './query-dialog/query-dialog.component';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 
@@ -31,7 +32,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ResultsComponent, InformationDialogComponent, ColumnsDialogComponent],
+  declarations: [
+    ResultsComponent,
+    InformationDialogComponent,
+    ColumnsDialogComponent,
+    QueryDialogComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

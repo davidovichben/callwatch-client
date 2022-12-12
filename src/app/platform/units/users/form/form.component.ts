@@ -17,6 +17,8 @@ export class FormComponent {
 
   readonly errorMessages = ErrorMessages;
 
+  isSubmitting = false;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private dialogRef: MatDialogRef<FormComponent>,
               private unitUserService: UnitUserService,
@@ -24,11 +26,13 @@ export class FormComponent {
               private t: TranslatePipe) {}
 
   submit(form: NgForm): void {
-    if (form.valid) {
+    if (form.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
       const userId = form.value.userId;
 
       this.unitUserService.newUser(this.data.unitId, userId).then(response => {
         this.handleServerResponse(response);
+        this.isSubmitting = false;
       });
     }
   }
