@@ -36,9 +36,9 @@ export class DashboardComponent implements AfterViewInit {
       }
     }
 
-    new Chart(
-      document.getElementById('myChart') as any,
-      config
-    );
+    // new Chart(
+    //   document.getElementById('myChart') as any,
+    //   config
+    // );
   }
 }
