@@ -1,4 +1,14 @@
-import { Component, ElementRef, forwardRef, HostListener, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef, EventEmitter,
+  forwardRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
@@ -32,6 +42,8 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   @Input() multiple = false;
   @Input() toggleUp = false;
   @Input() required = false;
+
+  @Output() touched: EventEmitter<any> = new EventEmitter();
 
   title: string;
 
@@ -102,6 +114,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   }
 
   toggleDropdown(): void {
+    this.touched.emit();
     this.isOpened = !this.isOpened;
     this.setCoords();
   }

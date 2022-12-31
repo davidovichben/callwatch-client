@@ -15,11 +15,35 @@ export class HistoricalReportsService {
   setCriteria(values: ReportCriteriaModel): void {
     this.dates = values.dates;
 
-    localStorage.setItem('report-criteria', JSON.stringify(values));
+    const criteria = this.getCriteria(true) ?? {};
+    const module = this.reportTemplate.module;
+    const name = this.reportTemplate.name;
+
+    if (!criteria[module]) {
+      criteria[module] = {};
+      if (!criteria[module][name]) {
+        criteria[module][name] = {};
+      }
+    }
+
+    criteria[module][name] = values;
+
+    localStorage.setItem('report-criteria', JSON.stringify(criteria));
   }
 
-  getCriteria(): ReportCriteriaModel {
-    return JSON.parse(localStorage.getItem('report-criteria'));
+  getCriteria(all?: boolean): ReportCriteriaModel {
+    const criteria = JSON.parse(localStorage.getItem('report-criteria'));
+
+    if (!criteria) {
+      return null;
+    }
+
+    if (all) {
+      return criteria;
+    }
+
+    const template = this.reportTemplate;
+    return criteria[template.module] ? criteria[template.module][template.name] : null;
   }
 
   setReportTemplate(reportTemplate: ReportTemplateModel): void {

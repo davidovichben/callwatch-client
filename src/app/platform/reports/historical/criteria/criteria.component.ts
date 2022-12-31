@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { MatRadioChange } from '@angular/material/radio';
 import { Subscription } from 'rxjs';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
@@ -80,19 +79,38 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     });
 
     this.weekDays.forEach(day => {
-      const control = this.fb.control(true);
+      const control = this.fb.control(false);
       (this.formGroup.get('weekDays') as FormGroup).addControl(day, control);
     });
 
     const criteria = this.reportStateService.getCriteria();
     if (criteria) {
-      criteria.times.forEach(() => this.addTime());
-      // criteria.sort.forEach(values => {
-      //   this.addSortColumn();
-      //   this.setColumnDisabled(values.column, true);
-      // });
+      if (criteria.times) {
+        criteria.times.forEach((time, index) => {
+          this.addTime();
+
+          const startString = time.start.split(':')
+          const endString = time.end.split(':')
+
+          const start = { hour: startString[0], minute: startString[1] };
+          const end = { hour: endString[0], minute: endString[1] };
+
+          criteria.times[index] = { start, end };
+        });
+      }
+
+      criteria.sort.forEach(values => {
+        this.addSortColumn();
+        this.setColumnDisabled(values.column, true);
+      });
+
+      criteria.weekDays.forEach(day => {
+        this.formGroup.get('weekDays').get(day).setValue(true);
+      });
 
       this.formGroup.patchValue(criteria);
+    } else {
+      this.formGroup.reset();
     }
 
     if ((this.formGroup.get('times') as FormArray).length === 0) {
@@ -105,14 +123,15 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   addTime(): void {
-    let time = this.fb.group({
-      hour: null,
-      minute: null
-    })
-
     const group = this.fb.group({
-      start: time,
-      end: time
+      start: this.fb.group({
+        hour: null,
+        minute: null
+      }),
+      end: this.fb.group({
+        hour: null,
+        minute: null
+      })
     });
 
     (this.formGroup.get('times') as FormArray).push(group);
@@ -163,11 +182,12 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     const values = this.sanitizeValues(this.formGroup.value);
     this.reportStateService.setCriteria(values);
 
+    return;
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
   }
 
   private sanitizeValues(values: ReportCriteriaModel): ReportCriteriaModel {
-    values.weekDays = Object.keys(values.weekDays).filter(day => !!day);
+    values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
 
     this.sanitizeDates(values, 'dates');
     this.sanitizeDates(values, 'ignoreDates')
@@ -176,6 +196,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
     values.sort = values.sort.filter(sort => sort.column && sort.direction);
 
+    console.log(values)
     return values;
   }
 

@@ -13,11 +13,11 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
-import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
-import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
-import { EmailPattern, PhonePattern } from 'src/app/_shared/constants/patterns';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { AuthTypes, UserModel } from 'src/app/_shared/models/user.model';
+import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
+import { EmailPattern, PhonePattern } from 'src/app/_shared/constants/patterns';
 import { ImageTypes, Megabyte } from 'src/app/_shared/constants/general';
 import { Fade } from 'src/app/_shared/constants/animations';
 

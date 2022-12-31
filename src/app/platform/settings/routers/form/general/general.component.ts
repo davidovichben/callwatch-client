@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 
 import { AudioInputComponent } from 'src/app/_shared/components/audio-input/audio-input.component';
@@ -35,7 +36,9 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
   routerForm: FormGroup;
 
-  constructor(public formService: RouterFormService) {}
+  constructor(public formService: RouterFormService, private dateAdapter: DateAdapter<Date>) {
+      // this.dateAdapter.setLocale('es');
+  }
 
   ngOnInit(): void {
     this.routerForm = (this.formService.routerForm.get('general') as FormGroup);

@@ -96,7 +96,7 @@
     </section>
     <section formArrayName="texts" [hidden]="activeTab !== 'texts'">
       <div class="d-flex mb-3" *ngFor="let i of formGroup.get('texts')['controls']; let index = index" [formGroupName]="index">
-        <mat-checkbox class="pt-3" formControlName="isActive" (change)="setTextDisabledState(index)"></mat-checkbox>
+        <mat-checkbox class="pt-3 ms-2" formControlName="isActive" (change)="setTextDisabledState(index)"></mat-checkbox>
         <mat-form-field>
           <mat-label>{{ ('callback_text_' + (index + 1)) | t }}</mat-label>
           <input matInput type="text" formControlName="content">

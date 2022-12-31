@@ -124,7 +124,7 @@ export class FormComponent {
   }
 
   addCallTime(): void {
-    if (this.callTimeForm.valid) {
+    if (this.callTimeForm.valid && this.validateTimeRange()) {
       const callTime = this.callTimeForm.value;
       callTime.isActive = true;
 
@@ -143,9 +143,28 @@ export class FormComponent {
     }
   }
 
+  validateTimeRange(startTime?: string, endTime?: string): boolean {
+    const start = startTime ? startTime : this.callTimeForm.get('startTime').value;
+    const end = endTime ? endTime : this.callTimeForm.get('endTime').value;
+
+    const hasRangeError = end < start;
+    this.callTimeForm.setErrors({ range : hasRangeError });
+
+    return !hasRangeError;
+  }
+
   confirmTimeUpdate(callTime: CallTimeModel, startTime: string, endTime: string, allDay: boolean): void {
+    let msg;
+
+    if (!this.validateTimeRange(startTime, endTime)) {
+      msg = this.t.transform('time_range_error')
+    }
+
     if ((!startTime && !endTime && !allDay) || (startTime && !endTime) || (!startTime && endTime)) {
-      const msg = this.t.transform('schedule_times_missing_error');
+      msg = this.t.transform('schedule_times_missing_error');
+    }
+
+    if (msg) {
       this.notification.error(msg);
       return;
     }

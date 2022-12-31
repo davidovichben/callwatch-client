@@ -126,7 +126,7 @@
         <mat-checkbox formControlName="isRoot" *ngIf="loggedUser.permissions === 'root'">{{ 'main_user' | t }}</mat-checkbox>
         <div class="row" *ngIf="!formGroup.get('isRoot').value">
           <div class="col-12 col-lg-6 col-xxl-5 mb-3">
-            <app-unit-select formControlName="units" [units]="units" [toggleUp]="true" [multiple]="true"></app-unit-select>
+            <app-unit-select formControlName="units" [units]="units" (touched)="formGroup.markAllAsTouched()" [toggleUp]="true" [multiple]="true"></app-unit-select>
           </div>
         </div>
       </section>
