@@ -269,8 +269,10 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     })
   }
 
-  reset(event: Event): void {
-    event.stopPropagation();
+  reset(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
 
     this.selected = null;
     if (this.multiple) {

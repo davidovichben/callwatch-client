@@ -11,14 +11,14 @@ import { QueryDialogComponent } from './query-dialog/query-dialog.component';
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
+import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { ReportFormats, ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
 import { isNumeric } from 'rxjs/internal-compatibility';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 import { PaginationData } from 'src/app/_shared/components/data-table/classes/pagination-data';
-import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
-import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 @Component({
   selector: 'app-results',
@@ -160,7 +160,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
       const reportTemplateId = this.reportStateService.getReportTemplate()?.id;
       this.reportService.produceReport(reportTemplateId, this.criteria, this.paginationData.currentPage).then(response => {
         if (response) {
-          this.results = response;
+          this.results = response.report;
+          this.query = response.query;
           this.setStyles();
         }
 

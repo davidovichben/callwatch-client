@@ -10,6 +10,8 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,7 +29,7 @@ export class LoginComponent {
 
   constructor(private router: Router, private userSession: UserSessionService,
               private appHttp: AppHttpService, private localeService: LocaleService,
-              private notificationService: NotificationService) {}
+              private notificationService: NotificationService, private t: TranslatePipe) {}
 
   submit(form: NgForm): void {
     if (form.valid && !this.isSubmitting) {
@@ -35,8 +37,9 @@ export class LoginComponent {
       this.hasLoginError = false;
 
       this.appHttp.login(form.value.username, form.value.password).then(response => {
-        if (response.status === 500) {
-          this.notificationService.error('server error');
+        if (response.status === 500 || response.status === 0) {
+          const errorMsg = this.t.transform('general_login_error');
+          this.notificationService.error(errorMsg);
           return;
         }
 

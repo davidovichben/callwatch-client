@@ -51,6 +51,11 @@ export class DateRangeInputComponent implements ControlValueAccessor {
     }
   }
 
+  reset(): void {
+    this.clearErrors();
+    this.value = null;
+  }
+
   registerOnChange(fn: any) {
     this.propagateChange = fn;
   }

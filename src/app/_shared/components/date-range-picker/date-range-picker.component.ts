@@ -13,6 +13,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { DateRangeInputComponent } from './date-range-input/date-range-input.component';
 
 import { SlideToggle } from 'src/app/_shared/constants/animations';
+
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -38,6 +39,10 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   constructor(private elementRef: ElementRef) {}
 
   ngAfterContentInit(): void {
+    this.writeValues();
+  }
+
+  writeValues(): void {
     const first = this.inputs.first;
     const last = this.inputs.last;
 
@@ -94,6 +99,12 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
     }
 
     this.calendarOpened = this.elementRef.nativeElement.contains(e.target);
+  }
+
+  reset(): void {
+    this.inputs.first.reset();
+    this.inputs.last.reset();
+    this.writeValues();
   }
 
   ngOnDestroy(): void {

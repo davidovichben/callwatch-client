@@ -1,9 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
+import { UnitSelectComponent } from 'src/app/_shared/components/unit-select/unit-select.component';
+import { DateRangePickerComponent } from 'src/app/_shared/components/date-range-picker/date-range-picker.component';
+
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
+
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { SortDirections, WeekDays } from 'src/app/_shared/constants/general';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
@@ -22,6 +28,9 @@ import { ReportTemplateModel } from 'src/app/_shared/models/report-template.mode
 })
 export class CriteriaComponent implements OnInit, OnDestroy {
 
+  @ViewChild(UnitSelectComponent) unitsSelect: UnitSelectComponent;
+  @ViewChild(DateRangePickerComponent) dateRange: DateRangePickerComponent;
+
   readonly sub = new Subscription();
 
   units: UnitModel[] = [];
@@ -37,7 +46,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-              private router: Router, public reportStateService: HistoricalReportsService) {}
+              private router: Router, public reportStateService: HistoricalReportsService,
+              private notifications: NotificationService, private t: TranslatePipe) {}
 
   ngOnInit(): void {
     this.units = this.route.snapshot.data.units;
@@ -85,19 +95,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
     const criteria = this.reportStateService.getCriteria();
     if (criteria) {
-      if (criteria.times) {
-        criteria.times.forEach((time, index) => {
-          this.addTime();
-
-          const startString = time.start.split(':')
-          const endString = time.end.split(':')
-
-          const start = { hour: startString[0], minute: startString[1] };
-          const end = { hour: endString[0], minute: endString[1] };
-
-          criteria.times[index] = { start, end };
-        });
-      }
+      this.setTimes(criteria);
 
       criteria.sort.forEach(values => {
         this.addSortColumn();
@@ -109,9 +107,9 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       });
 
       this.formGroup.patchValue(criteria);
-    } else {
-      this.formGroup.reset();
     }
+
+    this.resetFields(criteria);
 
     if ((this.formGroup.get('times') as FormArray).length === 0) {
       this.addTime();
@@ -120,6 +118,41 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     if ((this.formGroup.get('sort') as FormArray).length === 0) {
       this.addSortColumn();
     }
+  }
+
+  resetFields(criteria: ReportCriteriaModel): void {
+    let formReset = false;
+
+    if (!criteria) {
+      this.formGroup.reset();
+      formReset = true;
+    }
+
+    if (this.unitsSelect && (formReset || criteria.units?.length === 0)) {
+      this.unitsSelect.reset();
+    }
+
+    if (this.dateRange && (formReset || !criteria.dates)) {
+      this.dateRange.reset();
+    }
+  }
+
+  setTimes(criteria: ReportCriteriaModel): void {
+    if (!criteria.times) {
+      return;
+    }
+
+    criteria.times.forEach((time, index) => {
+      this.addTime();
+
+      const startString = time.start.split(':')
+      const endString = time.end.split(':')
+
+      const start = { hour: startString[0], minute: startString[1] };
+      const end = { hour: endString[0], minute: endString[1] };
+
+      criteria.times[index] = { start, end };
+    });
   }
 
   addTime(): void {
@@ -179,10 +212,14 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
+    if (!this.formGroup.get('units').value) {
+      this.notifications.error(this.t.transform('units_field_is_required'));
+      return;
+    }
+
     const values = this.sanitizeValues(this.formGroup.value);
     this.reportStateService.setCriteria(values);
 
-    return;
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
   }
 
