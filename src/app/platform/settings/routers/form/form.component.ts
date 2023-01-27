@@ -20,8 +20,6 @@ export class FormComponent implements OnInit, OnDestroy {
     { label: 'inactive_hours_routing', url: ['./routing', 'inactive'], formGroup: 'keys.inactive' }
   ];
 
-  activeTab: string;
-
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,

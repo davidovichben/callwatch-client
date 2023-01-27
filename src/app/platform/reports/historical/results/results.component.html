@@ -5,7 +5,7 @@
       <span *ngIf="criteria.dateType === 'today'"> - {{ todayDate }}</span>
       <span *ngIf="criteria.dateType === 'range' && dates && dates.start && dates.end">{{ dates.start|date: 'dd/MM/Y' }} - {{ dates.end|date: 'dd/MM/Y' }}</span>
     </p>
-    <p class="h3" *ngIf="criteria.times && criteria.times.length > 0">
+    <p class="h3" *ngIf="criteria.times && criteria.times.length > 0 && criteria.dateType !== 'today'">
       <span>{{ 'for_hours' | t }}: </span>
       <span *ngFor="let time of criteria.times; let last = last">
         <span>{{ time.start }} - {{ time.end }}</span>
