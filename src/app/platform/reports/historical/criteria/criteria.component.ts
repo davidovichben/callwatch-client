@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { UnitSelectComponent } from 'src/app/_shared/components/unit-select/unit-select.component';
@@ -20,6 +20,7 @@ import {
   ReportTimeSpaces
 } from 'src/app/_shared/models/report-criteria.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
+import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 
 @Component({
   selector: 'app-criteria',
@@ -33,12 +34,14 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   readonly sub = new Subscription();
 
+  readonly errorMessages = ErrorMessages;
+
   units: UnitModel[] = [];
   reportTemplate: ReportTemplateModel;
 
   readonly weekDays = WeekDays;
   readonly abandonTimes = AbandonTimes;
-  readonly timeSpaces = ReportTimeSpaces;
+  readonly timeSpaces = ReportTimeSpaces;e
   readonly sortDirections = SortDirections;
   readonly minutesInterval = MinutesInterval;
   readonly hours = Hours;
@@ -211,9 +214,48 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     }
   }
 
+  timeByIndex(index: number): FormControl {
+    return <FormControl>(this.formGroup.get('times') as FormArray).controls[index];
+  }
+
+  timeRangeCheck(index: number): void {
+    let time = this.timeByIndex(index);
+    const startTime = time.get('start').value;
+    const endTime = time.get('end').value;
+    let hasRangeError = false;
+
+    if (!startTime.hour || !startTime.minute || !endTime.hour || !endTime.minute) {
+      time.setErrors(null);
+      return;
+    }
+
+    if (startTime.hour > endTime.hour) {
+      hasRangeError = true;
+    }
+
+    if (startTime.hour === endTime.hour) {
+      hasRangeError = startTime.minute >= endTime.minute;
+    }
+
+
+    if (hasRangeError) {
+      time.setErrors({ range: true });
+    } else {
+      time.setErrors(null);
+    }
+
+    console.log(this.timeByIndex(index).errors?.range);
+  }
+
   submit(): void {
-    if (!this.formGroup.get('units').value) {
+    const units = this.formGroup.get('units').value;
+    if (!units || units.length === 0) {
       this.notifications.error(this.t.transform('units_field_is_required'));
+      return;
+    }
+
+    if (!this.formGroup.valid) {
+      console.log(this.formGroup)
       return;
     }
 
@@ -233,7 +275,6 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
     values.sort = values.sort.filter(sort => sort.column && sort.direction);
 
-    console.log(values)
     return values;
   }
 

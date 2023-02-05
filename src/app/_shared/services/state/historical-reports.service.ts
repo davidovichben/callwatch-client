@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
+
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
 
@@ -12,10 +14,18 @@ export class HistoricalReportsService {
 
   dates: { start: string, end: string };
 
+  userId: number;
+
+  constructor(private userService: UserSessionService) {
+    this.userId = this.userService.getUserId();
+  }
+
   setCriteria(values: ReportCriteriaModel): void {
     this.dates = values.dates;
 
-    const criteria = this.getCriteria(true) ?? {};
+    const criteriaIndexByUser = this.getCriteria(true) ?? {};
+    const criteria = criteriaIndexByUser[this.userId] ? criteriaIndexByUser[this.userId] : {};
+
     const module = this.reportTemplate.module;
     const name = this.reportTemplate.name;
 
@@ -27,8 +37,9 @@ export class HistoricalReportsService {
     }
 
     criteria[module][name] = values;
+    criteriaIndexByUser[this.userId] = criteria
 
-    localStorage.setItem('report-criteria', JSON.stringify(criteria));
+    localStorage.setItem('report-criteria', JSON.stringify(criteriaIndexByUser));
   }
 
   getCriteria(all?: boolean): ReportCriteriaModel {
@@ -43,7 +54,11 @@ export class HistoricalReportsService {
     }
 
     const template = this.reportTemplate;
-    return criteria[template.module] ? criteria[template.module][template.name] : null;
+    if (criteria[this.userId]) {
+      return criteria[this.userId][template.module] ? criteria[this.userId][template.module][template.name] : null;
+    }
+
+    return null;
   }
 
   setReportTemplate(reportTemplate: ReportTemplateModel): void {

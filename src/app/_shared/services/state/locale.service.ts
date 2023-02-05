@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
+
 import { TranslationModel } from 'src/app/_shared/models/translation.model';
 
 @Injectable()
@@ -9,13 +11,16 @@ export class LocaleService {
   activeLocale: string;
   dir: 'rtl' | 'ltr';
 
+  userId: number;
+
   localeChanged: Subject<string> = new Subject();
   translationLoaded: Subject<boolean> = new Subject();
 
   showTranslationKeys = false;
 
-  constructor() {
+  constructor(private userService: UserSessionService) {
     this.activeLocale = this.getLocale();
+    this.userId = this.userService.getUserId();
     this.dir = this.activeLocale === 'en' ? 'ltr' : 'rtl';
   }
 
@@ -34,8 +39,13 @@ export class LocaleService {
   }
 
   getTranslations(): TranslationModel[] {
-    if (localStorage.getItem('translations')) {
-      return JSON.parse(localStorage.getItem('translations'));
+    const translations = localStorage.getItem('translations');
+    if (translations) {
+      const translationsByUser = JSON.parse(translations)[this.userId];
+
+      if (translationsByUser) {
+        return translationsByUser
+      }
     }
 
     return [];
@@ -43,10 +53,13 @@ export class LocaleService {
 
   setTranslations(translations: TranslationModel[]): void {
     const keyed = {};
+    const keyedByUser = {};
 
     translations.forEach(row => keyed[row.key] = row.value);
 
-    localStorage.setItem('translations', JSON.stringify(keyed));
+    keyedByUser[this.userId] = keyed;
+
+    localStorage.setItem('translations', JSON.stringify(keyedByUser));
     this.translationLoaded.next(true);
   }
 }

@@ -54,6 +54,8 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
 
   selected: any;
 
+  currentCheckStatus = false;
+
   top: number;
   bottom: number;
   width: number;
@@ -156,6 +158,10 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   }
 
   selectUnit(unit: UnitModel, checked?: boolean): void {
+    if (!checked && this.currentCheckStatus) {
+      this.currentCheckStatus = false;
+    }
+
     let output;
 
     if (this.multiple) {
@@ -236,6 +242,8 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     this.units.forEach(unit => this.checkUnit(isChecked, unit));
     this.selected = [];
     this.units.forEach(unit => this.setMultipleSelected(unit));
+
+    this.currentCheckStatus = isChecked;
   }
 
   initFilter(value: string): void {

@@ -1,5 +1,10 @@
 <form (ngSubmit)="submit()" [formGroup]="formGroup" *ngIf="reportTemplate">
-  <p class="mb-3 f-20 blue-text">{{ 'data_filtering' | t }}</p>
+  <div class="d-flex justify-content-between">
+    <p class="mb-3 f-20 blue-text">{{ 'data_filtering' | t }}</p>
+    <div>
+      <button mat-flat-button class="blue-btn" type="submit">{{ 'show_report' | t }}</button>
+    </div>
+  </div>
   <div class="criterion">
     <div>
       <p class="mb-3">{{ 'show_values_in_date_range' | t }}:</p>
@@ -21,12 +26,12 @@
         <div formGroupName="start" class="mx-3">
           <mat-label>{{ 'from_hour' | t }}</mat-label>
           <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select formControlName="minute">
+            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="minute">
               <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select formControlName="hour">
+            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="hour">
               <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -34,12 +39,12 @@
         <div formGroupName="end" class="mx-3">
           <mat-label>{{ 'to_hour' | t }}</mat-label>
           <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select formControlName="minute">
+            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="minute">
               <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select formControlName="hour">
+            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="hour">
               <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -52,6 +57,7 @@
             <mat-icon class="f-16">remove</mat-icon>
           </button>
         </div>
+        <span class="mat-error m-3" *ngIf="timeByIndex(i).errors?.range">{{ errorMessages.timeRange | t }}</span>
       </div>
     </div>
   </div>
