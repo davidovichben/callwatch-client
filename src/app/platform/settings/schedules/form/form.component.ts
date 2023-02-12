@@ -148,7 +148,12 @@ export class FormComponent {
     const end = endTime ? endTime : this.callTimeForm.get('endTime').value;
 
     const hasRangeError = end < start;
-    this.callTimeForm.setErrors({ range : hasRangeError });
+
+    if (hasRangeError) {
+      this.callTimeForm.setErrors({ range: true });
+    } else {
+      this.callTimeForm.setErrors(null);
+    }
 
     return !hasRangeError;
   }

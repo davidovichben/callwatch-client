@@ -26,14 +26,14 @@
   </div>
   <div id="optionsWrapper">
     <div id="options">
+      <div *ngIf="multiple" (click)="checkAll(!currentCheckStatus)" id="selectAll" class="text-center unit w-100" [ngClass]="currentCheckStatus ? 'active': null">
+        {{ 'select_all' | t }}
+      </div>
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits }"></ng-container>
     </div>
   </div>
 </div>
 <ng-template #recursiveListTmpl let-list="list">
-  <div *ngIf="multiple" (click)="checkAll(!currentCheckStatus)" id="selectAll" class="text-center unit w-100" [ngClass]="currentCheckStatus ? 'active': null">
-    {{ 'select_all' | t }}
-  </div>
   <li *ngFor="let unit of list" [@slideToggle]="isOpened ? 'active' : 'inactive'">
     <div *ngIf="!unit.ignore" class="d-flex align-items-center unit" (click)="unitClicked(unit)">
       <mat-icon class="side-chevron" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !hasMoreUnits(unit) }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>

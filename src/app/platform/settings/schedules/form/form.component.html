@@ -135,11 +135,11 @@
         <td>
           <mat-slide-toggle [checked]="callTime.isActive" (change)="callTime.isActive = $event.checked"></mat-slide-toggle>
         </td>
-        <td class="row-icons">
+        <td class="blue-text">
           <div class="d-flex align-items-center">
             <button class="ms-2 btn blue-btn w-auto" type="button" (click)="confirmTimeUpdate(callTime, startTimeInput.value, endTimeInput.value, rowAllDayInput.checked)" *ngIf="callTime.editing">{{ 'confirm' | t }}</button>
-            <mat-icon class="ms-2" (click)="callTime.editing = true" *ngIf="!callTime.editing">edit</mat-icon>
-            <mat-icon (click)="removeCallTime(index)">delete</mat-icon>
+            <mat-icon class="ms-2 pointer" (click)="callTime.editing = true" *ngIf="!callTime.editing">edit</mat-icon>
+            <mat-icon class="pointer" (click)="removeCallTime(index)">delete</mat-icon>
           </div>
         </td>
       </tr>
