@@ -1,12 +1,12 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router, ChildActivationStart } from '@angular/router';
+import { DateAdapter } from '@angular/material/core';
 
 import { Fade } from 'src/app/_shared/constants/animations';
 
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
-import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    TranslateModule
+    TranslateModule,
+    CommonModule
   ],
   providers: [AppHttpService]
 })

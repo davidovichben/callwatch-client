@@ -5,7 +5,7 @@ export const ErrorMessages = {
   phone: 'phone_error',
   number: 'number_error',
   dateRange: 'date_range_error',
-  timeRange: 'time_range_error',
+  timeRange: 'LBL_REP_DEF_ERROR_HOURS',
   greaterThan: 'greater_than_error',
   exists: 'values_exist_error'
 };

@@ -19,6 +19,7 @@ import { CriteriaComponent } from './criteria.component';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const routes: Routes = [
   {
@@ -32,21 +33,22 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [CriteriaComponent],
-	imports: [
-		CommonModule,
-		RouterModule.forChild(routes),
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatSelectModule,
-		MatCheckboxModule,
-		MatButtonModule,
-		MatIconModule,
-		UnitSelectModule,
-		TranslateModule,
-		DateRangePickerModule,
-		MatRadioModule
-	],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatIconModule,
+        UnitSelectModule,
+        TranslateModule,
+        DateRangePickerModule,
+        MatRadioModule,
+        MatGridListModule
+    ],
   providers: [UnitService, UnitsSelectResolve]
 })
 export class CriteriaModule {}

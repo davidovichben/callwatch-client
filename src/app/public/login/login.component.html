@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit(form)" #form="ngForm">
+<form *ngIf="showForm" (ngSubmit)="submit(form)" #form="ngForm">
   <h3 class="text-center blue-text">{{ 'system_login' | t }}</h3>
   <mat-form-field class="w-100">
     <mat-label>{{ 'lbl_login_user_name' | t }}</mat-label>
@@ -21,3 +21,6 @@
     <a class="f-12 blue-text" routerLink="./forgot">{{ 'forgot_password' | t }}?</a>
   </div>
 </form>
+<div class="overlay" *ngIf="!showForm">
+  <div class="loader">Loading...</div>
+</div>
