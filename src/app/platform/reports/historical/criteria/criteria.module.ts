@@ -17,6 +17,7 @@ import { DateRangePickerModule } from 'src/app/_shared/components/date-range-pic
 import { CriteriaComponent } from './criteria.component';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
+import { ReportCriteriaService } from 'src/app/_shared/services/http/report-criteria.service';
 
 import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
 
@@ -47,6 +48,6 @@ const routes: Routes = [
 		DateRangePickerModule,
 		MatRadioModule
 	],
-  providers: [UnitService, UnitsSelectResolve]
+  providers: [UnitService, UnitsSelectResolve, ReportCriteriaService]
 })
 export class CriteriaModule {}

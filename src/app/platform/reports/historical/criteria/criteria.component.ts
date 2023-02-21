@@ -8,6 +8,8 @@ import { DateRangePickerComponent } from 'src/app/_shared/components/date-range-
 
 import { HistoricalReportsService } from 'src/app/_shared/services/state/historical-reports.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
+import { ReportCriteriaService } from 'src/app/_shared/services/http/report-criteria.service';
+import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -48,27 +50,39 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   formGroup: FormGroup;
 
+  userId: number;
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
               private router: Router, public reportStateService: HistoricalReportsService,
-              private notifications: NotificationService, private t: TranslatePipe) {}
+              private notifications: NotificationService, private t: TranslatePipe,
+              private reportCriteriaService: ReportCriteriaService, private userService: UserSessionService) {}
 
   ngOnInit(): void {
     this.units = this.route.snapshot.data.units;
+    this.userId = this.userService.getUserId();
 
     const sub = this.reportStateService.reportTemplateChanged.subscribe(() => {
-      this.reportTemplate = this.reportStateService.getReportTemplate();
-      this.makeForm();
+      this.getReportCriteria();
     })
 
     this.sub.add(sub);
 
     this.reportTemplate = this.reportStateService.getReportTemplate();
+    this.getReportCriteria();
+  }
+
+  getReportCriteria(): void {
+    this.reportTemplate = this.reportStateService.getReportTemplate();
+
     if (this.reportTemplate) {
       this.makeForm();
+      this.reportCriteriaService.getReportCriteria(this.reportTemplate.module, this.reportTemplate.name, this.userId)
+        .then(report => this.makeForm(report))
     }
   }
 
-  private makeForm(): void {
+  private makeForm(criteria?: ReportCriteriaModel): void {
+    console.log(criteria)
     this.formGroup = this.fb.group({
       dateType: this.fb.control(null),
       dates: this.fb.group({
@@ -96,7 +110,6 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       (this.formGroup.get('weekDays') as FormGroup).addControl(day, control);
     });
 
-    const criteria = this.reportStateService.getCriteria();
     if (criteria) {
       this.setTimes(criteria);
 
@@ -112,7 +125,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       this.formGroup.patchValue(criteria);
     }
 
-    this.resetFields(criteria);
+    // this.resetFields(criteria);
 
     if ((this.formGroup.get('times') as FormArray).length === 0) {
       this.addTime();
@@ -260,6 +273,10 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     }
 
     const values = this.sanitizeValues(this.formGroup.value);
+
+    this.reportCriteriaService.newReportCriteria(values, this.userId, this.reportTemplate.name, this.reportTemplate.module).then(response => {
+      console.log(response)
+    })
     this.reportStateService.setCriteria(values);
 
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
