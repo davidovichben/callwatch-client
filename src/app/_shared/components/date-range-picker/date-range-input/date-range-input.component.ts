@@ -13,6 +13,7 @@ import * as moment from 'moment/moment';
 export class DateRangeInputComponent implements ControlValueAccessor {
 
   @Input() placeholder: string;
+  @Input() disabled = false;
 
   @Output() dateChange = new EventEmitter();
 

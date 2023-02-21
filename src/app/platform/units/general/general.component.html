@@ -9,7 +9,7 @@
     <div class="col-12 col-lg-6 mb-3" *ngIf="!isRootUnit">
       <app-unit-select name="parent" [ngModel]="unit.parent" [units]="units" [ignoredUnit]="unit" [placeholder]="'select_parent_unit' | t"></app-unit-select>
     </div>
-    <div class="col-12 col-lg-6 mb-3">
+    <div class="col-12 col-lg-6 mb-3" *ngIf="!isRootUnit">
       <mat-form-field class="w-100">
         <mat-label>{{ 'unit_administrator' | t }}</mat-label>
         <input matInput name="admin" [ngModel]="unit.admin" [disabled]="isRootUnit || !hasPermission('units', 'update')">

@@ -85,7 +85,11 @@
       </div>
     </section>
     <section [hidden]="activeTab !== 'acds'">
-      <app-dual-groups-select formControlName="acds" [items]="switchboardAcds" *ngIf="!extension || (extension && acdsLoaded)"></app-dual-groups-select>
+      <app-dual-groups-select formControlName="acds" [items]="switchboardAcds" *ngIf="!extension || (extension && acdsLoaded)">
+        <ng-template let-item #row>
+          <span>{{ item.name }} ({{ item.number }})</span>
+        </ng-template>
+      </app-dual-groups-select>
     </section>
     <section formGroupName="callback" [hidden]="activeTab !== 'callback'">
       <div class="row">

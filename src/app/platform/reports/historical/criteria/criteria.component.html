@@ -12,8 +12,8 @@
         <mat-radio-button value="today" class="mb-3">{{ 'today' | t }}</mat-radio-button>
         <mat-radio-button value="range">
           <app-date-range-picker formGroupName="dates">
-            <app-date-range-input class="mx-3 no-space" formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>
-            <app-date-range-input class="mx-3 no-space" formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>
+            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>
+            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>
           </app-date-range-picker>
         </mat-radio-button>
       </mat-radio-group>
@@ -21,31 +21,42 @@
   </div>
   <div class="criterion">
     <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>
+<!--    TODO make time component-->
     <div formArrayName="times">
       <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
         <div formGroupName="start" class="mx-3">
           <mat-label>{{ 'from_hour' | t }}</mat-label>
-          <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="minute">
+          <mat-form-field *ngIf="locale.dir === 'rtl'" class="mx-2 no-space w-100p">
+            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
               <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="hour">
+            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="hour">
               <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="locale.dir === 'ltr'" class="mx-2 no-space w-100p">
+            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
+              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div formGroupName="end" class="mx-3">
           <mat-label>{{ 'to_hour' | t }}</mat-label>
-          <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="minute">
+          <mat-form-field *ngIf="locale.dir === 'rtl'" class="mx-2 no-space w-100p">
+            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
               <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select (selectionChange)="timeRangeCheck(i)" formControlName="hour">
+            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="hour">
               <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field  *ngIf="locale.dir === 'ltr'" class="mx-2 no-space w-100p">
+            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
+              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

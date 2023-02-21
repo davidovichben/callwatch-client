@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Fade } from 'src/app/_shared/constants/animations';
@@ -18,7 +18,7 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
   styleUrls: ['./login.component.styl'],
   animations: [Fade]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   readonly errorMessages = ErrorMessages;
 
@@ -26,10 +26,15 @@ export class LoginComponent {
 
   hasLoginError: boolean;
   loginNotAllowed: boolean;
+  showForm = false;
 
   constructor(private router: Router, private userSession: UserSessionService,
               private appHttp: AppHttpService, private localeService: LocaleService,
               private notificationService: NotificationService, private t: TranslatePipe) {}
+
+  ngOnInit(): void {
+    setTimeout(() => this.showForm = true, 300);
+  }
 
   submit(form: NgForm): void {
     if (form.valid && !this.isSubmitting) {

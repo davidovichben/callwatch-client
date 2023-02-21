@@ -10,6 +10,7 @@ import { HistoricalReportsService } from 'src/app/_shared/services/state/histori
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { ReportCriteriaService } from 'src/app/_shared/services/http/report-criteria.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
+import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
@@ -43,7 +44,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   readonly weekDays = WeekDays;
   readonly abandonTimes = AbandonTimes;
-  readonly timeSpaces = ReportTimeSpaces;e
+  readonly timeSpaces = ReportTimeSpaces;
   readonly sortDirections = SortDirections;
   readonly minutesInterval = MinutesInterval;
   readonly hours = Hours;
@@ -55,7 +56,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
               private router: Router, public reportStateService: HistoricalReportsService,
               private notifications: NotificationService, private t: TranslatePipe,
-              private reportCriteriaService: ReportCriteriaService, private userService: UserSessionService) {}
+              private reportCriteriaService: ReportCriteriaService, private userService: UserSessionService,
+              public locale: LocaleService) {}
 
   ngOnInit(): void {
     this.units = this.route.snapshot.data.units;
@@ -82,9 +84,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   private makeForm(criteria?: ReportCriteriaModel): void {
-    console.log(criteria)
     this.formGroup = this.fb.group({
-      dateType: this.fb.control(null),
+      dateType: this.fb.control('today'),
       dates: this.fb.group({
         start: this.fb.control(null),
         end: this.fb.control(null),
@@ -96,7 +97,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       showInternal: this.fb.control(true),
       showExternal: this.fb.control(true),
       abandonTime: this.fb.control(null),
-      timeSpace: this.fb.control('hour'),
+      timeSpace: this.fb.control('day'),
       sort: this.fb.array([]),
       ignoreDates: this.fb.group({
         start: this.fb.control(null),
@@ -125,7 +126,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       this.formGroup.patchValue(criteria);
     }
 
-    // this.resetFields(criteria);
+    this.resetFields(criteria);
 
     if ((this.formGroup.get('times') as FormArray).length === 0) {
       this.addTime();
@@ -140,7 +141,14 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     let formReset = false;
 
     if (!criteria) {
-      this.formGroup.reset();
+      this.formGroup.reset({
+        dateType: 'today',
+        timeSpace: 'day',
+        showInternal: true,
+        showExternal: true,
+        weekDays: { sun: true, mon: true, tue: true, wed: true, thu: true, fri: true, sat: true },
+      });
+
       formReset = true;
     }
 
@@ -172,14 +180,16 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   addTime(): void {
+    const setDefault = this.formGroup.get('times').value.length === 0;
+
     const group = this.fb.group({
       start: this.fb.group({
-        hour: null,
-        minute: null
+        hour: setDefault ? '00' : null,
+        minute: setDefault ? '00' : null
       }),
       end: this.fb.group({
-        hour: null,
-        minute: null
+        hour: setDefault ? '23' : null,
+        minute: setDefault ? '45' : null
       })
     });
 
@@ -191,9 +201,10 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   addSortColumn(): void {
+    const setDefault = this.formGroup.get('sort').value.length === 0;
     const group = this.fb.group({
-      column: this.fb.control(null),
-      direction: this.fb.control(null)
+      column: this.fb.control(setDefault ? 'date' : null),
+      direction: this.fb.control(setDefault ? 'desc' : null)
     });
 
     (this.formGroup.get('sort') as FormArray).push(group);
@@ -250,14 +261,11 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       hasRangeError = startTime.minute >= endTime.minute;
     }
 
-
     if (hasRangeError) {
       time.setErrors({ range: true });
     } else {
       time.setErrors(null);
     }
-
-    console.log(this.timeByIndex(index).errors?.range);
   }
 
   submit(): void {
@@ -268,7 +276,6 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     }
 
     if (!this.formGroup.valid) {
-      console.log(this.formGroup)
       return;
     }
 
