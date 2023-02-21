@@ -42,7 +42,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   readonly weekDays = WeekDays;
   readonly abandonTimes = AbandonTimes;
-  readonly timeSpaces = ReportTimeSpaces;e
+  readonly timeSpaces = ReportTimeSpaces;
   readonly sortDirections = SortDirections;
   readonly minutesInterval = MinutesInterval;
   readonly hours = Hours;
@@ -249,25 +249,17 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       hasRangeError = startTime.minute >= endTime.minute;
     }
 
-
     if (hasRangeError) {
       time.setErrors({ range: true });
     } else {
       time.setErrors(null);
     }
-
-    console.log(this.timeByIndex(index).errors?.range);
   }
 
   submit(): void {
     const units = this.formGroup.get('units').value;
     if (!units || units.length === 0) {
       this.notifications.error(this.t.transform('units_field_is_required'));
-      return;
-    }
-
-    if (!this.formGroup.valid) {
-      console.log(this.formGroup)
       return;
     }
 

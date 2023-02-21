@@ -41,7 +41,6 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('sdf');
     this.routerForm = (this.formService.routerForm.get('general') as FormGroup);
     this.formService.activeGroup = 'general';
     this.languages = this.formService.languages;
