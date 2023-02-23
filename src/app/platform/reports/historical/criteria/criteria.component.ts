@@ -281,9 +281,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
     const values = this.sanitizeValues(this.formGroup.value);
 
-    this.reportCriteriaService.newReportCriteria(values, this.userId, this.reportTemplate.name, this.reportTemplate.module).then(response => {
-      console.log(response)
-    })
+    this.reportCriteriaService.newReportCriteria(values, this.userId, this.reportTemplate.name, this.reportTemplate.module)
     this.reportStateService.setCriteria(values);
 
     this.router.navigate(['..', 'results'], { relativeTo: this.route });

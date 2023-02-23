@@ -29,19 +29,21 @@
       <div *ngIf="multiple" (click)="checkAll(!currentCheckStatus)" id="selectAll" class="text-center unit w-100" [ngClass]="currentCheckStatus ? 'active': null">
         {{ 'select_all' | t }}
       </div>
-      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits }"></ng-container>
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits, height: 7 * 50 }"></ng-container>
     </div>
   </div>
 </div>
-<ng-template #recursiveListTmpl let-list="list">
-  <li *ngFor="let unit of list" [@slideToggle]="isOpened ? 'active' : 'inactive'">
-    <div *ngIf="!unit.ignore" class="d-flex align-items-center unit" (click)="unitClicked(unit)">
-      <mat-icon class="side-chevron" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !hasMoreUnits(unit) }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
-      <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple"></mat-checkbox>
-      <div class="mx-2">{{ unit.name }}</div>
-    </div>
-    <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.isToggled }">
-      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
-    </ul>
-  </li>
+<ng-template #scrollWrapper #recursiveListTmpl let-list="list" let-height="height">
+  <cdk-virtual-scroll-viewport #scrollViewport itemSize="50" [style.height.px]="height">
+    <li *cdkVirtualFor="let unit of list" [@slideToggle]="isOpened ? 'active' : 'inactive'" [style.background-color]="unit.backgroundColor">
+      <div *ngIf="!unit.ignore" class="d-flex align-items-center unit" (click)="unitClicked(unit)">
+        <mat-icon class="side-chevron" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !hasMoreUnits(unit) }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="unit.checked" (change)="selectUnit(unit, $event.checked)" *ngIf="multiple"></mat-checkbox>
+        <div class="mx-2">{{ unit.name }}</div>
+      </div>
+      <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.isToggled }">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units, height: unit.height ?? 50 }"></ng-container>
+      </ul>
+    </li>
+  </cdk-virtual-scroll-viewport>
 </ng-template>
