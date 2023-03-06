@@ -206,6 +206,14 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     this.propagateChange(output);
   }
 
+  selectAll(isChecked: boolean) {
+    this.units.forEach(unit => {
+      this.selectUnit(unit, isChecked)
+    })
+
+    this.currentCheckStatus = isChecked;
+  }
+
   checkUnit(checked: boolean, unit: UnitModel): void {
     unit.checked = checked;
     if (unit.units) {

@@ -26,15 +26,15 @@
   </div>
   <div id="optionsWrapper">
     <div id="options">
-      <div *ngIf="multiple" (click)="checkAll(!currentCheckStatus)" id="selectAll" class="text-center unit w-100" [ngClass]="currentCheckStatus ? 'active': null">
+      <div *ngIf="multiple" (click)="selectAll(!currentCheckStatus)" id="selectAll" class="text-center unit w-100" [ngClass]="currentCheckStatus ? 'active': null">
         {{ 'select_all' | t }}
       </div>
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits, height: 7 * 50 }"></ng-container>
     </div>
   </div>
 </div>
-<ng-template #scrollWrapper #recursiveListTmpl let-list="list" let-height="height">
-  <cdk-virtual-scroll-viewport #scrollViewport itemSize="50" [style.height.px]="height" [itemSize]="50" minBufferPx="175" maxBufferPx="2450">
+<ng-template #recursiveListTmpl let-list="list" let-height="height">
+  <cdk-virtual-scroll-viewport itemSize="50" [style.height.px]="height" [itemSize]="50" minBufferPx="175" maxBufferPx="2450">
     <li *cdkVirtualFor="let unit of list" [@slideToggle]="isOpened ? 'active' : 'inactive'" [style.background-color]="unit.backgroundColor">
       <div *ngIf="!unit.ignore" class="d-flex align-items-center unit" (click)="unitClicked(unit)">
         <mat-icon class="side-chevron" [ngClass]="{ 'rotate-side': unit.isToggled, 'fade': !hasMoreUnits(unit) }" (click)="toggleUnit(unit, $event)">arrow_left</mat-icon>
