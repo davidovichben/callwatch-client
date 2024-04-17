@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private renderer: Renderer2,
               private genericService: GenericService, private appState: AppStateService,
               public localeService: LocaleService, private dateAdapter: DateAdapter<Date>) {}
+  
   ngOnInit() {
     this.setSubscriptions();
     this.setLocale();
