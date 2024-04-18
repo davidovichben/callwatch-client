@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -42,7 +42,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   activeTab = 'general';
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   acd;
 
   extensionsLoaded = true;
@@ -51,7 +51,7 @@ export class FormComponent implements OnInit, OnDestroy {
 	isSubmitting = false;
 
 	constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private acdService: AcdService,
+              private fb: UntypedFormBuilder, private acdService: AcdService,
               private switchboardService: SwitchboardService) {}
 
 	ngOnInit(): void {
@@ -130,7 +130,7 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
-  checkExists(args: object, control: FormControl): Promise<{ exists: boolean }> {
+  checkExists(args: object, control: UntypedFormControl): Promise<{ exists: boolean }> {
     const switchboardId = this.formGroup.get('general.switchboard').value;
     if (!switchboardId) {
       return Promise.resolve(null);

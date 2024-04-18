@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
@@ -24,7 +24,7 @@ export class FormComponent implements OnInit {
 
   switchboardId: number;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   activeType: SelectItemModel;
   activeTab = 'cti';
@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private switchboardService: SwitchboardService,
+              private fb: UntypedFormBuilder, private switchboardService: SwitchboardService,
               private userSession: UserSessionService) {}
 
 	ngOnInit(): void {

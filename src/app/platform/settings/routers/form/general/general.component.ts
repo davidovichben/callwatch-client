@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 
@@ -34,14 +34,14 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
   audioFile: { bin: string, name: string };
 
-  routerForm: FormGroup;
+  routerForm: UntypedFormGroup;
 
   constructor(public formService: RouterFormService, private dateAdapter: DateAdapter<Date>) {
       // this.dateAdapter.setLocale('es');
   }
 
   ngOnInit(): void {
-    this.routerForm = (this.formService.routerForm.get('general') as FormGroup);
+    this.routerForm = (this.formService.routerForm.get('general') as UntypedFormGroup);
     this.formService.activeGroup = 'general';
     this.languages = this.formService.languages;
 
@@ -80,7 +80,7 @@ export class GeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   removeDialedNumbersGroup(index: number): void {
-    (this.routerForm.get('dialedNumbers') as FormArray).removeAt(index);
+    (this.routerForm.get('dialedNumbers') as UntypedFormArray).removeAt(index);
     this.setDisabledLanguages();
   }
 

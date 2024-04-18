@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 
@@ -13,7 +13,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 })
 export class MultipleEditComponent implements OnInit {
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   checkedItems: any[]
 
@@ -21,7 +21,7 @@ export class MultipleEditComponent implements OnInit {
 
   isSubmitting = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: UntypedFormBuilder,
               private dialogRef: MatDialogRef<MultipleEditComponent>,
               private scheduleService: ScheduleService) {}
 

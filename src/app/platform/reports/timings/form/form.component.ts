@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -38,14 +38,14 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
   users: SelectItemModel[] = [];
   units: SelectItemModel[] = [];
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   columns = [];
 
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private reportTimingService: ReportTimingService) {}
+              private fb: UntypedFormBuilder, private reportTimingService: ReportTimingService) {}
 
   ngOnInit(): void {
     this.makeForm();
@@ -137,7 +137,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.formGroup.get(currentGroup).valid) {
       this.currentStep += 1;
     } else {
-      const controls = (this.formGroup.get(currentGroup) as FormGroup).controls;
+      const controls = (this.formGroup.get(currentGroup) as UntypedFormGroup).controls;
       Object.keys(controls).forEach(control => controls[control].markAsTouched());
     }
   }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -37,7 +37,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   activeTab = 'general';
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   extension;
 
   switchboardUnits = [];
@@ -49,7 +49,7 @@ export class FormComponent implements OnInit, OnDestroy {
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private extensionService: ExtensionService,
+              private fb: UntypedFormBuilder, private extensionService: ExtensionService,
               private switchboardService: SwitchboardService) {}
 
   ngOnInit(): void {
@@ -157,7 +157,7 @@ export class FormComponent implements OnInit, OnDestroy {
         from: this.fb.control(null, Validators.required),
         to: this.fb.control(null, Validators.required)
       }, {
-        validator: (group: FormGroup) => {
+        validator: (group: UntypedFormGroup) => {
           if (group.value.to && group.value.from > group.value.to) {
             return { range: true }
           }
@@ -167,12 +167,12 @@ export class FormComponent implements OnInit, OnDestroy {
         asyncValidator: this.checkDialNumbersExist.bind(this)
     });
 
-    (this.formGroup.get('general') as FormGroup).addControl('dialNumbers', group);
+    (this.formGroup.get('general') as UntypedFormGroup).addControl('dialNumbers', group);
   }
 
   private addDialNumber(): void {
     const control = this.fb.control(null, null, this.checkDialNumberExist.bind(this));
-    (this.formGroup.get('general') as FormGroup).addControl('dialNumber', control);
+    (this.formGroup.get('general') as UntypedFormGroup).addControl('dialNumber', control);
   }
 
   submit(): void {
@@ -197,7 +197,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
 
-  private checkDialNumbersExist(group: FormGroup): Promise<object> {
+  private checkDialNumbersExist(group: UntypedFormGroup): Promise<object> {
     const switchboardId = this.formGroup.get('general.switchboard').value;
     if (!switchboardId || !group.value.from || !group.value.to) {
       return Promise.resolve(null);
@@ -212,7 +212,7 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
-  private checkDialNumberExist(control: FormControl): Promise<object> {
+  private checkDialNumberExist(control: UntypedFormControl): Promise<object> {
     const switchboardId = this.formGroup.get('general.switchboard').value;
     if (!switchboardId || !control.value) {
       return Promise.resolve(null);

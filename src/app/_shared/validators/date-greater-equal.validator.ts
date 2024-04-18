@@ -1,8 +1,8 @@
 import * as moment from 'moment';
 import Diff = moment.unitOfTime.Diff;
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
-export const isDateGreaterOrEqual = (args: { minControl: FormControl, unitOfTime?: Diff }, control: FormControl) => {
+export const isDateGreaterOrEqual = (args: { minControl: UntypedFormControl, unitOfTime?: Diff }, control: UntypedFormControl) => {
   if (!args.unitOfTime) {
     args.unitOfTime = 'days';
   }

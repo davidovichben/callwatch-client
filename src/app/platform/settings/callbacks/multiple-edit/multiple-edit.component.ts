@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { CallbackService } from 'src/app/_shared/services/http/callback.service';
 
@@ -19,7 +19,7 @@ export class MultipleEditComponent {
 
   readonly optionalDialerControls = ['schedule', 'dialAttemptIntervals', 'dialAttempts', 'minDigitsForRequest'];
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   checkedItems: any[]
 
@@ -27,7 +27,7 @@ export class MultipleEditComponent {
 
   isSubmitting = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: UntypedFormBuilder,
               private dialogRef: MatDialogRef<MultipleEditComponent>,
               private callbackService: CallbackService) {}
 

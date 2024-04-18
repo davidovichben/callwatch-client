@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
@@ -14,9 +14,9 @@ export class DuplicationDialogComponent implements OnInit {
 
   readonly errorMessages = ErrorMessages;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private genericService: GenericService, private fb: FormBuilder,
+  constructor(private genericService: GenericService, private fb: UntypedFormBuilder,
               private dialogRef: MatDialogRef<DuplicationDialogComponent>) {}
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class DuplicationDialogComponent implements OnInit {
     });
   }
 
-  checkNameExists(control: FormControl): Promise<object> {
+  checkNameExists(control: UntypedFormControl): Promise<object> {
     return this.genericService.exists('router', control.value).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;

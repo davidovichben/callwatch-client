@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -29,7 +29,7 @@ export abstract class SharedComponent implements OnDestroy {
     this.activeLang = this.languages[0].id;
   }
 
-  setFile(group: FormGroup, file: { bin: string, name: string }, formControlName = 'files'): void {
+  setFile(group: UntypedFormGroup, file: { bin: string, name: string }, formControlName = 'files'): void {
     let value = group.get(formControlName).value;
     if (!value) {
       value = {};
@@ -40,7 +40,7 @@ export abstract class SharedComponent implements OnDestroy {
     group.get(formControlName).patchValue(value);
   }
 
-  openActivityDialog(formGroup: FormGroup): void {
+  openActivityDialog(formGroup: UntypedFormGroup): void {
     const dialog = this.dialog.open(TimingDialogComponent, {
       width: '800px',
       data: {
@@ -58,7 +58,7 @@ export abstract class SharedComponent implements OnDestroy {
     this.sub.add(sub);
   }
 
-  checkOnline(formGroup: FormGroup): void {
+  checkOnline(formGroup: UntypedFormGroup): void {
     if (!formGroup.get('isActive').value) {
       formGroup.get('isOnline').patchValue(false);
       return;

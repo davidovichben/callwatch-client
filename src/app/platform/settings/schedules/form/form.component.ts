@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
@@ -28,9 +28,9 @@ export class FormComponent {
   uniqueDays: SelectItemModel[] = [];
   uniqueSchedules: SelectItemModel[] = [];
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  callTimeForm: FormGroup;
+  callTimeForm: UntypedFormGroup;
 
   scheduleId: number;
 
@@ -39,7 +39,7 @@ export class FormComponent {
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private scheduleService: ScheduleService,
+              private fb: UntypedFormBuilder, private scheduleService: ScheduleService,
               private notification: NotificationService, private t: TranslatePipe) {}
 
   ngOnInit() {

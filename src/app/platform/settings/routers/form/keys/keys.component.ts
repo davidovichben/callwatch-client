@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { SharedComponent } from 'src/app/platform/settings/routers/form/shared/shared.component';
@@ -29,12 +29,12 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   hasDefault = false;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   isLoading = false;
 
   constructor(dialog: MatDialog, formService: RouterFormService, router: Router,
-              private route: ActivatedRoute, private fb: FormBuilder, public locale: LocaleService,
+              private route: ActivatedRoute, private fb: UntypedFormBuilder, public locale: LocaleService,
               private t: TranslatePipe, private notificationService: NotificationService) {
     super(dialog, router, formService);
   }
@@ -44,7 +44,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
       this.setLanguage();
 
       this.category = params.category;
-      this.formGroup = (this.formService.routerForm.get('keys.' + this.category) as FormGroup);
+      this.formGroup = (this.formService.routerForm.get('keys.' + this.category) as UntypedFormGroup);
       this.formService.activeGroup = 'messages.' + this.category;
 
       this.setUnusedKeys();
@@ -70,7 +70,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
   }
 
   addAction(key: string, index: number): void {
-    const arr = (this.formGroup.get(key) as FormArray);
+    const arr = (this.formGroup.get(key) as UntypedFormArray);
     const conditionResult = arr.at(index).value.conditionResult;
     if (conditionResult) {
       arr.insert(index + 1, this.formService.getKeyGroup(conditionResult));
@@ -89,7 +89,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
           return;
         }
 
-        const arr = (this.formGroup.get(key) as FormArray);
+        const arr = (this.formGroup.get(key) as UntypedFormArray);
         const activityType = arr.at(index).value.activityTypeName;
 
         arr.removeAt(index);
@@ -109,7 +109,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     })
   }
 
-  activityChanged(activityTypeId: number, action: FormGroup, key: string): void {
+  activityChanged(activityTypeId: number, action: UntypedFormGroup, key: string): void {
     const activityType = this.formService.keyActivityTypes.find(type => type.id === activityTypeId);
     const activityTypeName = activityType.name;
 
@@ -123,7 +123,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
     action.get('activityValue').updateValueAndValidity();
 
-    const arr = (this.formGroup.get(key) as FormArray);
+    const arr = (this.formGroup.get(key) as UntypedFormArray);
 
     if (prevValue === 'Condition') {
       const controls = arr.controls.filter(control => !control.get('conditionResult').value);
@@ -143,19 +143,19 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
     }
   }
 
-  setSMS(action: FormGroup, value: string): void {
+  setSMS(action: UntypedFormGroup, value: string): void {
     const currentValue = action.get('activityValue').value ?? {};
     currentValue[this.activeLang] = value;
 
     action.get('activityValue').patchValue(currentValue);
   }
 
-  conditionValueChanged(value: string, action: FormGroup): void {
+  conditionValueChanged(value: string, action: UntypedFormGroup): void {
     action.get('conditionSchedule').setValidators(value === 'schedule' ? Validators.required : null);
     action.get('conditionSchedule').updateValueAndValidity();
   }
 
-  setDefault(group: FormGroup): void {
+  setDefault(group: UntypedFormGroup): void {
     this.clearDefault();
     this.hasDefault = true;
 
@@ -164,7 +164,7 @@ export class KeysComponent extends SharedComponent implements OnInit, OnDestroy 
 
   clearDefault(): void {
     this.getKeys().forEach(key => {
-      (this.formGroup.get(key) as FormArray).at(0).get('isDefault').patchValue(false);
+      (this.formGroup.get(key) as UntypedFormArray).at(0).get('isDefault').patchValue(false);
     })
 
     this.hasDefault = false;

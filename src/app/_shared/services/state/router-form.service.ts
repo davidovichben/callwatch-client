@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { RouterService } from 'src/app/_shared/services/http/router.service';
@@ -12,10 +12,10 @@ import { isInteger } from 'src/app/_shared/validators/integer.validator';
 @Injectable()
 export class RouterFormService {
 
-  constructor(private fb: FormBuilder, private genericService: GenericService,
+  constructor(private fb: UntypedFormBuilder, private genericService: GenericService,
               private routerService: RouterService) {}
 
-  routerForm: FormGroup;
+  routerForm: UntypedFormGroup;
 
   schedules: SelectItemModel[] = [];
   routers: SelectItemModel[] = [];
@@ -77,7 +77,7 @@ export class RouterFormService {
           const group = this.getMessageGroup(category);
           group.patchValue(message);
 
-          (this.routerForm.get('messages.' + category) as FormArray).push(group);
+          (this.routerForm.get('messages.' + category) as UntypedFormArray).push(group);
         });
       }
     })
@@ -104,13 +104,13 @@ export class RouterFormService {
             actions.push(group);
           });
 
-          (this.routerForm.get('keys.' + category) as FormGroup).addControl(key, this.fb.array(actions));
+          (this.routerForm.get('keys.' + category) as UntypedFormGroup).addControl(key, this.fb.array(actions));
         })
       }
     })
   }
 
-  getMessageGroup(category: string): FormGroup {
+  getMessageGroup(category: string): UntypedFormGroup {
     return this.fb.group({
       category: this.fb.control(category),
       type: this.fb.control('message'),
@@ -128,7 +128,7 @@ export class RouterFormService {
     });
   }
 
-  getKeyGroup(category: string, conditionResult?: string, isFirstCondition?: boolean): FormGroup {
+  getKeyGroup(category: string, conditionResult?: string, isFirstCondition?: boolean): UntypedFormGroup {
     return this.fb.group({
       category: this.fb.control(category),
       activityType: this.fb.control(null, Validators.required),
@@ -158,10 +158,10 @@ export class RouterFormService {
       group.addAsyncValidators([this.checkFormNumbersExist.bind(this), this.checkNumbersExists.bind(this) ]);
     }, 0);
 
-    (this.routerForm.get('general.dialedNumbers') as FormArray).push(group);
+    (this.routerForm.get('general.dialedNumbers') as UntypedFormArray).push(group);
   }
 
-  checkNameExists(control: FormControl): Promise<object> {
+  checkNameExists(control: UntypedFormControl): Promise<object> {
     if (this.router && this.router.general.name === control.value) {
       return Promise.resolve(null);
     }
@@ -175,9 +175,9 @@ export class RouterFormService {
     })
   }
 
-  checkFormNumbersExist(control: FormGroup): Promise<object> {
+  checkFormNumbersExist(control: UntypedFormGroup): Promise<object> {
     let exist = false;
-    const numberGroups = (this.routerForm.get('general.dialedNumbers') as FormArray).controls;
+    const numberGroups = (this.routerForm.get('general.dialedNumbers') as UntypedFormArray).controls;
     if (numberGroups.length > 1) {
       exist = numberGroups.some(group => {
         if (group !== control) {
@@ -199,7 +199,7 @@ export class RouterFormService {
     return !exist ? Promise.resolve(null) : Promise.resolve({ formExists: true });
   }
 
-  checkNumbersExists(control: FormControl): Promise<object> {
+  checkNumbersExists(control: UntypedFormControl): Promise<object> {
     if (!control.value.numbers) {
       return Promise.resolve(null);
     }

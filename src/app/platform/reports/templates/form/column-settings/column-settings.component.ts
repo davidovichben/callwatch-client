@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validator, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
@@ -31,9 +31,9 @@ export class ColumnSettingsComponent {
 
   columnsById = {};
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data, private fb: FormBuilder,
+  constructor(@Inject(MAT_DIALOG_DATA) public data, private fb: UntypedFormBuilder,
               private dialogRef: MatDialogRef<ColumnSettingsComponent>,
               public localeService: LocaleService) {}
 
@@ -115,18 +115,18 @@ export class ColumnSettingsComponent {
     const formula = this.data.column.formula;
 
     formula.columns.forEach((column, index) => {
-      (this.formGroup.get('formula.columns') as FormArray).push(this.fb.control(column));
+      (this.formGroup.get('formula.columns') as UntypedFormArray).push(this.fb.control(column));
       if (index > 0) {
         const operator = formula.operators[index - 1];
-        (this.formGroup.get('formula.operators') as FormArray).push(this.fb.control(operator));
+        (this.formGroup.get('formula.operators') as UntypedFormArray).push(this.fb.control(operator));
       }
     });
   }
 
   addColumn(column: SelectItemModel): void {
-    const columns = this.formGroup.get('formula.columns') as FormArray;
+    const columns = this.formGroup.get('formula.columns') as UntypedFormArray;
     if (columns.length > 0) {
-      const operators = (this.formGroup.get('formula.operators') as FormArray);
+      const operators = (this.formGroup.get('formula.operators') as UntypedFormArray);
       operators.push(this.fb.control('+'));
     }
 
@@ -134,10 +134,10 @@ export class ColumnSettingsComponent {
   }
 
   removeColumn(index: number): void {
-    const columns = this.formGroup.get('formula.columns') as FormArray;
+    const columns = this.formGroup.get('formula.columns') as UntypedFormArray;
     columns.removeAt(index);
     if (index > 0) {
-      const operators = this.formGroup.get('formula.operators') as FormArray;
+      const operators = this.formGroup.get('formula.operators') as UntypedFormArray;
       operators.removeAt(index);
     }
   }

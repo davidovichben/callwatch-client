@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 import { AbandonTimes, ReportCriteriaModel, ReportProductionTimeRanges, ReportTimeSpaces } from 'src/app/_shared/models/report-criteria.model';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
@@ -17,7 +17,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 export class CriteriaComponent implements OnInit {
 
   @Input() criteria: ReportCriteriaModel;
-  @Input() formGroup: FormGroup;
+  @Input() formGroup: UntypedFormGroup;
   @Input() columns: ReportColumnModel[] = [];
 
   readonly errorMessages = ErrorMessages;
@@ -28,13 +28,13 @@ export class CriteriaComponent implements OnInit {
   readonly sortDirections = SortDirections;
   readonly weekDays = WeekDays;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.weekDays.forEach((day) => {
       const value = this.criteria ? this.criteria.weekDays.includes(day) : true;
       const control = this.fb.control(value);
-      (this.formGroup.get('weekDays') as FormGroup).addControl(day, control);
+      (this.formGroup.get('weekDays') as UntypedFormGroup).addControl(day, control);
     });
 
     if (this.criteria?.times.length > 0) {
@@ -75,11 +75,11 @@ export class CriteriaComponent implements OnInit {
       end: this.fb.control(time ? time.end : null)
     });
 
-    (this.formGroup.get('times') as FormArray).push(group);
+    (this.formGroup.get('times') as UntypedFormArray).push(group);
   }
 
   removeTime(index: number): void {
-    (this.formGroup.get('times') as FormArray).removeAt(index);
+    (this.formGroup.get('times') as UntypedFormArray).removeAt(index);
   }
 
   addSortColumn(sort?: { column: string, direction: string }): void {
@@ -88,7 +88,7 @@ export class CriteriaComponent implements OnInit {
       direction: this.fb.control(sort ? sort.direction : null)
     });
 
-    (this.formGroup.get('sort') as FormArray).push(group);
+    (this.formGroup.get('sort') as UntypedFormArray).push(group);
 
     if (sort) {
       this.setColumnDisabled(sort.column, true)
@@ -101,6 +101,6 @@ export class CriteriaComponent implements OnInit {
       this.setColumnDisabled(columnId, false);
     }
 
-    (this.formGroup.get('sort') as FormArray).removeAt(index);
+    (this.formGroup.get('sort') as UntypedFormArray).removeAt(index);
   }
 }

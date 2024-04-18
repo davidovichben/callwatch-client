@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -31,12 +31,12 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   permission: PermissionModel;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   isSubmitting = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private fb: FormBuilder, private permissionService: PermissionService,
+              private fb: UntypedFormBuilder, private permissionService: PermissionService,
               private genericService: GenericService, public userSession: UserSessionService,
               private selectService: SelectService, private notificationService: NotificationService,
               private t: TranslatePipe, private dialog: MatDialog) {}
@@ -56,7 +56,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
         this.permission.modules.forEach(module => {
           const index = this.formGroup.get('modules').value.findIndex(groupModule => groupModule.name === module.name);
           if (!isNaN(index)) {
-            (this.formGroup.get('modules') as FormArray).at(index).patchValue(module);
+            (this.formGroup.get('modules') as UntypedFormArray).at(index).patchValue(module);
           }
         })
       }, 0);
@@ -82,24 +82,24 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
         delete: this.fb.control(false)
       });
 
-      (this.formGroup.get('modules') as FormArray).push(group);
+      (this.formGroup.get('modules') as UntypedFormArray).push(group);
     });
   }
 
   checkAll(checked: boolean): void {
-    (this.formGroup.get('modules') as FormArray).controls.forEach((group: FormGroup) => {
+    (this.formGroup.get('modules') as UntypedFormArray).controls.forEach((group: UntypedFormGroup) => {
       group.get('all').patchValue(checked);
       this.checkRow(checked, group);
     })
   }
 
-  checkRow(checked: boolean, group: FormGroup): void {
+  checkRow(checked: boolean, group: UntypedFormGroup): void {
     PermissionActions.forEach(action => {
       group.get(action).patchValue(checked);
     });
   }
 
-  actionChecked(checked: boolean, group: FormGroup): void {
+  actionChecked(checked: boolean, group: UntypedFormGroup): void {
     if (checked && group.get('read').enabled) {
       group.get('read').patchValue(true);
       group.get('read').disable();
@@ -185,7 +185,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private checkExists(control: FormControl): Promise<{ exists: boolean }> {
+  private checkExists(control: UntypedFormControl): Promise<{ exists: boolean }> {
     return this.genericService.exists('permission', control.value, this.permission?.id).then(response => {
       if (response) {
         return response.exists ? { exists: true } : null;

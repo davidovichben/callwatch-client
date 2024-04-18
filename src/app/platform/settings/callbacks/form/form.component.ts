@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CallbackService } from 'src/app/_shared/services/http/callback.service';
@@ -30,7 +30,7 @@ export class FormComponent implements OnInit {
 
   activeTab = 'general';
 
-	formGroup: FormGroup;
+	formGroup: UntypedFormGroup;
 
   callbackId: number;
 
@@ -41,7 +41,7 @@ export class FormComponent implements OnInit {
 	isSubmitting = false;
 
 	constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private callbackService: CallbackService) {}
+              private fb: UntypedFormBuilder, private callbackService: CallbackService) {}
 
 	ngOnInit(): void {
     this.makeForm();
@@ -71,7 +71,7 @@ export class FormComponent implements OnInit {
       texts: this.fb.array([])
     });
 
-    const textArray = (this.formGroup.get('texts') as FormArray);
+    const textArray = (this.formGroup.get('texts') as UntypedFormArray);
     this.callbackTextTypes.forEach(type => {
      const group = this.fb.group({
        type: this.fb.control(type),
@@ -101,7 +101,7 @@ export class FormComponent implements OnInit {
   }
 
   private setTextArray(texts: CallbackTextModel[]): void {
-    const textArray = (this.formGroup.get('texts') as FormArray);
+    const textArray = (this.formGroup.get('texts') as UntypedFormArray);
     textArray.controls.forEach(control => {
       const text = texts.find(text => text.type === control.get('type').value);
       if (text) {
@@ -127,7 +127,7 @@ export class FormComponent implements OnInit {
   }
 
   setTextDisabledState(index: number): void {
-    const control = (this.formGroup.get('texts') as FormArray).at(index).get('content');
+    const control = (this.formGroup.get('texts') as UntypedFormArray).at(index).get('content');
     control.disabled ? control.enable() : control.disable();
   }
 
@@ -157,7 +157,7 @@ export class FormComponent implements OnInit {
   private filterEmptyTexts(): object[] {
     const values = [];
 
-    const textArray = (this.formGroup.get('texts') as FormArray);
+    const textArray = (this.formGroup.get('texts') as UntypedFormArray);
     textArray.getRawValue().forEach(text => {
       if (text.content) {
         values.push(text);

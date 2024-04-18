@@ -1,6 +1,6 @@
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
-export const isInteger = (control: FormControl) => {
+export const isInteger = (control: UntypedFormControl) => {
   if (!control.value || control.value && parseInt(control.value) === parseInt(control.value)) {
     return null;
   }

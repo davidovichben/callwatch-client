@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -37,14 +37,14 @@ export class FormComponent implements OnInit, OnDestroy {
 
   unitLevels = [];
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   reportTemplate: ReportTemplateModel;
 
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private dialog: MatDialog,
+              private fb: UntypedFormBuilder, private dialog: MatDialog,
               private reportService: ReportTemplateService,
               private selectService: SelectService, private t: TranslatePipe) {}
 

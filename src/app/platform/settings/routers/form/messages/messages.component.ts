@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -21,11 +21,11 @@ export class MessagesComponent extends SharedComponent implements OnInit, OnDest
 
   readonly messageTypes = RouterMessageTypes;
 
-  formArray: FormArray;
+  formArray: UntypedFormArray;
 
   constructor(dialog: MatDialog, formService: RouterFormService, router: Router,
               private route: ActivatedRoute, private locale: LocaleService,
-              private fb: FormBuilder, private notificationService: NotificationService) {
+              private fb: UntypedFormBuilder, private notificationService: NotificationService) {
     super(dialog, router, formService);
   }
 
@@ -34,7 +34,7 @@ export class MessagesComponent extends SharedComponent implements OnInit, OnDest
       this.setLanguage();
 
       this.category = params.category;
-      this.formArray = (this.formService.routerForm.get('messages.' + this.category) as FormArray);
+      this.formArray = (this.formService.routerForm.get('messages.' + this.category) as UntypedFormArray);
       this.formService.activeGroup = 'messages.' + this.category;
     }))
   }

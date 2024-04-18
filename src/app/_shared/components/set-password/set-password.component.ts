@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Fade } from 'src/app/_shared/constants/animations';
@@ -17,12 +17,12 @@ export class SetPasswordComponent implements OnInit {
 
   readonly errorMessages = ErrorMessages;
 
-  passwordForm: FormGroup;
+  passwordForm: UntypedFormGroup;
 
   showPassword: boolean;
   showRepeatPassword: boolean;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit() {
     this.passwordForm = this.fb.group({

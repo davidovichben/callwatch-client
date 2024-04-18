@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { ExtensionService } from 'src/app/_shared/services/http/extension.service';
 
@@ -17,7 +17,7 @@ export class MultipleEditComponent implements OnInit {
 
   readonly errorMessages = ErrorMessages;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   checkedItems: any[]
 
@@ -31,7 +31,7 @@ export class MultipleEditComponent implements OnInit {
 
   isSubmitting = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: UntypedFormBuilder,
               private dialogRef: MatDialogRef<MultipleEditComponent>,
               private extensionService: ExtensionService) {}
 

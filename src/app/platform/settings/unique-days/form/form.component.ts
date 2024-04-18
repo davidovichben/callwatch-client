@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -23,12 +23,12 @@ export class FormComponent implements OnInit, OnDestroy {
 
   uniqueDay: UniqueDayModel;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
 	isSubmitting = false;
 
 	constructor(private router: Router, private route: ActivatedRoute,
-              private fb: FormBuilder, private uniqueDayService: UniqueDayService) {}
+              private fb: UntypedFormBuilder, private uniqueDayService: UniqueDayService) {}
 
 	ngOnInit(): void {
     this.setForm();

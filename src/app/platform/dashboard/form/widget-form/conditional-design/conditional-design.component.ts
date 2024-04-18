@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { TemporaryDesignTypes } from 'src/app/_shared/models/report-widget.model';
@@ -20,7 +20,7 @@ export class ConditionalDesignComponent implements OnInit {
 
   @Input() formGroup: AbstractControl;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void  {
     this.addEqualToDesignGroup();
@@ -30,7 +30,7 @@ export class ConditionalDesignComponent implements OnInit {
   }
 
   addEqualToDesignGroup(): void {
-    (this.formGroup.get('equalTo') as FormArray).push(this.fb.group({
+    (this.formGroup.get('equalTo') as UntypedFormArray).push(this.fb.group({
       value: this.fb.control(null, Validators.required),
       duration: this.fb.control(null),
       color: this.fb.control(null)
@@ -38,7 +38,7 @@ export class ConditionalDesignComponent implements OnInit {
   }
 
   addTemporaryDesignGroup(): void {
-    (this.formGroup.get('temporary') as FormArray).push(this.fb.group({
+    (this.formGroup.get('temporary') as UntypedFormArray).push(this.fb.group({
       type: this.fb.control(null),
       color: this.fb.control(null),
       duration: this.fb.control(null)

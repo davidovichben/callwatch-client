@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { UnitSelectComponent } from 'src/app/_shared/components/unit-select/unit-select.component';
@@ -49,11 +49,11 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   readonly minutesInterval = MinutesInterval;
   readonly hours = Hours;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   userId: number;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute,
+  constructor(private fb: UntypedFormBuilder, private route: ActivatedRoute,
               private router: Router, public reportStateService: HistoricalReportsService,
               private notifications: NotificationService, private t: TranslatePipe,
               private reportCriteriaService: ReportCriteriaService, private userService: UserSessionService,
@@ -108,7 +108,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
     this.weekDays.forEach(day => {
       const control = this.fb.control(false);
-      (this.formGroup.get('weekDays') as FormGroup).addControl(day, control);
+      (this.formGroup.get('weekDays') as UntypedFormGroup).addControl(day, control);
     });
 
     if (criteria) {
@@ -128,11 +128,11 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
     this.resetFields(criteria);
 
-    if ((this.formGroup.get('times') as FormArray).length === 0) {
+    if ((this.formGroup.get('times') as UntypedFormArray).length === 0) {
       this.addTime();
     }
 
-    if ((this.formGroup.get('sort') as FormArray).length === 0) {
+    if ((this.formGroup.get('sort') as UntypedFormArray).length === 0) {
       this.addSortColumn();
     }
   }
@@ -193,11 +193,11 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       })
     });
 
-    (this.formGroup.get('times') as FormArray).push(group);
+    (this.formGroup.get('times') as UntypedFormArray).push(group);
   }
 
   removeTime(index: number): void {
-    (this.formGroup.get('times') as FormArray).removeAt(index);
+    (this.formGroup.get('times') as UntypedFormArray).removeAt(index);
   }
 
   addSortColumn(): void {
@@ -207,7 +207,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       direction: this.fb.control(setDefault ? 'desc' : null)
     });
 
-    (this.formGroup.get('sort') as FormArray).push(group);
+    (this.formGroup.get('sort') as UntypedFormArray).push(group);
   }
 
   removeSortColumn(index: number): void {
@@ -216,7 +216,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       this.setColumnDisabled(columnId, false);
     }
 
-    (this.formGroup.get('sort') as FormArray).removeAt(index);
+    (this.formGroup.get('sort') as UntypedFormArray).removeAt(index);
   }
 
   sortColumnSelected(value: string, index: number): void {
@@ -238,8 +238,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     }
   }
 
-  timeByIndex(index: number): FormControl {
-    return <FormControl>(this.formGroup.get('times') as FormArray).controls[index];
+  timeByIndex(index: number): UntypedFormControl {
+    return <UntypedFormControl>(this.formGroup.get('times') as UntypedFormArray).controls[index];
   }
 
   timeRangeCheck(index: number): void {

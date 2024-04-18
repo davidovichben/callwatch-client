@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RouterService } from 'src/app/_shared/services/http/router.service';
@@ -53,7 +53,7 @@ export class FormComponent implements OnInit, OnDestroy {
       this.appState.setPageSpinner(true);
 			this.isSubmitting = true;
 
-      const general = (form.get('general') as FormGroup).getRawValue();
+      const general = (form.get('general') as UntypedFormGroup).getRawValue();
 
       this.setDialedNumbers(general);
 

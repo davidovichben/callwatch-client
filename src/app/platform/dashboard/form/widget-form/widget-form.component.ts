@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { SelectService } from 'src/app/_shared/services/http/select.service';
@@ -29,11 +29,11 @@ export class WidgetFormComponent implements OnInit {
   readonly typeIcons = ['donut_small', 'speed', 'table_chart', 'looks_one'];
   readonly dataTypes = DataTypes;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   columns: SelectItemModel[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data, private fb: FormBuilder,
+  constructor(@Inject(MAT_DIALOG_DATA) public data, private fb: UntypedFormBuilder,
               private dialogRef: MatDialogRef<WidgetFormComponent>,
               private selectService: SelectService, private widgetService: ReportWidgetService) {}
 

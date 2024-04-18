@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -42,7 +42,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   loggedUser: UserModel;
 
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   user: UserModel;
   units: UnitModel[] = [];
@@ -52,7 +52,7 @@ export class FormComponent implements OnInit, OnDestroy {
   isSubmitting = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private dialog: MatDialog, private fb: FormBuilder,
+              private dialog: MatDialog, private fb: UntypedFormBuilder,
               private userService: UserService, public userSession: UserSessionService,
               private notifications: NotificationService, private t: TranslatePipe) {}
 
@@ -137,7 +137,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }));
   }
 
-  checkUsernameUnique(control: FormControl): Promise<{ exists: boolean }> {
+  checkUsernameUnique(control: UntypedFormControl): Promise<{ exists: boolean }> {
     if (this.user && this.user.username === control.value) {
       return Promise.resolve(null);
     }
