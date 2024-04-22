@@ -81,10 +81,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "callwatch:build:production"
+              "buildTarget": "callwatch:build:production"
             },
             "development": {
-              "browserTarget": "callwatch:build:development"
+              "buildTarget": "callwatch:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "callwatch:build"
+            "buildTarget": "callwatch:build"
           }
         },
         "test": {
