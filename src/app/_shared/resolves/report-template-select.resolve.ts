@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 
 @Injectable()
-export class ReportTemplateSelectResolve implements Resolve<ReportTemplateModel[]> {
+export class ReportTemplateSelectResolve  {
 
   constructor(private reportService: ReportTemplateService) {}
 

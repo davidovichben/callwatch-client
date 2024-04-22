@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 @Injectable()
-export class ExtensionGroupFormSelectResolve implements Resolve<object> {
+export class ExtensionGroupFormSelectResolve  {
 
   constructor(private selectService: SelectService) {}
 

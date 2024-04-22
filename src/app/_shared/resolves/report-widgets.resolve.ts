@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { ReportWidgetService } from 'src/app/_shared/services/http/report-widget.service';
 
 import { ReportWidgetModel } from 'src/app/_shared/models/report-widget.model';
 
 @Injectable()
-export class ReportWidgetsResolve implements Resolve<ReportWidgetModel[]> {
+export class ReportWidgetsResolve  {
 
 	constructor(private reportWidgetService: ReportWidgetService) {}
 

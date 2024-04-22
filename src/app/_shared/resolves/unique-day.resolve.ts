@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { UniqueDayService } from 'src/app/_shared/services/http/unique-day.service';
 
 import { UniqueDayModel } from 'src/app/_shared/models/unique-day.model';
 
 @Injectable()
-export class UniqueDayResolve implements Resolve<UniqueDayModel> {
+export class UniqueDayResolve  {
 
 	constructor(private uniqueDayService: UniqueDayService) {}
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { ScheduleService } from 'src/app/_shared/services/http/schedule.service';
 
 import { ScheduleModel } from 'src/app/_shared/models/schedule.model';
 
 @Injectable()
-export class ScheduleResolve implements Resolve<ScheduleModel> {
+export class ScheduleResolve  {
 
   constructor(private scheduleService: ScheduleService) {}
 

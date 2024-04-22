@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
 
 @Injectable()
-export class UnitUsersResolve implements Resolve<object> {
+export class UnitUsersResolve  {
 
   constructor(private userService: UnitUserService) {}
 

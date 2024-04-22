@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 
 import { SwitchboardService } from 'src/app/_shared/services/http/switchboard.service';
 
 @Injectable()
-export class SwitchboardDefaultsResolve implements Resolve<object> {
+export class SwitchboardDefaultsResolve  {
 
   constructor(private switchboardService: SwitchboardService) {}
 

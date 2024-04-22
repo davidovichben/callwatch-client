@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
 @Injectable()
-export class GuestGuard implements CanLoad {
+export class GuestGuard  {
 
   constructor(private userSession: UserSessionService, private router: Router) {}
 

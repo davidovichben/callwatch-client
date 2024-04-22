@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 
 @Injectable()
-export class ReportModulesSelectResolve implements Resolve<SelectItemModel[]> {
+export class ReportModulesSelectResolve  {
 
   constructor(private selectService: SelectService) {}
 

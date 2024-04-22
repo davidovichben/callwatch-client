@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 
 @Injectable()
-export class UserPermissionsResolve implements Resolve<any> {
+export class UserPermissionsResolve  {
 
   constructor(private userService: UserService) {}
 

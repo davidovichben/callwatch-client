@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { OrganizationService } from 'src/app/_shared/services/http/organization.service';
 
 import { OrganizationModel } from 'src/app/_shared/models/organization.model';
 
 @Injectable()
-export class OrganizationResolve implements Resolve<OrganizationModel> {
+export class OrganizationResolve  {
 
   constructor(private organizationService: OrganizationService) {}
 

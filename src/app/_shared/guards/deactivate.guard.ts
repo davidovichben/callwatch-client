@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
@@ -9,7 +9,7 @@ export interface CanComponentDeactivate {
 }
 
 @Injectable()
-export class DeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
+export class DeactivateGuard  {
 
   constructor(private notificationService: NotificationService) {}
 
