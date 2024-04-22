@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 import { ExceptionDialogComponent } from 'src/app/admin/exceptions/exception-dialog/exception-dialog.component';
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';

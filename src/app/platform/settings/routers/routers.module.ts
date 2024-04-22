@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
