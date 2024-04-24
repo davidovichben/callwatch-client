@@ -19,7 +19,7 @@ import { DesignColors } from 'src/app/_shared/models/report-column.model';
 @Component({
   selector: 'app-widget-form',
   templateUrl: './widget-form.component.html',
-  styleUrls: ['./widget-form.component.styl'],
+  styleUrls: ['./widget-form.component.sass'],
   animations: [Fade]
 })
 export class WidgetFormComponent implements OnInit {

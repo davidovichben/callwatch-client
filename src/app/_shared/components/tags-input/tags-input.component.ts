@@ -7,7 +7,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 @Component({
   selector: 'app-tags-input',
   templateUrl: './tags-input.component.html',
-  styleUrls: ['../_shared/form-field.styl', './tags-input.component.styl'],
+  styleUrls: ['../_shared/form-field.sass', './tags-input.component.sass'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: TagsInputComponent, multi: true }
   ]

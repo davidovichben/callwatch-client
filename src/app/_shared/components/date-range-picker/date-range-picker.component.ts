@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-date-range-picker',
   templateUrl: './date-range-picker.component.html',
-  styleUrls: ['./date-range-picker.component.styl'],
+  styleUrls: ['./date-range-picker.component.sass'],
   animations: [SlideToggle]
 })
 export class DateRangePickerComponent implements AfterContentInit, OnDestroy {

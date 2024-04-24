@@ -10,7 +10,7 @@ import { ReportTemplateModel } from 'src/app/_shared/models/report-template.mode
 @Component({
   selector: 'app-historical',
   templateUrl: './historical.component.html',
-  styleUrls: ['./historical.component.styl']
+  styleUrls: ['./historical.component.sass']
 })
 export class HistoricalComponent implements OnInit {
 

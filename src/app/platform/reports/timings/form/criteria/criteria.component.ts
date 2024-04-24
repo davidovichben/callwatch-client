@@ -11,7 +11,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-criteria',
   templateUrl: './criteria.component.html',
-  styleUrls: ['./criteria.component.styl'],
+  styleUrls: ['./criteria.component.sass'],
   animations: [Fade]
 })
 export class CriteriaComponent implements OnInit {

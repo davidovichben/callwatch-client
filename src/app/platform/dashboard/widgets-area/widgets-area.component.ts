@@ -9,7 +9,7 @@ import { WidgetModel } from 'src/app/_shared/models/widget.model';
 @Component({
   selector: 'app-widgets-area',
   templateUrl: './widgets-area.component.html',
-  styleUrls: ['./widgets-area.component.scss']
+  styleUrls: ['./widgets-area.component.sass']
 })
 export class WidgetsAreaComponent implements OnInit, AfterViewInit {
 

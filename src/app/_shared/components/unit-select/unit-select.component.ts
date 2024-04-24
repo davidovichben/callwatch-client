@@ -21,7 +21,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 @Component({
   selector: 'app-unit-select',
   templateUrl: './unit-select.component.html',
-  styleUrls: ['./unit-select.component.styl'],
+  styleUrls: ['./unit-select.component.sass'],
   animations: [SlideToggle, Placeholder],
   providers: [
     {

@@ -13,7 +13,7 @@ import { ModuleModel } from 'src/app/_shared/models/module.model';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.styl']
+  styleUrls: ['./sidebar.component.sass']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 

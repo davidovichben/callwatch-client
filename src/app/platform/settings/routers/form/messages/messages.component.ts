@@ -15,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.styl', '../shared/shared.component.styl']
+  styleUrls: ['./messages.component.sass', '../shared/shared.component.sass']
 })
 export class MessagesComponent extends SharedComponent implements OnInit, OnDestroy {
 

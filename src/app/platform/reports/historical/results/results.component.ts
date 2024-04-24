@@ -23,7 +23,7 @@ import { PaginationData } from 'src/app/_shared/components/data-table/classes/pa
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.styl']
+  styleUrls: ['./results.component.sass']
 })
 export class ResultsComponent implements OnInit, OnDestroy {
 

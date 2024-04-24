@@ -9,7 +9,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.styl']
+  styleUrls: ['./form.component.sass']
 })
 export class FormComponent implements OnInit {
 

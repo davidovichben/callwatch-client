@@ -6,7 +6,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 @Component({
   selector: 'app-platform',
   templateUrl: './platform.component.html',
-  styleUrls: ['./platform.component.styl']
+  styleUrls: ['./platform.component.sass']
 })
 export class PlatformComponent implements OnInit {
 

@@ -3,7 +3,7 @@ import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 @Component({
   selector: 'app-time-input',
   templateUrl: './time-input.component.html',
-  styleUrls: ['./time-input.component.styl']
+  styleUrls: ['./time-input.component.sass']
 })
 export class TimeInputComponent {
 

@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'app-widget',
   templateUrl: './widget.component.html',
-  styleUrls: ['./widget.component.less']
+  styleUrls: ['./widget.component.sass']
 })
 export class WidgetComponent implements OnInit {
 

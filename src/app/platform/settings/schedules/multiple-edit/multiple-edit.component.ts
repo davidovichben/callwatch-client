@@ -9,7 +9,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 @Component({
   selector: 'app-multiple-edit',
   templateUrl: './multiple-edit.component.html',
-  styleUrls: ['../../../../_shared/components/multiple-edit/multiple-edit.component.styl'],
+  styleUrls: ['../../../../_shared/components/multiple-edit/multiple-edit.component.sass'],
 })
 export class MultipleEditComponent implements OnInit {
 

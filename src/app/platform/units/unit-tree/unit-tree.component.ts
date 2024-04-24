@@ -13,7 +13,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 @Component({
   selector: 'app-unit-tree',
   templateUrl: './unit-tree.component.html',
-  styleUrls: ['./unit-tree.component.styl']
+  styleUrls: ['./unit-tree.component.sass']
 })
 export class UnitTreeComponent implements OnInit, OnDestroy {
 

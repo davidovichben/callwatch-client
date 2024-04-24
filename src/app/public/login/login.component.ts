@@ -15,7 +15,7 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.styl'],
+  styleUrls: ['./login.component.sass'],
   animations: [Fade]
 })
 export class LoginComponent implements OnInit {

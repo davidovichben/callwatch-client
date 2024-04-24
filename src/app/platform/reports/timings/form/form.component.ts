@@ -17,7 +17,7 @@ import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.mode
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.styl'],
+  styleUrls: ['./form.component.sass'],
   animations: [Fade]
 })
 export class FormComponent implements OnInit, AfterViewInit, OnDestroy {

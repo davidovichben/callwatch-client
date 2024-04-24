@@ -13,7 +13,7 @@ import { UserModel } from 'src/app/_shared/models/user.model';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.styl']
+  styleUrls: ['./content.component.sass']
 })
 export class ContentComponent implements OnInit, OnDestroy {
 

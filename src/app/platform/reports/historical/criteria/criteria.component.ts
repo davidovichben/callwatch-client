@@ -28,7 +28,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 @Component({
   selector: 'app-criteria',
   templateUrl: './criteria.component.html',
-  styleUrls: ['./criteria.component.styl']
+  styleUrls: ['./criteria.component.sass']
 })
 export class CriteriaComponent implements OnInit, OnDestroy {
 

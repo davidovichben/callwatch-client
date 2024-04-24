@@ -15,7 +15,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-extensions-groups',
   templateUrl: './extensions-groups.component.html',
-  styleUrls: ['./extensions-groups.component.styl'],
+  styleUrls: ['./extensions-groups.component.sass'],
   animations: [Fade]
 })
 export class ExtensionsGroupsComponent implements OnInit {

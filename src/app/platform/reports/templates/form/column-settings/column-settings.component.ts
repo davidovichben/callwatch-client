@@ -13,7 +13,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-column-settings',
   templateUrl: './column-settings.component.html',
-  styleUrls: ['./column.settings.component.styl'],
+  styleUrls: ['./column.settings.component.sass'],
   animations: [Fade]
 })
 export class ColumnSettingsComponent {

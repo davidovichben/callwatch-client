@@ -6,7 +6,7 @@ import { ExceptionModel } from 'src/app/_shared/models/exception.model';
 @Component({
   selector: 'app-exception-dialog',
   templateUrl: './exception-dialog.component.html',
-  styleUrls: ['./exception.dialog.component.styl']
+  styleUrls: ['./exception.dialog.component.sass']
 })
 export class ExceptionDialogComponent {
 

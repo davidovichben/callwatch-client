@@ -16,7 +16,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 @Component({
   selector: 'app-general',
   templateUrl: './general.component.html',
-  styleUrls: ['./general.component.styl']
+  styleUrls: ['./general.component.sass']
 })
 export class GeneralComponent implements AfterViewInit, OnDestroy {
 

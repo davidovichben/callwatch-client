@@ -24,7 +24,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.styl'],
+  styleUrls: ['./form.component.sass'],
   animations: [Fade]
 })
 export class FormComponent implements OnInit, OnDestroy {

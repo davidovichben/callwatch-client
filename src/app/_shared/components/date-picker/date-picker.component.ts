@@ -10,7 +10,7 @@ import { SlideToggle } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.styl'],
+  styleUrls: ['./date-picker.component.sass'],
   animations: [SlideToggle],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: DatePickerComponent, multi: true }

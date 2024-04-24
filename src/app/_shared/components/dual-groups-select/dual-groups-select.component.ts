@@ -6,7 +6,7 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 @Component({
   selector: 'app-dual-groups-select',
   templateUrl: './dual-groups-select.component.html',
-  styleUrls: ['./dual-groups-select.component.styl'],
+  styleUrls: ['./dual-groups-select.component.sass'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

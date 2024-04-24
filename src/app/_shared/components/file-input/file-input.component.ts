@@ -6,7 +6,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-file-input',
   templateUrl: './file-input.component.html',
-  styleUrls: ['./file-input.component.styl'],
+  styleUrls: ['./file-input.component.sass'],
   animations: [Fade]
 })
 export class FileInputComponent {

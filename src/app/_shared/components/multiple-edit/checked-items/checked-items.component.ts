@@ -7,7 +7,7 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 @Component({
   selector: 'app-checked-items',
   templateUrl: './checked-items.component.html',
-  styleUrls: ['./checked-items.component.styl']
+  styleUrls: ['./checked-items.component.sass']
 })
 export class CheckedItemsComponent {
 

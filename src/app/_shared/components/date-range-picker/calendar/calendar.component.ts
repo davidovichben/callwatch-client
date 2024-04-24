@@ -17,7 +17,7 @@ export enum DayStates {
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.styl']
+  styleUrls: ['./calendar.component.sass']
 })
 export class CalendarComponent {
 

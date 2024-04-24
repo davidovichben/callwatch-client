@@ -1,4 +1,4 @@
-@import '~src/assets/variables';
+@import '~src/assets/variables'
 
 @font-face
   src: url('assets/fonts/OpenSansHebrew-Regular.ttf')
@@ -15,10 +15,8 @@
   src: url('assets/fonts/MaterialIcons.woff2')
 
 .material-icons
-  font-family: 'Material Icons'
+  font-family: 'Material Icons', serif
   font-weight: normal
-  font-style: swap
-  font-display: block
   font-size: 24px
   line-height: 1
   letter-spacing: normal
@@ -117,10 +115,10 @@ button:focus
   color: #fff
 
 .light-black-text
-  color: LightBlackColor
+  color: $neutral-color-dark-2
 
 .dark-grey-text
-  color: DarkGreyColor
+  color: $neutral-color-dark-1
 
 .grey-text
   color: $neutral-color
@@ -223,7 +221,7 @@ button:focus
   border: 1px solid $primary-color !important
 
 .grey-btn
-  background-color: DarkGreyColor !important
+  background-color: $neutral-color-dark-1 !important
 
 .blue-btn
   background-color: $primary-color !important
@@ -298,7 +296,7 @@ mat-icon.f-16
   mat-icon
     font-size: 24px
     cursor: pointer
-    color: DarkGreyColor
+    color: $neutral-color-dark-1
 
   mat-menu
 
@@ -315,7 +313,7 @@ mat-icon.f-16
 
   th
     border: none
-    color: LightBlackColor
+    color: $neutral-color-dark-2
 
   td
     color: $primary-color
@@ -338,7 +336,7 @@ mat-icon.f-16
     min-width: 120px
     padding: 5px 20px
     cursor: pointer
-    color: LightBlackColor
+    color: $neutral-color-dark-2
     text-align: center
 
   .tab.active, .tab:hover
@@ -357,13 +355,13 @@ mat-icon.f-16
   object-fit: cover
 
 .user-default-avatar
-  color: DarkGreyColor
+  color: $neutral-color-dark-1
 
 .breadcrumbs
   display: flex
 
   a
-    color: LightBlackColor
+    color: $neutral-color-dark-2
 
   a.active
     color: $primary-color
@@ -371,7 +369,7 @@ mat-icon.f-16
 
   mat-icon
     margin: 0 12px
-    color: DarkGreyColor
+    color: $neutral-color-dark-1
 
 /*--- Forms ---*/
 
@@ -442,7 +440,7 @@ form
     border-color: $primary-color-light-1
 
   .mat-form-field-outline-thick
-    color: DarkGreyColor
+    color: $neutral-color-dark-1
 
 .mat-form-field-appearance-outline.mat-focused
   .mat-form-field-outline-thick
@@ -481,7 +479,7 @@ form
 
 .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background
-  background-color: DarkGreyColor
+  background-color: $neutral-color-dark-1
 
 .mat-menu-item
   .mat-icon
@@ -515,9 +513,7 @@ textarea.mat-input-element
 .cdk-drag-preview
   box-sizing: border-box
   border-radius: 4px
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12)
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)
 
 .cdk-drag-placeholder
   opacity: 0
@@ -590,7 +586,7 @@ textarea.mat-input-element
 
   .table
     background-color: $white-color
-    border: 1px solid LighterGreyColor
+    border: 1px solid $neutral-color-light-3
 
   .table > :not(caption) > * > *
     padding: 0.75rem 0.75rem
@@ -681,7 +677,7 @@ app-audio-input
   background-color: $primary-color
 
 .swal2-styled.swal2-cancel
-  background-color: DarkGreyColor
+  background-color: $neutral-color-dark-1
 
 /*--- Overlay and Loader ---*/
 

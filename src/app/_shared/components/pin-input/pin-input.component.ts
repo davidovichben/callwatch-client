@@ -4,7 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-pin-input',
   templateUrl: './pin-input.component.html',
-  styleUrls: ['./pin-input.component.styl'],
+  styleUrls: ['./pin-input.component.sass'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: PinInputComponent, multi: true }
   ]

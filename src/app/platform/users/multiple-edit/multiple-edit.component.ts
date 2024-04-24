@@ -13,7 +13,7 @@ import { Fade } from 'src/app/_shared/constants/animations';
 @Component({
   selector: 'app-multiple-edit',
   templateUrl: './multiple-edit.component.html',
-  styleUrls: ['../../../_shared/components/multiple-edit/multiple-edit.component.styl'],
+  styleUrls: ['../../../_shared/components/multiple-edit/multiple-edit.component.sass'],
   animations: [Fade]
 })
 export class MultipleEditComponent implements OnInit {

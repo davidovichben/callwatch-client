@@ -17,7 +17,7 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 @Component({
   selector: 'app-keys',
   templateUrl: './keys.component.html',
-  styleUrls: ['./keys.component.styl', '../shared/shared.component.styl']
+  styleUrls: ['./keys.component.sass', '../shared/shared.component.sass']
 })
 export class KeysComponent extends SharedComponent implements OnInit, OnDestroy {
 

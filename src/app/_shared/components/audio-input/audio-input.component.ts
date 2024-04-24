@@ -11,7 +11,7 @@ import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-audio-input',
   templateUrl: './audio-input.component.html',
-  styleUrls: ['audio-input.component.styl'],
+  styleUrls: ['audio-input.component.sass'],
   animations: [Fade]
 })
 export class AudioInputComponent implements AfterViewInit {

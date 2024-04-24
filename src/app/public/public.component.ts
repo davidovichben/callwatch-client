@@ -4,7 +4,7 @@ import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 @Component({
   selector: 'app-public',
   templateUrl: './public.component.html',
-  styleUrls: ['./public.component.styl']
+  styleUrls: ['./public.component.sass']
 })
 export class PublicComponent {
 
