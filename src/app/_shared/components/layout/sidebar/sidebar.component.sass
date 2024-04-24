@@ -1,6 +1,6 @@
-@import '~src/assets/variables';
+@import '~src/assets/variables'
 
-:host
+\:host
   position: fixed
   top: 0
   display: flex
@@ -18,10 +18,10 @@
 .ltr :host
   left: 0
 
-:host.opened
+\:host.opened
   width: 220px
 
-:host.closed
+\:host.closed
   width: 80px
 
   .sidebar-item
@@ -58,7 +58,7 @@
     background: $primary-color
     border-radius: 8px
 
-:host.closed
+\:host.closed
   #menu
     overflow: visible
 
@@ -100,9 +100,9 @@
     background-color: $primary-color-dark-1
     font-size: 14px
 
-  :before
-    content: ""
-    width: 80px
+    &:before
+      content: ""
+      width: 80px
 
   .sidebar-item.active, .sidebar-item:hover
     color: $primary-color-light-2 !important
@@ -112,7 +112,7 @@
     margin: 0 !important
     border-radius: 0 !important
 
-:host.closed
+\:host.closed
   #modules
     .sidebar-item:hover, .sidebar-item.active
       margin: 0
