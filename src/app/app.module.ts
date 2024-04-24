@@ -5,12 +5,11 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { ChartModule } from 'src/app/_shared/components/chart/charts.module';
-
-import { MAT_LEGACY_RADIO_DEFAULT_OPTIONS as MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/legacy-radio';
-import { MAT_LEGACY_SLIDE_TOGGLE_DEFAULT_OPTIONS as MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/legacy-slide-toggle';
-import { MAT_LEGACY_FORM_FIELD_DEFAULT_OPTIONS as MAT_FORM_FIELD_DEFAULT_OPTIONS, MatLegacyFormFieldDefaultOptions as MatFormFieldDefaultOptions } from '@angular/material/legacy-form-field';
-import { MAT_LEGACY_CHECKBOX_DEFAULT_OPTIONS as MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/legacy-checkbox';
 import { DateAdapterConfig } from 'src/app/_shared/constants/date-adapter-options';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -29,10 +28,6 @@ import { LoggedInGuard } from 'src/app/_shared/guards/logged-in.guard';
 import { GuestGuard } from 'src/app/_shared/guards/guest.guard';
 
 import { AppInterceptor } from 'src/app/_shared/interceptors/app.interceptor';
-
-const appearance: MatFormFieldDefaultOptions = {
-  appearance: 'outline'
-};
 
 @NgModule({
   declarations: [AppComponent],
@@ -56,7 +51,7 @@ const appearance: MatFormFieldDefaultOptions = {
     LoggedInGuard,
     TranslatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
     { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
     { provide: MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
