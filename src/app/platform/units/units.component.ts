@@ -17,7 +17,7 @@ import { UnitModules } from 'src/app/_shared/constants/modules';
 @Component({
   selector: 'app-units',
   templateUrl: './units.component.html',
-  styleUrls: ['./units.component.styl']
+  styleUrls: ['./units.component.sass']
 })
 export class UnitsComponent implements OnInit, OnDestroy {
 

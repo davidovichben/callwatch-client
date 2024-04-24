@@ -50,7 +50,7 @@ ul
   list-style-type: none
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4
-  color: BlueColor
+  color: $primary-color
 
 h1, .h1
   font-size: 2rem
@@ -123,16 +123,16 @@ button:focus
   color: DarkGreyColor
 
 .grey-text
-  color: GreyColor
+  color: $neutral-color
 
 .blue-text
-  color: BlueColor
+  color: $primary-color
 
 .red-text
-  color: RedColor
+  color: $warning-color
 
 .green-text
-  color: GreenColor
+  color: $success-color
 
 .f-12
   font-size: 12px
@@ -198,7 +198,7 @@ button:focus
     cursor: pointer
 
 .chip.active
-  background-color: BlueColor
+  background-color: $primary-color
 
 .fade
   opacity: 0
@@ -214,39 +214,39 @@ button:focus
   margin-right: 10px
 
 .grey-btn, .blue-btn, .red-btn, .green-btn, .light-green-btn
-  color: WhiteColor !important
+  color: $white-color !important
   transition: 0.3s
 
 .white-btn
-  background-color: LightColor !important
-  color: BlueColor !important
-  border: 1px solid BlueColor !important
+  background-color: $neutral-color-light-1 !important
+  color: $primary-color !important
+  border: 1px solid $primary-color !important
 
 .grey-btn
   background-color: DarkGreyColor !important
 
 .blue-btn
-  background-color: BlueColor !important
+  background-color: $primary-color !important
   transition: 0.3s
 
 .blue-btn:hover
-  background-color: LightBlueColor !important
+  background-color: $primary-color-light-1 !important
 
 .light-green-btn
-  background-color: LightGreenColor
+  background-color: $success-color-light-1
 
 .green-btn
-  background-color: GreenColor
+  background-color: $success-color
 
 .green-btn:hover, .light-green-btn:hover
-  background-color: DarkGreenColor
+  background-color: $success-color-dark-1
 
 .red-btn
-  background-color: RedColor
+  background-color: $warning-color
   transition: 0.3s
 
 .red-btn:hover
-  background-color: DarkRedColor
+  background-color: $warning-color-dark-1
 
 .small-btn
   min-width: 50px !important
@@ -255,7 +255,7 @@ button:focus
   padding: 0 !important
 
 .white-bg
-  background-color: WhiteColor
+  background-color: $white-color
 
 .side-chevron
   transition: all 0.2s ease
@@ -271,7 +271,7 @@ button:focus
 
 .required:after
   content: " *"
-  color: RedColor
+  color: $warning-color
 
 .logo
   font-size: 24px
@@ -288,7 +288,7 @@ mat-icon.f-16
 .input-error
   padding: 0 10px
   font-size: 12px
-  color: RedColor
+  color: $warning-color
 
 .dual-groups-container
   width: 560px
@@ -318,7 +318,7 @@ mat-icon.f-16
     color: LightBlackColor
 
   td
-    color: BlueColor
+    color: $primary-color
 
   .row-icons
 
@@ -327,7 +327,7 @@ mat-icon.f-16
       min-width: initial !important
 
 .simple-table.table-striped tbody
-  background-color: WhiteColor
+  background-color: $white-color
 
 .tabs
   display: flex
@@ -343,9 +343,9 @@ mat-icon.f-16
 
   .tab.active, .tab:hover
     margin-bottom: -2px
-    color: BlueColor
+    color: $primary-color
     font-weight: bold
-    border-bottom: 3px solid BlueColor
+    border-bottom: 3px solid $primary-color
 
 .dialog-header
   @extend .flex-between
@@ -366,7 +366,7 @@ mat-icon.f-16
     color: LightBlackColor
 
   a.active
-    color: BlueColor
+    color: $primary-color
     font-weight: bold
 
   mat-icon
@@ -380,11 +380,11 @@ form
   .form-header
     @extend .flex-between
     margin-bottom: 15px
-    background-color: GreyColor
+    background-color: $neutral-color
 
 .form-body
   padding: 2rem 1rem
-  background-color: WhiteColor
+  background-color: $white-color
   border-radius: 5px
 
   section
@@ -439,17 +439,17 @@ form
 .mat-form-field-appearance-outline
 
   .mat-form-field-prefix, .mat-form-field-suffix
-    border-color: LightBlueColor
+    border-color: $primary-color-light-1
 
   .mat-form-field-outline-thick
     color: DarkGreyColor
 
 .mat-form-field-appearance-outline.mat-focused
   .mat-form-field-outline-thick
-    color: LightBlueColor
+    color: $primary-color-light-1
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled)
-  color: LightBlueColor
+  color: $primary-color-light-1
 
 .mat-select.hide-arrow .mat-select-arrow
   border: none !important
@@ -459,10 +459,10 @@ form
 
 .mat-form-field.mat-focused
   .mat-form-field-label
-    color: LightBlueColor
+    color: $primary-color-light-1
 
 .mat-form-field-outline
-  background-color: WhiteColor
+  background-color: $white-color
 
 .mat-form-field.large-suffix
 
@@ -477,7 +477,7 @@ form
 
 .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
 .mat-checkbox-checked.mat-primary .mat-checkbox-background
-  background-color: BlueColor
+  background-color: $primary-color
 
 .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background
@@ -532,8 +532,8 @@ textarea.mat-input-element
   font-size: 14px !important
 
 .table-striped > tbody > tr:nth-of-type(odd)
-  background-color: GreyColor
-  --bs-table-accent-bg: GreyColor
+  background-color: $neutral-color
+  --bs-table-accent-bg: $neutral-color
 
 .table > :not(:first-child)
   border-top: none
@@ -589,17 +589,17 @@ textarea.mat-input-element
 .data-table
 
   .table
-    background-color: WhiteColor
+    background-color: $white-color
     border: 1px solid LighterGreyColor
 
   .table > :not(caption) > * > *
     padding: 0.75rem 0.75rem
 
   tbody tr:nth-child(odd)
-    background-color: LightColor !important
+    background-color: $neutral-color-light-1 !important
 
   tbody tr:nth-child(even)
-    background-color: WhiteColor !important
+    background-color: $white-color !important
 
 app-data-table
 
@@ -614,17 +614,17 @@ app-data-table
 app-pagination
   .page-link
     border-color: transparent !important
-    color: BlueColor !important
+    color: $primary-color !important
     font-size: 12px
 
   .page-item.active
     .page-link
-      background-color: BlueColor !important
+      background-color: $primary-color !important
       color: #fff !important
 
   .page-item.disabled
     .page-link
-      color: LightColor
+      color: $neutral-color-light-1
 
 .ltr app-pagination
     i
@@ -635,10 +635,10 @@ app-pagination
 bd-select
 
   #selectLabel.opened #placeholder
-    color: LightBlueColor !important
+    color: $primary-color-light-1 !important
 
   #selectLabel.opened #selectLabelBorder, #dropdown
-    border-color: LightBlueColor !important
+    border-color: $primary-color-light-1 !important
 
 .ltr bd-select
 
@@ -651,10 +651,10 @@ bd-select
 app-unit-select
 
   #selectLabel.opened #placeholder
-    color: LightBlueColor !important
+    color: $primary-color-light-1 !important
 
   #selectLabel.opened #selectLabelBorder, #dropdown
-    border-color: LightBlueColor !important
+    border-color: $primary-color-light-1 !important
 
 .ltr app-unit-select
 
@@ -667,7 +667,7 @@ app-unit-select
 app-audio-input
 
   mat-icon
-    color: BlueColor
+    color: $primary-color
 
 /*--- Swal ---*/
 
@@ -678,7 +678,7 @@ app-audio-input
   box-shadow: none !important
 
 .swal2-styled.swal2-confirm
-  background-color: BlueColor
+  background-color: $primary-color
 
 .swal2-styled.swal2-cancel
   background-color: DarkGreyColor
@@ -709,9 +709,9 @@ app-audio-input
   margin: 60px auto
   font-size: 10px
   text-indent: -9999em
-  border-top: 1.1em solid BlueColor
-  border-right: 1.1em solid BlueColor
-  border-bottom: 1.1em solid BlueColor
+  border-top: 1.1em solid $primary-color
+  border-right: 1.1em solid $primary-color
+  border-bottom: 1.1em solid $primary-color
   border-left: 1.1em solid #fff
   -webkit-transform: translateZ(0)
   -ms-transform: translateZ(0)
