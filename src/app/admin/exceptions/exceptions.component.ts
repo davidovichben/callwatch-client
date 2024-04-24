@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ExceptionDialogComponent } from 'src/app/admin/exceptions/exception-dialog/exception-dialog.component';
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
@@ -27,8 +27,9 @@ export class ExceptionsComponent {
     { label: 'created_at', name: 'createdAt' }
   ];
 
-  constructor(private router: Router, private exceptionService: ExceptionsService,
-              private notifications: NotificationService, private dialog: MatDialog) {}
+  constructor(private exceptionService: ExceptionsService,
+              private notifications: NotificationService,
+              private dialog: MatDialog) {}
 
   fetchItems(): void {
     const criteria = this.dataTable.criteria;

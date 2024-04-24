@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 
@@ -21,8 +20,7 @@ export class TemplatesComponent {
     { label: 'description', name: 'description' }
   ];
 
-  constructor(private route: ActivatedRoute,
-              private reportService: ReportTemplateService,
+  constructor(private reportService: ReportTemplateService,
               private notificationService: NotificationService,
               public userSession: UserSessionService) {}
 

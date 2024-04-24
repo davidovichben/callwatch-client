@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { ChangesComponent } from './changes/changes.component';

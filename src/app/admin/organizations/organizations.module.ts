@@ -7,7 +7,7 @@ import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.modul
 import { OrganizationsComponent } from './organizations.component';
 
 import { OrganizationService } from 'src/app/_shared/services/http/organization.service';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {

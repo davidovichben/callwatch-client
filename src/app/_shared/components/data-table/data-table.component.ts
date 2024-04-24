@@ -2,7 +2,7 @@ import { Component, Input, Output, OnDestroy, OnInit, EventEmitter, HostBinding 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgModel } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';

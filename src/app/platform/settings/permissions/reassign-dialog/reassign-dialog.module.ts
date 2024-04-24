@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import {MatDialogModule } from '@angular/material/dialog';
 
 import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';

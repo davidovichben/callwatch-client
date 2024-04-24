@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import {MatDialogModule } from '@angular/material/dialog';
 
 import { UniqueDaysComponent } from 'src/app/platform/settings/unique-days/unique-days.component';
 

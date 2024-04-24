@@ -10,7 +10,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { RouterModel } from 'src/app/_shared/models/router.model';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DuplicationDialogComponent } from './duplication-dialog/duplication-dialog.component';
 
 @Component({

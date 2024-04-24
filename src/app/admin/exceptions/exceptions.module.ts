@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { DataTableModule } from 'src/app/_shared/components/data-table/data-table.module';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TruncateModule } from 'src/app/_shared/pipes/truncate/truncate.module';
 
 import { ExceptionsComponent } from 'src/app/admin/exceptions/exceptions.component';

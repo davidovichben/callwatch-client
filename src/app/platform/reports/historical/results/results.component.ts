@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FileSaverService } from 'ngx-filesaver';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment/moment';
@@ -213,7 +213,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
               continue;
             }
 
-            if (design.between?.values && design.between.values.from <= value && design.between.values.to >= value) {
+            if (design.between?.values && design.between.values.from <= +value && design.between.values.to >= +value) {
               rowStyle[index] = { backgroundColor: design.between.color, color: '#fff' };
               continue;
             }
