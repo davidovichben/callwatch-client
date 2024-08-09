@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { ChartModule } from 'src/app/_shared/components/chart/charts.module';
@@ -29,35 +29,29 @@ import { GuestGuard } from 'src/app/_shared/guards/guest.guard';
 
 import { AppInterceptor } from 'src/app/_shared/interceptors/app.interceptor';
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatMomentDateModule,
-    NgxMatMomentModule,
-    ChartModule
-  ],
-  providers: [
-    AppStateService,
-    UserSessionService,
-    NotificationService,
-    HelpersService,
-    LocaleService,
-    GenericService,
-    GuestGuard,
-    LoggedInGuard,
-    TranslatePipe,
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
-    { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
-    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
-    { provide: MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
-    ...DateAdapterConfig
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatMomentDateModule,
+        NgxMatMomentModule,
+        ChartModule], providers: [
+        AppStateService,
+        UserSessionService,
+        NotificationService,
+        HelpersService,
+        LocaleService,
+        GenericService,
+        GuestGuard,
+        LoggedInGuard,
+        TranslatePipe,
+        { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+        { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
+        { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
+        { provide: MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
+        ...DateAdapterConfig,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {}
 
