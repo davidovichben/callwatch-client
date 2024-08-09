@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { from, Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/internal/operators';
 
 import { BaseHttpService } from './base-http.service';
 import { UserSessionService } from '../state/user-session.service';
@@ -75,16 +74,5 @@ export class UnitService extends BaseHttpService {
       .toPromise()
       .then(response => response as number[])
       .catch(() => []);
-  }
-
-  getMoreUnits(offset: number, limit: number): Observable<UnitModel[]> {
-    const params = {};
-    Object.assign(params, { offset, limit });
-
-    return from(this.http.get(this.endPoint, this.getTokenRequest(params, true)))
-      .pipe(
-        map(response => response as UnitModel[]),
-        catchError(() => of([]))
-      );
   }
 }

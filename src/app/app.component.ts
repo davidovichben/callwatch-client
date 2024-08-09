@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
       this.setDirection();
 
       const translations = this.localeService.getTranslations();
-      if (translations.length === 0) {
+      if (!translations || Object.keys(translations).length === 0) {
         this.genericService.getTranslations(this.locale).then(response => {
           this.localeService.setTranslations(response);
         })

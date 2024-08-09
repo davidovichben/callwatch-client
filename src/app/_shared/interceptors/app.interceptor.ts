@@ -4,18 +4,16 @@ import {
 } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/internal/operators';
+import { catchError, finalize } from 'rxjs/operators';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
-import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
   constructor(private userSession: UserSessionService,
-              private notificationService: NotificationService,
-              private appState: AppStateService) {}
+              private notificationService: NotificationService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const noLoader = req.headers.get('NoLoader');
@@ -38,8 +36,8 @@ export class AppInterceptor implements HttpInterceptor {
         } else {
           this.notificationService.serverError();
         }
-
-        return throwError(error);
+        
+        return throwError(() => error);
       }),
       finalize(() => {
         // this.appState.setPageSpinner(false);

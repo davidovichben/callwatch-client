@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ChartType } from 'chart.js';
-import { MultiDataSet, Colors, Label } from 'ng2-charts';
+// import { MultiDataSet, Colors, Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-doughnut-chart',
@@ -11,21 +11,21 @@ export class DoughnutChartComponent {
   @Input() width: number;
   @Input() height: number;
 
-  @Input() doughnutChartLabels: Label[] = ['BMW', 'Ford', 'Tesla'];
-  @Input() doughnutChartData: MultiDataSet = [
-    [55, 25, 20]
-  ];
-  @Input() doughnutChartType: ChartType = 'doughnut';
-  @Input() lineChartColors: Colors[] = [
-    {
-      data: [1, 2],
-      borderColor: 'black',
-      backgroundColor: 'rgb(134,43,246)'
-    },
-    {
-      data: [3],
-      borderColor: 'black',
-      backgroundColor: 'rgb(43,70,246)'
-    },
-  ];
+  // @Input() doughnutChartLabels: Label[] = ['BMW', 'Ford', 'Tesla'];
+  // @Input() doughnutChartData: MultiDataSet = [
+  //   [55, 25, 20]
+  // ];
+  // @Input() doughnutChartType: ChartType = 'doughnut';
+  // @Input() lineChartColors: Colors[] = [
+  //   {
+  //     data: [1, 2],
+  //     borderColor: 'black',
+  //     backgroundColor: 'rgb(134,43,246)'
+  //   },
+  //   {
+  //     data: [3],
+  //     borderColor: 'black',
+  //     backgroundColor: 'rgb(43,70,246)'
+  //   },
+  // ];
 }

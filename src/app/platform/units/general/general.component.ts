@@ -85,7 +85,7 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
       if (response) {
         this.notifications.success();
         this.router.navigate(['/platform', 'units', 'root']);
-        this.unitStateService.refreshTree.next();
+        this.unitStateService.refreshTree.next(true);
       }
     })
   }

@@ -16,7 +16,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 
 import { ReportFormats, ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
-import { isNumeric } from 'rxjs/internal-compatibility';
+
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 import { PaginationData } from 'src/app/_shared/components/data-table/classes/pagination-data';
 
@@ -202,7 +202,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
             continue;
           }
 
-          if (isNumeric(value)) {
+          if (!isNaN(value)) {
             if (design.greaterThan?.value && design.greaterThan.value > value) {
               rowStyle[index] = { backgroundColor: design.greaterThan.color, color: '#fff' };
               continue;

@@ -8,11 +8,15 @@ import { DatePickerModule } from 'src/app/_shared/components/date-picker/date-pi
 
 import { DashboardComponent } from './dashboard.component';
 
+import { StatsService } from '../../_shared/services/http/stats.service';
+
+import { StatsResolve } from '../../_shared/resolves/stats.resolve';
+
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    // resolve: { widgets: ReportWidgetsResolve }
+    // resolve: { stats: StatsResolve }
   },
   {
     path: 'form',
@@ -28,6 +32,7 @@ const routes: Routes = [
     MatIconModule,
     TranslateModule,
     DatePickerModule
-  ]
+  ],
+  providers: [StatsResolve, StatsService]
 })
 export class DashboardModule {}

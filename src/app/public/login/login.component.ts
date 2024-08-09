@@ -36,34 +36,36 @@ export class LoginComponent implements OnInit {
     setTimeout(() => this.showForm = true, 300);
   }
 
-  submit(form: NgForm): void {
-    if (form.valid && !this.isSubmitting) {
-      this.isSubmitting = true;
-      this.hasLoginError = false;
-
-      this.appHttp.login(form.value.username, form.value.password).then(response => {
-        if (response.status === 500 || response.status === 0) {
-          const errorMsg = this.t.transform('general_login_error');
-          this.notificationService.error(errorMsg);
-          return;
-        }
-
-        if (response.token) {
-          this.localeService.setLocale(response.language.code);
-          this.userSession.setUser({ extension: form.value.extension, ...response });
-          const url = response.isAdmin ? ['/admin'] : ['/platform'];
-          window.location.reload();
-          this.router.navigate(url);
-        } else {
-          if (response.error?.errorCode) {
-            this.loginNotAllowed = true;
-          } else {
-            this.hasLoginError = true;
-          }
-        }
-
-        this.isSubmitting = false;
-      })
+  async submit(form: NgForm) {
+    if (!form.valid || this.isSubmitting) {
+      return;
     }
+    
+    this.isSubmitting = true;
+    this.hasLoginError = false;
+
+    const response = await this.appHttp.login(form.value.username, form.value.password);
+    if (response.status === 500 || response.status === 0) {
+      const errorMsg = this.t.transform('general_login_error');
+      this.notificationService.error(errorMsg);
+    } else if (response.accessToken) {
+      //this.localeService.setLocale(response.language.code);
+      
+      
+      
+      this.localeService.setLocale('he');
+      this.userSession.setUser(response.accessToken);
+      const url = response.isAdmin ? ['/admin'] : ['/platform'];
+      // window.location.reload();
+      await this.router.navigate(url);
+    } else {
+      if (response.error?.errorCode) {
+        this.loginNotAllowed = true;
+      } else {
+        this.hasLoginError = true;
+      }
+    }
+
+    this.isSubmitting = false;
   }
 }

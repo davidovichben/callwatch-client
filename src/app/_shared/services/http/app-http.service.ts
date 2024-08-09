@@ -11,7 +11,7 @@ export class AppHttpService extends BaseHttpService {
   constructor(private http: HttpClient) {
     super();
   }
-
+  
   login(username: string, password: string): Promise<any> {
     return this.http.post(this.apiUrl + '/login', { username, password }, { headers: { noLoader: 'true' }})
       .toPromise()
@@ -42,6 +42,13 @@ export class AppHttpService extends BaseHttpService {
 
   resetPassword(password: string, username: string, token: string): Promise<boolean> {
     return this.http.post(this.apiUrl + '/password/reset', { password, username, token })
+      .toPromise()
+      .then(() => true)
+      .catch(() => false);
+  }
+  
+  test(): Promise<boolean> {
+    return this.http.get(this.apiUrl + '/test')
       .toPromise()
       .then(() => true)
       .catch(() => false);

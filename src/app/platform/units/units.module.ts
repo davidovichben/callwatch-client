@@ -20,14 +20,14 @@ import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
 const routes: Routes = [
   {
     path: ':id',
-    pathMatch: '',
+    pathMatch: 'full',
     component: UnitsComponent,
     data: { noPadding: true },
     children: [
       { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
       { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
       { path: 'groups', loadChildren: () => import('./extensions-groups/extensions-groups.module').then(m => m.ExtensionsGroupsModule) },
-      { path: '', redirectTo: 'general' }
+      { path: '', pathMatch: 'full', redirectTo: 'general' }
     ],
     runGuardsAndResolvers: 'always',
     resolve: {
@@ -37,6 +37,7 @@ const routes: Routes = [
   },
   {
     path: '',
+    pathMatch: 'full',
     redirectTo: 'root'
   }
 ];

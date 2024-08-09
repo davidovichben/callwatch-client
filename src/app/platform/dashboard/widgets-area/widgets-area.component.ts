@@ -2,20 +2,19 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 
 import { WidgetService } from 'src/app/_shared/services/http/widget.service';
 
-import { NgxResizeHandleType } from 'ngx-drag-resize';
 import { WidgetModel } from 'src/app/_shared/models/widget.model';
 
 
 @Component({
   selector: 'app-widgets-area',
   templateUrl: './widgets-area.component.html',
-  styleUrls: ['./widgets-area.component.sass']
+  styleUrls: ['./widgets-area.component.scss']
 })
 export class WidgetsAreaComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gridArea') gridEl: ElementRef;
 
-  readonly handleType = NgxResizeHandleType;
+  // readonly handleType = NgxResizeHandleType;
 
   readonly tiles = new Array(56)
 

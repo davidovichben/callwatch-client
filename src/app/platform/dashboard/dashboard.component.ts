@@ -1,44 +1,35 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { StatsModel } from '../../_shared/models/stats.model';
 import { ActivatedRoute } from '@angular/router';
-import { Chart } from 'chart.js';
+import { StatsService } from '../../_shared/services/http/stats.service';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.sass']
 })
-export class DashboardComponent implements AfterViewInit {
-
-  constructor(private route: ActivatedRoute) {}
+export class DashboardComponent implements OnInit {
+  
+  statsLoadingInterval: any;
+  
+  stats: StatsModel;
+  
+  constructor(private route: ActivatedRoute, private statsService: StatsService) {}
 
   ngOnInit(): void {
-    const widgets = this.route.snapshot.data.widgets;
+    this.stats = this.route.snapshot.data.stats;
+    
+    this.loadData();
   }
-
-  ngAfterViewInit(): void {
-    const config: any = {
-      type: 'pie',
-      data: {
-        labels: [
-          'Red',
-          'Blue',
-          'Yellow'
-        ],
-        datasets: [{
-          label: 'My First Dataset',
-          data: [300, 50, 100],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
-          hoverOffset: 4
-        }]
-      }
-    }
-
-    // new Chart(
-    //   document.getElementById('myChart') as any,
-    //   config
-    // );
+  
+  loadData() {
+    // this.statsLoadingInterval = setInterval(async () => {
+    //   this.stats = await this.statsService.getStats();
+    // }, 5000);
+  }
+  
+  ngOnDestroy() {
+    clearInterval(this.statsLoadingInterval);
   }
 }

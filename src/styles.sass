@@ -1,4 +1,4 @@
-@import '~src/assets/variables'
+@import 'variables'
 
 @font-face
   src: url('assets/fonts/OpenSansHebrew-Regular.ttf')
@@ -420,81 +420,86 @@ form
 
 /* --- Material ---*/
 
-.mat-form-field
-  font-family: OpenSans
+.mat-mdc-form-field
+  font-family: OpenSans, serif
+  width: 100%
 
-.mat-form-field-appearance-outline .mat-form-field-label
+.mat-mdc-form-field-appearance-outline .mat-mdc-form-field-label
   top: 2.05em
 
-.mat-form-field-infix
+.mat-mdc-form-field-infix
   padding: 0.5em !important
   border-top: 0.4em solid #0000 !important
 
-.mat-form-field-appearance-outline .mat-form-field-infix
+.mat-mdc-form-field-appearance-outline .mat-mdc-form-field-infix
   padding: 1em 0 !important
   height: 50px !important
 
-.mat-form-field-appearance-outline
+.mat-mdc-form-field-appearance-outline
 
-  .mat-form-field-prefix, .mat-form-field-suffix
+  .mat-mdc-form-field-prefix, .mat-mdc-form-field-suffix
     border-color: $primary-color-light-1
 
-  .mat-form-field-outline-thick
+  .mat-mdc-form-field-outline-thick
     color: $neutral-color-dark-1
 
-.mat-form-field-appearance-outline.mat-focused
-  .mat-form-field-outline-thick
+.mat-mdc-form-field-appearance-outline.mat-mdc-focused
+  .mat-mdc-form-field-outline-thick
     color: $primary-color-light-1
 
-.mat-primary .mat-option.mat-selected:not(.mat-option-disabled)
+.mat-mdc-primary .mat-mdc-option.mat-mdc-selected:not(.mat-mdc-option-disabled)
   color: $primary-color-light-1
 
-.mat-select.hide-arrow .mat-select-arrow
+.mat-mdc-select.hide-arrow .mat-mdc-select-arrow
   border: none !important
 
-.mat-form-field-label
-  font-family: OpenSans !important
+.mat-mdc-form-field-label
+  font-family: OpenSans, serif !important
 
-.mat-form-field.mat-focused
-  .mat-form-field-label
+.mat-mdc-form-field.mat-focused
+  .mat-mdc-form-field-label
     color: $primary-color-light-1
 
-.mat-form-field-outline
+.mat-mdc-form-field-outline
   background-color: $white-color
 
-.mat-form-field.large-suffix
-
-  .mat-form-field-suffix
-    top: -0.3em
-
-.mat-form-field.no-space .mat-form-field-wrapper
+.mat-mdc-form-field-icon-suffix
+  margin: 0 8px
   padding: 0
 
-.break-text .mat-checkbox-layout
+.mat-mdc-form-field.large-suffix
+
+  .mat-mdc-form-field-suffix
+    top: -0.3em
+
+.mat-mdc-form-field.no-space .mat-mdc-form-field-wrapper
+  padding: 0
+
+.break-text .mat-mdc-checkbox-layout
   white-space: initial
 
-.mat-checkbox-indeterminate.mat-primary .mat-checkbox-background,
-.mat-checkbox-checked.mat-primary .mat-checkbox-background
+.mat-mdc-checkbox-indeterminate.mat-primary .mat-mdc-checkbox-background,
+.mat-mdc-checkbox-checked.mat-primary .mat-mdc-checkbox-background
   background-color: $primary-color
 
-.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
-.mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background
+.mat-mdc-checkbox-disabled.mat-mdc-checkbox-checked .mat-mdc-checkbox-background,
+.mat-mdc-checkbox-disabled.mat-mdc-checkbox-indeterminate .mat-mdc-checkbox-background
   background-color: $neutral-color-dark-1
 
-.mat-menu-item
-  .mat-icon
+.mat-mdc-menu-item
+  .mat-mdc-icon
     margin-bottom: 2px
 
-.mat-button
+.mat-mdc-button
   min-width: 100px
 
-.mat-form-field-outline-start
+.mat-mdc-form-field-outline-start
   width: 7px !important
 
-.cdk-overlay-pane.no-overflow .mat-dialog-container
+.cdk-overlay-pane.no-overflow .mat-mdc-dialog-container
   overflow: unset
 
-textarea.mat-input-element
+textarea.mat-mdc-input-element
   margin: 12px 0
   padding: 0
 
