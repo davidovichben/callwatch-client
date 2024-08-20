@@ -30,7 +30,6 @@ const routes: Routes = [
 	],
   providers: [
     PermissionService,
-    SelectService,
     TranslatePipe
   ]
 })

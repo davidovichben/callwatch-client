@@ -1,19 +1,34 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy, HostBinding } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
+
+import { TranslateModule } from '../../../pipes/translate/translate.module';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { HelpersService } from 'src/app/_shared/services/generic/helpers.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
-import { AdminModules, PlatformModules } from 'src/app/_shared/constants/modules';
 import { ModuleModel } from 'src/app/_shared/models/module.model';
+
+import { AdminModules, PlatformModules } from 'src/app/_shared/constants/modules';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.sass']
+  styleUrls: ['./sidebar.component.sass'],
+  imports: [
+    NgClass,
+    NgIf,
+    RouterLink,
+    NgForOf,
+    MatIcon,
+    TranslateModule,
+    NgStyle
+  ],
+  standalone: true
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
@@ -31,9 +46,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   pageDirection: 'rtl' | 'ltr';
 
-  constructor(private router: Router, private route: ActivatedRoute,
-              private helpers: HelpersService, private appState: AppStateService,
-              private userSession: UserSessionService, private localeService: LocaleService) {}
+  constructor(private router: Router, private helpers: HelpersService,
+              private appState: AppStateService, private userSession: UserSessionService,
+              private localeService: LocaleService) {}
 
   ngOnInit(): void {
     this.setMenu();
@@ -81,8 +96,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (module.isOpen) {
       return true;
     }
-
-    return permissions[module.permission] && permissions[module.permission].read;
+    
+    return permissions[module.permission]?.read;
   }
 
   setActiveModule(from?: string): void {

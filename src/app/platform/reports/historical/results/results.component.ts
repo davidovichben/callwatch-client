@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FileSaverService } from 'ngx-filesaver';
 import { Subscription } from 'rxjs';
-import * as moment from 'moment/moment';
+import moment from 'moment';
 
 import { InformationDialogComponent } from './information-dialog/information-dialog.component';
 import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.component';

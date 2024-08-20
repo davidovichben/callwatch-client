@@ -20,7 +20,7 @@ export class GenericService extends BaseHttpService {
       .catch(() => []);
   }
 
-  exists(resource: string, value: string, ignoredId?: number, key?: string): Promise<{ exists: boolean }> {
+  exists(resource: string, value: string, ignoredId?: any, key?: string): Promise<{ exists: boolean }> {
     const values = { resource, value };
     if (ignoredId) {
       Object.assign(values, { ignore: ignoredId })

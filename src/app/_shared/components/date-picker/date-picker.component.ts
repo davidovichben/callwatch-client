@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Moment } from 'moment';
-import * as moment from 'moment/moment';
+import moment from 'moment/moment';
 
 import { CalendarComponent } from './calendar/calendar.component';
 

@@ -1,7 +1,7 @@
 import { ModuleModel } from 'src/app/_shared/models/module.model';
 
 export class PermissionModel {
-  id: number;
+  _id: string;
   name: string;
   description: string;
   userCount: number;

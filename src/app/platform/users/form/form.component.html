@@ -60,7 +60,7 @@
               </mat-form-field>
               <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'EMAIL_TIP' | t ">help</mat-icon>
             </div>
-            <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
+            <div class="col-12 col-lg-6 col-xxl-5 d-flex">
               <mat-form-field>
                 <mat-label>{{ 'mobile' | t }}</mat-label>
                 <input matInput type="text" formControlName="mobile">
@@ -94,7 +94,7 @@
           </div>
           <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex" [@fade]="user?.id !== loggedUser?.id ? 'active' : 'inactive'">
             <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="formGroup.get('permission').errors && form.submitted" [required]="true">
-              <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
+              <bd-option *ngFor="let permission of permissions" [value]="permission._id">{{ permission.name }}</bd-option>
             </bd-select>
             <div class="input-error" [@fade]="formGroup.get('permission').errors && form.submitted ? 'active' : 'inactive'">{{ errorMessages.required | t }}</div>
             <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'PERMISSION_TIP' | t ">help</mat-icon>

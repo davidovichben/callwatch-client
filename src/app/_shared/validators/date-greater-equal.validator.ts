@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import Diff = moment.unitOfTime.Diff;
 import { UntypedFormControl } from '@angular/forms';
 

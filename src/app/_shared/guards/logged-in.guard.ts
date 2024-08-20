@@ -1,19 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 
-@Injectable()
-export class LoggedInGuard  {
-
-  constructor(private userSession: UserSessionService, private router: Router) {}
-
-  canLoad(): boolean {
-    if (!this.userSession.isLoggedIn()) {
-      this.router.navigate(['/']);
-      return false;
-    }
-
-    return true;
+const loggedInGuard = () => {
+  if (!inject(UserSessionService).isLoggedIn()) {
+    inject(Router).navigate(['/']);
+    return false;
   }
+
+  return true;
 }
+
+export default loggedInGuard;

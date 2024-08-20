@@ -86,7 +86,7 @@ export class FormComponent implements OnInit, OnDestroy {
       if (columns) {
         const mapped = columns.map(column => {
           return {
-            id: column.id,
+            id: column._id,
             name: this.t.transform('col_' + column.name.toLowerCase()),
             description: this.t.transform('col_' + column.name.toLowerCase() + '_tip')
           }
@@ -206,4 +206,3 @@ export class FormComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 }
-

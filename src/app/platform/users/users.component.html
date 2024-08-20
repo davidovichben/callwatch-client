@@ -17,7 +17,7 @@
       <mat-checkbox (change)="dataTable.checkItem(item, $event.checked)" [checked]="item.checked"></mat-checkbox>
     </td>
     <td>
-      <a [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('users', 'update')">{{ item.name }}</a>
+      <a [routerLink]="['./', 'form', item._id]" *ngIf="userSession.hasPermission('users', 'update')">{{ item.name }}</a>
       <span *ngIf="!userSession.hasPermission('users', 'update')">{{ item.name }}</span>
     </td>
     <td>{{ item.username }}</td>
@@ -28,12 +28,12 @@
     <td class="row-icons" *ngIf="userSession.canModify('users')">
       <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('users', 'update')">
+        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item._id]" *ngIf="userSession.hasPermission('users', 'update')">
           <mat-icon>edit</mat-icon>
           <span>{{ 'edit' | t }}</span>
         </button>
-        <button mat-menu-item class="row-action" (click)="deleteItem(item.id)"
-                *ngIf="userSession.hasPermission('users', 'delete') && item.id !== userSession.getUserId()">
+        <button mat-menu-item class="row-action" (click)="deleteItem(item._id)"
+                *ngIf="userSession.hasPermission('users', 'delete') && item._id !== userSession.getUserId()">
           <mat-icon>delete</mat-icon>
           <span>{{ 'delete' | t }}</span>
         </button>

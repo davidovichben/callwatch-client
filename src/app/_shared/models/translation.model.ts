@@ -1,4 +1,4 @@
 export class TranslationModel {
-  key: string;
+  keyName: string;
   value: string;
 }

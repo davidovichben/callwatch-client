@@ -40,6 +40,7 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const route = this.route.parent.parent;
+
     this.sub.add(route.data.subscribe(() => {
       this.form.reset();
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as moment from 'moment/moment';
+import moment from 'moment/moment';
 
 @Component({
   selector: 'app-date-range-input',

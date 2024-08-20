@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     this.listenRouterEvents();
   }
 
-  private setLocale(): void {
+  private async setLocale(): Promise<void> {
     this.locale = this.localeService.getLocale();
 
     this.dateAdapter.setLocale('he-IL');
@@ -40,9 +40,8 @@ export class AppComponent implements OnInit {
 
       const translations = this.localeService.getTranslations();
       if (!translations || Object.keys(translations).length === 0) {
-        this.genericService.getTranslations(this.locale).then(response => {
-          this.localeService.setTranslations(response);
-        })
+        const response = await this.genericService.getTranslations(this.locale);
+        this.localeService.setTranslations(response);
       }
     } else {
       this.localeService.setLocale();

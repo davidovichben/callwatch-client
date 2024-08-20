@@ -10,7 +10,7 @@
 <app-data-table tableUrl="permissions" [columns]="columns" [hasActionsHeader]="userSession.canModify('permissions')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <tr *ngFor="let item of dataTable.items">
     <td>
-      <a [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('permissions', 'update')">{{ item.name }}</a>
+      <a [routerLink]="['./', 'form', item._id]" *ngIf="userSession.hasPermission('permissions', 'update')">{{ item.name }}</a>
       <span *ngIf="!userSession.hasPermission('permissions', 'update')">{{ item.name }}</span>
     </td>
     <td>{{ item.description }}</td>
@@ -18,7 +18,7 @@
     <td class="row-icons" *ngIf="userSession.canModify('permissions')">
       <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item.id]" *ngIf="userSession.hasPermission('permissions', 'update')">
+        <button mat-menu-item class="row-action" [routerLink]="['./', 'form', item._id]" *ngIf="userSession.hasPermission('permissions', 'update')">
           <mat-icon>edit</mat-icon>
           <span>{{ 'edit' | t }}</span>
         </button>

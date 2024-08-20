@@ -105,15 +105,14 @@ export class TagsInputComponent implements ControlValueAccessor {
     }
   }
 
-  writeValue(value?: number | number[]): void {
+  async writeValue(value?: string | string[]): Promise<void> {
     if (value) {
-      this.tagService.getTags(this.type, []).then(tags => {
-        if (Array.isArray(value)) {
-          this.selectedTags = tags.filter(tag => value.includes(tag.id));
-        } else {
-          this.selectedTags = tags.filter(tag => tag.id === value);
-        }
-      });
+      const tags = await this.tagService.getTags(this.type, []);
+      if (Array.isArray(value)) {
+        this.selectedTags = tags.filter(tag => value.includes(tag._id));
+      } else {
+        this.selectedTags = tags.filter(tag => tag._id === value);
+      }
     }
   }
 

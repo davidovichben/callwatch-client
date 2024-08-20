@@ -1,5 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+
+import { PinInputModule } from '../../_shared/components/pin-input/pin-input.module';
+import { SetPasswordModule } from '../../_shared/components/set-password/set-password.module';
 
 import { PinInputComponent } from 'src/app/_shared/components/pin-input/pin-input.component';
 
@@ -9,10 +14,15 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Fade } from 'src/app/_shared/constants/animations';
 
+import { TranslateModule } from '../../_shared/pipes/translate/translate.module';
+
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  animations: [Fade]
+  animations: [Fade],
+  imports: [CommonModule, RouterModule, FormsModule, TranslateModule, PinInputModule, SetPasswordModule],
+  providers: [AppHttpService],
+  standalone: true
 })
 export class ForgotPasswordComponent {
 

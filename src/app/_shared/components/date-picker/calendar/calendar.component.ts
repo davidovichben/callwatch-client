@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Moment } from 'moment';
-import * as moment from 'moment/moment';
+import moment from 'moment/moment';
 
 import { WeekDays } from 'src/app/_shared/constants/general';
 

@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 
 @Component({
   selector: 'app-public',
   templateUrl: './public.component.html',
-  styleUrls: ['./public.component.sass']
+  styleUrls: ['./public.component.sass'],
+  imports: [CommonModule, RouterModule],
+  standalone: true
 })
 export class PublicComponent {
 

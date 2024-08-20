@@ -1,5 +1,5 @@
 export class SelectItemModel {
-  id: number;
+  _id: string;
   name: string;
   checked?: boolean;
 }

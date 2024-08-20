@@ -11,6 +11,6 @@ export class PermissionResolve  {
   constructor(private permissionService: PermissionService) {}
 
   resolve(snapshot: ActivatedRouteSnapshot) {
-    return this.permissionService.getPermission(+snapshot.params.id).then(response => response as PermissionModel);
+    return this.permissionService.getPermission(snapshot.params.id).then(response => response as PermissionModel);
   }
 }

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 import { Fade } from 'src/app/_shared/constants/animations';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
@@ -11,12 +15,16 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
+import { TranslateModule } from '../../_shared/pipes/translate/translate.module';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass'],
-  animations: [Fade]
+  animations: [Fade],
+  imports: [RouterModule, FormsModule, MatFormFieldModule, MatInputModule, TranslateModule, CommonModule],
+  providers: [AppHttpService],
+  standalone: true
 })
 export class LoginComponent implements OnInit {
 
@@ -50,8 +58,6 @@ export class LoginComponent implements OnInit {
       this.notificationService.error(errorMsg);
     } else if (response.accessToken) {
       //this.localeService.setLocale(response.language.code);
-      
-      
       
       this.localeService.setLocale('he');
       this.userSession.setUser(response.accessToken);

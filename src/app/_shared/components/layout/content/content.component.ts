@@ -1,7 +1,13 @@
 import { Component, Input, OnDestroy, OnInit, HostBinding } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { fromEvent, merge, Observable, Subscription, timer } from 'rxjs';
 import { filter, startWith, switchMap } from 'rxjs/operators';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+
+import { TranslateModule } from '../../../pipes/translate/translate.module';
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
@@ -13,7 +19,10 @@ import { UserModel } from 'src/app/_shared/models/user.model';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.sass']
+  styleUrls: ['./content.component.sass'],
+  imports: [RouterModule, CommonModule, MatMenu, MatIcon, MatButton, MatMenuItem, MatMenuTrigger, TranslateModule],
+  providers: [AppHttpService],
+  standalone: true
 })
 export class ContentComponent implements OnInit, OnDestroy {
 
@@ -56,7 +65,7 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.noPadding = false;
 
     let component = this.route.firstChild;
-    while (component.firstChild) {
+    while (component?.firstChild) {
       component = component.firstChild;
       if (component.snapshot.data.noPadding) {
         this.noPadding = true;

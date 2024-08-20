@@ -54,8 +54,8 @@ export class LocaleService {
   setTranslations(translations: TranslationModel[]): void {
     const keyed = {};
     const keyedByUser = {};
-
-    translations.forEach(row => keyed[row.key] = row.value);
+    
+    translations.forEach(row => keyed[row.keyName] = row.value);
 
     keyedByUser[this.userId] = keyed;
 

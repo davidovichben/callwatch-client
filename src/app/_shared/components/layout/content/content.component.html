@@ -11,7 +11,7 @@
   </div>
   <div class="d-flex align-items-center px-3">
     <mat-icon class="user-default-avatar" *ngIf="!user.avatar">account_circle</mat-icon>
-    <img class="user-avatar" [src]="user.avatar" *ngIf="user.avatar">
+    <img class="user-avatar" [src]="user.avatar" *ngIf="user.avatar" alt="user">
     <span id="username">{{ user.firstName + ' ' + user.lastName }}</span>
     <mat-icon class="pointer" [matMenuTriggerFor]="menu">expand_more</mat-icon>
     <mat-menu #menu="matMenu">

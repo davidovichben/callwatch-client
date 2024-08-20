@@ -14,8 +14,6 @@ import { ReassignDialogModule } from 'src/app/platform/settings/permissions/reas
 import { FormComponent } from 'src/app/platform/settings/permissions/form/form.component';
 
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
-import { SelectService } from 'src/app/_shared/services/http/select.service';
 
 import { PermissionResolve } from 'src/app/_shared/resolves/permission.resolve';
 
@@ -53,8 +51,6 @@ const routes: Routes = [
   ],
   providers: [
     PermissionService,
-    GenericService,
-    SelectService,
     PermissionResolve,
     TranslatePipe,
     DeactivateGuard

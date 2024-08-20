@@ -10,7 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+// import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
 import { TagsInputModule } from 'src/app/_shared/components/tags-input/tags-input.module';
@@ -39,7 +39,7 @@ const routes: Routes = [
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
-    NgxMatDatetimePickerModule, NgxMatTimepickerModule,
+    // NgxMatDatetimePickerModule, NgxMatTimepickerModule,
     TranslateModule,
     TagsInputModule,
     AudioInputModule,

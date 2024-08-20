@@ -29,7 +29,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
 
   readonly sub = new Subscription();
 
-  modules;
+  modules = UnitModules;
 
   activeUnit: UnitModel;
 
@@ -43,24 +43,22 @@ export class UnitsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.rootUnit.name = this.userSession.getUser().organization;
     this.rootUnit.units = this.route.snapshot.data.units;
-
+    this.activeUnit = this.route.snapshot.data.unit;
+    
     this.sub.add(this.route.params.subscribe(() => {
       this.activeUnit = this.route.snapshot.data.unit;
       this.modules = this.activeUnit.id === 'root' ? UnitModules.slice(0, 2) : UnitModules;
       this.unitStateService.unitLoaded.next(this.activeUnit);
     }));
 
-    this.sub.add(this.unitStateService.refreshTree.subscribe(() => {
-      this.unitService.getUnits().then(units => {
-        if (units) {
-          this.rootUnit.units = units;
-        }
-      });
+    this.sub.add(this.unitStateService.refreshTree.subscribe(async () => {
+      const units = await this.unitService.getUnits();
+      if (units) {
+        this.rootUnit.units = units;
+      }
     }));
 
-    this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => {
-      this.activeUnit = unit;
-    }));
+    this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => this.activeUnit = unit));
 
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
       const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor.id === unit.id);
@@ -85,16 +83,15 @@ export class UnitsComponent implements OnInit, OnDestroy {
         data: units
       });
 
-      this.sub.add(dialog.afterClosed().subscribe(unitId => {
+      this.sub.add(dialog.afterClosed().subscribe(async (unitId) => {
         if (unitId) {
-          this.unitService.getUnits().then(response => {
-            if (response) {
-              this.notifications.success();
-              this.rootUnit.units = response;
-            }
-          })
-
-          this.router.navigate(['/platform', 'units', unitId]);
+          const response = await this.unitService.getUnits();
+          if (response) {
+            this.notifications.success();
+            this.rootUnit.units = response;
+          }
+          
+          await this.router.navigate(['/platform', 'units', unitId]);
         }
       }))
     })

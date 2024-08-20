@@ -7,7 +7,6 @@ import { ReassignDialogComponent } from 'src/app/platform/settings/permissions/r
 
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
-import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
@@ -32,61 +31,59 @@ export class PermissionsComponent {
 
   constructor(public userSession: UserSessionService,
               private permissionService: PermissionService,
-              private selectService: SelectService,
               private notificationService: NotificationService,
               private dialog: MatDialog,
               private t: TranslatePipe) {}
 
-  fetchItems(): void {
-    this.permissionService.getPermissions(this.dataTable.criteria).then(response => {
-      this.dataTable.setItems(response);
-    });
+  async fetchItems(): Promise<void> {
+    const response = await this.permissionService.getPermissions(this.dataTable.criteria);
+    this.dataTable.setItems(response);
   }
 
-  deleteItem(permission: PermissionModel): void {
+  async deleteItem(permission: PermissionModel): Promise<void> {
     if (permission.userCount > 0) {
-      this.reassignPermission(permission.id, permission.userCount);
+      await this.reassignPermission(permission._id, permission.userCount);
       return;
     }
 
-    this.notificationService.warning().then(confirmation => {
-      if (confirmation.value) {
-        this.deletePermission(permission.id);
-      }
-    });
+    const confirmation = await this.notificationService.warning();
+    if (confirmation.value) {
+      await this.deletePermission(permission._id);
+    }
   }
 
-  reassignPermission(permissionId: number, userCount: number): void {
-    this.selectService.select('permission').then(permissions => {
-      permissions = permissions.filter(permission => permission.id !== permissionId);
+  async reassignPermission(permissionId: string, userCount: number): Promise<void> {
+    const permissions = await this.permissionService.selectPermissions();
+    
+    // Filter out the permission that is being deleted
+    
+    const filteredPermissions = permissions.filter(permission => permission._id !== permissionId);
 
-      if (permissions.length === 0) {
-        const msg = this.t.transform('create_delete_permission_s');
-        this.notificationService.error(msg);
-        return;
-      }
+    if (filteredPermissions.length === 0) {
+      const msg = this.t.transform('create_delete_permission_s');
+      this.notificationService.error(msg);
+      return;
+    }
 
-      const dialog = this.dialog.open(ReassignDialogComponent, {
-        data: { permissions, userCount },
-        width: '500px',
-        panelClass: 'no-overflow'
-      });
-
-      this.sub.add(dialog.afterClosed().subscribe(newPermissionId => {
-        if (newPermissionId) {
-          this.deletePermission(permissionId, newPermissionId);
-        }
-      }));
+    const dialog = this.dialog.open(ReassignDialogComponent, {
+      data: { permissions: filteredPermissions, userCount },
+      width: '500px',
+      panelClass: 'no-overflow'
     });
+
+    this.sub.add(dialog.afterClosed().subscribe(newPermissionId => {
+      if (newPermissionId) {
+        this.deletePermission(permissionId, newPermissionId);
+      }
+    }));
   }
 
-  private deletePermission(permissionId: number, newPermissionId?: number): void {
-    this.permissionService.deletePermission(permissionId, newPermissionId).then(response => {
-      if (response) {
-        this.notificationService.success();
-        this.fetchItems();
-      }
-    });
+  private async deletePermission(permissionId: string, newPermissionId?: string): Promise<void> {
+    const response = await this.permissionService.deletePermission(permissionId, newPermissionId);
+    if (response) {
+      this.notificationService.success();
+      await this.fetchItems();
+    }
   }
 
   ngOnDestroy(): void {

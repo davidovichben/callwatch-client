@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { UserModel } from 'src/app/_shared/models/user.model';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable()
 export class UserSessionService {
@@ -13,8 +14,13 @@ export class UserSessionService {
     return !!sessionStorage.getItem('user');
   }
 
-  setUser(user: UserModel): void {
-    sessionStorage.setItem('user', JSON.stringify(user));
+  setUser(token: string): void {
+    
+    console.log(jwtDecode(token));
+    console.log(JSON.stringify(jwtDecode(token)));
+    
+    sessionStorage.setItem('token', token)
+    sessionStorage.setItem('user', JSON.stringify(jwtDecode(token)));
     this.loginChange.next(true);
   }
 
@@ -49,20 +55,9 @@ export class UserSessionService {
   }
 
   getToken(): string {
-    if (sessionStorage.getItem('user')) {
-      return JSON.parse(sessionStorage.getItem('user')).token;
-    }
-
-    return null;
+    return sessionStorage.getItem('token');
   }
-
-  setPermissions(permissions: any): void {
-    const user = this.getUser();
-    user.permissions = permissions;
-
-    this.setUser(user);
-  }
-
+  
   setOrganization(organizationName: string): void {
     const user = this.getUser();
     user.organization = organizationName;

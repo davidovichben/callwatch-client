@@ -7,9 +7,7 @@ import { Subscription } from 'rxjs';
 import { ReassignDialogComponent } from 'src/app/platform/settings/permissions/reassign-dialog/reassign-dialog.component';
 
 import { PermissionService } from 'src/app/_shared/services/http/permission.service';
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
-import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
@@ -37,8 +35,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private router: Router,
               private fb: UntypedFormBuilder, private permissionService: PermissionService,
-              private genericService: GenericService, public userSession: UserSessionService,
-              private selectService: SelectService, private notificationService: NotificationService,
+              public userSession: UserSessionService, private notificationService: NotificationService,
               private t: TranslatePipe, private dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -54,7 +51,7 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
         this.formGroup.get('name').patchValue(this.permission.name);
         this.formGroup.get('description').patchValue(this.permission.description);
         this.permission.modules.forEach(module => {
-          const index = this.formGroup.get('modules').value.findIndex(groupModule => groupModule.name === module.name);
+          const index = this.formGroup.get('modules').value.findIndex((groupModule: { name: string; }) => groupModule.name === module.name);
           if (!isNaN(index)) {
             (this.formGroup.get('modules') as UntypedFormArray).at(index).patchValue(module);
           }
@@ -115,66 +112,64 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  confirmDeletePermission(): void {
+  async confirmDeletePermission(): Promise<void> {
     if (this.permission.userCount > 0) {
       this.reassignPermission();
       return;
     }
 
-    this.notificationService.warning().then(confirmation => {
-      if (confirmation.value) {
-        this.deletePermission();
-      }
-    });
-  }
-
-  private reassignPermission(): void {
-    this.selectService.select('permission').then(permissions => {
-      permissions = permissions.filter(permission => permission.id !== this.permission.id);
-
-      if (permissions.length === 0) {
-        const msg = this.t.transform('create_delete_permission_s');
-        this.notificationService.error(msg);
-        return;
-      }
-
-      const dialog = this.dialog.open(ReassignDialogComponent, {
-        data: { permissions, userCount: this.permission.userCount },
-        width: '500px',
-        panelClass: 'no-overflow'
-      });
-
-      this.sub.add(dialog.afterClosed().subscribe(newPermissionId => {
-        if (newPermissionId) {
-          this.deletePermission(newPermissionId);
-        }
-      }));
-    });
-  }
-
-  private deletePermission(newPermissionId?): void {
-    this.permissionService.deletePermission(this.permission.id, newPermissionId).then(response => {
-      if (response) {
-        this.notificationService.success();
-        this.router.navigate(['/platform', 'settings', 'permissions']);
-      }
-    });
-  }
-
-  submit(): void {
-    if (this.formGroup.valid && !this.isSubmitting) {
-      this.isSubmitting = true;
-
-      if (this.permission) {
-        this.permissionService.updatePermission(this.permission.id, this.formGroup.getRawValue()).then(response => {
-          this.handleSubmitResponse(response);
-        })
-      } else {
-        this.permissionService.newPermission(this.formGroup.getRawValue()).then(response => {
-          this.handleSubmitResponse(response);
-        })
-      }
+    const confirmation = await this.notificationService.warning();
+    if (confirmation.value) {
+      await this.deletePermission();
     }
+  }
+
+  private async reassignPermission(): Promise<void> {
+    const permissions = await this.permissionService.selectPermissions();
+    const filteredPermissions = permissions.filter(permission => permission._id !== this.permission._id);
+
+    if (filteredPermissions.length === 0) {
+      const msg = this.t.transform('create_delete_permission_s');
+      this.notificationService.error(msg);
+      return;
+    }
+
+    const dialog = this.dialog.open(ReassignDialogComponent, {
+      data: { permissions: filteredPermissions, userCount: this.permission.userCount },
+      width: '500px',
+      panelClass: 'no-overflow'
+    });
+
+    this.sub.add(dialog.afterClosed().subscribe(async (newPermissionId) => {
+      if (newPermissionId) {
+        await this.deletePermission(newPermissionId);
+      }
+    }));
+  }
+
+  private async deletePermission(newPermissionId?: string): Promise<void> {
+    const response = await this.permissionService.deletePermission(this.permission._id, newPermissionId);
+    if (response) {
+      this.notificationService.success();
+      await this.router.navigate(['/platform', 'settings', 'permissions']);
+    }
+  }
+
+  async submit(): Promise<void> {
+    if (!this.formGroup.valid || this.isSubmitting) {
+      return;
+    }
+    
+    this.isSubmitting = true;
+
+    let response;
+    if (this.permission) {
+      response = await this.permissionService.updatePermission(this.permission._id, this.formGroup.getRawValue());
+    } else {
+      response = await this.permissionService.newPermission(this.formGroup.getRawValue());
+    }
+    
+    this.handleSubmitResponse(response);
   }
 
   private handleSubmitResponse(response: boolean): void {
@@ -185,14 +180,13 @@ export class FormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private checkExists(control: UntypedFormControl): Promise<{ exists: boolean }> {
-    return this.genericService.exists('permission', control.value, this.permission?.id).then(response => {
-      if (response) {
-        return response.exists ? { exists: true } : null;
-      }
+  private async checkExists(control: UntypedFormControl): Promise<{ exists: boolean }> {
+    const response = await this.permissionService.permissionExists(control.value, this.permission?._id);
+    if (response) {
+      return response.exists ? { exists: true } : null;
+    }
 
-      return null;
-    })
+    return null;
   }
 
   ngOnDestroy() {

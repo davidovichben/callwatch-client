@@ -1,141 +1,141 @@
-<div [formGroup]="routerForm">
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'router_name' | t }}</mat-label>
-        <input matInput type="text" formControlName="name" required>
-        <mat-error *ngIf="routerForm.get('name').errors?.required">{{ errorMessages.required | t }}</mat-error>
-        <mat-error *ngIf="routerForm.get('name').errors?.exists">{{ 'router_name_exists' | t }}</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3">
-      <app-tags-input [placeholder]="'tags' | t" [type]="'router'" formControlName="tags"></app-tags-input>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <div class="col-12 col-lg-6">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'description' | t }}</mat-label>
-        <textarea rows="8" matInput formControlName="description"></textarea>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'schedule' | t }}</mat-label>
-        <mat-select formControlName="schedule">
-          <mat-option *ngFor="let schedule of formService.schedules" [value]="schedule.id">{{ schedule.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row" formArrayName="dialedNumbers" *ngFor="let control of routerForm.get('dialedNumbers')['controls']; let index = index">
-    <ng-container [formGroupName]="index">
-      <div class="col-12 col-lg-3">
-        <app-chips-input formControlName="numbers" [rules]="{ pattern: '[0-9]', 'length': 15 }" [placeholder]="'dialed_numbers' | t" (ngModelChange)="numbersChange($event, index)"></app-chips-input>
-        <p class="alert alert-danger mb-0 d-block" [@fade]="routerForm.get('dialedNumbers.' + index).errors ? 'active' : 'inactive'">
-          <ng-container *ngIf="routerForm.get('dialedNumbers.' + index).errors?.exists">{{ 'router_dial_numbers_exist' | t }}</ng-container>
-          <ng-container *ngIf="routerForm.get('dialedNumbers.' + index).errors?.formExists">{{ 'router_form_dial_numbers_exist' | t }}</ng-container>
-        </p>
-      </div>
-      <div class="col-12 col-lg-3">
-        <mat-form-field class="w-100">
-          <mat-label>{{ 'select_language' | t }}</mat-label>
-          <mat-select formControlName="language" (ngModelChange)="setDisabledLanguages()" [required]="routerForm.get('dialedNumbers.' + index + '.numbers').value && routerForm.get('dialedNumbers.' + index + '.numbers').value?.length > 0">
-            <mat-option *ngFor="let language of formService.languages" [value]="language.id" [disabled]="!!language.disabled">{{ language.name }}</mat-option>
-          </mat-select>
-          <mat-error>{{ errorMessages.required | t }}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="pt-2 col-12 col-lg-3">
-        <button mat-flat-button class="light-green-btn" (click)="formService.addDialNumberGroup()" *ngIf="index === 0 && routerForm.get('dialedNumbers')['controls'].length < formService.languages.length">
-          <mat-icon>add</mat-icon>
-        </button>
-        <mat-icon (click)="removeDialedNumbersGroup(index)" class="dark-grey-text" *ngIf="index > 0">delete</mat-icon>
-      </div>
-    </ng-container>
-  </div>
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'router_admin_code' | t }}</mat-label>
-        <input matInput type="text" formControlName="adminCode">
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'default_selection_seconds' | t }}</mat-label>
-        <input matInput type="text" formControlName="defaultSelectionDuration">
-        <mat-error>{{ errorMessages.number | t }}</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="mb-3">
-    <mat-checkbox formControlName="irregularTimingEnabled">{{ 'irregular_timing' | t }}</mat-checkbox>
-  </div>
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'active' | t }}</mat-label>
-        <mat-select formControlName="irregularTimingActive">
-          <mat-option [value]="true">{{ 'active' | t }}</mat-option>
-          <mat-option [value]="false">{{ 'inactive' | t }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'from' | t }}</mat-label>
-        <input matInput formControlName="irregularTimingFrom" [ngxMatDatetimePicker]="fromDatePicker" required>
-        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #fromDatePicker></ngx-mat-datetime-picker>
-        <mat-error>{{ errorMessages.required | t }}</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'until' | t }}</mat-label>
-        <input matInput formControlName="irregularTimingTo" [ngxMatDatetimePicker]="toDatePicker" required>
-        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker [showSeconds]="false" #toDatePicker></ngx-mat-datetime-picker>
-        <mat-error *ngIf="routerForm.get('irregularTimingTo').errors?.required">{{ errorMessages.required | t }}</mat-error>
-        <mat-error *ngIf="routerForm.get('irregularTimingTo').errors?.range">{{ errorMessages.dateRange | t }}</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="mb-3">
-    <mat-checkbox formControlName="vipEnabled">{{ 'router_vip_bypass' | t }}</mat-checkbox>
-  </div>
-  <div class="row mb-3">
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'router_vip_destination' | t }}</mat-label>
-        <input matInput type="text" formControlName="vipDestination">
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="mb-3">
-    <mat-checkbox formControlName="waitingRouterEnabled">{{ 'waiting_router' | t }}</mat-checkbox>
-  </div>
-  <div class="row">
-    <div class="col-12 col-lg-3 mt-3">
-      <mat-checkbox formControlName="queuePositionReading">{{ 'queue_position_reading' | t }}</mat-checkbox>
-    </div>
-    <div class="col-12 col-lg-3">
-      <mat-form-field class="w-100">
-        <mat-label>{{ 'queue_waiting_seconds' | t }}</mat-label>
-        <input matInput type="text" formControlName="queueWaitingTime">
-        <mat-error>{{ errorMessages.number | t }}</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="col-12 col-lg-3">
-      <app-audio-input class="w-100"
-        [placeholder]="'router_queue_file' | t"
-        [fileTypes]="['wav']"
-        [inputFile]="audioFile"
-        (fileChange)="setFile($event)">
-      </app-audio-input>
-    </div>
-  </div>
-</div>
+<!--<div [formGroup]="routerForm">-->
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'router_name' | t }}</mat-label>-->
+<!--        <input matInput type="text" formControlName="name" required>-->
+<!--        <mat-error *ngIf="routerForm.get('name').errors?.required">{{ errorMessages.required | t }}</mat-error>-->
+<!--        <mat-error *ngIf="routerForm.get('name').errors?.exists">{{ 'router_name_exists' | t }}</mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <app-tags-input [placeholder]="'tags' | t" [type]="'router'" formControlName="tags"></app-tags-input>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-12 col-lg-6">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'description' | t }}</mat-label>-->
+<!--        <textarea rows="8" matInput formControlName="description"></textarea>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'schedule' | t }}</mat-label>-->
+<!--        <mat-select formControlName="schedule">-->
+<!--          <mat-option *ngFor="let schedule of formService.schedules" [value]="schedule.id">{{ schedule.name }}</mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="row" formArrayName="dialedNumbers" *ngFor="let control of routerForm.get('dialedNumbers')['controls']; let index = index">-->
+<!--    <ng-container [formGroupName]="index">-->
+<!--      <div class="col-12 col-lg-3">-->
+<!--        <app-chips-input formControlName="numbers" [rules]="{ pattern: '[0-9]', 'length': 15 }" [placeholder]="'dialed_numbers' | t" (ngModelChange)="numbersChange($event, index)"></app-chips-input>-->
+<!--        <p class="alert alert-danger mb-0 d-block" [@fade]="routerForm.get('dialedNumbers.' + index).errors ? 'active' : 'inactive'">-->
+<!--          <ng-container *ngIf="routerForm.get('dialedNumbers.' + index).errors?.exists">{{ 'router_dial_numbers_exist' | t }}</ng-container>-->
+<!--          <ng-container *ngIf="routerForm.get('dialedNumbers.' + index).errors?.formExists">{{ 'router_form_dial_numbers_exist' | t }}</ng-container>-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div class="col-12 col-lg-3">-->
+<!--        <mat-form-field class="w-100">-->
+<!--          <mat-label>{{ 'select_language' | t }}</mat-label>-->
+<!--          <mat-select formControlName="language" (ngModelChange)="setDisabledLanguages()" [required]="routerForm.get('dialedNumbers.' + index + '.numbers').value && routerForm.get('dialedNumbers.' + index + '.numbers').value?.length > 0">-->
+<!--            <mat-option *ngFor="let language of formService.languages" [value]="language.id" [disabled]="!!language.disabled">{{ language.name }}</mat-option>-->
+<!--          </mat-select>-->
+<!--          <mat-error>{{ errorMessages.required | t }}</mat-error>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="pt-2 col-12 col-lg-3">-->
+<!--        <button mat-flat-button class="light-green-btn" (click)="formService.addDialNumberGroup()" *ngIf="index === 0 && routerForm.get('dialedNumbers')['controls'].length < formService.languages.length">-->
+<!--          <mat-icon>add</mat-icon>-->
+<!--        </button>-->
+<!--        <mat-icon (click)="removeDialedNumbersGroup(index)" class="dark-grey-text" *ngIf="index > 0">delete</mat-icon>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--  </div>-->
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'router_admin_code' | t }}</mat-label>-->
+<!--        <input matInput type="text" formControlName="adminCode">-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'default_selection_seconds' | t }}</mat-label>-->
+<!--        <input matInput type="text" formControlName="defaultSelectionDuration">-->
+<!--        <mat-error>{{ errorMessages.number | t }}</mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="mb-3">-->
+<!--    <mat-checkbox formControlName="irregularTimingEnabled">{{ 'irregular_timing' | t }}</mat-checkbox>-->
+<!--  </div>-->
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'active' | t }}</mat-label>-->
+<!--        <mat-select formControlName="irregularTimingActive">-->
+<!--          <mat-option [value]="true">{{ 'active' | t }}</mat-option>-->
+<!--          <mat-option [value]="false">{{ 'inactive' | t }}</mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'from' | t }}</mat-label>-->
+<!--        <input matInput formControlName="irregularTimingFrom" [ngxMatDatetimePicker]="fromDatePicker" required>-->
+<!--        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>-->
+<!--        <ngx-mat-datetime-picker #fromDatePicker></ngx-mat-datetime-picker>-->
+<!--        <mat-error>{{ errorMessages.required | t }}</mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'until' | t }}</mat-label>-->
+<!--        <input matInput formControlName="irregularTimingTo" [ngxMatDatetimePicker]="toDatePicker" required>-->
+<!--        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>-->
+<!--        <ngx-mat-datetime-picker [showSeconds]="false" #toDatePicker></ngx-mat-datetime-picker>-->
+<!--        <mat-error *ngIf="routerForm.get('irregularTimingTo').errors?.required">{{ errorMessages.required | t }}</mat-error>-->
+<!--        <mat-error *ngIf="routerForm.get('irregularTimingTo').errors?.range">{{ errorMessages.dateRange | t }}</mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="mb-3">-->
+<!--    <mat-checkbox formControlName="vipEnabled">{{ 'router_vip_bypass' | t }}</mat-checkbox>-->
+<!--  </div>-->
+<!--  <div class="row mb-3">-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'router_vip_destination' | t }}</mat-label>-->
+<!--        <input matInput type="text" formControlName="vipDestination">-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="mb-3">-->
+<!--    <mat-checkbox formControlName="waitingRouterEnabled">{{ 'waiting_router' | t }}</mat-checkbox>-->
+<!--  </div>-->
+<!--  <div class="row">-->
+<!--    <div class="col-12 col-lg-3 mt-3">-->
+<!--      <mat-checkbox formControlName="queuePositionReading">{{ 'queue_position_reading' | t }}</mat-checkbox>-->
+<!--    </div>-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <mat-form-field class="w-100">-->
+<!--        <mat-label>{{ 'queue_waiting_seconds' | t }}</mat-label>-->
+<!--        <input matInput type="text" formControlName="queueWaitingTime">-->
+<!--        <mat-error>{{ errorMessages.number | t }}</mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="col-12 col-lg-3">-->
+<!--      <app-audio-input class="w-100"-->
+<!--        [placeholder]="'router_queue_file' | t"-->
+<!--        [fileTypes]="['wav']"-->
+<!--        [inputFile]="audioFile"-->
+<!--        (fileChange)="setFile($event)">-->
+<!--      </app-audio-input>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

@@ -31,8 +31,8 @@ export class HistoricalComponent implements OnInit {
     this.setActiveModule(this.modules[0]);
   }
 
-  setActiveModule(module: SelectItemModel): void {
-    if (this.activeModule && this.activeModule.id === module.id) {
+  async setActiveModule(module: SelectItemModel): Promise<void> {
+    if (this.activeModule && this.activeModule._id === module._id) {
       return;
     }
 
@@ -40,15 +40,14 @@ export class HistoricalComponent implements OnInit {
 
     this.activeModule = module;
 
-    this.reportService.getReportTemplatesByModule(module.id).then(response => {
-      this.isLoadingReports = false;
+    const response = await this.reportService.getReportTemplatesByModule(module._id);
+    this.isLoadingReports = false;
 
-      this.reportTemplates = response;
+    this.reportTemplates = response;
 
-      if (this.reportTemplates.length > 0 && !this.activeReport) {
-        this.setActiveReport(this.reportTemplates[0]);
-      }
-    })
+    if (this.reportTemplates.length > 0 && !this.activeReport) {
+      this.setActiveReport(this.reportTemplates[0]);
+    }
   }
 
   setActiveReport(reportTemplate: ReportTemplateModel): void {

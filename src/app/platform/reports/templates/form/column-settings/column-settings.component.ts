@@ -130,7 +130,7 @@ export class ColumnSettingsComponent {
       operators.push(this.fb.control('+'));
     }
 
-    columns.push(this.fb.control(column.id));
+    columns.push(this.fb.control(column._id));
   }
 
   removeColumn(index: number): void {
