@@ -11,6 +11,6 @@ export class UserResolve  {
   constructor(private userService: UserService) {}
 
   resolve(snapshot: ActivatedRouteSnapshot) {
-    return this.userService.getUser(+snapshot.params.id).then(response => response as UserModel);
+    return this.userService.getUser(snapshot.params.id).then(response => response as UserModel);
   }
 }

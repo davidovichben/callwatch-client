@@ -1,0 +1,20 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div class="form-header">
+    <p class="h1">{{ mailbox ? ('edit_mailbox' | t) : ('add_mailbox' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn grey-btn" [routerLink]="['/platform', 'settings', 'mailboxes']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn blue-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <mat-form-field>
+          <mat-label>{{ 'mailbox_name' | t }}</mat-label>
+          <input matInput type="text" formControlName="name" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</form>

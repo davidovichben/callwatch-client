@@ -17,13 +17,8 @@ export const PlatformModules = [
     icon: 'settings',
     subModules: [
       { name: 'permissions' },
-      { name: 'schedules', permission: 'schedules' },
-      { name: 'uniqueDays', permission: 'schedules', label: 'unique_days' },
-      { name: 'switchboards', permission: 'switchboards' },
-      { name: 'callbacks', permission: 'calls'  },
-      { name: 'routers', permission: 'routers' },
-      { name: 'acds', permission: 'switchboards' },
-      { name: 'extensions', permission: 'switchboards' }
+      { name: 'mailServers', label: 'mail_servers', permission: 'mailServers' },
+      { name: 'mailboxes', permission: 'mailServers' }
     ]
   },
   { name: 'auditTrail', label: 'audit_trail', icon: 'library_books', isOpen: true },
@@ -36,6 +31,5 @@ export const AdminModules = [
 
 export const UnitModules = [
   { name: 'general', label: 'general' },
-  { name: 'users', label: 'users' },
-  { name: 'groups', label: 'groups_extensions' }
+  { name: 'users', label: 'users' }
 ];

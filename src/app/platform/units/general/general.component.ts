@@ -46,7 +46,7 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
 
       this.unit = route.snapshot.data.unit;
       this.units = route.snapshot.data.units;
-      this.isRootUnit = this.unit.id === 'root';
+      this.isRootUnit = this.unit._id === 'root';
     }));
 
     this.organizationName = this.userSession.getUser().organization;
@@ -56,65 +56,64 @@ export class GeneralComponent implements AfterViewInit, OnDestroy {
     return this.userSession.hasPermission(module, action);
   }
 
-  reassignUnit(): void {
+  async reassignUnit(): Promise<void> {
     if (this.unit.hasUnits) {
-      this.unitService.getUnits().then(units => {
-        if (units) {
-          const dialog = this.dialog.open(ReassignDialogComponent, {
-            data: { replacedUnit: this.unit, units },
-            width: '500px'
-          })
+      const units = await this.unitService.getUnits();
+      if (units) {
+        const dialog = this.dialog.open(ReassignDialogComponent, {
+          data: { replacedUnit: this.unit, units },
+          width: '500px'
+        })
 
-          this.sub.add(dialog.afterClosed().subscribe(assignedUnitId => {
-            if (assignedUnitId) {
-              this.deleteUnit(assignedUnitId);
-            }
-          }));
-        }
-      });
+        this.sub.add(dialog.afterClosed().subscribe(assignedUnitId => {
+          if (assignedUnitId) {
+            this.deleteUnit(assignedUnitId);
+          }
+        }));
+      }
     } else {
-      this.notifications.warning().then(confirmation => {
-        if (confirmation.value) {
-          this.deleteUnit();
-        }
-      })
+      const confirmation = await this.notifications.warning();
+      if (confirmation.value) {
+        await this.deleteUnit();
+      }
     }
   }
 
-  deleteUnit(assignedUnitId?: number): void {
-    this.unitService.deleteUnit(this.unit.id, assignedUnitId).then((response) => {
-      if (response) {
-        this.notifications.success();
-        this.router.navigate(['/platform', 'units', 'root']);
+  async deleteUnit(assignedUnitId?: string): Promise<void> {
+    const response = await this.unitService.deleteUnit(this.unit._id, assignedUnitId);
+    if (response) {
+      this.notifications.success();
+      await this.router.navigate(['/platform', 'units', 'root']);
+      this.unitStateService.refreshTree.next(true);
+    }
+  }
+
+  async submit(): Promise<void> {
+    if (this.isSubmitting) {
+      return;
+    }
+    
+    this.isSubmitting = true;
+    
+    const response = await this.unitService.updateUnit(this.unit._id, this.form.value);
+    if (response) {
+      this.notifications.success();
+
+      if (this.unit.name !== this.form.value.name) {
+        this.unit.name = this.form.value.name;
+        this.unitStateService.unitNameChanged.next(this.unit);
+      }
+
+      if (this.unit.parent !== this.form.value.parent) {
+        this.unit = response.resource;
+        this.unitStateService.unitTransferred.next(this.unit);
         this.unitStateService.refreshTree.next(true);
       }
-    })
-  }
 
-  submit(): void {
-    if (!this.isSubmitting) {
-      this.isSubmitting = true;
-      this.unitService.updateUnit(this.unit.id, this.form.value).then(response => {
-        if (response) {
-          this.notifications.success();
-
-          if (this.unit.name !== this.form.value.name) {
-            this.unit.name = this.form.value.name;
-            this.unitStateService.unitNameChanged.next(this.unit);
-          }
-
-          if (this.unit.parent !== this.form.value.parent) {
-            this.unit = response.resource;
-            this.unitStateService.unitTransferred.next(this.unit);
-            this.unitStateService.refreshTree.next(true);
-          }
-
-          this.form.form.markAsPristine();
-
-          this.isSubmitting = false;
-        }
-      })
+      this.form.form.markAsPristine();
     }
+    
+    this.isSubmitting = false;
   }
 
   ngOnDestroy(): void {

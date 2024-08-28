@@ -51,7 +51,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   formGroup: UntypedFormGroup;
 
-  userId: number;
+  userId: string;
 
   constructor(private fb: UntypedFormBuilder, private route: ActivatedRoute,
               private router: Router, public reportStateService: HistoricalReportsService,
@@ -73,13 +73,13 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     this.getReportCriteria();
   }
 
-  getReportCriteria(): void {
+  async getReportCriteria(): Promise<void> {
     this.reportTemplate = this.reportStateService.getReportTemplate();
 
     if (this.reportTemplate) {
       this.makeForm();
-      this.reportCriteriaService.getReportCriteria(this.reportTemplate.module, this.reportTemplate.name, this.userId)
-        .then(report => this.makeForm(report))
+      const report = await this.reportCriteriaService.getReportCriteria(this.reportTemplate.module, this.reportTemplate.name, this.userId);
+      this.makeForm(report);
     }
   }
 

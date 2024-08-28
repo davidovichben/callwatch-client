@@ -2,7 +2,7 @@
   <div class="form-header">
     <p class="h1">{{ user ? ('edit_user' | t) : ('add_user' | t) }}</p>
     <div>
-      <button mat-button type="button" class="red-btn" (click)="deleteUser()" *ngIf="user && userSession.hasPermission('users', 'delete') && user.id !== loggedUser.id">{{ 'delete' | t }}</button>
+      <button mat-button type="button" class="red-btn" (click)="deleteUser()" *ngIf="user && userSession.hasPermission('users', 'delete') && user._id !== loggedUser._id">{{ 'delete' | t }}</button>
       <button mat-button type="button" class="mx-2 grey-btn" [routerLink]="['/platform', 'users']">{{ 'cancel' | t }}</button>
       <button mat-button type="submit" class="blue-btn">{{ 'save' | t }}</button>
     </div>
@@ -92,7 +92,7 @@
             </mat-form-field>
             <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'VERIFICATION_TYPE_TIP' | t ">help</mat-icon>
           </div>
-          <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex" [@fade]="user?.id !== loggedUser?.id ? 'active' : 'inactive'">
+          <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex" [@fade]="user?._id !== loggedUser?._id ? 'active' : 'inactive'">
             <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="formGroup.get('permission').errors && form.submitted" [required]="true">
               <bd-option *ngFor="let permission of permissions" [value]="permission._id">{{ permission.name }}</bd-option>
             </bd-select>
@@ -124,7 +124,7 @@
             <mat-form-field>
               <mat-label>{{ 'system_lang_default' | t }}</mat-label>
               <mat-select formControlName="language" required>
-                <mat-option *ngFor="let language of languages" [value]="language.id">{{ language.name }}</mat-option>
+                <mat-option *ngFor="let language of languages" [value]="language._id">{{ language.name }}</mat-option>
               </mat-select>
               <mat-error>{{ errorMessages.required | t }}</mat-error>
             </mat-form-field>
@@ -132,7 +132,7 @@
           </div>
         </div>
       </section>
-      <section [@fade]="user?.id !== loggedUser?.id ? 'active' : 'inactive'">
+      <section [@fade]="user?._id !== loggedUser?._id ? 'active' : 'inactive'">
         <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
         <mat-checkbox formControlName="isRoot" *ngIf="loggedUser.permissions === 'root'">{{ 'main_user' | t }}</mat-checkbox>
         <div class="row" *ngIf="!formGroup.get('isRoot').value">

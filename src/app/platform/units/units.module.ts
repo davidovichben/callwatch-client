@@ -26,7 +26,6 @@ const routes: Routes = [
     children: [
       { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
       { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
-      { path: 'groups', loadChildren: () => import('./extensions-groups/extensions-groups.module').then(m => m.ExtensionsGroupsModule) },
       { path: '', pathMatch: 'full', redirectTo: 'general' }
     ],
     runGuardsAndResolvers: 'always',

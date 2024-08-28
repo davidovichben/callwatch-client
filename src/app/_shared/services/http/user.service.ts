@@ -26,7 +26,7 @@ export class UserService extends BaseHttpService {
       .catch(() => null);
   }
 
-  getUser(userId: number): Promise<UserModel> {
+  getUser(userId: string): Promise<UserModel> {
     return this.http.get(this.endPoint + '/' + userId, this.getTokenRequest())
       .toPromise()
       .then(response => response as UserModel)
@@ -40,7 +40,7 @@ export class UserService extends BaseHttpService {
       .catch(() => false);
   }
 
-  updateUser(userId: number, values: object): Promise<any> {
+  updateUser(userId: string, values: object): Promise<any> {
     return this.http.put(this.endPoint + '/' + userId, values, this.getTokenRequest())
       .toPromise()
       .then(response => response)
@@ -54,7 +54,7 @@ export class UserService extends BaseHttpService {
       .catch(() => false);
   }
 
-  deleteUser(userId: number): Promise<boolean> {
+  deleteUser(userId: string): Promise<boolean> {
     return this.http.delete(this.endPoint + '/' + userId, this.getTokenRequest())
       .toPromise()
       .then(() => true)

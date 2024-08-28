@@ -14,7 +14,7 @@ export class HistoricalReportsService {
 
   dates: { start: string, end: string };
 
-  userId: number;
+  userId: string;
 
   constructor(private userService: UserSessionService) {
     this.userId = this.userService.getUserId();

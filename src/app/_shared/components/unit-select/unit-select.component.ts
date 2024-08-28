@@ -11,8 +11,6 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { UnitService } from 'src/app/_shared/services/http/unit.service';
-
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { Placeholder, SlideToggle } from 'src/app/_shared/constants/animations';
@@ -37,7 +35,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   @ViewChild('widthElement') widthElement: ElementRef;
 
   @Input() units: any[] = [];
-  @Input() placeholder;
+  @Input() placeholder: any;
   @Input() ignoredUnit: UnitModel;
   @Input() multiple = false;
   @Input() toggleUp = false;
@@ -62,8 +60,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
 
   unitHeight = 50;
 
-  constructor(private elementRef: ElementRef, private unitService: UnitService,
-              private t: TranslatePipe) {}
+  constructor(private elementRef: ElementRef, private t: TranslatePipe) {}
 
   ngOnInit() {
     if (!this.placeholder) {
@@ -72,7 +69,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     }
 
     this.loadUnits();
-
+    
     if (this.multiple) {
       this.selected = [];
     }
@@ -105,7 +102,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
 
   ignoreUnit(units: UnitModel[]): void {
     units.forEach(unit => {
-      const unitToIgnore = units.find(unit => unit.id === this.ignoredUnit.id);
+      const unitToIgnore = units.find(unit => unit._id === this.ignoredUnit._id);
       if (unitToIgnore) {
         (unitToIgnore as any).ignore = true;
         return;
@@ -200,7 +197,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
 
       this.title = unit.name;
 
-      output = unit.id;
+      output = unit._id;
     }
 
     this.propagateChange(output);
@@ -226,9 +223,9 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     return unit.units.length > 0 && !hasOnlyIgnoredUnit;
   }
 
-  selectUnitById(unitId: number, units: UnitModel[]): void {
+  selectUnitById(unitId: string, units: UnitModel[]): void {
     units.forEach(unit => {
-      if (unit.id == unitId) {
+      if (unit._id == unitId) {
         this.selected = unit;
         this.title = unit.name;
         return;
@@ -319,8 +316,8 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     this.propagateChange(this.selected);
   }
 
-  private matchValues(unit: UnitModel, values: number[]): void {
-    if (values.indexOf(unit.id) !== -1) {
+  private matchValues(unit: UnitModel, values: string[]): void {
+    if (values.indexOf(unit._id) !== -1) {
       this.checkUnit(true, unit);
     }
 

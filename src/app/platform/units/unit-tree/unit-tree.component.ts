@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
@@ -26,11 +26,10 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
   @Output() loadedUnits = new EventEmitter();
 
   readonly sub = new Subscription();
-
-
-  constructor(private route: ActivatedRoute, private router: Router,
-              private notifications: NotificationService, private unitService: UnitService,
-              private unitStateService: UnitStateService, private t: TranslatePipe) {}
+  
+  constructor(private router: Router, private notifications: NotificationService,
+              private unitService: UnitService, private unitStateService: UnitStateService,
+              private t: TranslatePipe) {}
 
   ngOnInit(): void {
     this.sub.add(this.unitStateService.unitLoaded.subscribe(unit => {
@@ -49,11 +48,11 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
           return;
         }
 
-        const unit = units.find(unit => unit.id === ancestor.id);
+        const unit = units.find(unit => unit._id === ancestor._id);
         if (unit) {
           units = unit.units;
 
-          if (unit.id === changedUnit.id) {
+          if (unit._id === changedUnit._id) {
             unit.name = changedUnit.name;
           }
         }
@@ -63,16 +62,14 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     this.setActiveBranch();
   }
 
-  toggleUnit(unit: UnitModel): void {
+  async toggleUnit(unit: UnitModel): Promise<void> {
     if (unit.units || unit.toggled) {
       unit.toggled = !unit.toggled;
       return;
     }
 
-    this.unitService.getUnits(unit.id).then(response => {
-      unit.units = response;
-      unit.toggled = true;
-    });
+    unit.units = await this.unitService.getUnits(unit._id);
+    unit.toggled = true;
   }
 
   private setActiveUnit(unit?: UnitModel): void {
@@ -96,9 +93,9 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private toggleActiveBranch(ancestorId: number, branchUnit?: UnitModel): UnitModel {
+  private toggleActiveBranch(ancestorId: string, branchUnit?: UnitModel): UnitModel {
     const units = branchUnit ? branchUnit.units : this.rootUnit.units;
-    const unit = units.find(unit => unit.id === ancestorId);
+    const unit = units.find(unit => unit._id === ancestorId);
     if (unit) {
       unit.toggled = true;
       return unit;
@@ -112,7 +109,7 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.router.navigate(['/platform', 'units', unit.id]);
+    this.router.navigate(['/platform', 'units', unit._id]);
   }
 
   dragStart(event: DragEvent, unit: UnitModel): void {
@@ -133,7 +130,7 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     event.dataTransfer.setData('transferredUnit', JSON.stringify(unit));
   }
 
-  drop(event: DragEvent, destinationUnit: UnitModel): void {
+  async drop(event: DragEvent, destinationUnit: UnitModel): Promise<void> {
     event.stopPropagation();
     event.preventDefault();
 
@@ -142,36 +139,32 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     }
 
     const transferredUnit = JSON.parse(event.dataTransfer.getData('transferredUnit'));
-    if (transferredUnit.id === destinationUnit.id) {
+    if (transferredUnit.id === destinationUnit._id) {
       return;
     }
 
-    const existingUnit = destinationUnit.units && destinationUnit.units.find(unit => unit.id === transferredUnit.id);
+    const existingUnit = destinationUnit.units && destinationUnit.units.find(unit => unit._id === transferredUnit.id);
     if (existingUnit) {
       return;
     }
 
     const msg = this.t.transform('transfer_v') + ' ' + transferredUnit.name + ' ' + this.t.transform('to') + ' ' + destinationUnit.name + '?';
 
-    this.notifications.warning(msg).then(confirmation => {
-      if (confirmation.value) {
-        this.unitService.transferUnit(transferredUnit.id, destinationUnit.id).then(response => {
-          if (response) {
-            if (response.error) {
-              if (response.error.errorCode === 1) {
-                const msg = this.t.transform('unit_transfer_child_error');
-                this.notifications.error(msg);
-              }
-            } else {
-              this.unitService.getUnits().then(units => {
-                this.rootUnit.units = units;
-                this.unitStateService.unitTransferred.next(response.resource);
-              });
+    const confirmation = await this.notifications.warning(msg);
+    if (confirmation.value) {
+      const response = await this.unitService.transferUnit(transferredUnit.id, destinationUnit._id);
+        if (response) {
+          if (response.error) {
+            if (response.error.errorCode === 1) {
+              const msg = this.t.transform('unit_transfer_child_error');
+              this.notifications.error(msg);
             }
+          } else {
+            this.rootUnit.units = await this.unitService.getUnits();
+            this.unitStateService.unitTransferred.next(response.resource);
           }
-        });
-      }
-    });
+        }
+    }
   }
 
   allowDrop(event: DragEvent): void {

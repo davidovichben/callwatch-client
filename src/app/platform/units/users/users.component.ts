@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.sub.add(this.route.data.subscribe(data => {
       this.unit = this.route.parent.parent.snapshot.data.unit;
 
-      this.isRootUnit = this.unit.id === 'root';
+      this.isRootUnit = this.unit._id === 'root';
       this.isRootUser = this.userSession.isRootUser();
 
       this.users = data.users;
@@ -53,32 +53,28 @@ export class UsersComponent implements OnInit, OnDestroy {
       width: '400px',
       panelClass: 'no-overflow',
       data: {
-        unitId: this.unit.id,
+        unitId: this.unit._id,
         users: this.users
       }
     })
 
-    this.sub.add(dialog.afterClosed().subscribe(saved => {
+    this.sub.add(dialog.afterClosed().subscribe(async (saved) => {
       if (saved) {
-        this.unitUserService.getUsers(this.unit.id).then(response => {
-          this.unitUsers = response.unit;
-        });
+        const response = await this.unitUserService.getUsers(this.unit._id);
+        this.unitUsers = response.unit;
       }
     }));
   }
 
-  deleteUser(userId: number): void {
-    this.notifications.warning().then(confirmation => {
-      if (confirmation.value) {
-        this.unitUserService.deleteUser(this.unit.id, userId).then(response => {
-          if (response) {
-            this.unitUserService.getUsers(this.unit.id).then(response => {
-              this.unitUsers = response.unit;
-            });
-          }
-        })
+  async deleteUser(userId: string): Promise<void> {
+    const confirmation = await this.notifications.warning();
+    if (confirmation.value) {
+      const response = await this.unitUserService.deleteUser(this.unit._id, userId);
+      if (response) {
+        const users = await this.unitUserService.getUsers(this.unit._id);
+        this.unitUsers = users.unit;
       }
-    });
+    }
   }
 
   ngOnDestroy() {

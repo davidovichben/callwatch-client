@@ -37,7 +37,7 @@ export class UserSessionService {
     return null;
   }
 
-  getUserId(): any {
+  getUserId(): string {
     const user = this.getUser();
     if (this.getUser()) {
       return user.id;

@@ -22,7 +22,7 @@ import { UnitModules } from 'src/app/_shared/constants/modules';
 export class UnitsComponent implements OnInit, OnDestroy {
 
   readonly rootUnit = {
-    id: 'root',
+    _id: 'root',
     name: '',
     units: []
   }
@@ -47,7 +47,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
     
     this.sub.add(this.route.params.subscribe(() => {
       this.activeUnit = this.route.snapshot.data.unit;
-      this.modules = this.activeUnit.id === 'root' ? UnitModules.slice(0, 2) : UnitModules;
+      this.modules = this.activeUnit._id === 'root' ? UnitModules.slice(0, 2) : UnitModules;
       this.unitStateService.unitLoaded.next(this.activeUnit);
     }));
 
@@ -61,7 +61,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
     this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => this.activeUnit = unit));
 
     this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
-      const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor.id === unit.id);
+      const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor._id === unit._id);
       if (activeUnit) {
         activeUnit.name = unit.name;
       }
@@ -73,7 +73,7 @@ export class UnitsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.router.navigate(['/platform', 'units', ancestor.id]);
+    this.router.navigate(['/platform', 'units', ancestor._id]);
   }
 
   openFormDialog(): void {

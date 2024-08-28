@@ -27,8 +27,8 @@ export class HistoricalComponent implements OnInit {
               private reportStateService: HistoricalReportsService) {}
 
   ngOnInit(): void {
-    this.modules = this.route.snapshot.data.modules;
-    this.setActiveModule(this.modules[0]);
+    // this.modules = this.route.snapshot.data.modules;
+    // this.setActiveModule(this.modules[0]);
   }
 
   async setActiveModule(module: SelectItemModel): Promise<void> {

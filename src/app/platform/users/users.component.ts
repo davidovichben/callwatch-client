@@ -65,16 +65,14 @@ export class UsersComponent implements OnInit {
     this.dataTable.openMultipleEditDialog(MultipleEditComponent, data)
   }
 
-  deleteItem(userId: number): void {
-    this.notificationService.warning().then(confirmation => {
-      if (confirmation.value) {
-        this.userService.deleteUser(userId).then(response => {
-          if (response) {
-            this.notificationService.success();
-            this.fetchItems();
-          }
-        });
+  async deleteItem(userId: string): Promise<void> {
+    const confirmation = await this.notificationService.warning();
+    if (confirmation.value) {
+      const response = await this.userService.deleteUser(userId);
+      if (response) {
+        this.notificationService.success();
+        this.fetchItems();
       }
-    });
+    }
   }
 }

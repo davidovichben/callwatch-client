@@ -19,7 +19,7 @@ const routes: Routes = [
     path: '',
     component: HistoricalComponent,
     children: [
-      { path: '', redirectTo: 'criteria' },
+      { path: '', redirectTo: 'criteria', pathMatch: 'full' },
       { path: 'criteria', loadChildren: () => import('./criteria/criteria.module').then(m => m.CriteriaModule) },
       { path: 'results', loadChildren: () => import('./results/results.module').then(m => m.ResultsModule) }
     ],

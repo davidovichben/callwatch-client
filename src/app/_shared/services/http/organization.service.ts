@@ -27,7 +27,7 @@ export class OrganizationService extends BaseHttpService {
       .catch(() => null);
   }
 
-  getOrganization(organizationId: number): Promise<OrganizationModel> {
+  getOrganization(organizationId: string): Promise<OrganizationModel> {
     return this.http.get(this.endPoint + '/' + organizationId, this.getTokenRequest())
       .toPromise()
       .then(response => response as OrganizationModel)
@@ -41,14 +41,14 @@ export class OrganizationService extends BaseHttpService {
       .catch(() => false);
   }
 
-  updateOrganization(organizationId: number, values: object): Promise<boolean> {
+  updateOrganization(organizationId: string, values: object): Promise<boolean> {
     return this.http.put(this.endPoint + '/' + organizationId, values, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);
   }
 
-  enterOrganization(organizationId: number): Promise<boolean> {
+  enterOrganization(organizationId: string): Promise<boolean> {
     return this.http.put(this.endPoint + '/' + organizationId + '/enter', {}, this.getTokenRequest())
       .toPromise()
       .then(() => true)

@@ -166,29 +166,29 @@ export class FormComponent implements OnInit, OnDestroy {
       }
 
       if (this.user) {
-        this.userService.updateUser(this.user.id, values).then(response => this.handleServerResponse(response));
+        this.userService.updateUser(this.user._id, values).then(response => this.handleServerResponse(response));
       } else {
         this.userService.newUser(values).then(response => this.handleServerResponse(response));
       }
     }
   }
 
-  deleteUser(): void {
+  async deleteUser(): Promise<void> {
     const msg = this.t.transform('delete_user') + '?';
-    this.notifications.warning(msg).then(confirmation => {
-      if (confirmation.value && !this.isSubmitting) {
-        this.isSubmitting = true;
-
-        this.userService.deleteUser(this.user.id).then(response => {
-          this.handleServerResponse(response);
-        });
-      }
-    })
+    const confirmation = await this.notifications.warning(msg);
+    
+    if (confirmation.value && !this.isSubmitting) {
+      this.isSubmitting = true;
+      
+      const response = await this.userService.deleteUser(this.user._id);
+      
+      this.handleServerResponse(response);
+    }
   }
 
   private handleServerResponse(response: any): void {
     if (response) {
-      if (this.user && this.user.id === this.userSession.getUserId()) {
+      if (this.user && this.user._id === this.userSession.getUserId()) {
         this.userSession.updateUser('avatar', response.resource.avatar);
       }
 

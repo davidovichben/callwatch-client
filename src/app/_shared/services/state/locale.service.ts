@@ -11,7 +11,7 @@ export class LocaleService {
   activeLocale: string;
   dir: 'rtl' | 'ltr';
 
-  userId: number;
+  userId: string;
 
   localeChanged: Subject<string> = new Subject();
   translationLoaded: Subject<boolean> = new Subject();

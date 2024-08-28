@@ -10,7 +10,7 @@
 </div>
 <div id="main">
   <div class="my-5 breadcrumbs">
-    <a (click)="breadcrumbClicked(rootUnit)" [ngClass]="{ active: activeUnit.id === 'root' }">{{ rootUnit.name }}</a>
+    <a (click)="breadcrumbClicked(rootUnit)" [ngClass]="{ active: activeUnit._id === 'root' }">{{ rootUnit.name }}</a>
     <ng-container *ngFor="let ancestor of activeUnit.ancestors; let first = first; let last = last">
       <mat-icon class="side-chevron" *ngIf="first">chevron_left</mat-icon>
       <a (click)="breadcrumbClicked(ancestor)" [ngClass]="{ active: last, disabled: ancestor.disabled }">{{ ancestor.name }}</a>
@@ -18,7 +18,7 @@
     </ng-container>
   </div>
   <div class="tabs">
-    <a class="tab" [routerLink]="['/platform', 'units', activeUnit.id, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>
+    <a class="tab" [routerLink]="['/platform', 'units', activeUnit._id, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>
   </div>
   <div>
     <router-outlet></router-outlet>

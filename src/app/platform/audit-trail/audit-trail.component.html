@@ -1,19 +1,19 @@
 <div class="mb-3">
   <h1>{{ 'audit_trail' | t }}</h1>
 </div>
-<app-data-table [columns]="columns" [hasActionsHeader]="false" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+<app-data-table [columns]="columns" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
   <tr *ngFor="let item of dataTable.items">
     <td>{{ item.created }}</td>
     <td class="flex-grow-1">
       <span class="bold">{{ item.username }} </span>
-      <span>{{ ('audit_trail_' + item.action) | t }}</span>
+      <span>{{ ('audit_trail_' + item.actionName) | t }}</span>
       <span *ngIf="item.resourceType">{{ item.resourceType | t }} </span>
-      <a class="bold pointer" *ngIf="item.resourceType && item.action !== 'delete'" (click)="navigateToResource(item)">{{ item.resourceName | t }}</a>
-      <span class="bold" *ngIf="item.resourceType && item.action === 'delete'">{{ item.resourceName | t }}</span>
+      <a class="bold pointer" *ngIf="item.resourceType && item.actionName !== 'delete'" (click)="navigateToResource(item)">{{ item.resourceName | t }}</a>
+      <span class="bold" *ngIf="item.resourceType && item.actionName === 'delete'">{{ item.resourceName | t }}</span>
     </td>
-    <td>{{ item.ip }}</td>
+    <td>{{ item.ipAddress }}</td>
     <td>
-      <mat-icon (click)="openChangesDialog(item.id)" class="pointer link" *ngIf="item.action === 'update'">library_books</mat-icon>
+      <mat-icon (click)="openChangesDialog(item.id)" class="pointer link" *ngIf="item.actionName === 'update'">library_books</mat-icon>
     </td>
   </tr>
 </app-data-table>

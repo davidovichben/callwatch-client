@@ -9,7 +9,7 @@
                 [hasCheckColumn]="userSession.hasPermission('users', 'update') && dataTable.hasItems" (openMultipleEdit)="openMultipleEdit()">
   <div class="data-table-filters">
     <bd-select [(ngModel)]="dataTable.criteria.filters['permissionId']" (ngModelChange)="dataTable.criteriaChange()" [placeholder]="'select_permission' | t">
-      <bd-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</bd-option>
+      <bd-option *ngFor="let permission of permissions" [value]="permission._id">{{ permission.name }}</bd-option>
     </bd-select>
   </div>
   <tr *ngFor="let item of dataTable.items">

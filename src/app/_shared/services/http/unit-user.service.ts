@@ -13,21 +13,21 @@ export class UnitUserService extends BaseHttpService {
     super(userSession);
   }
 
-  getUsers(unitId: number): Promise<any> {
+  getUsers(unitId: string): Promise<any> {
     return this.http.get(this.endPoint + '/' + unitId + '/user', this.getTokenRequest())
       .toPromise()
       .then(response => response as any)
       .catch(() => null);
   }
 
-  newUser(unitId: number, user: number): Promise<any> {
+  newUser(unitId: string, user: string): Promise<any> {
     return this.http.post(this.endPoint + '/' + unitId + '/user', { user }, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(response => response);
   }
 
-  deleteUser(unitId: number, user: number): Promise<boolean> {
+  deleteUser(unitId: string, user: string): Promise<boolean> {
     return this.http.delete(this.endPoint + '/' + unitId + '/user', this.getTokenRequest({ user }))
       .toPromise()
       .then(() => true)

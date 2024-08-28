@@ -17,7 +17,7 @@ export class UnitService extends BaseHttpService {
     super(userSession);
   }
 
-  getUnits(unitId?: number): Promise<UnitModel[]> {
+  getUnits(unitId?: string): Promise<UnitModel[]> {
     const params = {};
     if (unitId) {
       Object.assign(params, { unitId });
@@ -29,7 +29,7 @@ export class UnitService extends BaseHttpService {
       .catch(() => []);
   }
 
-  getUnit(unitId: number | 'root'): Promise<UnitModel> {
+  getUnit(unitId: string | 'root'): Promise<UnitModel> {
     return this.http.get(this.endPoint + '/' + unitId, this.getTokenRequest())
       .toPromise()
       .then(response => response as UnitModel)
@@ -43,14 +43,14 @@ export class UnitService extends BaseHttpService {
       .catch(() => false);
   }
 
-  updateUnit(unitId: number, values: object): Promise<ResponseData> {
+  updateUnit(unitId: string, values: object): Promise<ResponseData> {
     return this.http.put(this.endPoint + '/' + unitId, values, this.getTokenRequest(null, true))
       .toPromise()
       .then(response => response as ResponseData)
       .catch(() => null);
   }
 
-  deleteUnit(unitId: number, assignedUnitId?: number): Promise<boolean> {
+  deleteUnit(unitId: string, assignedUnitId?: string): Promise<boolean> {
     const params = {};
     if (assignedUnitId) {
       Object.assign(params, { assignedUnitId });
@@ -62,7 +62,7 @@ export class UnitService extends BaseHttpService {
       .catch(() => false);
   }
 
-  transferUnit(unit: number, parent: number): Promise<any> {
+  transferUnit(unit: string, parent: string): Promise<any> {
     return this.http.put(this.endPoint + '/' + unit + '/transfer', { parent }, this.getTokenRequest())
       .toPromise()
       .then(response => response)

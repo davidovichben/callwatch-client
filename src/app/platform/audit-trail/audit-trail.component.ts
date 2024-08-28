@@ -19,21 +19,20 @@ export class AuditTrailComponent {
 
   readonly columns = [
     { label: 'time', name: 'created' },
-    { label: 'event', name: 'resource' },
-    { label: 'ip_address', name: 'ip' }
+    { label: 'event', name: 'resourceName' },
+    { label: 'ip_address', name: 'ipAddress' }
   ];
 
   constructor(private router: Router, private dialog: MatDialog,
               private auditTrailService: AuditTrailService) {}
 
-  fetchItems(): void {
-    this.auditTrailService.getLogs(this.dataTable.criteria).then(response => {
-      this.dataTable.setItems(response);
-    });
+  async fetchItems(): Promise<void> {
+    const response = await this.auditTrailService.getLogs(this.dataTable.criteria);
+    this.dataTable.setItems(response);
   }
 
   navigateToResource(item: AuditTrailEntryModel): void {
-    let url;
+    let url: any[];
     if (item.resourceType === 'unit') {
       url = ['/platform', 'units', item.resourceId];
     } else {
@@ -43,14 +42,13 @@ export class AuditTrailComponent {
     this.router.navigate(url);
   }
 
-  openChangesDialog(entryId: number): void {
-    this.auditTrailService.getChanges(entryId).then(changes => {
-      if (changes) {
-        this.dialog.open(ChangesComponent, {
-          data: changes,
-          width: '600px'
-        })
-      }
-    })
+  async openChangesDialog(entryId: number): Promise<void> {
+    const changes = await this.auditTrailService.getChanges(entryId)
+    if (changes) {
+      this.dialog.open(ChangesComponent, {
+        data: changes,
+        width: '600px'
+      })
+    }
   }
 }
