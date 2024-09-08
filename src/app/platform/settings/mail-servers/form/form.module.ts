@@ -16,7 +16,7 @@ import { FormComponent } from 'src/app/platform/settings/mail-servers/form/form.
 import { MailServerService } from 'src/app/_shared/services/http/mail-server.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 
-import { MailServersResolve } from 'src/app/_shared/resolves/mail-servers.resolve';
+import { MailServerResolve } from 'src/app/_shared/resolves/mail-server.resolve';
 
 import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
 
@@ -29,7 +29,10 @@ const routes: Routes = [
 	{
 		path: ':id',
 		component: FormComponent,
-    canDeactivate: [DeactivateGuard]
+    canDeactivate: [DeactivateGuard],
+		resolve: {
+			mailServer: MailServerResolve
+		}
   }
 ];
 
@@ -50,7 +53,7 @@ const routes: Routes = [
 	providers: [
     MailServerService,
     SelectService,
-    MailServersResolve,
+		MailServerResolve,
     DeactivateGuard
   ]
 })

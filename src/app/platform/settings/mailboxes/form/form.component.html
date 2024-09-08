@@ -8,13 +8,32 @@
   </div>
   <div class="form-body">
     <div class="row">
-      <div class="col-12 col-lg-3">
+	    <div class="col-12 col-lg-4">
+		    <mat-form-field>
+			    <mat-label>{{ 'mail_server' | t }}</mat-label>
+			    <mat-select formControlName="mailServer" required>
+				    <mat-option [value]="mailServer._id" *ngFor="let mailServer of mailServers">{{ mailServer.name }}</mat-option>
+			    </mat-select>
+			    <mat-error>{{ errorMessages.required | t }}</mat-error>
+		    </mat-form-field>
+	    </div>
+      <div class="col-12 col-lg-4">
         <mat-form-field>
           <mat-label>{{ 'mailbox_name' | t }}</mat-label>
           <input matInput type="text" formControlName="name" required>
           <mat-error>{{ errorMessages.required | t }}</mat-error>
         </mat-form-field>
       </div>
+	    <div class="col-12 col-lg-4">
+		    <mat-form-field>
+			    <mat-label>{{ 'resource_id' | t }}</mat-label>
+			    <input matInput type="text" formControlName="resourceID" required>
+			    <mat-error>{{ errorMessages.required | t }}</mat-error>
+		    </mat-form-field>
+	    </div>
+	    <div class="col-12 col-lg-4">
+		    <app-unit-select formControlName="unit" [units]="units" (touched)="formGroup.markAllAsTouched()" [toggleUp]="false" [multiple]="false"></app-unit-select>
+	    </div>
     </div>
   </div>
 </form>

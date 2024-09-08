@@ -6,7 +6,7 @@ import { MailServerService } from 'src/app/_shared/services/http/mail-server.ser
 import { MailServerModel } from 'src/app/_shared/models/mail-server.model';
 
 @Injectable()
-export class MailServersResolve {
+export class MailServerResolve {
 
 	constructor(private mailServerService: MailServerService) {}
 

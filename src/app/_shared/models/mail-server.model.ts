@@ -1,5 +1,7 @@
 export class MailServerModel {
-	id: number;
+	_id: string;
 	name: string;
-  type: string;
+  tenantID: string;
+	clientID: string;
+	clientSecret: string;
 }

@@ -20,45 +20,50 @@ export class HistoricalReportsService {
     this.userId = this.userService.getUserId();
   }
 
-  setCriteria(values: ReportCriteriaModel): void {
-    this.dates = values.dates;
-
-    const criteriaIndexByUser = this.getCriteria(true) ?? {};
-    const criteria = criteriaIndexByUser[this.userId] ? criteriaIndexByUser[this.userId] : {};
-
-    const module = this.reportTemplate.module;
-    const name = this.reportTemplate.name;
-
-    if (!criteria[module]) {
-      criteria[module] = {};
-      if (!criteria[module][name]) {
-        criteria[module][name] = {};
-      }
-    }
-
-    criteria[module][name] = values;
-    criteriaIndexByUser[this.userId] = criteria
-
-    localStorage.setItem('report-criteria', JSON.stringify(criteriaIndexByUser));
+  setCriteria(criteria: ReportCriteriaModel): void {
+    // this.dates = values.dates;
+    //
+    // const criteriaIndexByUser = this.getCriteria(true) ?? {};
+    // const criteria = criteriaIndexByUser[this.userId] ? criteriaIndexByUser[this.userId] : {};
+    //
+    // const module = this.reportTemplate.module;
+    // const name = this.reportTemplate.name;
+    //
+    // if (!criteria[module]) {
+    //   criteria[module] = {};
+    //   if (!criteria[module][name]) {
+    //     criteria[module][name] = {};
+    //   }
+    // }
+    //
+    // criteria[module][name] = values;
+    // criteriaIndexByUser[this.userId] = criteria
+    //
+    // localStorage.setItem('report-criteria', JSON.stringify(criteriaIndexByUser));
+    
+    localStorage.setItem('report-criteria', JSON.stringify(criteria));
   }
 
   getCriteria(all?: boolean): ReportCriteriaModel {
-    const criteria = JSON.parse(localStorage.getItem('report-criteria'));
-
-    if (!criteria) {
-      return null;
-    }
-
-    if (all) {
-      return criteria;
-    }
-
-    const template = this.reportTemplate;
-    if (criteria[this.userId]) {
-      return criteria[this.userId][template.module] ? criteria[this.userId][template.module][template.name] : null;
-    }
-
-    return null;
+    
+    return JSON.parse(localStorage.getItem('report-criteria'));
+    
+    // const criteria = JSON.parse(localStorage.getItem('report-criteria'));
+    
+    // if (!criteria) {
+    //   return null;
+    // }
+    //
+    // if (all) {
+    //   return criteria;
+    // }
+    //
+    // const template = this.reportTemplate;
+    // if (criteria[this.userId]) {
+    //   return criteria[this.userId][template.module] ? criteria[this.userId][template.module][template.name] : null;
+    // }
+    //
+    // return null;
   }
 
   setReportTemplate(reportTemplate: ReportTemplateModel): void {

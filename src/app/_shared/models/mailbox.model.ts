@@ -1,4 +1,5 @@
 export class MailboxModel {
-	id: string;
+	_id: string;
 	name: string;
+	resourceID: string;
 }

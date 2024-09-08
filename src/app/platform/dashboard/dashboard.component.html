@@ -2,20 +2,20 @@
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header">
-				<p class="card-title">Average requests Count</p>
+				<p class="card-title">{{ 'average_request_count' | t }}</p>
 			</div>
 			<div class="card-body d-flex justify-content-center">
 				<div>
 					<p class="card-value">{{ insights.requestCount.daily }}</p>
-					<p class="card-value-desc">Daily</p>
+					<p class="card-value-desc">{{ 'daily' | t }}</p>
 				</div>
 				<div class="mx-5">
 					<p class="card-value">{{ insights.requestCount.weekly }} </p>
-					<p class="card-value-desc">Weekly</p>
+					<p class="card-value-desc">{{ 'weekly' | t }}</p>
 				</div>
 				<div>
 					<p class="card-value">{{ insights.requestCount.monthly }} </p>
-					<p class="card-value-desc">Monthly</p>
+					<p class="card-value-desc">{{ 'monthly' | t }}</p>
 				</div>
 			</div>
 		</div>
@@ -23,66 +23,66 @@
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header">
-				<p class="card-title">Average Resolution Time</p>
+				<p class="card-title">{{ 'average_resolution_time' | t }}</p>
 			</div>
 			<div class="card-body">
 				<p class="card-value">{{ insights.averageResolutionTime }} </p>
-				<p class="card-value-desc">Seconds</p>
+				<p class="card-value-desc">{{ 'seconds' | t }}</p>
 			</div>
 		</div>
 	</div>
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header">
-				<p class="card-title">Average First Response Time</p>
+				<p class="card-title">{{ 'average_first_response_time' | t }}</p>
 			</div>
 			<div class="card-body">
 				<p class="card-value">{{ insights.averageResponseTime }} </p>
-				<p class="card-value-desc">Seconds</p>
+				<p class="card-value-desc">{{ 'seconds' | t }}</p>
 			</div>
 		</div>
 	</div>
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header">
-				<p class="card-title">Number of Interactions per thread</p>
+				<p class="card-title">{{ 'number_of_mails_per_thread' | t }}</p>
 			</div>
 			<div class="card-body">
 				<p class="card-value">{{ insights.averageInteractions }} </p>
-				<p class="card-value-desc">Seconds</p>
+				<p class="card-value-desc">{{ 'mails' | t }}</p>
 			</div>
 		</div>
 	</div>
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header">
-				<p class="card-title">Average Handling Time</p>
+				<p class="card-title">{{ 'average_handling_time' | t }}</p>
 			</div>
 			<div class="card-body">
 				<p class="card-value">{{ insights.averageHandlingTime }} </p>
-				<p class="card-value-desc">Seconds</p>
+				<p class="card-value-desc">{{ 'seconds' | t }}</p>
 			</div>
 		</div>
 	</div>
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header">
-				<p class="card-title">Requests Resolution Rate</p>
+				<p class="card-title">{{ 'requests_resolution_rate' | t }}</p>
 			</div>
 			<div class="card-body">
 				<p class="card-value">{{ insights.requestsResolutionRate }} </p>
-				<p class="card-value-desc">Seconds</p>
+				<p class="card-value-desc">{{ 'seconds' | t }}</p>
 			</div>
 		</div>
 	</div>
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header">
-				<p class="card-title">Rate of Handled requests</p>
+				<p class="card-title">{{ 'rate_of_handled_requests' | t }}</p>
 			</div>
 			<div class="card-body">
 				<p class="card-value">{{ insights.handledRequestsRate }} </p>
-				<p class="card-value-desc">Seconds</p>
+				<p class="card-value-desc">{{ 'seconds' | t }}</p>
 			</div>
 		</div>
 	</div>
@@ -94,11 +94,11 @@
 			<div class="card-body d-flex justify-content-center">
 				<div>
 					<p class="card-value">{{ insights.backlog.notHandled }} </p>
-					<p class="card-value-desc">Not handled</p>
+					<p class="card-value-desc">{{ 'not_handled' | t }}</p>
 				</div>
 				<div class="me-5">
 					<p class="card-value">{{ insights.backlog.withoutResponse }} </p>
-					<p class="card-value-desc">Without response after reply</p>
+					<p class="card-value-desc">{{ 'without_response_after_reply' | t }}</p>
 				</div>
 			</div>
 		</div>

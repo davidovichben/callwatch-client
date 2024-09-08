@@ -6,8 +6,8 @@ export const PlatformModules = [
     permission: 'reports',
     icon: 'assignment',
     subModules: [
-      { name: 'templates', permission: 'reports', label: 'templates' },
-      { name: 'timings', permission: 'timed_reports', label: 'timed_reports' },
+      // { name: 'templates', permission: 'reports', label: 'templates' },
+      // { name: 'timings', permission: 'timed_reports', label: 'timed_reports' },
       { name: 'historical', permission: 'reports', label: 'historical_reports' }
     ]
   },

@@ -1,5 +1,5 @@
 export class WidgetModel {
-  id: number;
+  _id: string;
   type: string;
   top: number;
   left: number;

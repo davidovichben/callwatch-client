@@ -18,6 +18,7 @@ import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.componen
 import { QueryDialogComponent } from './query-dialog/query-dialog.component';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
+import { InsightsService } from 'src/app/_shared/services/http/insights.service';
 
 import { HistoricalReportResultsResolve } from 'src/app/_shared/resolves/historical-report-results.resolve';
 
@@ -51,6 +52,10 @@ const routes: Routes = [
     DualGroupsSelectModule,
     DataTableModule
   ],
-  providers: [ReportTemplateService, HistoricalReportResultsResolve]
+  providers: [
+    ReportTemplateService,
+    HistoricalReportResultsResolve,
+    InsightsService
+  ]
 })
 export class ResultsModule {}

@@ -6,7 +6,7 @@ import { MailboxService } from 'src/app/_shared/services/http/mailbox.service';
 import { MailboxModel } from 'src/app/_shared/models/mailbox.model';
 
 @Injectable()
-export class MailboxesResolve {
+export class MailboxResolve {
 
   constructor(private mailBoxService: MailboxService) {}
 

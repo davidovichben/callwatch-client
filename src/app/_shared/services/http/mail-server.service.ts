@@ -7,6 +7,7 @@ import { UserSessionService } from 'src/app/_shared/services/state/user-session.
 import { MailServerModel } from 'src/app/_shared/models/mail-server.model';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
+import { SelectItemModel } from '../../models/select-item.model';
 
 @Injectable()
 export class MailServerService extends BaseHttpService {
@@ -52,5 +53,12 @@ export class MailServerService extends BaseHttpService {
 			.toPromise()
 			.then(() => true)
 			.catch(() => false);
+	}
+	
+	selectMailServers(): Promise<SelectItemModel[]> {
+		return this.http.get(this.endPoint + '/select', this.getTokenRequest())
+			.toPromise()
+			.then(response => response as SelectItemModel[])
+			.catch(() => []);
 	}
 }

@@ -1,148 +1,142 @@
-<form (ngSubmit)="submit()" [formGroup]="formGroup" *ngIf="reportTemplate">
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
   <div class="d-flex justify-content-between">
     <p class="mb-3 f-20 blue-text">{{ 'data_filtering' | t }}</p>
-    <div>
-      <button mat-flat-button class="blue-btn" type="submit">{{ 'show_report' | t }}</button>
-    </div>
+<!--    <div>-->
+<!--      <button mat-flat-button class="blue-btn" type="submit">{{ 'show_report' | t }}</button>-->
+<!--    </div>-->
   </div>
-  <div class="criterion">
-    <div>
-      <p class="mb-3">{{ 'show_values_in_date_range' | t }}:</p>
-      <mat-radio-group formControlName="dateType">
-        <mat-radio-button value="today" class="mb-3">{{ 'today' | t }}</mat-radio-button>
-        <mat-radio-button value="range">
-          <app-date-range-picker formGroupName="dates">
-            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>
-            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>
-          </app-date-range-picker>
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
-  </div>
-  <div class="criterion">
-    <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>
-<!--    TODO make time component-->
-    <div formArrayName="times">
-      <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">
-        <div formGroupName="start" class="mx-3">
-          <mat-label>{{ 'from_hour' | t }}</mat-label>
-          <mat-form-field *ngIf="locale.dir === 'rtl'" class="mx-2 no-space w-100p">
-            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
-              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="hour">
-              <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field *ngIf="locale.dir === 'ltr'" class="mx-2 no-space w-100p">
-            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
-              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div formGroupName="end" class="mx-3">
-          <mat-label>{{ 'to_hour' | t }}</mat-label>
-          <mat-form-field *ngIf="locale.dir === 'rtl'" class="mx-2 no-space w-100p">
-            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
-              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="mx-2 no-space w-100p">
-            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="hour">
-              <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field  *ngIf="locale.dir === 'ltr'" class="mx-2 no-space w-100p">
-            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">
-              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="d-flex align-items-center">
-          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">
-            <mat-icon class="f-16">add</mat-icon>
-          </button>
-          <button mat-flat-button type="button" class="blue-btn" (click)="removeTime(i)" *ngIf="!first">
-            <mat-icon class="f-16">remove</mat-icon>
-          </button>
-        </div>
-        <span class="mat-error m-3" *ngIf="timeByIndex(i).errors?.range">{{ errorMessages.timeRange | t }}</span>
-      </div>
-    </div>
-  </div>
-  <div class="criterion" formGroupName="weekDays">
-    <span>{{ 'days_to_show' | t }}:</span>
-    <mat-checkbox class="mx-3" [formControlName]="day" *ngFor="let day of weekDays">{{ day | t }}</mat-checkbox>
-  </div>
-  <div class="criterion">
-    <span>{{ 'phone_numbers' | t }}:</span>
-    <mat-form-field class="mx-3 no-space">
-      <mat-label>{{ 'calling_number' | t }}</mat-label>
-      <input matInput type="text" formControlName="callingNumber">
-    </mat-form-field>
-    <mat-form-field class="mx-3 no-space">
-      <mat-label>{{ 'called_to_number' | t }}</mat-label>
-      <input matInput type="text" formControlName="calledNumber">
-    </mat-form-field>
-  </div>
-  <div class="criterion">
-    <span>{{ 'abandonment_treatment_time_seconds' | t }}:</span>
-    <mat-form-field class="mx-3 no-space">
-      <mat-select formControlName="abandonTime">
-        <mat-option [value]="time" *ngFor="let time of abandonTimes">{{ time }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="criterion">
-    <span>{{ 'time_space' | t }}:</span>
-    <mat-form-field class="mx-3 no-space">
-      <mat-select formControlName="timeSpace">
-        <mat-option [value]="timeSpace" *ngFor="let timeSpace of timeSpaces">{{ timeSpace | t }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="criterion">
-    <span>{{ 'call_types' | t }}:</span>
-    <mat-checkbox class="mx-3" formControlName="showExternal">{{ 'show_external_calls' | t }}</mat-checkbox>
-    <mat-checkbox class="mx-3" formControlName="showInternal">{{ 'show_internal_calls' | t }}</mat-checkbox>
-  </div>
-  <div class="criterion">
-    <span class="d-flex align-items-baseline">{{ 'data_sorting' | t }}:</span>
-    <div formArrayName="sort">
-      <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('sort')['controls']; let i = index; let first = first; let last = last">
-        <mat-form-field class="mx-3 no-space">
-          <mat-label>{{ 'select_column' | t }}</mat-label>
-          <mat-select formControlName="column" (valueChange)="sortColumnSelected($event, i)">
-            <mat-option *ngIf="i === 0">-------</mat-option>
-            <mat-option [value]="column.id" *ngFor="let column of reportTemplate.columns" [disabled]="column.disabled">{{ (column.name | t) }} {{ column.level }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="mx-3 no-space">
-          <mat-label>{{ 'order' | t }}</mat-label>
-          <mat-select formControlName="direction">
-            <mat-option [value]="direction.value" *ngFor="let direction of sortDirections">{{ direction.label | t }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div class="d-flex align-items-center">
-          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addSortColumn()" *ngIf="last && reportTemplate.columns.length > (i + 1)">
-            <mat-icon class="f-16">add</mat-icon>
-          </button>
-          <button mat-flat-button type="button" class="blue-btn" (click)="removeSortColumn(i)" *ngIf="!first">
-            <mat-icon class="f-16">remove</mat-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="criterion">
-    <span class="d-flex align-items-center">{{ 'ignore_dates' | t }}:</span>
+	<div class="criterion">
+		<mat-form-field>
+			<mat-label>{{ 'interval' | t }}</mat-label>
+			<mat-select formControlName="interval">
+				<mat-option [value]="interval.value" *ngFor="let interval of timeIntervals">{{ interval.label | t }}</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+	
+
+<!--  <div class="criterion">-->
+<!--    <div>-->
+<!--      <p class="mb-3">{{ 'show_values_in_date_range' | t }}:</p>-->
+<!--      <mat-radio-group formControlName="dateType">-->
+<!--        <mat-radio-button value="today" class="mb-3">{{ 'today' | t }}</mat-radio-button>-->
+<!--        <mat-radio-button value="range">-->
+<!--          <app-date-range-picker formGroupName="dates">-->
+<!--            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>-->
+<!--            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>-->
+<!--          </app-date-range-picker>-->
+<!--        </mat-radio-button>-->
+<!--      </mat-radio-group>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="criterion">-->
+<!--    <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>-->
+<!--&lt;!&ndash;    TODO make time component&ndash;&gt;-->
+<!--    <div formArrayName="times">-->
+<!--      <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('times')['controls']; let i = index; let first = first; let last = last">-->
+<!--        <div formGroupName="start" class="mx-3">-->
+<!--          <mat-label>{{ 'from_hour' | t }}</mat-label>-->
+<!--          <mat-form-field *ngIf="locale.dir === 'rtl'" class="mx-2 no-space w-100p">-->
+<!--            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">-->
+<!--              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="mx-2 no-space w-100p">-->
+<!--            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="hour">-->
+<!--              <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field *ngIf="locale.dir === 'ltr'" class="mx-2 no-space w-100p">-->
+<!--            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">-->
+<!--              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div formGroupName="end" class="mx-3">-->
+<!--          <mat-label>{{ 'to_hour' | t }}</mat-label>-->
+<!--          <mat-form-field *ngIf="locale.dir === 'rtl'" class="mx-2 no-space w-100p">-->
+<!--            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">-->
+<!--              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="mx-2 no-space w-100p">-->
+<!--            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="hour">-->
+<!--              <mat-option [value]="hour" *ngFor="let hour of hours">{{ hour }}</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field  *ngIf="locale.dir === 'ltr'" class="mx-2 no-space w-100p">-->
+<!--            <mat-select [disabled]="formGroup.get('dateType')?.value === 'today'" (selectionChange)="timeRangeCheck(i)" formControlName="minute">-->
+<!--              <mat-option [value]="minute" *ngFor="let minute of minutesInterval">{{ minute }}</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="d-flex align-items-center">-->
+<!--          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">-->
+<!--            <mat-icon class="f-16">add</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-flat-button type="button" class="blue-btn" (click)="removeTime(i)" *ngIf="!first">-->
+<!--            <mat-icon class="f-16">remove</mat-icon>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--        <span class="mat-error m-3" *ngIf="timeByIndex(i).errors?.range">{{ errorMessages.timeRange | t }}</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="criterion" formGroupName="weekDays">-->
+<!--    <span>{{ 'days_to_show' | t }}:</span>-->
+<!--    <mat-checkbox class="mx-3" [formControlName]="day" *ngFor="let day of weekDays">{{ day | t }}</mat-checkbox>-->
+<!--  </div>-->
+<!--  <div class="criterion">-->
+<!--    <span>{{ 'phone_numbers' | t }}:</span>-->
+<!--    <mat-form-field class="mx-3 no-space">-->
+<!--      <mat-label>{{ 'calling_number' | t }}</mat-label>-->
+<!--      <input matInput type="text" formControlName="callingNumber">-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field class="mx-3 no-space">-->
+<!--      <mat-label>{{ 'called_to_number' | t }}</mat-label>-->
+<!--      <input matInput type="text" formControlName="calledNumber">-->
+<!--    </mat-form-field>-->
+<!--  </div>-->
+<!--  <div class="criterion">-->
+<!--    <span>{{ 'call_types' | t }}:</span>-->
+<!--    <mat-checkbox class="mx-3" formControlName="showExternal">{{ 'show_external_calls' | t }}</mat-checkbox>-->
+<!--    <mat-checkbox class="mx-3" formControlName="showInternal">{{ 'show_internal_calls' | t }}</mat-checkbox>-->
+<!--  </div>-->
+<!--  <div class="criterion">-->
+<!--    <span class="d-flex align-items-baseline">{{ 'data_sorting' | t }}:</span>-->
+<!--    <div formArrayName="sort">-->
+<!--      <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('sort')['controls']; let i = index; let first = first; let last = last">-->
+<!--        <mat-form-field class="mx-3 no-space">-->
+<!--          <mat-label>{{ 'select_column' | t }}</mat-label>-->
+<!--          <mat-select formControlName="column" (valueChange)="sortColumnSelected($event, i)">-->
+<!--            <mat-option *ngIf="i === 0">-&#45;&#45;&#45;&#45;&#45;&#45;</mat-option>-->
+<!--            <mat-option [value]="column.id" *ngFor="let column of reportTemplate.columns" [disabled]="column.disabled">{{ (column.name | t) }} {{ column.level }}</mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field class="mx-3 no-space">-->
+<!--          <mat-label>{{ 'order' | t }}</mat-label>-->
+<!--          <mat-select formControlName="direction">-->
+<!--            <mat-option [value]="direction.value" *ngFor="let direction of sortDirections">{{ direction.label | t }}</mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+<!--        <div class="d-flex align-items-center">-->
+<!--          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addSortColumn()" *ngIf="last && reportTemplate.columns.length > (i + 1)">-->
+<!--            <mat-icon class="f-16">add</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-flat-button type="button" class="blue-btn" (click)="removeSortColumn(i)" *ngIf="!first">-->
+<!--            <mat-icon class="f-16">remove</mat-icon>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="criterion">-->
+<!--    <span class="d-flex align-items-center">{{ 'ignore_dates' | t }}:</span>-->
 <!--    <app-date-range-picker formGroupName="ignoreDates">-->
 <!--      <app-date-range-input formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>-->
 <!--      <app-date-range-input formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>-->
 <!--    </app-date-range-picker>-->
-  </div>
+<!--  </div>-->
   <p class="mb-3 f-20 blue-text">{{ 'units_to_show' | t }}</p>
   <div class="mb-4">
     <app-unit-select formControlName="units" [units]="units" [multiple]="true" class="w-300p"></app-unit-select>

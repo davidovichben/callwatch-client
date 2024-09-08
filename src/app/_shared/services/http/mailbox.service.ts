@@ -11,7 +11,7 @@ import { DataTableResponse } from 'src/app/_shared/components/data-table/classes
 @Injectable()
 export class MailboxService extends BaseHttpService {
 
-	readonly endPoint = this.apiUrl + '/mailboxModel';
+	readonly endPoint = this.apiUrl + '/mailboxes';
 
 	constructor(private http: HttpClient, userSession: UserSessionService) {
 		super(userSession);
@@ -33,18 +33,21 @@ export class MailboxService extends BaseHttpService {
 			.catch(() => null);
 	}
 
-	createMailBox(values: object): Promise<any> {
+	createMailbox(values: object): Promise<any> {
 		return this.http.post(this.endPoint, values, this.getTokenRequest())
 			.toPromise()
 			.then(() => true)
 			.catch(() => false);
 	}
 
-	updateMailbox(mailBoxId: string, values: object): Promise<boolean> {
-		return this.http.put(this.endPoint + '/' + mailBoxId, values, this.getTokenRequest())
-			.toPromise()
-			.then(() => true)
-			.catch(() => false);
+	async updateMailbox(mailBoxId: string, values: object): Promise<boolean> {
+		try {
+			await this.http.put(this.endPoint + '/' + mailBoxId, values, this.getTokenRequest())
+				.toPromise();
+			return true;
+		} catch {
+			return false;
+		}
 	}
 
   multipleUpdate(checkedItems: any[], values: object): Promise<boolean> {

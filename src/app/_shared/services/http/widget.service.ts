@@ -24,7 +24,7 @@ export class WidgetService extends BaseHttpService {
       .catch(() => null);
   }
 
-  getWidget(widgetId: number): Promise<WidgetModel> {
+  getWidget(widgetId: string): Promise<WidgetModel> {
     return this.http.get(this.endPoint + '/' + widgetId, this.getTokenRequest())
       .toPromise()
       .then(response => response as WidgetModel)
@@ -39,13 +39,13 @@ export class WidgetService extends BaseHttpService {
   }
 
   updateWidget(widget: WidgetModel): Promise<boolean> {
-    return this.http.put(this.endPoint + '/' + widget.id, widget, this.getTokenRequest())
+    return this.http.put(this.endPoint + '/' + widget._id, widget, this.getTokenRequest())
       .toPromise()
       .then(() => true)
       .catch(() => false);
   }
 
-  deleteWidget(widgetId: number): Promise<boolean> {
+  deleteWidget(widgetId: string): Promise<boolean> {
     return this.http.delete(this.endPoint + '/' + widgetId, this.getTokenRequest())
       .toPromise()
       .then(() => true)

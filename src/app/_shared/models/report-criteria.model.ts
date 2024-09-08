@@ -3,12 +3,9 @@ export class ReportCriteriaModel {
   dates: { start: string, end: string };
   times: { start: any, end: any }[];
   weekDays: string[];
-  callingNumber: string;
-  calledNumber: string;
-  showInternal: boolean;
-  showExternal: boolean;
-  abandonTime: number;
-  timeSpace: string;
+  // showInternal: boolean;
+  // showExternal: boolean;
+  interval: string;
   sort: { column: string, direction: 'desc' | 'asc' }[];
   ignoreDates: { start: string, end: string };
   columns: number[];
@@ -17,7 +14,17 @@ export class ReportCriteriaModel {
 
 export const AbandonTimes = [3];
 export const ReportProductionTimeRanges = ['day', 'week', 'month', 'last_year', 'current_year'];
-export const ReportTimeSpaces = ['15_minutes', 'hour', 'hour_in_day', 'day', 'day_in_week', 'week', 'month', 'year'];
+export const ReportTimeIntervals = [
+  { label: '15_minutes', value: 'minute' },
+  { label: 'hour', value: 'hour' },
+  { label: 'day', value: 'day' },
+  { label: 'day_in_week', value: 'dayInWeek' },
+  { label: 'week', value: 'week' },
+  { label: 'month', value: 'month' },
+  { label: 'month_in_year', value: 'monthInYear' },
+  { label: 'year', value: 'year' }
+];
+
 export const MinutesInterval = ['00', '15', '30', '45'];
 
 export const Hours = Array.from({ length: 24 }, (_, i) => {

@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { MultipleEditComponent } from 'src/app/platform/settings/mailboxes/multiple-edit/multiple-edit.component';
@@ -13,52 +12,37 @@ import { MailboxService } from 'src/app/_shared/services/http/mailbox.service';
   selector: 'app-mailboxes',
   templateUrl: './mailboxes.component.html'
 })
-export class MailboxesComponent implements OnInit {
+export class MailboxesComponent {
 
   @ViewChild(DataTableComponent, { static: true }) dataTable: DataTableComponent;
 
   readonly sub = new Subscription();
 
   readonly columns = [
-    { label: 'extension_name', name: 'name' },
-    { label: 'dial_number', name: 'dialNumber' },
-    { label: 'extension_type', name: 'type' },
+    { label: 'name', name: 'name' },
     { label: 'unit', name: 'unit' }
   ];
-
-  selects = {
-    extensions: [],
-    types: [],
-    switchboards: [],
-    callbacks: [],
-    routers: []
-  };
-
+  
   constructor(private notification: NotificationService,
               public userSession: UserSessionService,
-              private mailboxService: MailboxService,
-              private route: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.selects = this.route.snapshot.data.selects;
-  }
-
+              private mailboxService: MailboxService) {}
+  
   async fetchItems(): Promise<void> {
     const response = await this.mailboxService.getMailboxes(this.dataTable.criteria);
     this.dataTable.setItems(response);
   }
 
   openMultipleEdit(): void {
-    const data = { selects: this.selects }
-    this.dataTable.openMultipleEditDialog(MultipleEditComponent, data)
+    // const data = { selects: this.selects };
+    // this.dataTable.openMultipleEditDialog(MultipleEditComponent, data);
   }
 
-  async deleteItem(extensionId: string): Promise<void> {
+  async deleteItem(mailboxId: string): Promise<void> {
     const confirmation = await this.notification.warning();
     if (confirmation.value) {
-      await this.mailboxService.deleteMailbox(extensionId);
+      await this.mailboxService.deleteMailbox(mailboxId);
       this.notification.success();
-      this.fetchItems();
+      await this.fetchItems();
     }
   }
 }

@@ -13,12 +13,14 @@ export class DeactivateGuard  {
 
   constructor(private notificationService: NotificationService) {}
 
-  canDeactivate(component) {
+  canDeactivate(component: any) {
     const formSubmitted = component.form ? component.form.submitted : component.isSubmitting;
     if (formSubmitted || (!component.formGroup || !component.formGroup.touched) && (!component.form || !component.form.touched)) {
       return true;
     }
-
-    return this.notificationService.deactivateWarning();
+    //
+    // return this.notificationService.deactivateWarning();
+    
+    return true;
   }
 }

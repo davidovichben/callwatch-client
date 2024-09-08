@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "callwatch": {
+    "mailwatch": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +24,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": {
-              "base": "dist/callwatch"
+              "base": "dist/mailwatch"
             },
             "index": "src/index.html",
             "polyfills": [
@@ -83,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "callwatch:build:production"
+              "buildTarget": "mailwatch:build:production"
             },
             "development": {
-              "buildTarget": "callwatch:build:development"
+              "buildTarget": "mailwatch:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "callwatch:build"
+            "buildTarget": "mailwatch:build"
           }
         },
         "test": {

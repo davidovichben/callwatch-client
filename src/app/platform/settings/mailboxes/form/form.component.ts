@@ -7,7 +7,9 @@ import { MailboxService } from 'src/app/_shared/services/http/mailbox.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Fade } from 'src/app/_shared/constants/animations';
-import { MailboxModel } from '../../../../_shared/models/mailbox.model';
+import { MailboxModel } from 'src/app/_shared/models/mailbox.model';
+import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
+import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Component({
   selector: 'app-form',
@@ -23,6 +25,9 @@ export class FormComponent implements OnInit, OnDestroy {
   formGroup: UntypedFormGroup;
   mailbox: MailboxModel;
   
+  mailServers: SelectItemModel[] = [];
+  units: UnitModel[] = [];
+  
   isSubmitting = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -31,6 +36,9 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.makeForm();
 
+    this.mailServers = this.route.snapshot.data.mailServers;
+    this.units = this.route.snapshot.data.units;
+    
     this.mailbox = this.route.snapshot.data.mailbox;
 
     if (this.mailbox) {
@@ -41,9 +49,11 @@ export class FormComponent implements OnInit, OnDestroy {
   private makeForm(): void {
     this.formGroup = this.fb.group({
       name: this.fb.control(null, Validators.required),
+      mailServer: this.fb.control(null, Validators.required),
+      resourceID: this.fb.control(null, Validators.required),
+      unit: this.fb.control(null, Validators.required)
     })
   }
-
   
   async submit(): Promise<void> {
     if (this.formGroup.valid && !this.isSubmitting) {
@@ -52,9 +62,9 @@ export class FormComponent implements OnInit, OnDestroy {
       let response: boolean;
       
       if (this.mailbox) {
-        response = await this.mailboxService.updateMailbox(this.mailbox.id, this.formGroup.value);
+        response = await this.mailboxService.updateMailbox(this.mailbox._id, this.formGroup.value);
       } else {
-        response = await this.mailboxService.createMailBox(this.formGroup.value);
+        response = await this.mailboxService.createMailbox(this.formGroup.value);
       }
       
       this.handleServerResponse(response)

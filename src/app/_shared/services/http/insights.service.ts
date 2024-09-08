@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BaseHttpService } from './base-http.service';
 import { UserSessionService } from '../state/user-session.service';
 import { InsightsModel } from '../../models/insights.model';
+import { ReportCriteriaModel } from '../../models/report-criteria.model';
 
 @Injectable()
 export class InsightsService extends BaseHttpService {
@@ -21,6 +22,16 @@ export class InsightsService extends BaseHttpService {
 			return response as InsightsModel;
 		} catch {
 			return null;
+		}
+	}
+	
+	async getHistoricalInsights(criteria: ReportCriteriaModel): Promise<any[]> {
+		try {
+			const response = await this.http.post(this.endPoint + '/historical', criteria, this.getTokenRequest())
+				.toPromise();
+			return response as any[];
+		} catch {
+			return [];
 		}
 	}
 }

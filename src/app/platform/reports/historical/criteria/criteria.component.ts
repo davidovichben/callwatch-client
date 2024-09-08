@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, timeInterval } from 'rxjs';
 
 import { UnitSelectComponent } from 'src/app/_shared/components/unit-select/unit-select.component';
 import { DateRangePickerComponent } from 'src/app/_shared/components/date-range-picker/date-range-picker.component';
@@ -17,10 +17,10 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 import { SortDirections, WeekDays } from 'src/app/_shared/constants/general';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import {
-  AbandonTimes, Hours,
+  Hours,
   MinutesInterval,
   ReportCriteriaModel,
-  ReportTimeSpaces
+  ReportTimeIntervals
 } from 'src/app/_shared/models/report-criteria.model';
 import { ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
@@ -43,9 +43,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   reportTemplate: ReportTemplateModel;
 
   readonly weekDays = WeekDays;
-  readonly abandonTimes = AbandonTimes;
-  readonly timeSpaces = ReportTimeSpaces;
   readonly sortDirections = SortDirections;
+  readonly timeIntervals = ReportTimeIntervals;
   readonly minutesInterval = MinutesInterval;
   readonly hours = Hours;
 
@@ -63,25 +62,27 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     this.units = this.route.snapshot.data.units;
     this.userId = this.userService.getUserId();
 
-    const sub = this.reportStateService.reportTemplateChanged.subscribe(() => {
-      this.getReportCriteria();
-    })
+    this.makeForm();
+    
+    // const sub = this.reportStateService.reportTemplateChanged.subscribe(() => {
+    //   this.getReportCriteria();
+    // })
+    //
+    // this.sub.add(sub);
 
-    this.sub.add(sub);
-
-    this.reportTemplate = this.reportStateService.getReportTemplate();
-    this.getReportCriteria();
+    // this.reportTemplate = this.reportStateService.getReportTemplate();
+    // this.getReportCriteria();
   }
 
-  async getReportCriteria(): Promise<void> {
-    this.reportTemplate = this.reportStateService.getReportTemplate();
-
-    if (this.reportTemplate) {
-      this.makeForm();
-      const report = await this.reportCriteriaService.getReportCriteria(this.reportTemplate.module, this.reportTemplate.name, this.userId);
-      this.makeForm(report);
-    }
-  }
+  // async getReportCriteria(): Promise<void> {
+  //   this.reportTemplate = this.reportStateService.getReportTemplate();
+  //
+  //   if (this.reportTemplate) {
+  //     this.makeForm();
+  //     const report = await this.reportCriteriaService.getReportCriteria(this.reportTemplate.module, this.reportTemplate.name, this.userId);
+  //     this.makeForm(report);
+  //   }
+  // }
 
   private makeForm(criteria?: ReportCriteriaModel): void {
     this.formGroup = this.fb.group({
@@ -92,12 +93,9 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       }),
       times: this.fb.array([]),
       weekDays: this.fb.group({}),
-      callingNumber: this.fb.control(null),
-      calledNumber: this.fb.control(null),
-      showInternal: this.fb.control(true),
-      showExternal: this.fb.control(true),
-      abandonTime: this.fb.control(null),
-      timeSpace: this.fb.control('day'),
+      // showInternal: this.fb.control(true),
+      // showExternal: this.fb.control(true),
+      interval: this.fb.control('minute'),
       sort: this.fb.array([]),
       ignoreDates: this.fb.group({
         start: this.fb.control(null),
@@ -105,7 +103,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       }),
       units: this.fb.control(null)
     });
-
+    
     this.weekDays.forEach(day => {
       const control = this.fb.control(false);
       (this.formGroup.get('weekDays') as UntypedFormGroup).addControl(day, control);
@@ -126,7 +124,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       this.formGroup.patchValue(criteria);
     }
 
-    this.resetFields(criteria);
+    // this.resetFields(criteria);
 
     if ((this.formGroup.get('times') as UntypedFormArray).length === 0) {
       this.addTime();
@@ -144,8 +142,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
       this.formGroup.reset({
         dateType: 'today',
         timeSpace: 'day',
-        showInternal: true,
-        showExternal: true,
+        // showInternal: true,
+        // showExternal: true,
         weekDays: { sun: true, mon: true, tue: true, wed: true, thu: true, fri: true, sat: true },
       });
 
@@ -269,19 +267,19 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    const units = this.formGroup.get('units').value;
-    if (!units || units.length === 0) {
-      this.notifications.error(this.t.transform('units_field_is_required'));
-      return;
-    }
-
-    if (!this.formGroup.valid) {
-      return;
-    }
+    // const units = this.formGroup.get('units').value;
+    // if (!units || units.length === 0) {
+    //   this.notifications.error(this.t.transform('units_field_is_required'));
+    //   return;
+    // }
+    //
+    // if (!this.formGroup.valid) {
+    //   return;
+    // }
 
     const values = this.sanitizeValues(this.formGroup.value);
 
-    this.reportCriteriaService.newReportCriteria(values, this.userId, this.reportTemplate.name, this.reportTemplate.module)
+    // this.reportCriteriaService.newReportCriteria(values, this.userId, this.reportTemplate.name, this.reportTemplate.module)
     this.reportStateService.setCriteria(values);
 
     this.router.navigate(['..', 'results'], { relativeTo: this.route });
@@ -325,4 +323,6 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
+  
+  protected readonly timeInterval = timeInterval;
 }

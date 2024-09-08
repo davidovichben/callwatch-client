@@ -1,110 +1,126 @@
-<div class="d-flex justify-content-between" [ngClass]="{ 'mb-3': !criteria.times || criteria.times.length === 0 }">
-  <div>
-    <p class="h1" *ngIf="criteria.dateType">
-      <span>{{ (criteria.dateType === 'today' ? 'example_report_for_today' : 'example_report_for_dates') | t }} </span>
-      <span *ngIf="criteria.dateType === 'today'"> - {{ todayDate }}</span>
-      <span *ngIf="criteria.dateType === 'range' && dates && dates.start && dates.end">{{ dates.start|date: 'dd/MM/Y' }} - {{ dates.end|date: 'dd/MM/Y' }}</span>
-    </p>
-    <p class="h3" *ngIf="criteria.times && criteria.times.length > 0 && criteria.dateType !== 'today'">
-      <span>{{ 'for_hours' | t }}: </span>
-      <span *ngFor="let time of criteria.times; let last = last">
-        <span>{{ time.start }} - {{ time.end }}</span>
-        <span *ngIf="!last">,</span>
-      </span>
-    </p>
-  </div>
-  <div>
-    <button mat-flat-button class="ms-2 action-btn" (click)="openInformationDialog()">
-      <mat-icon class="ms-1">error_outline</mat-icon>
-      <span>{{ 'information' | t }}</span>
-    </button>
-    <button mat-flat-button class="ms-2 action-btn" (click)="produce()">
-      <mat-icon class="ms-1">refresh</mat-icon>
-      <span>{{ 'refresh' | t }}</span>
-    </button>
-    <button mat-flat-button class="ms-2 action-btn" (click)="openColumnsDialog()">
-      <mat-icon class="ms-1">grid_on</mat-icon>
-      <span>{{ 'columns' | t }}</span>
-    </button>
-    <button mat-flat-button class="ms-2 action-btn" [routerLink]="['..', 'criteria']">
-      <mat-icon class="ms-1">settings</mat-icon>
-      <span>{{ 'settings' | t }}</span>
-    </button>
-    <button mat-flat-button class="ms-2 action-btn" [matMenuTriggerFor]="downloadMenu">
-      <mat-icon class="ms-1">download</mat-icon>
-      <span>{{ 'download' | t }}</span>
-    </button>
-    <button mat-flat-button class="action-btn" (click)="openQueryDialog()" *ngIf="isAdmin">
-      <mat-icon class="ms-1">code</mat-icon>
-      <span>SQL</span>
-    </button>
-    <mat-menu #downloadMenu="matMenu">
-      <button mat-menu-item (click)="download(format)" *ngFor="let format of formats">{{ format }}</button>
-    </mat-menu>
-  </div>
+<!--<div class="d-flex justify-content-between" [ngClass]="{ 'mb-3': !criteria.times || criteria.times.length === 0 }">-->
+<!--  <div>-->
+<!--    <p class="h1" *ngIf="criteria.dateType">-->
+<!--      <span>{{ (criteria.dateType === 'today' ? 'example_report_for_today' : 'example_report_for_dates') | t }} </span>-->
+<!--      <span *ngIf="criteria.dateType === 'today'"> - {{ todayDate }}</span>-->
+<!--      <span *ngIf="criteria.dateType === 'range' && dates && dates.start && dates.end">{{ dates.start|date: 'dd/MM/Y' }} - {{ dates.end|date: 'dd/MM/Y' }}</span>-->
+<!--    </p>-->
+<!--    <p class="h3" *ngIf="criteria.times && criteria.times.length > 0 && criteria.dateType !== 'today'">-->
+<!--      <span>{{ 'for_hours' | t }}: </span>-->
+<!--      <span *ngFor="let time of criteria.times; let last = last">-->
+<!--        <span>{{ time.start }} - {{ time.end }}</span>-->
+<!--        <span *ngIf="!last">,</span>-->
+<!--      </span>-->
+<!--    </p>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" (click)="openInformationDialog()">-->
+<!--      <mat-icon class="ms-1">error_outline</mat-icon>-->
+<!--      <span>{{ 'information' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" (click)="produce()">-->
+<!--      <mat-icon class="ms-1">refresh</mat-icon>-->
+<!--      <span>{{ 'refresh' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" (click)="openColumnsDialog()">-->
+<!--      <mat-icon class="ms-1">grid_on</mat-icon>-->
+<!--      <span>{{ 'columns' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" [routerLink]="['..', 'criteria']">-->
+<!--      <mat-icon class="ms-1">settings</mat-icon>-->
+<!--      <span>{{ 'settings' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" [matMenuTriggerFor]="downloadMenu">-->
+<!--      <mat-icon class="ms-1">download</mat-icon>-->
+<!--      <span>{{ 'download' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="action-btn" (click)="openQueryDialog()" *ngIf="isAdmin">-->
+<!--      <mat-icon class="ms-1">code</mat-icon>-->
+<!--      <span>SQL</span>-->
+<!--    </button>-->
+<!--    <mat-menu #downloadMenu="matMenu">-->
+<!--      <button mat-menu-item (click)="download(format)" *ngFor="let format of formats">{{ format }}</button>-->
+<!--    </mat-menu>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="table-container">-->
+<!--  <table class="table">-->
+<!--    <thead>-->
+<!--    <tr *ngIf="results.labels.titles.length > 0">-->
+<!--      <th></th>-->
+<!--      <th *ngFor="let title of results.labels.titles" [colSpan]="title.length">{{ title.name }}</th>-->
+<!--    </tr>-->
+<!--    <tr *ngIf="results.labels.subTitles.length > 0">-->
+<!--      <th></th>-->
+<!--      <th *ngFor="let subTitle of results.labels.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th>-->
+<!--        <span>{{ hasDateColumn ? ('date' | t) : '' }}</span>-->
+<!--        <div class="sort-container" *ngIf="hasDateColumn">-->
+<!--          <div class="triangle-up" (click)="sort('date', 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'asc' }"></div>-->
+<!--          <div class="triangle-down" (click)="sort('date', 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'desc' }"></div>-->
+<!--        </div>-->
+<!--      </th>-->
+<!--      <th *ngFor="let column of results.labels.columns" [colSpan]="column.length ?? 1">-->
+<!--        <div class="sort-container">-->
+<!--          <div class="triangle-up" (click)="sort(column.id, 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'asc' }"></div>-->
+<!--          <div class="triangle-down" (click)="sort(column.id, 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'desc' }"></div>-->
+<!--        </div>-->
+<!--        <span>{{ column.level ? ('level' | t) + ' ' + column.level : column.name | t }}</span>-->
+<!--        <span *ngIf="column.dataSource && column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>-->
+<!--      </th>-->
+<!--    </tr>-->
+<!--    <tr *ngIf="results.labels.columnTypes.length > 0">-->
+<!--      <th></th>-->
+<!--      <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name ? (type.name | t) : '' }}</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody *ngIf="isProducing">-->
+<!--    <tr>-->
+<!--      <td class="loader-cell" [colSpan]="results.labels.columns.length">-->
+<!--        <div class="loader inline"></div>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--    <tbody *ngIf="!isProducing">-->
+<!--    <tr *ngIf="results.rows.items.length === 0" class="h-100">-->
+<!--      <td [colspan]="results.labels.columns.length" class="text-center align-baseline">.{{ 'no_rows_found' | t }}</td>-->
+<!--    </tr>-->
+<!--    <tr *ngFor="let row of results.rows.items; let rowIndex = index">-->
+<!--      <td *ngIf="!hasDateColumn"></td>-->
+<!--      <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">-->
+<!--        &lt;!&ndash;      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}&ndash;&gt;-->
+<!--        {{ value }}-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--    <tfoot>-->
+<!--    <tr>-->
+<!--      <td>{{ 'total_for_page' | t }}</td>-->
+<!--      <td *ngFor="let total of results.pageTotals">{{ total ?? 0 }}</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>{{ 'total' | t }}</td>-->
+<!--      <td *ngFor="let total of results.totals">{{ total ?? 0 }}</td>-->
+<!--    </tr>-->
+<!--    </tfoot>-->
+<!--  </table>-->
+<!--</div>-->
+<div>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let result of results">
+				<td>{{ criteria.interval === 'dayInWeek' ? (weekDays[result._id] | t) : result._id | t }}</td>
+				<td>{{ result.count }}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-<div class="table-container">
-  <table class="table">
-    <thead>
-    <tr *ngIf="results.labels.titles.length > 0">
-      <th></th>
-      <th *ngFor="let title of results.labels.titles" [colSpan]="title.length">{{ title.name }}</th>
-    </tr>
-    <tr *ngIf="results.labels.subTitles.length > 0">
-      <th></th>
-      <th *ngFor="let subTitle of results.labels.subTitles" [colSpan]="subTitle.length">{{ subTitle.name }}</th>
-    </tr>
-    <tr>
-      <th>
-        <span>{{ hasDateColumn ? ('date' | t) : '' }}</span>
-        <div class="sort-container" *ngIf="hasDateColumn">
-          <div class="triangle-up" (click)="sort('date', 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'asc' }"></div>
-          <div class="triangle-down" (click)="sort('date', 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === 'date' && criteria.sort[0]?.direction === 'desc' }"></div>
-        </div>
-      </th>
-      <th *ngFor="let column of results.labels.columns" [colSpan]="column.length ?? 1">
-        <div class="sort-container">
-          <div class="triangle-up" (click)="sort(column.id, 'asc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'asc' }"></div>
-          <div class="triangle-down" (click)="sort(column.id, 'desc')" [ngClass]="{ selected: criteria.sort[0] && criteria.sort[0].column === column.id && criteria.sort[0]?.direction === 'desc' }"></div>
-        </div>
-        <span>{{ column.level ? ('level' | t) + ' ' + column.level : column.name | t }}</span>
-        <span *ngIf="column.dataSource && column.dataSource === 'internal' || column.dataSource === 'external'"> ({{ column.dataSource | t }})</span>
-      </th>
-    </tr>
-    <tr *ngIf="results.labels.columnTypes.length > 0">
-      <th></th>
-      <th *ngFor="let type of results.labels.columnTypes" [colSpan]="type.length">{{ type.name ? (type.name | t) : '' }}</th>
-    </tr>
-    </thead>
-    <tbody *ngIf="isProducing">
-    <tr>
-      <td class="loader-cell" [colSpan]="results.labels.columns.length">
-        <div class="loader inline"></div>
-      </td>
-    </tr>
-    </tbody>
-    <tbody *ngIf="!isProducing">
-    <tr *ngIf="results.rows.items.length === 0" class="h-100">
-      <td [colspan]="results.labels.columns.length" class="text-center align-baseline">.{{ 'no_rows_found' | t }}</td>
-    </tr>
-    <tr *ngFor="let row of results.rows.items; let rowIndex = index">
-      <td *ngIf="!hasDateColumn"></td>
-      <td *ngFor="let value of row; let first = first; let index = index" [ngStyle]="first ? null : styles[rowIndex][index]">
-        <!--      {{ first && timeSpace === 'day_in_week' ? (value | lowercase | t) : value }}-->
-        {{ value }}
-      </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-      <td>{{ 'total_for_page' | t }}</td>
-      <td *ngFor="let total of results.pageTotals">{{ total ?? 0 }}</td>
-    </tr>
-    <tr>
-      <td>{{ 'total' | t }}</td>
-      <td *ngFor="let total of results.totals">{{ total ?? 0 }}</td>
-    </tr>
-    </tfoot>
-  </table>
-</div>
-<app-pagination [data]="paginationData" *ngIf="results.rows.items.length > 0"></app-pagination>
+<!--<app-pagination [data]="paginationData" *ngIf="results.rows.items.length > 0"></app-pagination>-->
