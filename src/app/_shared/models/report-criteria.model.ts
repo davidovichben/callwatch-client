@@ -5,6 +5,7 @@ export class ReportCriteriaModel {
   weekDays: string[];
   // showInternal: boolean;
   // showExternal: boolean;
+  groupByUnit: boolean;
   interval: string;
   sort: { column: string, direction: 'desc' | 'asc' }[];
   ignoreDates: { start: string, end: string };

@@ -13,7 +13,7 @@ import { InsightsModel } from '../../_shared/models/insights.model';
 export class DashboardComponent implements OnInit {
   loadingInterval: number;
   
-  insights: InsightsModel;
+  insights: any;
   
   constructor(private route: ActivatedRoute, private insightsService: InsightsService) {}
 

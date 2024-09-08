@@ -1,11 +1,11 @@
 <form (ngSubmit)="submit()" [formGroup]="formGroup">
-  <div class="d-flex justify-content-between">
-    <p class="mb-3 f-20 blue-text">{{ 'data_filtering' | t }}</p>
+  <div class="d-flex justify-content-between mb-4">
+    <p class="f-20 blue-text">{{ 'data_filtering' | t }}</p>
 <!--    <div>-->
 <!--      <button mat-flat-button class="blue-btn" type="submit">{{ 'show_report' | t }}</button>-->
 <!--    </div>-->
   </div>
-	<div class="criterion">
+	<div class="criterion mb-4">
 		<mat-form-field>
 			<mat-label>{{ 'interval' | t }}</mat-label>
 			<mat-select formControlName="interval">
@@ -13,22 +13,18 @@
 			</mat-select>
 		</mat-form-field>
 	</div>
-	
-
-<!--  <div class="criterion">-->
-<!--    <div>-->
-<!--      <p class="mb-3">{{ 'show_values_in_date_range' | t }}:</p>-->
-<!--      <mat-radio-group formControlName="dateType">-->
-<!--        <mat-radio-button value="today" class="mb-3">{{ 'today' | t }}</mat-radio-button>-->
-<!--        <mat-radio-button value="range">-->
-<!--          <app-date-range-picker formGroupName="dates">-->
-<!--            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>-->
-<!--            <app-date-range-input [disabled]="formGroup.get('dateType')?.value === 'today'" class="mx-3 no-space" formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>-->
-<!--          </app-date-range-picker>-->
-<!--        </mat-radio-button>-->
-<!--      </mat-radio-group>-->
-<!--    </div>-->
-<!--  </div>-->
+  <div class="criterion mb-4">
+    <div>
+      <p class="mb-3">{{ 'show_values_in_date_range' | t }}:</p>
+	    <app-date-range-picker>
+		    <app-date-range-input class="ms-3 no-space" formControlName="startDate" [placeholder]="'start_date' | t" startInput></app-date-range-input>
+		    <app-date-range-input class="no-space" formControlName="endDate" [placeholder]="'end_date' | t" endInput></app-date-range-input>
+	    </app-date-range-picker>
+    </div>
+  </div>
+	<div class="criterion mb-4">
+		<mat-slide-toggle formControlName="groupByUnit">{{ 'group_by_unit' | t }}</mat-slide-toggle>
+	</div>
 <!--  <div class="criterion">-->
 <!--    <span class="d-flex align-items-baseline">{{ 'for_hours_in_day' | t }}:</span>-->
 <!--&lt;!&ndash;    TODO make time component&ndash;&gt;-->
@@ -137,10 +133,10 @@
 <!--      <app-date-range-input formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>-->
 <!--    </app-date-range-picker>-->
 <!--  </div>-->
-  <p class="mb-3 f-20 blue-text">{{ 'units_to_show' | t }}</p>
-  <div class="mb-4">
-    <app-unit-select formControlName="units" [units]="units" [multiple]="true" class="w-300p"></app-unit-select>
-  </div>
+<!--  <p class="mb-3 f-20 blue-text">{{ 'units_to_show' | t }}</p>-->
+<!--  <div class="mb-4">-->
+<!--    <app-unit-select formControlName="units" [units]="units" [multiple]="true" class="w-300p"></app-unit-select>-->
+<!--  </div>-->
   <div>
     <button mat-flat-button class="blue-btn" type="submit">{{ 'show_report' | t }}</button>
   </div>

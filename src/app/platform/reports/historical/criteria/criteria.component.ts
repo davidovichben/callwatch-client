@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Subscription, timeInterval } from 'rxjs';
+import moment from 'moment';
 
 import { UnitSelectComponent } from 'src/app/_shared/components/unit-select/unit-select.component';
 import { DateRangePickerComponent } from 'src/app/_shared/components/date-range-picker/date-range-picker.component';
@@ -47,6 +48,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   readonly timeIntervals = ReportTimeIntervals;
   readonly minutesInterval = MinutesInterval;
   readonly hours = Hours;
+  readonly timeInterval = timeInterval;
 
   formGroup: UntypedFormGroup;
 
@@ -86,11 +88,13 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
   private makeForm(criteria?: ReportCriteriaModel): void {
     this.formGroup = this.fb.group({
-      dateType: this.fb.control('today'),
+      startDate: this.fb.control(null),
+      endDate: this.fb.control(null),
       dates: this.fb.group({
         start: this.fb.control(null),
         end: this.fb.control(null),
       }),
+      groupByUnit: this.fb.control(false),
       times: this.fb.array([]),
       weekDays: this.fb.group({}),
       // showInternal: this.fb.control(true),
@@ -140,7 +144,6 @@ export class CriteriaComponent implements OnInit, OnDestroy {
 
     if (!criteria) {
       this.formGroup.reset({
-        dateType: 'today',
         timeSpace: 'day',
         // showInternal: true,
         // showExternal: true,
@@ -294,7 +297,7 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     this.sanitizeTime(values)
 
     values.sort = values.sort.filter(sort => sort.column && sort.direction);
-
+    
     return values;
   }
 
@@ -323,6 +326,4 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-  
-  protected readonly timeInterval = timeInterval;
 }
