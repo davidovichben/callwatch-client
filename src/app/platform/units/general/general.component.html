@@ -23,7 +23,7 @@
     </div>
   </div>
   <div>
-    <button class="btn blue-btn ms-3" type="submit" *ngIf="!isRootUnit && hasPermission('units', 'update')">{{ 'save' | t }}</button>
-    <button class="btn red-btn" type="button" (click)="reassignUnit()" *ngIf="!isRootUnit && hasPermission('units', 'delete')">{{ 'delete' | t }}</button>
+    <button class="btn primary-btn ms-3" type="submit" *ngIf="!isRootUnit && hasPermission('units', 'update')">{{ 'save' | t }}</button>
+    <button class="btn warning-btn" type="button" (click)="reassignUnit()" *ngIf="!isRootUnit && hasPermission('units', 'delete')">{{ 'delete' | t }}</button>
   </div>
 </form>

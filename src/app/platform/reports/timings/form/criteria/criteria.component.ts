@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
-import { AbandonTimes, ReportCriteriaModel, ReportProductionTimeRanges, ReportTimeSpaces } from 'src/app/_shared/models/report-criteria.model';
+import { ReportCriteriaModel, ReportProductionTimeRanges } from 'src/app/_shared/models/report-criteria.model';
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { ReportFormats } from 'src/app/_shared/models/report-template.model';
@@ -23,8 +23,6 @@ export class CriteriaComponent implements OnInit {
   readonly errorMessages = ErrorMessages;
   readonly formats = ReportFormats;
   readonly timeRanges = ReportProductionTimeRanges;
-  readonly timeSpaces = ReportTimeSpaces;
-  readonly abandonTimes = AbandonTimes;
   readonly sortDirections = SortDirections;
   readonly weekDays = WeekDays;
 
@@ -36,13 +34,7 @@ export class CriteriaComponent implements OnInit {
       const control = this.fb.control(value);
       (this.formGroup.get('weekDays') as UntypedFormGroup).addControl(day, control);
     });
-
-    if (this.criteria?.times.length > 0) {
-      this.criteria.times.forEach(time => this.addTime(time));
-    } else {
-      this.addTime();
-    }
-
+    
     if (this.criteria?.sort.length > 0) {
       this.criteria.sort.forEach(sort => this.addSortColumn(sort));
     } else {
@@ -63,25 +55,12 @@ export class CriteriaComponent implements OnInit {
   }
 
   setColumnDisabled(columnId: string, disabled: boolean): void {
-    const column = this.columns.find(column => column.id === columnId);
+    const column = this.columns.find(column => column._id === columnId);
     if (column) {
       column.disabled = disabled;
     }
   }
-
-  addTime(time?: { start: string, end: string }): void {
-    const group = this.fb.group({
-      start: this.fb.control(time ? time.start : null),
-      end: this.fb.control(time ? time.end : null)
-    });
-
-    (this.formGroup.get('times') as UntypedFormArray).push(group);
-  }
-
-  removeTime(index: number): void {
-    (this.formGroup.get('times') as UntypedFormArray).removeAt(index);
-  }
-
+  
   addSortColumn(sort?: { column: string, direction: string }): void {
     const group = this.fb.group({
       column: this.fb.control(sort ? sort.column : null),

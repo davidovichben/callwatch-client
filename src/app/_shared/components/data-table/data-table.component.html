@@ -17,7 +17,7 @@
     <mat-menu #actionMenu>
       <div mat-menu-item (click)="openMultipleEdit.emit(true)" class="text-center">{{ 'edit' | t }}</div>
     </mat-menu>
-    <button class="btn blue-btn" [matMenuTriggerFor]="actionMenu">{{ 'actions' | t }}</button>
+    <button class="btn primary-btn" [matMenuTriggerFor]="actionMenu">{{ 'actions' | t }}</button>
   </div>
 </div>
 <p class="alert alert-success mb-3" *ngIf="savedItem">

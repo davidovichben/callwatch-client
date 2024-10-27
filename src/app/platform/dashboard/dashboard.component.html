@@ -1,3 +1,12 @@
+<div class="flex-between">
+	<p class="h2">{{ 'primary_performance' | t }}</p>
+	<mat-form-field class="w-250p">
+		<mat-select value="week">
+			<mat-option value="week">השבוע</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>
+
 <div class="row">
 	<div class="col-12 col-lg-4 mb-3">
 		<div class="card">
@@ -5,7 +14,7 @@
 				<p class="card-title">{{ 'average_response_time' | t }}</p>
 			</div>
 			<div class="card-body">
-				<p class="card-value">{{ insights.averageResponseTime }} </p>
+				<p class="card-value">{{ results.averageResponseTime ?? '0' }} </p>
 				<p class="card-value-desc">{{ 'minutes' | t }}</p>
 			</div>
 		</div>
@@ -16,7 +25,7 @@
 				<p class="card-title">{{ 'conversation_count' | t }}</p>
 			</div>
 			<div class="card-body">
-				<p class="card-value">{{ insights.conversations }} </p>
+				<p class="card-value">{{ results.conversationsCount ?? '0' }} </p>
 				<p class="card-value-desc"></p>
 			</div>
 		</div>
@@ -27,7 +36,7 @@
 				<p class="card-title">{{ 'number_of_mails_per_conversation' | t }}</p>
 			</div>
 			<div class="card-body">
-				<p class="card-value">{{ insights.messages }} </p>
+				<p class="card-value">{{ results.messagesCount ?? '0' }} </p>
 				<p class="card-value-desc"></p>
 			</div>
 		</div>
@@ -38,7 +47,7 @@
 				<p class="card-title">{{ 'mailbox_count' | t }}</p>
 			</div>
 			<div class="card-body">
-				<p class="card-value">{{ insights.mailboxes }} </p>
+				<p class="card-value">{{ results.mailboxesCount ?? '0' }} </p>
 				<p class="card-value-desc"></p>
 			</div>
 		</div>
@@ -49,7 +58,7 @@
 				<p class="card-title">{{ 'unit_count' | t }}</p>
 			</div>
 			<div class="card-body">
-				<p class="card-value">{{ insights.units }} </p>
+				<p class="card-value">{{ results.unitsCount ?? '0' }} </p>
 				<p class="card-value-desc"></p>
 			</div>
 		</div>
@@ -60,7 +69,7 @@
 				<p class="card-title">{{ 'answered' | t }}</p>
 			</div>
 			<div class="card-body">
-				<p class="card-value">{{ insights.answeredCount }} </p>
+				<p class="card-value">{{ results.answeredCount ?? '0' }}</p>
 				<p class="card-value-desc"></p>
 			</div>
 		</div>
@@ -71,7 +80,40 @@
 				<p class="card-title">{{ 'open' | t }}</p>
 			</div>
 			<div class="card-body">
-				<p class="card-value">{{ insights.openCount }} </p>
+				<p class="card-value">{{ results.openCount ?? '0' }} </p>
+				<p class="card-value-desc"></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-lg-4 mb-3">
+		<div class="card">
+			<div class="card-header">
+				<p class="card-title">{{ 'open' | t }} %</p>
+			</div>
+			<div class="card-body">
+				<p class="card-value">{{ results.openPercentage ?? '0' }}%</p>
+				<p class="card-value-desc"></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-lg-4 mb-3">
+		<div class="card">
+			<div class="card-header">
+				<p class="card-title">{{ 'forwarded' | t }}</p>
+			</div>
+			<div class="card-body">
+				<p class="card-value">{{ results.forwardedCount ?? '0' }}</p>
+				<p class="card-value-desc"></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-lg-4 mb-3">
+		<div class="card">
+			<div class="card-header">
+				<p class="card-title">{{ 'forwarded' | t }} %</p>
+			</div>
+			<div class="card-body">
+				<p class="card-value">{{ results.forwardedPercentage ?? '0' }}%</p>
 				<p class="card-value-desc"></p>
 			</div>
 		</div>

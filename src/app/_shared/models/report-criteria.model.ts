@@ -1,19 +1,18 @@
 export class ReportCriteriaModel {
-  dateType: string;
+  startDate: string;
+  endDate: string;
   dates: { start: string, end: string };
-  times: { start: any, end: any }[];
   weekDays: string[];
-  // showInternal: boolean;
-  // showExternal: boolean;
-  groupByUnit: boolean;
+  unitId: string;
+  mailboxId: string;
+  groupBy: string;
   interval: string;
   sort: { column: string, direction: 'desc' | 'asc' }[];
   ignoreDates: { start: string, end: string };
-  columns: number[];
-  units: number[];
+  columns: string[];
+  units: string[];
 }
 
-export const AbandonTimes = [3];
 export const ReportProductionTimeRanges = ['day', 'week', 'month', 'last_year', 'current_year'];
 export const ReportTimeIntervals = [
   { label: '15_minutes', value: 'minute' },

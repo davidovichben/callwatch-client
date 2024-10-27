@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { InsightsService } from '../../_shared/services/http/insights.service';
-
-import { InsightsModel } from '../../_shared/models/insights.model';
+import { ReportsService } from 'src/app/_shared/services/http/reports.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,19 +11,21 @@ import { InsightsModel } from '../../_shared/models/insights.model';
 export class DashboardComponent implements OnInit {
   loadingInterval: number;
   
-  insights: any;
+  results: any;
   
-  constructor(private route: ActivatedRoute, private insightsService: InsightsService) {}
+  constructor(private route: ActivatedRoute, private reportsService: ReportsService) {}
 
   ngOnInit(): void {
-    this.insights = this.route.snapshot.data.insights;
+    this.results = this.route.snapshot.data.results;
+    
+    console.log(this.results)
     
     this.loadData();
   }
   
   loadData() {
     this.loadingInterval = setInterval(async () => {
-      this.insights = await this.insightsService.getLatestInsights();
+      this.results = await this.reportsService.getTodayResults();
     }, 5000);
   }
   

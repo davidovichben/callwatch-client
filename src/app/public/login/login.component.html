@@ -1,5 +1,5 @@
 <form *ngIf="showForm" (ngSubmit)="submit(form)" #form="ngForm">
-  <h3 class="text-center blue-text">{{ 'system_login' | t }}</h3>
+  <h3 class="text-center primary-text">{{ 'system_login' | t }}</h3>
   <mat-form-field class="w-100">
     <mat-label>{{ 'username' | t }}</mat-label>
     <input matInput type="text" ngModel name="username" required>
@@ -14,11 +14,11 @@
     <mat-label>{{ 'extension' | t }}</mat-label>
     <input matInput type="text" ngModel name="extension">
   </mat-form-field>
-  <button class="btn blue-btn w-100" type="submit">{{ 'login' | t }}</button>
+  <button class="btn primary-btn w-100" type="submit">{{ 'login' | t }}</button>
   <p class="mt-3 alert alert-danger" [@fade]="loginNotAllowed ? 'active' : 'inactive'">{{ 'login_not_allowed' | t }}.</p>
   <p class="mt-3 alert alert-danger" [@fade]="hasLoginError ? 'active' : 'inactive'">{{ 'invalid_username_or_password' | t }}.</p>
   <div class="mt-3 text-center">
-    <a class="f-12 blue-text" routerLink="./forgot">{{ 'forgot_password' | t }}?</a>
+    <a class="f-12 primary-text" routerLink="./forgot">{{ 'forgot_password' | t }}?</a>
   </div>
 </form>
 <div class="overlay" *ngIf="!showForm">

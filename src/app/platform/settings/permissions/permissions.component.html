@@ -1,7 +1,7 @@
 <div class="mb-3 flex-between">
   <h1>{{ 'permission_management' | t }}</h1>
   <div>
-    <button class="btn blue-btn" routerLink="form" *ngIf="userSession.hasPermission('permissions', 'create')">
+    <button class="btn primary-btn" routerLink="form" *ngIf="userSession.hasPermission('permissions', 'create')">
       <i class="la la-plus ms-1"></i>
       <span>{{ 'add_permission' | t }}</span>
     </button>

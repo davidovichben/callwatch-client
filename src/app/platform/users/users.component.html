@@ -1,6 +1,6 @@
 <div class="mb-3 flex-between">
   <h1>{{ 'users' | t }}</h1>
-  <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('users', 'create')">
+  <button class="btn primary-btn" routerLink="./form" *ngIf="userSession.hasPermission('users', 'create')">
     <i class="la la-plus ms-1"></i>
     <span>{{ 'add_user' | t }}</span>
   </button>

@@ -18,17 +18,12 @@ import { ColumnsDialogComponent } from './columns-dialog/columns-dialog.componen
 import { QueryDialogComponent } from './query-dialog/query-dialog.component';
 
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
-import { InsightsService } from 'src/app/_shared/services/http/insights.service';
-
-import { HistoricalReportResultsResolve } from 'src/app/_shared/resolves/historical-report-results.resolve';
+import { ReportsService } from 'src/app/_shared/services/http/reports.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: ResultsComponent,
-    resolve: {
-      results: HistoricalReportResultsResolve
-    }
+    component: ResultsComponent
   }
 ];
 
@@ -54,8 +49,7 @@ const routes: Routes = [
   ],
   providers: [
     ReportTemplateService,
-    HistoricalReportResultsResolve,
-    InsightsService
+    ReportsService
   ]
 })
 export class ResultsModule {}

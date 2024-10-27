@@ -1,18 +1,18 @@
 <form #form="ngForm">
   <ng-container *ngFor="let column of columns; let index = index">
     <mat-form-field appearance="none" *ngIf="!column.searchOptions" class="search-field">
-      <label class="f-12 grey-text">{{ column.label }}</label>
+      <label class="f-12 neutral-text">{{ column.label }}</label>
       <input matInput type="text" [placeholder]="column.label" [name]="column.name" ngModel>
     </mat-form-field>
     <div *ngIf="column.searchOptions && column.searchOptions.isDate">
       <label class="bold f-12">{{ column.label }}</label>
       <div [ngModelGroup]="column.name" #dateGroup="ngModelGroup">
         <mat-form-field appearance="none" class="search-field">
-          <label class="f-12 grey-text">מתאריך</label>
+          <label class="f-12 neutral-text">מתאריך</label>
           <input matInput type="date" placeholder="מתאריך" name="from" ngModel class="date-input">
         </mat-form-field>
         <mat-form-field appearance="none" class="search-field">
-          <label class="f-12 grey-text">עד תאריך</label>
+          <label class="f-12 neutral-text">עד תאריך</label>
           <input matInput type="date" placeholder="עד תאריך" name="to" ngModel class="date-input">
         </mat-form-field>
       </div>
@@ -23,4 +23,3 @@
   <span (click)="reset()" id="resetButton">נקה שדות</span>
   <span (click)="search()" id="searchButton">חיפוש</span>
 </div>
-

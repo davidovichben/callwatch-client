@@ -38,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'auditTrail',
-        loadChildren: () => import('./platform/audit-trail/audit-trail.module').then(m => m.AuditTrailModule)
+        loadComponent: () => import('./platform/audit-trail/audit-trail.component').then(m => m.AuditTrailComponent)
       },
       {
         path: '**',

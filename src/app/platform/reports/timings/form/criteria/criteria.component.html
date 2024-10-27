@@ -39,10 +39,10 @@
           <input matInput type="time" formControlName="end">
         </mat-form-field>
         <div class="d-flex align-items-center">
-          <button type="button" class="ms-1 light-green-btn" (click)="addTime()" *ngIf="last">
+          <button type="button" class="ms-1 btn light-success-btn" (click)="addTime()" *ngIf="last">
             <mat-icon class="f-16">add</mat-icon>
           </button>
-          <button type="button" class="blue-btn" (click)="removeTime(i)" *ngIf="!first">
+          <button type="button" class="primary-btn" (click)="removeTime(i)" *ngIf="!first">
             <mat-icon class="f-16">remove</mat-icon>
           </button>
         </div>
@@ -104,10 +104,10 @@
           </mat-select>
         </mat-form-field>
         <div class="d-flex align-items-center">
-          <button mat-flat-button type="button" class="ms-1 light-green-btn" (click)="addSortColumn()" *ngIf="last && columns?.length > (i + 1)">
+          <button mat-flat-button type="button" class="ms-1 btn light-success-btn" (click)="addSortColumn()" *ngIf="last && columns?.length > (i + 1)">
             <mat-icon class="f-16">add</mat-icon>
           </button>
-          <button mat-flat-button type="button" class="blue-btn" (click)="removeSortColumn(i)" *ngIf="!first">
+          <button mat-flat-button type="button" class="btn primary-btn" (click)="removeSortColumn(i)" *ngIf="!first">
             <mat-icon class="f-16">remove</mat-icon>
           </button>
         </div>

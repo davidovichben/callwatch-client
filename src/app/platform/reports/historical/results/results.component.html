@@ -107,39 +107,85 @@
 <!--    </tfoot>-->
 <!--  </table>-->
 <!--</div>-->
-<div>
-	<table class="table">
+
+<div class="d-flex justify-content-between mb-3">
+  <div>
+    <p class="h2" *ngIf="reportTitle">
+      <span>{{ reportTitle }} </span>
+      <span *ngIf="criteria.startDate && criteria.endDate">{{ criteria.startDate|date: 'dd/MM/Y' }} - {{ criteria.endDate|date: 'dd/MM/Y' }}</span>
+    </p>
+  </div>
+  <div>
+<!--    <button mat-flat-button class="ms-2 action-btn" (click)="openInformationDialog()">-->
+<!--      <mat-icon class="ms-1">error_outline</mat-icon>-->
+<!--      <span>{{ 'information' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" (click)="produce()">-->
+<!--      <mat-icon class="ms-1">refresh</mat-icon>-->
+<!--      <span>{{ 'refresh' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" (click)="openColumnsDialog()">-->
+<!--      <mat-icon class="ms-1">grid_on</mat-icon>-->
+<!--      <span>{{ 'columns' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="ms-2 action-btn" [routerLink]="['..', 'criteria']">-->
+<!--      <mat-icon class="ms-1">settings</mat-icon>-->
+<!--      <span>{{ 'settings' | t }}</span>-->
+<!--    </button>-->
+<!--    <button mat-flat-button class="action-btn" (click)="openQueryDialog()" *ngIf="isAdmin">-->
+<!--      <mat-icon class="ms-1">code</mat-icon>-->
+<!--      <span>SQL</span>-->
+<!--    </button>-->
+<!--    <mat-menu #downloadMenu="matMenu">-->
+<!--      <button mat-menu-item (click)="download(format)" *ngFor="let format of formats">{{ format }}</button>-->
+<!--    </mat-menu>-->
+  </div>
+</div>
+<div class="mb-3">
+	<button mat-raised-button class="ms-2 action-btn" (click)="exportXls()">
+		<mat-icon class="ms-1">download</mat-icon>
+		<span>{{ 'export' | t }}</span>
+	</button>
+</div>
+<div class="table-responsive">
+	<table class="table table-bordered">
 		<thead>
-			<tr>
-				<th>{{ 'date' | t }}</th>
-				<th *ngIf="criteria.groupByUnit">{{ 'unit_name' | t }}</th>
-				<th *ngIf="criteria.groupByUnit">{{ 'admin' | t }}</th>
-				<th>{{ 'conversation_count' | t }}</th>
-				<th>{{ 'message_count' | t }}</th>
-				<th>{{ 'mailbox_count' | t }}</th>
-				<th>{{ 'unit_count' | t }}</th>
-				<th>{{ 'average_response_time' | t }}</th>
-				<th>{{ 'answered' | t }}</th>
-				<th>{{ 'open' | t }}</th>
-			</tr>
+		<tr>
+			<th *ngFor="let header of results.headers">{{ header | t }}</th>
+		</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let result of results">
-				<td>{{ criteria.interval === 'dayInWeek' ? (weekDays[result.date] | t) : result.date | t }}</td>
-				<td *ngIf="criteria.groupByUnit">{{ result.unit.name }}</td>
-				<td *ngIf="criteria.groupByUnit">{{ result.unit.admin }}</td>
-				<td>{{ result.conversations }}</td>
-				<td>{{ result.messages }}</td>
-				<td>{{ result.mailboxes }}</td>
-				<td>{{ result.units }}</td>
-				<td>{{ result.averageResponseTime }}</td>
-				<td>{{ result.answeredCount }}</td>
-				<td>{{ result.openCount }}</td>
-			</tr>
-		    <tr *ngIf="results.length === 0" class="h-100">
-		      <td [colspan]="8" class="text-center align-baseline">.{{ 'no_rows_found' | t }}</td>
-		    </tr>
+		<tr *ngFor="let row of results.rows">
+			<td *ngFor="let column of results.columns">{{ row[column] }}</td>
+			
+<!--			<td>{{ criteria.interval === 'dayInWeek' ? (weekDays[result.date] | t) : result.date | t }}</td>-->
+<!--			<td *ngIf="result.unit">-->
+<!--				<a class="link" routerLink="./" [queryParams]="{ view: 'unit', _id: result.unit._id, title: result.unit.name }">{{ result.unit.name }}</a>-->
+<!--			</td>-->
+<!--			<td *ngIf="result.unit">{{ result.unit.admin }}</td>-->
+<!--			<td *ngIf="result.mailbox">-->
+<!--				<a class="link" routerLink="./" [queryParams]="{ view: 'mailbox', _id: result.mailbox._id, title: result.mailbox.name  }">{{ result.mailbox.name }}</a>-->
+<!--			</td>-->
+<!--			<td>{{ result.conversationsCount }}</td>-->
+<!--			<td>{{ result.messagesCount }}</td>-->
+<!--			<td *ngIf="result.unitsCount">-->
+<!--				<a class="link" routerLink="./" [queryParams]="{ view: 'units' }">{{ result.unitsCount }}</a>-->
+<!--			</td>-->
+<!--			<td *ngIf="result.mailboxesCount">-->
+<!--				<a class="link" routerLink="./" [queryParams]="{ view: 'mailboxes' }">{{ result.mailboxesCount }}</a>-->
+<!--			</td>-->
+<!--			<td>{{ result.averageResponseTime }}</td>-->
+<!--			<td>{{ result.answeredCount }}</td>-->
+<!--			<td>{{ result.openCount }}</td>-->
+<!--			<td>{{ result.openPercentage }}%</td>-->
+<!--			<td>{{ result.forwardedCount }}</td>-->
+<!--			<td>{{ result.forwardedPercentage }}%</td>-->
+		</tr>
+		<tr *ngIf="results.rows.length === 0" class="h-100">
+			<td [colspan]="8" class="text-center align-baseline">.{{ 'no_rows_found' | t }}</td>
+		</tr>
 		</tbody>
 	</table>
 </div>
+
 <!--<app-pagination [data]="paginationData" *ngIf="results.rows.items.length > 0"></app-pagination>-->

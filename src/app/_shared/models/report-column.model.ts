@@ -1,10 +1,10 @@
 export class ReportColumnModel {
-  id?: any;
+  _id?: string;
   name?: string;
   level?: number;
   type?: string;
   description?: string;
-  title?: string;
+  label?: string;
   subTitle?: string;
   totalType?: string;
   dataType?: string;

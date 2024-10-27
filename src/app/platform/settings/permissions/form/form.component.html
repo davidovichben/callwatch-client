@@ -2,9 +2,9 @@
   <div class="form-header">
     <p class="h1">{{ permission ? ('edit_permission' | t) : ('add_permission' | t) }}</p>
     <div>
-      <button mat-button type="button" class="red-btn" (click)="confirmDeletePermission()" *ngIf="permission && userSession.hasPermission('permissions', 'delete')">{{ 'delete' | t }}</button>
-      <button mat-button type="button" class="mx-2 grey-btn"  [routerLink]="['/platform', 'settings', 'permissions']">{{ 'cancel' | t }}</button>
-      <button mat-button type="submit" class="blue-btn">{{ 'save' | t }}</button>
+      <button mat-button type="button" class="warning-btn" (click)="confirmDeletePermission()" *ngIf="permission && userSession.hasPermission('permissions', 'delete')">{{ 'delete' | t }}</button>
+      <button mat-button type="button" class="mx-2 neutral-btn"  [routerLink]="['/platform', 'settings', 'permissions']">{{ 'cancel' | t }}</button>
+      <button mat-button type="submit" class="primary-btn">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">
@@ -25,8 +25,8 @@
       </div>
     </div>
     <div>
-      <button class="ms-3 btn blue-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
-      <button class="btn grey-btn" type="button" (click)="checkAll(false)">{{ 'clear' | t }}</button>
+      <button class="ms-3 btn primary-btn" type="button" (click)="checkAll(true)">{{ 'check_all' | t }}</button>
+      <button class="btn neutral-btn" type="button" (click)="checkAll(false)">{{ 'clear' | t }}</button>
     </div>
     <div class="mt-3">
       <table class="table table-striped simple-table">

@@ -82,7 +82,7 @@
     </div>
     <p class="alert alert-danger d-block" [@fade]="form.submitted && formGroup.get('formula.columns').errors ? 'active' : 'inactive'">{{ 'choose_columns_error' | t }}</p>
   </ng-container>
-  <p class="bold light-black-text">{{ 'conditional_design' | t }}</p>
+  <p class="bold text-1">{{ 'conditional_design' | t }}</p>
   <ng-container formGroupName="conditionalDesign">
     <div class="row" [formGroupName]="group.name" *ngFor="let group of designGroupNames; let first = first">
       <div class="col-12 col-lg-4">
@@ -122,6 +122,6 @@
     </div>
   </ng-container>
   <div class="text-center">
-    <button class="btn blue-btn" type="submit">{{ 'save' | t }}</button>
+    <button class="btn primary-btn" type="submit">{{ 'save' | t }}</button>
   </div>
 </form>

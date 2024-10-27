@@ -1,6 +1,20 @@
 <div class="logo flex-center">
   <span>{{ toggleState === 'opened' ? 'MailWatch' : 'MW' }}</span>
 </div>
+<div class="d-flex justify-content-start px-3">
+	<div class="rounded-circle pointer">
+		<i class="la la-angle-right f-18" *ngIf="(pageDirection === 'rtl' && toggleState === 'opened') || (pageDirection === 'ltr' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
+		<i class="la la-angle-left f-18" *ngIf="(pageDirection === 'ltr' && toggleState === 'opened') || (pageDirection === 'rtl' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
+	</div>
+</div>
+
+
+<!--<div *ngIf="user.isAdmin">-->
+<!--	<button mat-raised-button [routerLink]="['/admin', 'organizations']" *ngIf="isAdminViewing">{{ 'back_to_organizations' | t }}</button>-->
+<!--	<button mat-raised-button class="mx-3 primary-btn" (click)="locale.showTranslationKeys = !locale.showTranslationKeys">-->
+<!--		{{ !locale.showTranslationKeys ? ('show_translation_keys' | t) : ('hide_translation_keys' | t) }}-->
+<!--	</button>-->
+<!--</div>-->
 <div id="menu">
   <div id="modules">
     <div class="module-container" *ngFor="let module of modules">
@@ -19,16 +33,27 @@
           <mat-icon class="mx-2 side-chevron" [ngClass]="{ 'rotate-side': module.isToggled }">chevron_left</mat-icon>
         </div>
       </div>
-      <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 70) + 'px' : 0, transition: toggleState === 'opened' ? '0.3s ease' : '0s' }">
+      <div *ngIf="module.subModules" class="sub-modules" [ngStyle]="{ height: module.isToggled ? (module.subModules.length * 60) + 'px' : 0, transition: toggleState === 'opened' ? '0.3s ease' : '0s' }">
         <a *ngFor="let subModule of module.subModules"
            [ngClass]="{ active: activeSubModule && subModule.name === activeSubModule.name }"
            [routerLink]="['/', menuType, module.name, subModule.name]"
            class="sidebar-item">{{ subModule.label ? (subModule.label | t) : (subModule.name | t) }}</a>
       </div>
     </div>
+	  <div class="sidebar-item">
+		  <figure>
+			  <mat-icon inline>logout</mat-icon>
+		  </figure>
+		  <span (click)="logout()">{{ 'logout' | t }}</span>
+	  </div>
   </div>
 </div>
-<div id="toggleSidebar" class="px-3 sidebar-item" [ngClass]="{ 'justify-content-end': toggleState === 'opened', 'justify-content-center': toggleState === 'closed' }">
-  <i class="la la-angle-double-right f-20" *ngIf="(pageDirection === 'rtl' && toggleState === 'opened') || (pageDirection === 'ltr' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
-  <i class="la la-angle-double-left f-20" *ngIf="(pageDirection === 'ltr' && toggleState === 'opened') || (pageDirection === 'rtl' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
+<div class="d-flex align-items-center">
+	<mat-icon class="user-default-avatar" *ngIf="!user.avatar">account_circle</mat-icon>
+	<img class="user-avatar" [src]="user.avatar" *ngIf="user.avatar" alt="user">
+	<span id="username">{{ user.firstName + ' ' + user.lastName }}</span>
+<!--	<div *ngIf="user.extension">-->
+<!--		<span class="ms-2 bold">{{ 'extension' | t }}:</span>-->
+<!--		<span>{{ user.extension }}</span>-->
+<!--	</div>-->
 </div>

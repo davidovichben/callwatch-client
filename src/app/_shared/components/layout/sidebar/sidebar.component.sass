@@ -6,8 +6,7 @@
   display: flex
   height: 100vh
   flex-direction: column
-  background-color: #1e2635
-  color: #fff
+  background-color: $white-color
   z-index: 999999
   overflow-y: visible
   transition: 0.3s ease
@@ -19,7 +18,7 @@
   left: 0
 
 \:host.opened
-  width: 220px
+  width: 240px
 
 \:host.closed
   width: 80px
@@ -51,7 +50,7 @@
     width: 10px
 
 #menu::-webkit-scrollbar-track
-    background: $primary-color-dark-1
+    background: $primary-color
     border-radius: 8px
 
 #menu::-webkit-scrollbar-thumb
@@ -67,17 +66,23 @@
   .module-container:hover > .sidebar-item, .sidebar-item.active
     margin: 10px
     border-radius: 10px
-    background-color: $primary-color-dark-2
-    color: $primary-color-light-2
+    background-color: $white-color
+    color: $primary-color
 
 .sidebar-item
   display: flex
   align-items: center
-  height: 70px
-  margin: 10px 0
-  color: #fff
+  height: 50px
+  margin: 10px
+  color: $text-color-2
+  font-size: 16px
   cursor: pointer
   transition: 0.3s ease margin
+
+  &.active, &:hover
+    border-radius: 25px
+    background-color: $highlight-button-color !important
+    color: $primary-color !important
 
   figure
     display: flex
@@ -95,22 +100,9 @@
 .sub-modules
   overflow: hidden
 
-  .sidebar-item
-    margin: 0
-    background-color: $primary-color-dark-1
-    font-size: 14px
-
-    &:before
-      content: ""
-      width: 80px
-
-  .sidebar-item.active, .sidebar-item:hover
-    color: $primary-color-light-2 !important
-    font-weight: bold
-    border: none
-    background-color: $primary-color-dark-1 !important
-    margin: 0 !important
-    border-radius: 0 !important
+  .sidebar-item:before
+    content: ""
+    width: 80px
 
 \:host.closed
   #modules
@@ -120,12 +112,13 @@
   .sub-modules
     display: none
 
-#toggleSidebar
-  height: 5.5vh
-  min-height: 50px
-  margin: 0
-  background-color: $primary-color
+.user-default-avatar
+  width: 45px
+  height: 45px
+  margin: 20px 10px
+  font-size: 45px
 
-  mat-icon
-    margin: 0
-    font-size: 20px
+  .user-avatar
+    height: 45px
+    width: 45px
+    margin: 0 15px

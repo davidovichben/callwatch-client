@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FileSaverService } from 'ngx-filesaver';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { HistoricalReportsService } from 'src/app/_shared/services/state/histori
 import { ReportTemplateService } from 'src/app/_shared/services/http/report-template.service';
 import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
-import { InsightsService } from 'src/app/_shared/services/http/insights.service';
+import { ReportsService } from 'src/app/_shared/services/http/reports.service';
 
 import { ReportFormats, ReportTemplateModel } from 'src/app/_shared/models/report-template.model';
 import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.model';
@@ -21,6 +21,7 @@ import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.mode
 import { ReportColumnModel } from 'src/app/_shared/models/report-column.model';
 import { PaginationData } from 'src/app/_shared/components/data-table/classes/pagination-data';
 import { WeekDays } from 'src/app/_shared/constants/general';
+import { TranslatePipe } from '../../../../_shared/pipes/translate/translate.pipe';
 
 @Component({
   selector: 'app-results',
@@ -43,6 +44,8 @@ export class ResultsComponent implements OnInit, OnDestroy {
   activeColumns: ReportColumnModel[];
   todayDate: string;
 
+  reportTitle: string;
+  
   // results: {
   //   labels: {
   //     titles: [],
@@ -59,13 +62,17 @@ export class ResultsComponent implements OnInit, OnDestroy {
   //   totals: []
   // }
 
-  results = [];
+  results = {
+    headers: [],
+    columns: {},
+    rows: []
+  };
   
   paginationData: PaginationData;
 
   styles = [];
 
-  isProducing = false;
+  isReloading = false;
   isDownloading = false;
 
   query: string;
@@ -73,8 +80,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
   isAdmin = false;
 
   constructor(private route: ActivatedRoute, private dialog: MatDialog,
-              private appState: AppStateService, private insightsService: InsightsService,
+              private router: Router,
+              private appState: AppStateService, private reportsService: ReportsService,
               private reportStateService: HistoricalReportsService,
+              private translate: TranslatePipe,
               private fileSaver: FileSaverService, private userSession: UserSessionService) {}
 
   ngOnInit(): void {
@@ -82,12 +91,12 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
     this.criteria = this.reportStateService.getCriteria();
     
+    this.setReportTitle();
+    
     // this.setData();
     // this.setActiveColumns();
     // this.setStyles();
     this.appState.routeScrollDisabled = true;
-    
-    this.results = this.route.snapshot.data.results;
     
     // this.sub.add(this.route.queryParams.subscribe(params => {
     //   if (params.page && this.paginationData.currentPage !== +params.page) {
@@ -96,6 +105,77 @@ export class ResultsComponent implements OnInit, OnDestroy {
     //     this.produce();
     //   }
     // }));
+    
+    this.route.queryParams.subscribe(async (queryParam) => {
+      this.isReloading = true;
+      
+      this.criteria.groupBy = null;
+      
+      if (queryParam.view === 'units') {
+        this.criteria.groupBy = 'units';
+      }
+      
+      if (queryParam.view === 'mailboxes') {
+        this.criteria.groupBy = 'mailboxes';
+      }
+      
+      if (queryParam.view === 'unit') {
+        this.criteria.groupBy = 'unit';
+        this.criteria.unitId = queryParam._id;
+      }
+      
+      if (queryParam.view === 'mailbox') {
+        this.criteria.groupBy = 'mailbox';
+        this.criteria.mailboxId = queryParam._id;
+      }
+      
+      this.setReportTitle(queryParam.title);
+      
+      this.results = await this.reportsService.getHistoricalResults(this.criteria);
+      
+      this.isReloading = false;
+    });
+  }
+  
+  setReportTitle(reportTitle?: string) {
+    if (this.criteria.startDate && this.criteria.endDate) {
+      this.reportTitle = this.translate.transform('report');
+    }
+    
+    if (this.criteria.groupBy === 'units') {
+      this.reportTitle = this.translate.transform('units_report');
+    }
+    
+    if (this.criteria.groupBy === 'mailboxes') {
+      this.reportTitle = this.translate.transform('mailboxes_report');
+    }
+    
+    if (reportTitle) {
+      this.reportTitle = this.translate.transform('report_for') + reportTitle;
+    }
+    
+    if (this.criteria.startDate && this.criteria.endDate) {
+      this.reportTitle += ' ' + this.translate.transform('for_dates');
+    }
+  }
+  
+  
+  async exportXls() {
+    const xls = await this.reportsService.exportReport(this.criteria);
+    console.log(xls);
+    if (xls) {
+      this.fileSaver.save(xls, 'report.xls');
+    }
+  }
+  
+  sort(column: string, direction: 'desc' | 'asc'): void {
+    // this.criteria.sort = [{ column: column, direction }];
+    // this.produce();
+  }
+  
+  ngOnDestroy(): void {
+    this.appState.routeScrollDisabled = false;
+    this.sub.unsubscribe();
   }
   
   // private setData(): void {
@@ -237,13 +317,4 @@ export class ResultsComponent implements OnInit, OnDestroy {
   //   })
   // }
   //
-  sort(column: string, direction: 'desc' | 'asc'): void {
-    // this.criteria.sort = [{ column: column, direction }];
-    // this.produce();
-  }
-
-  ngOnDestroy(): void {
-    this.appState.routeScrollDisabled = false;
-    this.sub.unsubscribe();
-  }
 }

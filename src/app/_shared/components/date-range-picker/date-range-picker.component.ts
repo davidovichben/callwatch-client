@@ -71,7 +71,6 @@ export class DateRangePickerComponent implements AfterContentInit, OnDestroy {
   }
 
   dateSelected(selected: { start: Moment, end?: Moment }): void {
-    console.log('zzzz')
     if (selected.start && !selected.end) {
       selected.end = selected.start;
     }

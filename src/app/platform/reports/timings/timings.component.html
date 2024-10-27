@@ -1,6 +1,6 @@
 <div class="mb-3 flex-between">
   <h1>{{ 'timed_reports' | t }}</h1>
-  <button class="btn blue-btn" routerLink="./form" *ngIf="userSession.hasPermission('timed_reports', 'create')">
+  <button class="btn primary-btn" routerLink="./form" *ngIf="userSession.hasPermission('timed_reports', 'create')">
     <i class="la la-plus ms-1"></i>
     <span>{{ 'add_report' | t }}</span>
   </button>

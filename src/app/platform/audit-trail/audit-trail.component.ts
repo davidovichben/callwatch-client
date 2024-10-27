@@ -1,6 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { NgForOf } from '@angular/common';
+
+import { DataTableModule } from '../../_shared/components/data-table/data-table.module';
+import { TranslateModule } from '../../_shared/pipes/translate/translate.module';
 
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { ChangesComponent } from './changes/changes.component';
@@ -9,9 +13,17 @@ import { AuditTrailService } from 'src/app/_shared/services/http/audit-trail.ser
 
 import { AuditTrailEntryModel } from 'src/app/_shared/models/audit-trail-entry.model';
 
+
 @Component({
   selector: 'app-audit-trail',
-  templateUrl: './audit-trail.component.html'
+  templateUrl: './audit-trail.component.html',
+  imports: [
+    NgForOf,
+    DataTableModule,
+    TranslateModule,
+    ChangesComponent
+  ],
+  standalone: true
 })
 export class AuditTrailComponent {
 

@@ -33,7 +33,7 @@
       </div>
     </section>
     <section formGroupName="production" [hidden]="currentStep !== 2">
-      <p class="mb-5 f-18 bold light-black-text">{{ 'production_dates' | t }}</p>
+      <p class="mb-5 f-18 bold text-1">{{ 'production_dates' | t }}</p>
       <mat-radio-group class="row mb-3" formControlName="dateType">
         <mat-radio-button class="col-12 col-lg-3" value="day">{{ 'every_day' | t }}</mat-radio-button>
         <mat-radio-button class="col-12 col-lg-3" value="week">
@@ -66,12 +66,12 @@
       </div>
     </section>
     <section [hidden]="currentStep !== 3">
-      <p class="mb-5 f-18 bold light-black-text">{{ 'production_properties' | t }}</p>
+      <p class="mb-5 f-18 bold text-1">{{ 'production_properties' | t }}</p>
       <app-criteria [formGroup]="formGroup.get('criteria')" [columns]="columns" [criteria]="criteria"></app-criteria>
     </section>
     <section formGroupName="distribution" [hidden]="currentStep !== 4">
-      <p class="f-18 bold light-black-text">{{ 'select_users_to_send' | t }}</p>
-      <p class="mb-3 f-16 bold light-black-text">{{ 'report_timing_users_s' | t }}</p>
+      <p class="f-18 bold text-1">{{ 'select_users_to_send' | t }}</p>
+      <p class="mb-3 f-16 bold text-1">{{ 'report_timing_users_s' | t }}</p>
       <mat-checkbox formControlName="allUsers">{{ 'send_report_to_organization' | t }}</mat-checkbox>
       <div class="mb-5 row">
         <div class="col-12 col-lg-3">
@@ -84,10 +84,10 @@
           </mat-form-field>
         </div>
       </div>
-      <p class="f-18 bold light-black-text">{{ 'select_data_to_send' | t }}</p>
-      <p class="mb-3 f-16 bold light-black-text">
+      <p class="f-18 bold text-1">{{ 'select_data_to_send' | t }}</p>
+      <p class="mb-3 f-16 bold text-1">
         <span>{{ 'report_timing_units_s1' | t }}. </span>
-        <span class="red-text">{{ 'report_timing_units_s2' | t }}.</span>
+        <span class="warning-text">{{ 'report_timing_units_s2' | t }}.</span>
       </p>
       <mat-checkbox formControlName="allUnits">{{ 'send_report_to_organization' | t }}</mat-checkbox>
       <div class="row">
@@ -99,10 +99,9 @@
     </section>
   </div>
   <div class="mt-3">
-    <button type="button" class="ms-3 btn grey-btn" [routerLink]="['/platform', 'reports', 'timings']">{{ 'cancel' | t }}</button>
-    <button type="button" class="ms-3 btn blue-btn" (click)="currentStep = currentStep - 1" *ngIf="currentStep > 1">{{ 'back' | t }}</button>
-    <button type="button" class="ms-3 btn blue-btn" (click)="nextStep()" *ngIf="currentStep < 4">{{ 'next' | t }}</button>
-    <button type="submit" class="ms-3 btn blue-btn" *ngIf="currentStep === 4">{{ 'save' | t }}</button>
+    <button type="button" class="ms-3 btn neutral-btn" [routerLink]="['/platform', 'reports', 'timings']">{{ 'cancel' | t }}</button>
+    <button type="button" class="ms-3 btn primary-btn" (click)="currentStep = currentStep - 1" *ngIf="currentStep > 1">{{ 'back' | t }}</button>
+    <button type="button" class="ms-3 btn primary-btn" (click)="nextStep()" *ngIf="currentStep < 4">{{ 'next' | t }}</button>
+    <button type="submit" class="ms-3 btn primary-btn" *ngIf="currentStep === 4">{{ 'save' | t }}</button>
   </div>
 </form>
-

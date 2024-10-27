@@ -4,9 +4,23 @@
   src: url('assets/fonts/OpenSansHebrew-Regular.ttf')
   font-family: OpenSans
 
+
+
 @font-face
-  src: url('assets/fonts/Magistral-Medium.ttf')
-  font-family: Magistral
+  src: url('assets/fonts/Assistant-Light.woff')
+  font-family: AssistantLight
+
+@font-face
+  src: url('assets/fonts/Assistant-Regular.woff')
+  font-family: AssistantRegular
+
+@font-face
+  src: url('assets/fonts/Assistant-SemiBold.woff')
+  font-family: AssistantSemiBold
+
+@font-face
+  src: url('assets/fonts/Assistant-Bold.woff')
+  font-family: AssistantBold
 
 @font-face
   font-family: 'Material Icons'
@@ -34,30 +48,20 @@
 body
   margin: 0
   padding: 0
-  font-family: OpenSans
+  font-family: OpenSans, sans-serif
 
-th:first-child, td:first-child
-  padding: 0.75rem 25px !important
+/*--- General Elements ---*/
 
 td
   vertical-align: middle
+
+th:first-child, td:first-child
+  padding: 0.75rem 25px !important
 
 ul
   margin: 0
   padding: 0
   list-style-type: none
-
-h1, h2, h3, h4, .h1, .h2, .h3, .h4
-  color: $primary-color
-
-h1, .h1
-  font-size: 2rem
-
-h2, .h2
-  font-size: 1.85rem
-
-h3, .h3
-  font-size: 1.125rem
 
 a, a:hover
   text-decoration: none !important
@@ -73,6 +77,8 @@ button
 
 button:focus
   outline: 0 !important
+
+/* --- General Classes ---*/
 
 .borderless
   border: none
@@ -111,26 +117,68 @@ button:focus
 .underline
   text-decoration: underline
 
+p, span, h1, h2, h3, h4, .h1, .h2, .h3, .h4
+  color: $text-color-1
+
+h1, .h1
+  font-size: 48px
+  font-family: AssistantBold, sans-serif
+
+h2, .h2
+  font-size: 36px
+  font-family: AssistantSemiBold, sans-serif
+
+h3, .h3
+  font-size: 30px
+  font-family: AssistantRegular, sans-serif
+
+h4, .h4
+  font-size: 24px
+
+.b1
+  font-size: 16px
+
+.b2
+  font-size: 14px
+
+.caption
+  font-size: 12px
+
+.text-1
+  color: $text-color-1
+
+.text-2
+  color: $text-color-2
+
+.text-3
+  color: $text-color-3
+
+.text-4
+  color: $text-color-4
+
+.text-5
+  color: $text-color-5
+
 .white-text
-  color: #fff
+  color: $white-color
 
-.light-black-text
-  color: $neutral-color-dark-2
+.neutral-text
+  color: $stroke-color-1
 
-.dark-grey-text
-  color: $neutral-color-dark-1
-
-.grey-text
-  color: $neutral-color
-
-.blue-text
+.primary-text
   color: $primary-color
 
-.red-text
+.warning-text
   color: $warning-color
 
-.green-text
+.success-text
   color: $success-color
+
+.link
+  color: $primary-color
+  font-size: 16px
+  cursor: pointer
+  text-decoration: underline
 
 .f-12
   font-size: 12px
@@ -171,10 +219,6 @@ button:focus
 .enabled
   pointer-events: all
 
-.link
-  color: #024dbc
-  cursor: pointer
-
 .chip
   display: flex
   align-items: center
@@ -211,49 +255,35 @@ button:focus
 .ltr .btn > img
   margin-right: 10px
 
-.grey-btn, .blue-btn, .red-btn, .green-btn, .light-green-btn
+.btn
   color: $white-color !important
   transition: 0.3s
 
-.white-btn
-  background-color: $neutral-color-light-1 !important
-  color: $primary-color !important
-  border: 1px solid $primary-color !important
+.neutral-btn
+  background-color: $stroke-color-1 !important
 
-.grey-btn
-  background-color: $neutral-color-dark-1 !important
-
-.blue-btn
-  background-color: $primary-color !important
+.primary-btn
+  background-color: $primary-button-color !important
   transition: 0.3s
 
-.blue-btn:hover
-  background-color: $primary-color-light-1 !important
+.primary-btn:hover
+  background-color: $hover-button-color !important
 
-.light-green-btn
-  background-color: $success-color-light-1
-
-.green-btn
+.success-btn
   background-color: $success-color
 
-.green-btn:hover, .light-green-btn:hover
+.success-btn:hover, .sucess-btn:hover
   background-color: $success-color-dark-1
 
-.red-btn
+.light-success-btn
+  background-color: $success-color-light-1
+
+.warning-btn
   background-color: $warning-color
   transition: 0.3s
 
-.red-btn:hover
+.warning-btn:hover
   background-color: $warning-color-dark-1
-
-.small-btn
-  min-width: 50px !important
-  height: 30px
-  font-size: 14px !important
-  padding: 0 !important
-
-.white-bg
-  background-color: $white-color
 
 .side-chevron
   transition: all 0.2s ease
@@ -273,11 +303,8 @@ button:focus
 
 .logo
   font-size: 24px
-  font-family: Magistral
-
-.icon-img
-  height: 11px !important
-  width: 11px !important
+  font-family: Roboto, sans-serif
+  font-weight: bold
 
 mat-icon.f-16
   height: 16px
@@ -288,15 +315,19 @@ mat-icon.f-16
   font-size: 12px
   color: $warning-color
 
-.dual-groups-container
-  width: 560px
+.rounded-circle
+  @extend .flex-center
+  border-radius: 50%
+  background-color: $stroke-color-1
+  padding: 5px
+  color: $text-color-1
 
 .row-icons
 
   mat-icon
     font-size: 24px
     cursor: pointer
-    color: $neutral-color-dark-1
+    color: $stroke-color-1
 
   mat-menu
 
@@ -304,7 +335,7 @@ mat-icon.f-16
       margin: 0 !important
 
 .row-action
-  font-family: OpenSans
+  font-family: OpenSans, sans-serif
 
 .simple-table
 
@@ -313,7 +344,7 @@ mat-icon.f-16
 
   th
     border: none
-    color: $neutral-color-dark-2
+    color: $stroke-color-1
 
   td
     color: $primary-color
@@ -336,7 +367,7 @@ mat-icon.f-16
     min-width: 120px
     padding: 5px 20px
     cursor: pointer
-    color: $neutral-color-dark-2
+    color: $stroke-color-1
     text-align: center
 
   .tab.active, .tab:hover
@@ -355,21 +386,20 @@ mat-icon.f-16
   object-fit: cover
 
 .user-default-avatar
-  color: $neutral-color-dark-1
+  color: $stroke-color-2
 
 .breadcrumbs
   display: flex
 
   a
-    color: $neutral-color-dark-2
-
+    color: $stroke-color-1
   a.active
     color: $primary-color
     font-weight: bold
 
   mat-icon
     margin: 0 12px
-    color: $neutral-color-dark-1
+    color: $stroke-color-1
 
 /*--- Forms ---*/
 
@@ -378,7 +408,7 @@ form
   .form-header
     @extend .flex-between
     margin-bottom: 15px
-    background-color: $neutral-color
+    background-color: $stroke-color-1
 
 .form-body
   padding: 2rem 1rem
@@ -405,9 +435,8 @@ form
 @media (max-width: 992px)
 
   .form-header
-
     .h1
-      font-size: 1.5rem
+      font-size: 36px
 
     .btn
       min-width: 100px
@@ -415,13 +444,13 @@ form
   .form-body
 
     .h3
-      font-size: 1.25rem
+      font-size: 26px
       text-align: center
 
 /* --- Material ---*/
 
 .mat-mdc-form-field
-  font-family: OpenSans, serif
+  font-family: OpenSans, sans-serif
   width: 100%
 
 .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-label
@@ -438,17 +467,17 @@ form
 .mat-mdc-form-field-appearance-outline
 
   .mat-mdc-form-field-prefix, .mat-mdc-form-field-suffix
-    border-color: $primary-color-light-1
+    border-color: $stroke-color-1
 
   .mat-mdc-form-field-outline-thick
-    color: $neutral-color-dark-1
+    color: $stroke-color-1
 
 .mat-mdc-form-field-appearance-outline.mat-mdc-focused
   .mat-mdc-form-field-outline-thick
-    color: $primary-color-light-1
+    color: $stroke-color-1
 
 .mat-mdc-primary .mat-mdc-option.mat-mdc-selected:not(.mat-mdc-option-disabled)
-  color: $primary-color-light-1
+  color: $stroke-color-1
 
 .mat-mdc-select.hide-arrow .mat-mdc-select-arrow
   border: none !important
@@ -458,7 +487,7 @@ form
 
 .mat-mdc-form-field.mat-focused
   .mat-mdc-form-field-label
-    color: $primary-color-light-1
+    color: $stroke-color-1
 
 .mat-mdc-form-field-outline
   background-color: $white-color
@@ -484,7 +513,7 @@ form
 
 .mat-mdc-checkbox-disabled.mat-mdc-checkbox-checked .mat-mdc-checkbox-background,
 .mat-mdc-checkbox-disabled.mat-mdc-checkbox-indeterminate .mat-mdc-checkbox-background
-  background-color: $neutral-color-dark-1
+  background-color: $stroke-color-1
 
 .mat-mdc-menu-item
   .mat-mdc-icon
@@ -536,57 +565,11 @@ textarea.mat-mdc-input-element
   font-size: 14px !important
 
 .table-striped > tbody > tr:nth-of-type(odd)
-  background-color: $neutral-color
-  --bs-table-accent-bg: $neutral-color
+  background-color: $stroke-color-1
+  --bs-table-accent-bg: $stroke-color-1
 
 .table > :not(:first-child)
   border-top: none
-
-/*--- Bootstrap LTR ---*/
-
-  .ltr .ms-1
-    margin-right: 0.25rem !important
-    margin-left: 0 !important
-
-  .ltr .me-1
-    margin-left: 0.25rem !important
-    margin-right: 0 !important
-
-  .ltr .me-2
-    margin-left: 0.5rem
-    margin-right: 0 !important
-
-  .ltr .ms-2
-    margin-right: 0.5rem
-    margin-left: 0 !important
-
-  .ltr .me-3
-    margin-left: 1rem !important
-    margin-right: 0 !important
-
-  .ltr .ms-3
-    margin-right: 1rem !important
-    margin-left: 0 !important
-
-  .ltr .ms-4
-    margin-right: 1.5rem !important
-    margin-left: 0 !important
-
-  .ltr .ms-5
-    margin-right: 3rem !important
-    margin-left: 0 !important
-
-  .ltr .ps-1
-    padding-right: 0.25rem !important
-    padding-left: 0 !important
-
-  .ltr .pe-1
-    padding-left: 0.25rem !important
-    padding-right: 0 !important
-
-  .ltr .pe-3
-    padding-left: 1rem !important
-    padding-right: 0 !important
 
 /* --- Data Table ---*/
 
@@ -594,13 +577,13 @@ textarea.mat-mdc-input-element
 
   .table
     background-color: $white-color
-    border: 1px solid $neutral-color-light-3
+    border: 1px solid $stroke-color-1
 
   .table > :not(caption) > * > *
     padding: 0.75rem 0.75rem
 
   tbody tr:nth-child(odd)
-    background-color: $neutral-color-light-1 !important
+    background-color: $stroke-color-1 !important
 
   tbody tr:nth-child(even)
     background-color: $white-color !important
@@ -628,7 +611,7 @@ app-pagination
 
   .page-item.disabled
     .page-link
-      color: $neutral-color-light-1
+      color: $stroke-color-1
 
 .ltr app-pagination
     i
@@ -639,10 +622,10 @@ app-pagination
 bd-select
 
   #selectLabel.opened #placeholder
-    color: $primary-color-light-1 !important
+    color: $stroke-color-1 !important
 
   #selectLabel.opened #selectLabelBorder, #dropdown
-    border-color: $primary-color-light-1 !important
+    border-color: $stroke-color-1 !important
 
 .ltr bd-select
 
@@ -655,10 +638,10 @@ bd-select
 app-unit-select
 
   #selectLabel.opened #placeholder
-    color: $primary-color-light-1 !important
+    color: $stroke-color-1 !important
 
   #selectLabel.opened #selectLabelBorder, #dropdown
-    border-color: $primary-color-light-1 !important
+    border-color: $stroke-color-1 !important
 
 .ltr app-unit-select
 
@@ -685,7 +668,7 @@ app-audio-input
   background-color: $primary-color
 
 .swal2-styled.swal2-cancel
-  background-color: $neutral-color-dark-1
+  background-color: $stroke-color-1
 
 /*--- Overlay and Loader ---*/
 

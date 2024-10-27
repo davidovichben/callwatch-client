@@ -8,31 +8,36 @@ import { DatePickerModule } from 'src/app/_shared/components/date-picker/date-pi
 
 import { DashboardComponent } from './dashboard.component';
 
-import { InsightsService } from '../../_shared/services/http/insights.service';
+import { ReportsService } from '../../_shared/services/http/reports.service';
 
-import { InsightsResolve } from '../../_shared/resolves/insights.resolve';
+import { ReportsResolve } from '../../_shared/resolves/reports.resolve';
+import { MatFormField, MatLabel, MatOption, MatSelect } from '@angular/material/select';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    resolve: { insights: InsightsResolve }
+    resolve: { results: ReportsResolve }
   },
-  {
-    path: 'form',
-    loadChildren: () => import('./form/form.module').then(m => m.FormModule )
-  }
+  // {
+  //   path: 'form',
+  //   loadChildren: () => import('./form/form.module').then(m => m.FormModule )
+  // }
 ];
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatIconModule,
-    TranslateModule,
-    DatePickerModule
-  ],
-  providers: [InsightsResolve, InsightsService]
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		MatIconModule,
+		TranslateModule,
+		DatePickerModule,
+		MatSelect,
+		MatOption,
+		MatLabel,
+		MatFormField
+	],
+  providers: [ReportsResolve, ReportsService]
 })
 export class DashboardModule {}

@@ -2,9 +2,9 @@
   <div class="form-header">
     <p class="h1">{{ user ? ('edit_user' | t) : ('add_user' | t) }}</p>
     <div>
-      <button mat-button type="button" class="red-btn" (click)="deleteUser()" *ngIf="user && userSession.hasPermission('users', 'delete') && user._id !== loggedUser._id">{{ 'delete' | t }}</button>
-      <button mat-button type="button" class="mx-2 grey-btn" [routerLink]="['/platform', 'users']">{{ 'cancel' | t }}</button>
-      <button mat-button type="submit" class="blue-btn">{{ 'save' | t }}</button>
+      <button mat-button type="button" class="primary-btn" (click)="deleteUser()" *ngIf="user && userSession.hasPermission('users', 'delete') && user._id !== loggedUser._id">{{ 'delete' | t }}</button>
+      <button mat-button type="button" class="mx-2 primary-btn" [routerLink]="['/platform', 'users']">{{ 'cancel' | t }}</button>
+      <button mat-button type="submit" class="primary-btn">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body row g-0">
@@ -17,7 +17,7 @@
         </div>
       </div>
       <label>
-        <p class="f-12 blue-text underline pointer">{{ 'upload_image' | t }}</p>
+        <p class="f-12 primary-text underline pointer">{{ 'upload_image' | t }}</p>
         <input type="file" (change)="uploadAvatar(avatarInput.files[0])" #avatarInput>
       </label>
       <p class="alert alert-danger mx-auto w-250p" *ngIf="avatarErrors.type">{{ 'invalid_file_type' | t }}.</p>

@@ -15,10 +15,6 @@ export class UserSessionService {
   }
 
   setUser(token: string): void {
-    
-    console.log(jwtDecode(token));
-    console.log(JSON.stringify(jwtDecode(token)));
-    
     sessionStorage.setItem('token', token)
     sessionStorage.setItem('user', JSON.stringify(jwtDecode(token)));
     this.loginChange.next(true);

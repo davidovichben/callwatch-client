@@ -1,7 +1,7 @@
 <div id="units">
   <p class="h2 text-center">{{ 'organization_structure' | t }}</p>
   <div class="my-3 text-center">
-    <button class="btn blue-btn" (click)="openFormDialog()" *ngIf="userSession.hasPermission('units', 'create')">
+    <button class="btn primary-btn" (click)="openFormDialog()" *ngIf="userSession.hasPermission('units', 'create')">
       <i class="la la-plus ms-1"></i>
       <span>{{ 'add_unit' | t }}</span>
     </button>

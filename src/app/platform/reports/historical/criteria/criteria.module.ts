@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
@@ -20,14 +21,16 @@ import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { ReportCriteriaService } from 'src/app/_shared/services/http/report-criteria.service';
 
 import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { ReportColumnsResolve } from 'src/app/_shared/resolves/report-columns.resolve';
+import { ReportsService } from '../../../../_shared/services/http/reports.service';
 
 const routes: Routes = [
   {
     path: '',
     component: CriteriaComponent,
     resolve: {
-      units: UnitsSelectResolve
+      units: UnitsSelectResolve,
+	    columns: ReportColumnsResolve
     }
   }
 ];
@@ -50,6 +53,12 @@ const routes: Routes = [
 		MatRadioModule,
 		MatSlideToggle
 	],
-  providers: [UnitService, UnitsSelectResolve, ReportCriteriaService]
+  providers: [
+		UnitService,
+	  UnitsSelectResolve,
+	  ReportCriteriaService,
+	  ReportColumnsResolve,
+	  ReportsService
+  ]
 })
 export class CriteriaModule {}
