@@ -9,7 +9,7 @@ import { ReportsService } from 'src/app/_shared/services/http/reports.service';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-  loadingInterval: number;
+  loadingInterval: any;
   
   results: any;
   

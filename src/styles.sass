@@ -580,18 +580,24 @@ textarea.mat-mdc-input-element
 
 .data-table
 
+	th, th span
+			color: $text-color-2 !important
+			font-size: 16px
+		
+	td
+		border: none !important
+	
 	.table
 		background-color: $white-color
-		border: 1px solid $stroke-color-1
 
 	.table > :not(caption) > * > *
 		padding: 0.75rem 0.75rem
 
-	tbody tr:nth-child(odd)
-		background-color: $stroke-color-1 !important
+	tbody tr:nth-child(odd) td
+		background-color: $highlight-button-color
 
-	tbody tr:nth-child(even)
-		background-color: $white-color !important
+	tbody tr:nth-child(even) td
+		background-color: $text-color-5
 
 .data-table-header
 	display: flex
@@ -600,35 +606,6 @@ textarea.mat-mdc-input-element
 	
 	bd-select
 		width: initial !important
-		
-app-data-table
-
-	.data-table-filters
-		margin-top: -17px
-
-		app-chips-input
-			display: block
-			width: 300px
-			margin-top: 19px
-
-app-pagination
-	.page-link
-		border-color: transparent !important
-		color: $primary-color !important
-		font-size: 12px
-
-	.page-item.active
-		.page-link
-			background-color: $primary-color !important
-			color: #fff !important
-
-	.page-item.disabled
-		.page-link
-			color: $stroke-color-1
-
-.ltr app-pagination
-	i
-		transform: scaleX(-1)
 
 /*--- BD Select ---*/
 

@@ -13,7 +13,6 @@ import { AuditTrailService } from 'src/app/_shared/services/http/audit-trail.ser
 
 import { AuditTrailEntryModel } from 'src/app/_shared/models/audit-trail-entry.model';
 
-
 @Component({
   selector: 'app-audit-trail',
   templateUrl: './audit-trail.component.html',
@@ -23,6 +22,7 @@ import { AuditTrailEntryModel } from 'src/app/_shared/models/audit-trail-entry.m
     TranslateModule,
     ChangesComponent
   ],
+  providers: [AuditTrailService],
   standalone: true
 })
 export class AuditTrailComponent {

@@ -1,9 +1,9 @@
 <div class="d-flex align-content-center justify-content-between">
   <p class="mb-3 mb-lg-0 text-center text-lg-right">
-	  <span class="bold ms-1">{{ data.totalItems }}</span>
-	  <span>{{ 'listings' | t }}</span>
-	  <span>{{ 'page' }}</span>
-	  <span>{{ data.currentPage }}</span>
+	  <span class="bold ms-2">{{ data.totalItems }}</span>
+	  <span class="ms-3">{{ 'listings' | t }}</span>
+	  <span class="ms-3">{{ 'page' | t }}</span>
+	  <input [value]="data.currentPage">
   </p>
-  <button class="btn btn-primary">{{ 'next_page' | t }}</button>
+  <button class="btn primary-btn">{{ 'next_page' | t }}</button>
 </div>

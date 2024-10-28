@@ -10,8 +10,12 @@ export class UnitResolve  {
 
   constructor(private unitService: UnitService) {}
 
-  resolve(snapshot: ActivatedRouteSnapshot) {
+  async resolve(snapshot: ActivatedRouteSnapshot) {
     const unitId = snapshot.params.id;
+    
+    const unit = await this.unitService.getUnit(unitId).then(response => response as UnitModel);
+    console.log(unit)
+    
     return this.unitService.getUnit(unitId).then(response => response as UnitModel);
   }
 }

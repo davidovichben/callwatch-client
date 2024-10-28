@@ -40,11 +40,11 @@
            class="sidebar-item">{{ subModule.label ? (subModule.label | t) : (subModule.name | t) }}</a>
       </div>
     </div>
-	  <div class="sidebar-item">
+	  <div class="sidebar-item" (click)="logout()">
 		  <figure>
 			  <mat-icon inline>logout</mat-icon>
 		  </figure>
-		  <span (click)="logout()">{{ 'logout' | t }}</span>
+		  <span>{{ 'logout' | t }}</span>
 	  </div>
   </div>
 </div>

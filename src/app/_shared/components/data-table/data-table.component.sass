@@ -1,7 +1,9 @@
+@import '../../../../variables'
+
 :host
 	display: block
 	padding: 15px
-	background: #fff
+	background: $white-color
 
 #tableHeader, #tableHeader > :first-child
 	display: flex
@@ -29,16 +31,15 @@
 	input
 		height: 30px
 		line-height: 30px
-	
+		
 tr, ::ng-deep td
-	border: 1px solid #ebebeb
+	border: none
 	padding: 0.5rem
 	font-size: 14px
 
 th
 	border: none !important
 	border-width: 0
-	font-size: 14px
 
 .sort-container
 	display: flex
