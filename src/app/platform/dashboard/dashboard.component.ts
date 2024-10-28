@@ -13,6 +13,28 @@ export class DashboardComponent implements OnInit {
   
   results: any;
   
+  kpis = [
+    {
+      label: 'conversation_count',
+      trend: 8,
+      value: 'conversationsCount'
+    },
+    {
+      label: 'average_response_time',
+      trend: -3.3,
+      value: 'averageResponseTime'
+    },
+    {
+      label: 'number_of_mails_per_conversation',
+      trend: 1.5,
+      value: 'messages_count'
+    },
+    {
+      label: 'mailbox_count',
+      value: 'mailbox_count'
+    }
+  ];
+  
   constructor(private route: ActivatedRoute, private reportsService: ReportsService) {}
 
   ngOnInit(): void {

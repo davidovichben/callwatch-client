@@ -1,12 +1,10 @@
 <div id="tableHeader">
   <div>
     <mat-form-field id="searchContainer" class="ms-3">
-      <mat-label>{{ 'search' | t }}</mat-label>
+	    <mat-icon matIconPrefix (click)="search(searchInput.value)">search</mat-icon>
+	    <mat-label>{{ 'search' | t }}</mat-label>
       <input matInput [ngModel]="criteria.keyword" (keyup)="search(searchInput.value, $event)" #searchInput="ngModel">
-      <div matSuffix class="d-flex">
-        <mat-icon (click)="resetSearch(searchInput)" *ngIf="searchInput.value || criteria.keyword">close</mat-icon>
-        <mat-icon (click)="search(searchInput.value)">search</mat-icon>
-      </div>
+      <mat-icon matSuffix (click)="resetSearch(searchInput)" *ngIf="searchInput.value || criteria.keyword">close</mat-icon>
     </mat-form-field>
     <ng-content select=".data-table-filters"></ng-content>
     <div *ngIf="activeSwitch">

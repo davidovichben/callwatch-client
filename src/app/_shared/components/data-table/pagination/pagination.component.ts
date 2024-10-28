@@ -5,7 +5,7 @@ import { PaginationData } from '../classes/pagination-data';
 @Component({
 	selector: 'app-pagination',
 	templateUrl: './pagination.component.html',
-	styleUrls: [ './pagination.component.css']
+	styleUrls: [ './pagination.component.sass']
 })
 export class PaginationComponent {
 

@@ -1,17 +1,16 @@
-<div class="mb-3 flex-between">
-  <h1>{{ 'users' | t }}</h1>
-  <button class="btn primary-btn" routerLink="./form" *ngIf="userSession.hasPermission('users', 'create')">
-    <i class="la la-plus ms-1"></i>
+<div class="data-table-header">
+  <p class="h3">{{ 'users' | t }}</p>
+	<bd-select class="mx-3" [(ngModel)]="dataTable.criteria.filters['permissionId']" (ngModelChange)="dataTable.criteriaChange()" [placeholder]="'permission' | t">
+		<bd-option *ngFor="let permission of permissions" [value]="permission._id">{{ permission.name }}</bd-option>
+	</bd-select>
+  <button mat-button routerLink="./form" *ngIf="userSession.hasPermission('users', 'create')">
+    <mat-icon>add_2</mat-icon>
     <span>{{ 'add_user' | t }}</span>
   </button>
 </div>
 <app-data-table tableUrl="users" [columns]="columns" [hasActionsHeader]="userSession.canModify('users')" (fetchItems)="fetchItems()"
-                [hasCheckColumn]="userSession.hasPermission('users', 'update') && dataTable.hasItems" (openMultipleEdit)="openMultipleEdit()">
-  <div class="data-table-filters">
-    <bd-select [(ngModel)]="dataTable.criteria.filters['permissionId']" (ngModelChange)="dataTable.criteriaChange()" [placeholder]="'select_permission' | t">
-      <bd-option *ngFor="let permission of permissions" [value]="permission._id">{{ permission.name }}</bd-option>
-    </bd-select>
-  </div>
+                [hasCheckColumn]="userSession.hasPermission('users', 'update') && dataTable.hasItems"
+                (openMultipleEdit)="openMultipleEdit()">
   <tr *ngFor="let item of dataTable.items">
     <td *ngIf="userSession.hasPermission('users', 'update')">
       <mat-checkbox (change)="dataTable.checkItem(item, $event.checked)" [checked]="item.checked"></mat-checkbox>

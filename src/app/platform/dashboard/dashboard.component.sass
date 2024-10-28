@@ -1,23 +1,119 @@
 @import '../../../variables'
+@import '../../../extendables'
+
+select
+	background-color: $background-color-2
+
+.card
+	padding: 10px 0
+	border: none
+
+.card-header, .card-footer
+	background: transparent
+	border: none
 
 .card-header
-	background: $primary-color
+	@extend .flex-between
+	height: 50px
+	padding: 8px 20px
+	
+	.card-title
+		margin: 0
+		font-size: 18px
+	
+.card-trend
+	padding: 4px 8px
+	border-radius: 12px
+	direction: ltr
 
-.card-title
-	font-size: 1.2rem
-	font-weight: bold
-	color: $white-color
+.card-trend-positive
+	background: $kpi-color-up
 
+	> *
+		color: $primary-color !important
+
+.card-trend-negative
+	background: $kpi-color-down
+	
+	> *
+		color: $kpi-color-down-text !important
+		
 .card-body
-	padding: 30px 0
-	text-align: center
+	display: flex
+	align-items: center
+	flex-grow: 1
+	padding: 15px 40px
+	border-left: 1px solid $stroke-color-1
 
+	> *
+		color: $primary-color
+
+//body.rtl .card-body
+//	border-left: 1px solid $stroke-color-1
+//
+//body.ltr .card-body
+//	border-right: 1px solid $stroke-color-1
+
+.card-body:last-of-type
+	border: none
+	
 .card-value
-	margin: 0
-	font-size: 2rem
+	font-size: 32px
 	font-weight: bold
-	color: $primary-color
 
 .card-value-desc
-	color: $primary-color-dark-1
-	font-weight: bold
+	font-size: 20px
+
+.card-footer
+	color: $text-color-3
+	text-align: center
+	font-size: 12px
+
+.chart
+	flex-grow: 1
+	
+	.donut
+		position: relative
+		width: 200px
+		height: 200px
+		border-radius: 50%
+		overflow: hidden
+		background: conic-gradient($graph-color-3 var(--percentage, 0%) 0%, $primary-color var(--percentage, 0%) 75%, $graph-color-3 var(--percentage, 0%) 100%)
+		
+		.center-circle
+			@extend .flex-center
+			flex-direction: column
+			position: absolute
+			top: 50%
+			left: 50%
+			width: 125px
+			height: 125px
+			background: $white-color
+			border-radius: 50%
+			transform: translate(-50%, -50%)
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0)
+			
+			> *
+				margin: 0
+				color: #777
+				font-weight: bold
+			
+.legend
+	margin-top: 20px
+	display: flex
+	flex-direction: column
+	align-items: flex-start
+
+	.legend-item
+		margin: 5px 0
+		
+	.color-box
+		width: 15px
+		height: 15px
+		border-radius: 12px
+		
+		&.slice-1
+			background-color: $primary-color
+	
+		&.slice-2
+			background-color: $graph-color-3

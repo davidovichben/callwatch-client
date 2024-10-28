@@ -14,7 +14,7 @@
         <td>{{ user.name }}</td>
         <td>{{ user.permission ? user.permission : ('primary_f' | t) }}</td>
         <td class="row-icons" *ngIf="!isRootUnit && userSession.hasPermission('users', 'delete')">
-          <mat-icon (click)="deleteUser(user.id)">delete</mat-icon>
+          <mat-icon (click)="deleteUser(user._id)">delete</mat-icon>
         </td>
       </tr>
       <tr *ngIf="unitUsers.length === 0">

@@ -1,49 +1,9 @@
 <div class="d-flex align-content-center justify-content-between">
-  <div class="mb-3 mb-lg-0 text-center text-lg-right">
-    <span>
-      <span>{{ 'showing' | t }}</span>
-      <span class="bold">{{ getCurrentItems() }} - {{ getMaxShownItems() }}</span>
-      <span>{{ 'out_of' | t }}</span>
-      <span class="bold">{{ data.totalItems }}</span>
-      <span>{{ 'listings' | t }}</span>
-    </span>
-  </div>
-  <ul class="justify-content-center pagination">
-    <li class="page-item" [ngClass]="{ disabled: data.currentPage <= 1 }">
-      <a class="page-link" routerLink="./" [queryParams]="{ page: 1 }">
-        <i class="la la-angle-double-right"></i>
-      </a>
-    </li>
-	  <li class="page-item" [ngClass]="{ disabled: data.currentPage <= 1 }">
-		  <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage - 1 }">
-			  <i class="la la-angle-right"></i>
-		  </a>
-	  </li>
-    <li class="page-item" *ngIf="data.currentPage - 2 >= 1">
-      <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage - 2 }">{{ data.currentPage - 2 }}</a>
-    </li>
-    <li class="page-item" *ngIf="data.currentPage - 1 >= 1">
-      <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage - 1 }">{{ data.currentPage - 1 }}</a>
-    </li>
-    <li class="page-item active">
-      <a class="page-link">{{ data.currentPage }}</a>
-    </li>
-    <li class="page-item" *ngIf="data.currentPage + 1 <= data.totalPages">
-      <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage + 1 }">{{ data.currentPage + 1 }}</a>
-    </li>
-    <li class="page-item" *ngIf="data.currentPage + 2 <= data.totalPages">
-      <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage + 2 }">{{ data.currentPage + 2 }}</a>
-    </li>
-	  <li class="page-item" [ngClass]="{ disabled: data.currentPage >= data.totalPages }">
-		  <a class="page-link" routerLink="./" [queryParams]="{ page: data.currentPage + 1 }">
-			  <i class="la la-angle-left"></i>
-		  </a>
-	  </li>
-    <li class="page-item" [ngClass]="{ disabled: data.currentPage >= data.totalPages }">
-      <a class="page-link" routerLink="./" [queryParams]="{ page: data.totalPages }">
-        <i class="la la-angle-double-left"></i>
-      </a>
-    </li>
-  </ul>
+  <p class="mb-3 mb-lg-0 text-center text-lg-right">
+	  <span class="bold ms-1">{{ data.totalItems }}</span>
+	  <span>{{ 'listings' | t }}</span>
+	  <span>{{ 'page' }}</span>
+	  <span>{{ data.currentPage }}</span>
+  </p>
+  <button class="btn btn-primary">{{ 'next_page' | t }}</button>
 </div>
-
