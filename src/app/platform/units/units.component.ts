@@ -43,10 +43,10 @@ export class UnitsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.rootUnit.name = this.userSession.getUser().organization;
     this.rootUnit.units = this.route.snapshot.data.units;
-    this.activeUnit = this.route.snapshot.data.unit;
+    this.activeUnit = this.route.snapshot.data.unit ?? this.rootUnit;
     
     this.sub.add(this.route.params.subscribe(() => {
-      this.activeUnit = this.route.snapshot.data.unit;
+      this.activeUnit = this.route.snapshot.data.unit ?? this.rootUnit;
       this.modules = this.activeUnit._id === 'root' ? UnitModules.slice(0, 2) : UnitModules;
       this.unitStateService.unitLoaded.next(this.activeUnit);
     }));

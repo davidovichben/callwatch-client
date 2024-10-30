@@ -27,11 +27,11 @@ export class DashboardComponent implements OnInit {
     {
       label: 'number_of_mails_per_conversation',
       trend: 1.5,
-      value: 'messages_count'
+      value: 'messagesCount'
     },
     {
       label: 'mailbox_count',
-      value: 'mailbox_count'
+      value: 'mailboxesCount'
     }
   ];
   

@@ -1,146 +1,144 @@
 <form (ngSubmit)="submit()" #form="ngForm" [formGroup]="formGroup">
   <div class="form-header">
-    <p class="h1">{{ user ? ('edit_user' | t) : ('add_user' | t) }}</p>
+    <p class="h3">{{ user ? ('edit_user' | t) : ('add_user' | t) }}</p>
     <div>
       <button mat-button type="button" class="primary-btn" (click)="deleteUser()" *ngIf="user && userSession.hasPermission('users', 'delete') && user._id !== loggedUser._id">{{ 'delete' | t }}</button>
       <button mat-button type="button" class="mx-2 primary-btn" [routerLink]="['/platform', 'users']">{{ 'cancel' | t }}</button>
       <button mat-button type="submit" class="primary-btn">{{ 'save' | t }}</button>
     </div>
   </div>
-  <div class="form-body row g-0">
-    <div class="col-12 col-xl-3 text-center">
-      <div id="avatarUpload" class="container">
-        <mat-icon class="user-default-avatar" *ngIf="!formGroup.get('avatar').value">account_circle</mat-icon>
-        <img class="user-avatar" [src]="formGroup.get('avatar').value" *ngIf="formGroup.get('avatar').value">
-        <div class="overlay" *ngIf="formGroup.get('avatar').value">
-          <mat-icon class="pointer" (click)="deleteAvatar()">delete</mat-icon>
+  <div>
+	  <p class="f-20">{{ 'personal_details' | t }}</p>
+	  <section>
+	    <div class="flex-center flex-column">
+		    <div id="avatarUpload" class="mb-1">
+			    <mat-icon class="user-default-avatar" *ngIf="!formGroup.get('avatar').value">photo_camera</mat-icon>
+			    <img class="user-avatar" [src]="formGroup.get('avatar').value" *ngIf="formGroup.get('avatar').value" alt="avatar">
+			    <div class="overlay" *ngIf="formGroup.get('avatar').value">
+				    <mat-icon class="pointer" (click)="deleteAvatar()">delete</mat-icon>
+			    </div>
+		    </div>
+		    <label>
+			    <p class="f-12 primary-text underline pointer">{{ 'upload_image' | t }}</p>
+			    <input type="file" (change)="uploadAvatar(avatarInput.files[0])" #avatarInput>
+		    </label>
+		    <p class="alert alert-danger mx-auto w-250p" *ngIf="avatarErrors.type">{{ 'invalid_file_type' | t }}.</p>
+		    <p class="alert alert-danger mx-auto w-250p" *ngIf="avatarErrors.size">{{ 'maximum_file_size' | t }} - 8MB.</p>
+	    </div>
+      <div class="row">
+          <div class="col-12 col-lg-4 mb-3 d-flex">
+            <mat-form-field>
+              <mat-label>{{ 'first_name' | t }}</mat-label>
+              <input matInput type="text" formControlName="firstName" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'FIRST_NAME_TIP' | t ">help</mat-icon>
+          </div>
+          <div class="col-12 col-lg-4 mb-3 d-flex">
+            <mat-form-field>
+              <mat-label>{{ 'last_name' | t }}</mat-label>
+              <input matInput type="text" formControlName="lastName" required>
+              <mat-error>{{ errorMessages.required | t }}</mat-error>
+            </mat-form-field>
+            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'LAST_NAME_TIP' | t ">help</mat-icon>
+          </div>
+          <div class="col-12 col-lg-4 mb-3 d-flex">
+            <mat-form-field>
+              <mat-label>{{ 'employee_number' | t }}</mat-label>
+              <input matInput type="text" formControlName="workNumber">
+            </mat-form-field>
+            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'EMPLOYEE_NUMBER_TIP' | t ">help</mat-icon>
+          </div>
+          <div class="col-12 col-lg-4 mb-3 d-flex">
+            <mat-form-field>
+              <mat-label>{{ 'email' | t }}</mat-label>
+              <input matInput class="text-left ltr" type="email" formControlName="email" required>
+              <mat-error *ngIf="formGroup.get('email').errors?.required">{{ errorMessages.required | t }}</mat-error>
+              <mat-error *ngIf="formGroup.get('email').errors?.pattern">{{ errorMessages.email | t }}</mat-error>
+            </mat-form-field>
+            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'EMAIL_TIP' | t ">help</mat-icon>
+          </div>
+          <div class="col-12 col-lg-4 mb-3 d-flex">
+            <mat-form-field>
+              <mat-label>{{ 'mobile' | t }}</mat-label>
+              <input matInput type="text" formControlName="mobile">
+              <mat-error>{{ errorMessages.phone | t }}</mat-error>
+            </mat-form-field>
+            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'MOBILE_TIP' | t ">help</mat-icon>
+          </div>
+          <div class="col-12 col-lg-4 mb-3 d-flex">
+            <mat-form-field>
+              <mat-label>{{ 'phone' | t }}</mat-label>
+              <input matInput type="text" formControlName="phone">
+              <mat-error>{{ errorMessages.phone | t }}</mat-error>
+            </mat-form-field>
+            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'PHONE_TIP' | t ">help</mat-icon>
+          </div>
+        </div>
+    </section>
+	  <p class="f-20">{{ 'user_settings' | t }}</p>
+	  <section>
+      <div class="row">
+	      <div class="col-12 col-lg-4 mb-3 d-flex">
+          <mat-form-field>
+            <mat-label>{{ 'verification_type' | t }}</mat-label>
+            <mat-select formControlName="authType">
+              <mat-option>-------</mat-option>
+              <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'VERIFICATION_TYPE_TIP' | t ">help</mat-icon>
+        </div>
+        <div class="col-12 col-lg-4 mb-3 d-flex" [@fade]="user?._id !== loggedUser?._id ? 'active' : 'inactive'">
+          <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="formGroup.get('permission').errors && form.submitted" [required]="true">
+            <bd-option *ngFor="let permission of permissions" [value]="permission._id">{{ permission.name }}</bd-option>
+          </bd-select>
+          <div class="input-error" [@fade]="formGroup.get('permission').errors && form['submitted'] ? 'active' : 'inactive'">{{ errorMessages.required | t }}</div>
+          <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'PERMISSION_TIP' | t ">help</mat-icon>
+        </div>
+        <div class="col-12 col-lg-4 mb-3 d-flex">
+          <mat-form-field>
+            <mat-label>{{ 'username' | t }}</mat-label>
+            <input matInput type="text" formControlName="username" required>
+            <mat-error *ngIf="formGroup.get('username').errors?.required">{{ errorMessages.required | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('username').errors?.exists">{{ 'username_exists' | t }}</mat-error>
+          </mat-form-field>
+          <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'USERNAME_TIP' | t ">help</mat-icon>
+        </div>
+        <div class="col-12 col-lg-4 mb-3 d-flex">
+          <mat-form-field class="disabled large-suffix" *ngIf="!user || formGroup.get('password').value">
+            <mat-label>{{ 'password' | t }}</mat-label>
+            <input matInput type="password" formControlName="password" tabindex="-1" required>
+            <span matSuffix class="enabled f-12 underline pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+          <mat-icon *ngIf="!user || formGroup.get('password').value" matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'PASSWORD_TIP' | t ">help</mat-icon>
+          <ng-container *ngIf="user && !formGroup.get('password').value">
+            <span class="f-12 underline pointer" (click)="openPasswordDialog()">{{ 'change_password' | t }}</span>
+          </ng-container>
+        </div>
+        <div class="col-12 col-lg-4 mb-3 d-flex">
+          <mat-form-field>
+            <mat-label>{{ 'system_lang_default' | t }}</mat-label>
+            <mat-select formControlName="language" required>
+              <mat-option *ngFor="let language of languages" [value]="language._id">{{ language.name }}</mat-option>
+            </mat-select>
+            <mat-error>{{ errorMessages.required | t }}</mat-error>
+          </mat-form-field>
+          <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'LANGUAGE_TIP' | t ">help</mat-icon>
         </div>
       </div>
-      <label>
-        <p class="f-12 primary-text underline pointer">{{ 'upload_image' | t }}</p>
-        <input type="file" (change)="uploadAvatar(avatarInput.files[0])" #avatarInput>
-      </label>
-      <p class="alert alert-danger mx-auto w-250p" *ngIf="avatarErrors.type">{{ 'invalid_file_type' | t }}.</p>
-      <p class="alert alert-danger mx-auto w-250p" *ngIf="avatarErrors.size">{{ 'maximum_file_size' | t }} - 8MB.</p>
-    </div>
-    <div class="col-12 col-xl-9">
-      <section>
-        <p class="h3 mb-3">{{ 'personal_details' | t }}</p>
-        <div class="d-flex">
-          <div class="row">
-            <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-              <mat-form-field>
-                <mat-label>{{ 'first_name' | t }}</mat-label>
-                <input matInput type="text" formControlName="firstName" required>
-                <mat-error>{{ errorMessages.required | t }}</mat-error>
-              </mat-form-field>
-              <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'FIRST_NAME_TIP' | t ">help</mat-icon>
-            </div>
-            <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-              <mat-form-field>
-                <mat-label>{{ 'last_name' | t }}</mat-label>
-                <input matInput type="text" formControlName="lastName" required>
-                <mat-error>{{ errorMessages.required | t }}</mat-error>
-              </mat-form-field>
-              <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'LAST_NAME_TIP' | t ">help</mat-icon>
-            </div>
-            <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-              <mat-form-field>
-                <mat-label>{{ 'employee_number' | t }}</mat-label>
-                <input matInput type="text" formControlName="workNumber">
-              </mat-form-field>
-              <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'EMPLOYEE_NUMBER_TIP' | t ">help</mat-icon>
-            </div>
-            <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-              <mat-form-field>
-                <mat-label>{{ 'email' | t }}</mat-label>
-                <input matInput class="text-left ltr" type="email" formControlName="email" required>
-                <mat-error *ngIf="formGroup.get('email').errors?.required">{{ errorMessages.required | t }}</mat-error>
-                <mat-error *ngIf="formGroup.get('email').errors?.pattern">{{ errorMessages.email | t }}</mat-error>
-              </mat-form-field>
-              <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'EMAIL_TIP' | t ">help</mat-icon>
-            </div>
-            <div class="col-12 col-lg-6 col-xxl-5 d-flex">
-              <mat-form-field>
-                <mat-label>{{ 'mobile' | t }}</mat-label>
-                <input matInput type="text" formControlName="mobile">
-                <mat-error>{{ errorMessages.phone | t }}</mat-error>
-              </mat-form-field>
-              <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'MOBILE_TIP' | t ">help</mat-icon>
-            </div>
-            <div class="col-12 col-lg-6 col-xxl-5 d-flex">
-              <mat-form-field>
-                <mat-label>{{ 'phone' | t }}</mat-label>
-                <input matInput type="text" formControlName="phone">
-                <mat-error>{{ errorMessages.phone | t }}</mat-error>
-              </mat-form-field>
-              <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'PHONE_TIP' | t ">help</mat-icon>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <p class="h3 mb-3">{{ 'user_settings' | t }}</p>
-        <div class="row">
-          <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-            <mat-form-field>
-              <mat-label>{{ 'verification_type' | t }}</mat-label>
-              <mat-select formControlName="authType">
-                <mat-option>-------</mat-option>
-                <mat-option *ngFor="let type of authTypes" [value]="type">{{ type }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'VERIFICATION_TYPE_TIP' | t ">help</mat-icon>
-          </div>
-          <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex" [@fade]="user?._id !== loggedUser?._id ? 'active' : 'inactive'">
-            <bd-select class="w-100" formControlName="permission" [placeholder]="'select_permission' | t" [hasError]="formGroup.get('permission').errors && form.submitted" [required]="true">
-              <bd-option *ngFor="let permission of permissions" [value]="permission._id">{{ permission.name }}</bd-option>
-            </bd-select>
-            <div class="input-error" [@fade]="formGroup.get('permission').errors && form.submitted ? 'active' : 'inactive'">{{ errorMessages.required | t }}</div>
-            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'PERMISSION_TIP' | t ">help</mat-icon>
-          </div>
-          <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-            <mat-form-field>
-              <mat-label>{{ 'username' | t }}</mat-label>
-              <input matInput type="text" formControlName="username" required>
-              <mat-error *ngIf="formGroup.get('username').errors?.required">{{ errorMessages.required | t }}</mat-error>
-              <mat-error *ngIf="formGroup.get('username').errors?.exists">{{ 'username_exists' | t }}</mat-error>
-            </mat-form-field>
-            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'USERNAME_TIP' | t ">help</mat-icon>
-          </div>
-          <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-            <mat-form-field class="disabled large-suffix" *ngIf="!user || formGroup.get('password').value">
-              <mat-label>{{ 'password' | t }}</mat-label>
-              <input matInput type="password" formControlName="password" tabindex="-1" required>
-              <span matSuffix class="enabled f-12 underline pointer" (click)="openPasswordDialog()">{{ 'define_password' | t }}</span>
-              <mat-error>{{ errorMessages.required | t }}</mat-error>
-            </mat-form-field>
-            <mat-icon *ngIf="!user || formGroup.get('password').value" matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'PASSWORD_TIP' | t ">help</mat-icon>
-            <ng-container *ngIf="user && !formGroup.get('password').value">
-              <span class="f-12 underline pointer" (click)="openPasswordDialog()">{{ 'change_password' | t }}</span>
-            </ng-container>
-          </div>
-          <div class="col-12 col-lg-6 col-xxl-5 mb-3 d-flex">
-            <mat-form-field>
-              <mat-label>{{ 'system_lang_default' | t }}</mat-label>
-              <mat-select formControlName="language" required>
-                <mat-option *ngFor="let language of languages" [value]="language._id">{{ language.name }}</mat-option>
-              </mat-select>
-              <mat-error>{{ errorMessages.required | t }}</mat-error>
-            </mat-form-field>
-            <mat-icon matSuffix class="input-tooltip my-3 mx-2" [matTooltip]="'LANGUAGE_TIP' | t ">help</mat-icon>
-          </div>
-        </div>
-      </section>
-      <section [@fade]="user?._id !== loggedUser?._id ? 'active' : 'inactive'">
-        <p class="h3 mb-3">{{ 'organization_units' | t }}</p>
-        <mat-checkbox formControlName="isRoot" *ngIf="loggedUser.permissions === 'root'">{{ 'main_user' | t }}</mat-checkbox>
-        <div class="row" *ngIf="!formGroup.get('isRoot').value">
-          <div class="col-12 col-lg-6 col-xxl-5 mb-3">
-            <app-unit-select formControlName="units" [units]="units" (touched)="formGroup.markAllAsTouched()" [toggleUp]="true" [multiple]="true"></app-unit-select>
-          </div>
-        </div>
-      </section>
-    </div>
+    </section>
+	  <ng-container *ngIf="user?._id !== loggedUser?._id">
+		  <p class="f-20">{{ 'organization_units' | t }}</p>
+		  <section>
+			  <mat-checkbox formControlName="isRoot" *ngIf="loggedUser.permissions === 'root'">{{ 'main_user' | t }}</mat-checkbox>
+			  <div class="row" *ngIf="!formGroup.get('isRoot').value">
+				  <div class="col-12 col-lg-6 col-xxl-5 mb-3">
+					  <app-unit-select formControlName="units" [units]="units" (touched)="formGroup.markAllAsTouched()" [toggleUp]="true" [multiple]="true"></app-unit-select>
+				  </div>
+			  </div>
+		  </section>
+	  </ng-container>
   </div>
 </form>

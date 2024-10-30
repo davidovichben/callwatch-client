@@ -9,7 +9,6 @@
 </ul>
 <ng-template #recursiveListTmpl let-list="list">
   <li *ngFor="let unit of list" (drop)="drop($event, unit)">
-
     <i class="ms-2 la la-plus" [ngClass]="{ 'la-plus': !unit.toggled, 'la-minus': unit.toggled }" (click)="toggleUnit(unit)" *ngIf="unit.units.length > 0"></i>
 
     <span [draggable]="!unit.disabled" [ngClass]="{ 'disabled': unit.disabled, 'active': activeUnit.id == unit.id }"

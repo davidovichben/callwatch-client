@@ -263,6 +263,9 @@ h4, .h4
 	color: $white-color !important
 	transition: 0.3s
 
+	> *
+		color: $white-color !important
+
 .neutral-btn
 	background-color: $stroke-color-1 !important
 
@@ -371,7 +374,7 @@ mat-icon.f-16
 		min-width: 120px
 		padding: 5px 20px
 		cursor: pointer
-		color: $stroke-color-1
+		color: $text-color-1
 		text-align: center
 
 	.tab.active, .tab:hover
@@ -390,8 +393,11 @@ mat-icon.f-16
 	object-fit: cover
 
 .user-default-avatar
-	color: $stroke-color-2
-
+	@extend .flex-center
+	border-radius: 50%
+	background: $text-color-4
+	color: $text-color-2
+	
 .breadcrumbs
 	display: flex
 
@@ -413,7 +419,6 @@ form
 	.form-header
 		@extend .flex-between
 		margin-bottom: 15px
-		background-color: $stroke-color-1
 
 .form-body
 	padding: 2rem 1rem
@@ -526,7 +531,11 @@ form
 
 .mat-mdc-button
 	min-width: 100px
-
+	
+.mat-mdc-button.primary-btn
+	span
+		color: $white-color
+	
 .mat-mdc-form-field-outline-start
 	width: 7px !important
 

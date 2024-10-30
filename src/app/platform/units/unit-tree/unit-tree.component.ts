@@ -32,6 +32,8 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
               private t: TranslatePipe) {}
 
   ngOnInit(): void {
+    console.log(this.activeUnit)
+    
     this.sub.add(this.unitStateService.unitLoaded.subscribe(unit => {
       this.setActiveUnit(unit);
     }));
