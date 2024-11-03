@@ -1,6 +1,6 @@
 <div id="tableHeader">
   <div>
-    <mat-form-field id="searchContainer" class="ms-3">
+    <mat-form-field id="searchContainer" class="ms-3" *ngIf="hasSearch">
 	    <mat-icon matIconPrefix (click)="search(searchInput.value)">search</mat-icon>
 	    <mat-label>{{ 'search' | t }}</mat-label>
       <input matInput [ngModel]="criteria.keyword" (keyup)="search(searchInput.value, $event)" #searchInput="ngModel">

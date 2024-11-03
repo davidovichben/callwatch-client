@@ -1,5 +1,5 @@
 export class PaginationData {
-  totalPages: number;
+  lastPage: number;
   totalItems: number;
   limit?: number;
   currentPage: number;

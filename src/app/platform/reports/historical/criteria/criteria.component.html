@@ -37,48 +37,12 @@
     <span>{{ 'days_to_show' | t }}:</span>
     <mat-checkbox class="mx-3" [formControlName]="day" *ngFor="let day of weekDays">{{ day | t }}</mat-checkbox>
   </div>
-	
-  <div class="criterion">
-    <span class="d-flex align-items-baseline">{{ 'data_sorting' | t }}:</span>
-    <div formArrayName="sort">
-      <div class="d-flex mb-3" [formGroupName]="i" *ngFor="let control of formGroup.get('sort')['controls']; let i = index; let first = first; let last = last">
-        <mat-form-field class="mx-3 no-space">
-          <mat-label>{{ 'select_column' | t }}</mat-label>
-          <mat-select formControlName="column" (valueChange)="sortColumnSelected($event, i)">
-            <mat-option *ngIf="i === 0">-------</mat-option>
-            <mat-option [value]="column._id" *ngFor="let column of reportTemplate.columns" [disabled]="column.disabled">{{ (column.name | t) }} {{ column.level }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="mx-3 no-space">
-          <mat-label>{{ 'order' | t }}</mat-label>
-          <mat-select formControlName="direction">
-            <mat-option [value]="direction.value" *ngFor="let direction of sortDirections">{{ direction.label | t }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div class="d-flex align-items-center">
-          <button mat-flat-button type="button" class="ms-1 btn light-success-btn" (click)="addSortColumn()" *ngIf="last && reportTemplate.columns.length > (i + 1)">
-            <mat-icon class="f-16">add</mat-icon>
-          </button>
-          <button mat-flat-button type="button" class="btn primary-btn" (click)="removeSortColumn(i)" *ngIf="!first">
-            <mat-icon class="f-16">remove</mat-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="criterion">
-    <span class="d-flex align-items-center">{{ 'ignore_dates' | t }}:</span>
-    <app-date-range-picker formGroupName="ignoreDates">
-      <app-date-range-input formControlName="start" [placeholder]="'start_date' | t" startInput></app-date-range-input>
-      <app-date-range-input formControlName="end" [placeholder]="'end_date' | t" endInput></app-date-range-input>
-    </app-date-range-picker>
-  </div>
   <p class="mb-3 f-20 primary-text">{{ 'units_to_show' | t }}</p>
   <div class="mb-4">
     <app-unit-select formControlName="units" [units]="units" [multiple]="true" class="w-300p"></app-unit-select>
   </div>
   <div>
-	  <button mat-flat-button class="ms-3 primary-btn" type="submit">{{ 'save_as_template' | t }}</button>
+<!--	  <button mat-flat-button class="ms-3 primary-btn" type="submit">{{ 'save_as_template' | t }}</button>-->
 	  <button mat-flat-button class="primary-btn" type="submit">{{ 'show_report' | t }}</button>
   </div>
 </form>

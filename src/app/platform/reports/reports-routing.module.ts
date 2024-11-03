@@ -11,10 +11,6 @@ const routes: Routes = [
   //   path: 'templates',
   //   loadChildren: () => import('./templates/templates.module').then(m => m.TemplatesModule)
   // },
-  // {
-  //   path: 'timings',
-  //   loadChildren: () => import('./timings/timings.module').then(m => m.TimingsModule)
-  // },
   {
     path: 'historical',
     loadChildren: () => import('./historical/historical.module').then(m => m.HistoricalModule)

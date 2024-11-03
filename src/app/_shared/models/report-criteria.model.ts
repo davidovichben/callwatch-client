@@ -33,3 +33,10 @@ export const Hours = Array.from({ length: 24 }, (_, i) => {
   }
   return  i.toString();
 });
+
+export enum RealtimeReportInterval {
+  day = 'day',
+  week = 'week',
+  month = 'month',
+  year = 'year'
+}

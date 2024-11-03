@@ -26,6 +26,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @HostBinding('class') class = 'data-table';
 
   @Input() tableUrl: string;
+  @Input() hasSearch = true;
   @Input() columns: DataTableColumn[] = [];
   @Input() formUrl: string;
   @Input() activeSwitch: string;
@@ -55,9 +56,9 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.handleSavedSearch();
-
+    
     this.columnLength = this.columns.length + +this.hasCheckColumn + +this.hasActionsHeader;
-
+    
     this.sub.add(this.route.queryParams.subscribe(() => this.init()));
   }
 
@@ -89,17 +90,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.isLoading = false;
 
     this.paginationData.totalItems = response && response.total ? response.total : 0;
-    this.paginationData.totalPages = response && response.lastPage ? response.lastPage : 0;
+    this.paginationData.lastPage = response && response.lastPage ? response.lastPage : 0;
     this.items = response && response.items ? response.items : [];
-
-    // this.items.map((item: { id: number, checked: boolean }) => {
-    //   item.checked = this.criteria.isCheckAll;
-    //   this.criteria.checkedItems.forEach(checkedItem => {
-    //     if (checkedItem._id === item._id) {
-    //       item.checked = !this.criteria.isCheckAll;
-    //     }
-    //   });
-    // });
+    
+    if (response.columnLength) {
+      this.columnLength = response.columnLength;
+    }
   }
 
   search(keyword: string, event?: KeyboardEvent): void {

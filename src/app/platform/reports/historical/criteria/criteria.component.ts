@@ -60,6 +60,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
     this.units = this.route.snapshot.data.units;
     this.columns = this.route.snapshot.data.columns;
     
+    console.log(this.columns)
+    
     this.userId = this.userService.getUserId();
     this.makeForm();
     
@@ -205,8 +207,8 @@ export class CriteriaComponent implements OnInit, OnDestroy {
   private sanitizeValues(values: ReportCriteriaModel): ReportCriteriaModel {
     values.weekDays = Object.keys(values.weekDays).filter(day => !!values.weekDays[day]);
 
-    this.sanitizeDates(values, 'dates');
-    this.sanitizeDates(values, 'ignoreDates')
+    // this.sanitizeDates(values, 'dates');
+    // this.sanitizeDates(values, 'ignoreDates')
     
     values.sort = values.sort.filter(sort => sort.column && sort.direction);
     

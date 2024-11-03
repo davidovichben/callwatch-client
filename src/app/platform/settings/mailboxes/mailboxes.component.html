@@ -1,5 +1,5 @@
 <div class="mb-3 flex-between">
-  <h1>{{ 'mailboxes' | t }}</h1>
+	<p class="h3">{{ 'mailboxes' | t }}</p>
   <div>
     <button class="btn primary-btn" routerLink="./form" *ngIf="userSession.hasPermission('mailServers', 'create')">
       <i class="la la-plus ms-1"></i>

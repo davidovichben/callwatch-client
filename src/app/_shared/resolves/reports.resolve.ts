@@ -7,6 +7,6 @@ export class ReportsResolve {
 	constructor(private reportsService: ReportsService) {}
 	
 	async resolve(): Promise<any> {
-		return (await this.reportsService.getTodayResults());
+		return (await this.reportsService.getRealtimeResults());
 	}
 }

@@ -1,6 +1,6 @@
 <div class="flex-between mb-3">
 	<p class="h3">{{ 'primary_performance' | t }}</p>
-	<select>
+	<select [(ngModel)]="reportCriteriaInterval">
 		<option value="day">{{ 'today' | t }}</option>
 		<option value="week">{{ 'this_week' | t }}</option>
 		<option value="month">{{ 'this_month' | t }}</option>
@@ -31,12 +31,12 @@
 		<div class="card">
 			<div class="card-header">
 				<p class="card-title">{{ 'requests_status_desc' | t }}</p>
-				<select>
-					<option value="day">{{ 'today' | t }}</option>
-					<option value="week">{{ 'this_week' | t }}</option>
-					<option value="month">{{ 'this_month' | t }}</option>
-					<option value="year">{{ 'this_Year' | t }}</option>
-				</select>
+<!--				<select>-->
+<!--					<option value="day">{{ 'today' | t }}</option>-->
+<!--					<option value="week">{{ 'this_week' | t }}</option>-->
+<!--					<option value="month">{{ 'this_month' | t }}</option>-->
+<!--					<option value="year">{{ 'this_Year' | t }}</option>-->
+<!--				</select>-->
 			</div>
 			<div class="card-body flex-between">
 				<div class="chart">
@@ -45,7 +45,7 @@
 						<div class="slice slice-2" style="--percentage: 75;"></div>
 						<div class="center-circle">
 							<p class="b2">{{ 'total_requests' | t }}</p>
-							<p class="h2">0</p>
+							<p class="h2">{{ results.conversationsCount }}</p>
 						</div>
 					</div>
 				</div>
@@ -56,7 +56,7 @@
 							<span class="b2 text-2 bold">{{ 'requests_answered' | t }}</span>
 						</div>
 						<div class="flex-between">
-							<span class="h2 bold ms-5">0 {{ 'requests' | t }}</span>
+							<span class="h2 bold ms-5">{{ results.answeredCount }} {{ 'requests' | t }}</span>
 							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
 								<span>5%</span>
 								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
@@ -69,7 +69,7 @@
 							<span class="b2 text-2 bold">{{ 'open_requests' | t }}</span>
 						</div>
 						<div class="flex-between">
-							<span class="h2 bold ms-5">0 {{ 'requests' | t }}</span>
+							<span class="h2 bold ms-5">{{ results.openCount }} {{ 'requests' | t }}</span>
 							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
 								<span>5%</span>
 								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
@@ -85,12 +85,12 @@
 		<div class="card">
 			<div class="card-header">
 				<p class="card-title">{{ 'redirected_requests_desc' | t }}</p>
-				<select>
-					<option value="day">{{ 'today' | t }}</option>
-					<option value="week">{{ 'this_week' | t }}</option>
-					<option value="month">{{ 'this_month' | t }}</option>
-					<option value="year">{{ 'this_Year' | t }}</option>
-				</select>
+<!--				<select [(ngModel)]="reportCriteriaInterval">-->
+<!--					<option value="day">{{ 'today' | t }}</option>-->
+<!--					<option value="week">{{ 'this_week' | t }}</option>-->
+<!--					<option value="month">{{ 'this_month' | t }}</option>-->
+<!--					<option value="year">{{ 'this_Year' | t }}</option>-->
+<!--				</select>-->
 			</div>
 			<div class="card-body flex-between">
 				<div class="chart">
@@ -99,7 +99,7 @@
 						<div class="slice slice-2" style="--percentage: 75;"></div>
 						<div class="center-circle">
 							<p class="b2">{{ 'total_requests' | t }}</p>
-							<p class="h2">0</p>
+							<p class="h2">{{ results.conversationsCount }}</p>
 						</div>
 					</div>
 				</div>
@@ -107,10 +107,10 @@
 					<div class="legend-item">
 						<div class="d-flex align-items-center mb-2">
 							<div class="color-box slice-1 ms-2"></div>
-							<span class="b2 text-2 bold">{{ 'redirected_requests' | t }}</span>
+							<span class="b2 text-2 bold">{{ 'forwarded_requests' | t }}</span>
 						</div>
 						<div class="flex-between">
-							<span class="h2 bold ms-5">0 {{ 'requests' | t }}</span>
+							<span class="h2 bold ms-5">{{ results.forwardedCount }} {{ 'requests' | t }}</span>
 							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
 								<span>5%</span>
 								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
@@ -120,10 +120,10 @@
 					<div class="legend-item">
 						<div class="d-flex align-items-center mb-2">
 							<div class="color-box slice-2 ms-2"></div>
-							<span class="b2 text-2 bold">{{ 'requests_not_redirected' | t }}</span>
+							<span class="b2 text-2 bold">{{ 'requests_not_forwarded' | t }}</span>
 						</div>
 						<div class="flex-between">
-							<span class="h2 bold ms-5">0 {{ 'requests' | t }}</span>
+							<span class="h2 bold ms-5">{{ results.conversationsCount - results.forwardedCount }} {{ 'requests' | t }}</span>
 							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
 								<span>5%</span>
 								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>

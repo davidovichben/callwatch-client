@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ReportsService } from 'src/app/_shared/services/http/reports.service';
+import { ReportRealtimeResultsModel } from '../../_shared/models/report-realtime-results.model';
+import { RealtimeReportInterval } from '../../_shared/models/report-criteria.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,11 +11,7 @@ import { ReportsService } from 'src/app/_shared/services/http/reports.service';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-  loadingInterval: any;
-  
-  results: any;
-  
-  kpis = [
+  readonly kpis = [
     {
       label: 'conversation_count',
       trend: 8,
@@ -35,19 +33,22 @@ export class DashboardComponent implements OnInit {
     }
   ];
   
+  reportCriteriaInterval = RealtimeReportInterval.day;
+  loadingInterval: any;
+  
+  results: ReportRealtimeResultsModel;
+  
   constructor(private route: ActivatedRoute, private reportsService: ReportsService) {}
 
   ngOnInit(): void {
     this.results = this.route.snapshot.data.results;
-    
-    console.log(this.results)
     
     this.loadData();
   }
   
   loadData() {
     this.loadingInterval = setInterval(async () => {
-      this.results = await this.reportsService.getTodayResults();
+      this.results = await this.reportsService.getRealtimeResults(this.reportCriteriaInterval);
     }, 5000);
   }
   
