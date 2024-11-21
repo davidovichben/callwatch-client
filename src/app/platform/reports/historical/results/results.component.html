@@ -9,17 +9,18 @@
 	</button>
 </div>
 <app-data-table [columns]="results?.headers ?? []" [hasSearch]="false" [hasActionsHeader]="false" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
-	<ng-container *ngIf="results?.items">
-		<tr *ngFor="let item of results.items">
+	<ng-container *ngFor="let item of results.items">
+		<tr>
 			<ng-container *ngFor="let header of results.headers">
 				<td *ngIf="header.name === 'date'">{{ criteria.interval === 'dayInWeek' ? (weekDays[item[header.name]] | t) : item[header.name] }}</td>
-				<td *ngIf="drillDownColumns.includes(header.name)">
+				<td *ngIf="specialColumns.includes(header.name)">
 					<a class="link f-16" routerLink="./" [queryParams]="{ view: 'unit', _id: item.unit._id, title: item.unit.name }" *ngIf="header.name === 'unit'">{{ item.unit.name }}</a>
 					<a class="link f-16" routerLink="./" [queryParams]="{ view: 'mailbox', _id: item.mailbox._id, title: item.mailbox.name }" *ngIf="header.name === 'mailbox'">{{ item.mailbox.name }}</a>
-					<a class="link f-16" routerLink="./" [queryParams]="{ view: 'units' }" *ngIf="header.name === 'unitsCount'">{{ item.unitsCount }}</a>
 					<a class="link f-16" routerLink="./" [queryParams]="{ view: 'mailboxes' }" *ngIf="header.name === 'mailboxesCount'">{{ item.mailboxesCount }}</a>
+					<a class="link f-16" (click)="openConversationsDialog(item['conversations'], item.date)" *ngIf="header.name === 'conversationsCount'">{{ item.conversationsCount }}</a>
+					<span *ngIf="header.name === 'averageResponseTime'">{{ item.averageResponseTime }} {{ 'minutes' | t }}</span>
 				</td>
-				<td *ngIf="header.name !== 'date' && !drillDownColumns.includes(header.name)">{{ item[header.name] }}</td>
+				<td *ngIf="header.name !== 'date' && !specialColumns.includes(header.name)">{{ item[header.name] }}</td>
 			</ng-container>
 		</tr>
 	</ng-container>

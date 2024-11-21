@@ -1,0 +1,40 @@
+<p class="h4">
+	<span>{{ 'conversations_for_date' | t }}</span>
+	<span> {{ data.title }}</span>
+</p>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>{{ 'subject' | t }}</th>
+			<th>{{ 'sender' | t }}</th>
+			<th>{{ 'messages_count' | t }}</th>
+			<th>{{ 'average_response_time' | t }}</th>
+			<th>{{ 'resolved' | t }}</th>
+			<th>{{ 'forwarded' | t }}</th>
+			<th>{{ 'closed' | t }}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<ng-container *ngFor="let conversation of data.conversations">
+			<tr class="conversation" (click)="conversation.toggled = !conversation.toggled">
+				<td>{{ conversation.messages[0].subject }}</td>
+				<td>{{ conversation.messages[0].from }}</td>
+				<td>{{ conversation.averageResponseTime }} {{ 'minutes' | t }}</td>
+				<td>{{ conversation.messages.length }}</td>
+				<td>{{ conversation.resolved ? ('yes' | t) : ('no' | t) }}</td>
+				<td>{{ conversation.forwarded ? ('yes' | t) : ('no' | t) }}</td>
+				<td>{{ conversation.closed ? ('yes' | t) : ('no' | t) }}</td>
+			</tr>
+			<tr>
+				<td colspan="7" class="conversation-messages" [ngClass]="{ 'hidden': !conversation.toggled }">
+					<div [@slideDown]="conversation.toggled ? 'active' : 'inactive'">
+						<div class="p-3" *ngFor="let message of conversation.messages">
+							<p class="bold underline">{{ message.from }}</p>
+							<p>{{ stripHtml(message.body) ?? message.subject }}</p>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</ng-container>
+	</tbody>
+</table>

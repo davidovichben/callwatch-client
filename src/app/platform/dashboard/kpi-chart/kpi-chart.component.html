@@ -1,0 +1,14 @@
+<div class="card">
+	<div class="card-header">
+		<p class="card-title">{{ labels.title | t }}</p>
+		<span class="card-trend" [ngClass]="{ 'card-trend-positive': result.trend >= 0, 'card-trend-negative': result.trend < 0 }">
+					<span>{{ result.trend }}%</span>
+					<mat-icon class="align-middle" *ngIf="result.trend !== 0">{{ result.trend >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+				</span>
+	</div>
+	<div class="card-body">
+		<p class="card-value ms-3">{{ result.value ?? '0' }}</p>
+		<p class="card-value-desc">{{ labels.valueDesc | t }}</p>
+	</div>
+	<div class="card-footer">{{ labels.footer | t }}</div>
+</div>

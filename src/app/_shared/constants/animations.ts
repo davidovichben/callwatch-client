@@ -57,5 +57,3 @@ export const SlideToggle = trigger('slideToggle', [
   transition('active => inactive', animate('0ms ease-in')),
   transition('inactive => active', animate('0ms ease-out'))
 ]);
-
-

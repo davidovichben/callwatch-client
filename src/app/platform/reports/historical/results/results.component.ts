@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FileSaverService } from 'ngx-filesaver';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DataTableComponent } from '../../../../_shared/components/data-table/data-table.component';
 
@@ -14,8 +15,8 @@ import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.mode
 import { TranslatePipe } from '../../../../_shared/pipes/translate/translate.pipe';
 
 import { ReportResultsModel } from '../../../../_shared/models/report-results.model';
-import { DataTableColumn } from '../../../../_shared/components/data-table/classes/data-table-column';
 import { WeekDays } from '../../../../_shared/constants/general';
+import { ConversationsComponent } from './conversations/conversations.component';
 
 @Component({
   selector: 'app-results',
@@ -26,7 +27,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   
   readonly sub = new Subscription();
   
-  readonly drillDownColumns = ['unitsCount', 'mailboxesCount', 'unit', 'mailbox'];
+  readonly specialColumns = ['conversationsCount', 'mailboxesCount', 'unit', 'mailbox', 'averageResponseTime'];
   
   readonly weekDays = WeekDays;
   
@@ -34,11 +35,12 @@ export class ResultsComponent implements OnInit, OnDestroy {
   
   reportTitle: string;
   
-  results: ReportResultsModel;
+  results = new ReportResultsModel();
   
   constructor(private route: ActivatedRoute, private appState: AppStateService,
               private reportsService: ReportsService, private reportStateService: HistoricalReportsService,
-              private translate: TranslatePipe, private fileSaver: FileSaverService) {}
+              private translate: TranslatePipe, private fileSaver: FileSaverService,
+              private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.criteria = this.reportStateService.getCriteria();
@@ -109,6 +111,14 @@ export class ResultsComponent implements OnInit, OnDestroy {
     }
   }
 
+  openConversationsDialog(conversations: any[], title: string) {
+    this.dialog.open(ConversationsComponent, {
+      data: { conversations, title },
+      width: '70%',
+      height: '90%'
+    });
+  }
+  
   ngOnDestroy(): void {
     this.appState.routeScrollDisabled = false;
     this.sub.unsubscribe();

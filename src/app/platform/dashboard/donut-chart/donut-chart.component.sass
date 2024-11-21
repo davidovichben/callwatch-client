@@ -1,0 +1,50 @@
+@import '../../../../variables'
+@import '../../../../extendables'
+
+.chart
+	flex-grow: 1
+	
+	.donut
+		position: relative
+		width: 200px
+		height: 200px
+		border-radius: 50%
+		overflow: hidden
+		
+		.center-circle
+			@extend .flex-center
+			flex-direction: column
+			position: absolute
+			top: 50%
+			left: 50%
+			width: 125px
+			height: 125px
+			background: $white-color
+			border-radius: 50%
+			transform: translate(-50%, -50%)
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0)
+			
+			> *
+				margin: 0
+				color: #777
+				font-weight: bold
+
+.legend
+	margin-top: 20px
+	display: flex
+	flex-direction: column
+	align-items: flex-start
+	
+	.legend-item
+		margin: 5px 0
+	
+	.color-box
+		width: 15px
+		height: 15px
+		border-radius: 12px
+		
+		&.slice-1
+			background-color: $primary-color
+		
+		&.slice-2
+			background-color: $graph-color-3

@@ -13,6 +13,8 @@ import { DashboardComponent } from './dashboard.component';
 import { ReportsService } from '../../_shared/services/http/reports.service';
 
 import { ReportsResolve } from '../../_shared/resolves/reports.resolve';
+import { DonutChartComponent } from './donut-chart/donut-chart.component';
+import { KpiChartComponent } from './kpi-chart/kpi-chart.component';
 
 const routes: Routes = [
   {
@@ -38,7 +40,9 @@ const routes: Routes = [
 		MatOption,
 		MatLabel,
 		MatFormField,
-		FormsModule
+		FormsModule,
+		DonutChartComponent,
+		KpiChartComponent
 	],
   providers: [ReportsResolve, ReportsService]
 })

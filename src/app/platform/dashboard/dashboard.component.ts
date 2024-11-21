@@ -13,22 +13,19 @@ import { RealtimeReportInterval } from '../../_shared/models/report-criteria.mod
 export class DashboardComponent implements OnInit {
   readonly kpis = [
     {
-      label: 'conversation_count',
-      trend: 8,
+      title: 'conversation_count',
       value: 'conversationsCount'
     },
     {
-      label: 'average_response_time',
-      trend: -3.3,
+      title: 'average_response_time',
       value: 'averageResponseTime'
     },
     {
-      label: 'number_of_mails_per_conversation',
-      trend: 1.5,
+      title: 'number_of_mails_per_conversation',
       value: 'messagesCount'
     },
     {
-      label: 'mailbox_count',
+      title: 'mailbox_count',
       value: 'mailboxesCount'
     }
   ];
@@ -42,14 +39,22 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.results = this.route.snapshot.data.results;
+    console.log(this.results)
     
-    this.loadData();
+    this.setResultsInterval();
   }
   
-  loadData() {
+  setResultsInterval() {
     this.loadingInterval = setInterval(async () => {
       this.results = await this.reportsService.getRealtimeResults(this.reportCriteriaInterval);
     }, 5000);
+  }
+  
+  async changeInterval(interval: RealtimeReportInterval) {
+    console.log(interval)
+    
+    this.reportCriteriaInterval = interval;
+    this.results = await this.reportsService.getRealtimeResults(this.reportCriteriaInterval);
   }
   
   ngOnDestroy() {

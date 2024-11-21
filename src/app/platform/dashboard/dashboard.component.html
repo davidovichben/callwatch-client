@@ -1,6 +1,6 @@
 <div class="flex-between mb-3">
 	<p class="h3">{{ 'primary_performance' | t }}</p>
-	<select [(ngModel)]="reportCriteriaInterval">
+	<select [value]="reportCriteriaInterval" (change)="changeInterval($event.target['value'])">
 		<option value="day">{{ 'today' | t }}</option>
 		<option value="week">{{ 'this_week' | t }}</option>
 		<option value="month">{{ 'this_month' | t }}</option>
@@ -9,129 +9,31 @@
 </div>
 <div class="row gx-0 mb-5">
 	<div class="col-12 col-lg-3 mb-3" *ngFor="let kpi of kpis; let index = index">
-		<div class="card">
-			<div class="card-header">
-				<p class="card-title">{{ kpi.label | t }}</p>
-				<span class="card-trend" [ngClass]="{ 'card-trend-positive': kpi.trend >= 0, 'card-trend-negative': kpi.trend < 0 }" *ngIf="kpi.trend">
-					<span>{{ kpi.trend }}%</span>
-					<mat-icon class="align-middle">{{ kpi.trend >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-				</span>
-			</div>
-			<div class="card-body">
-				<p class="card-value ms-3">{{ results[kpi.value] ?? '0' }}</p>
-				<p class="card-value-desc">{{ 'kpi_value_text_' +  (index + 1) | t }}</p>
-			</div>
-			<div class="card-footer">{{ 'kpi_footer_text_' +  (index + 1) | t }}</div>
-		</div>
+		<app-kpi-chart
+			[result]="results[kpi.value]"
+			[labels]="{
+				title: kpi.title,
+				valueDesc: 'kpi_value_text_' + (index + 1),
+				footer: 'kpi_footer_text_' + (index + 1)
+			}">
+		</app-kpi-chart>
 	</div>
 </div>
 <div class="row">
 	<div class="col-12 col-lg-6">
-		<p class="h3">{{ 'requests_status' | t }}</p>
-		<div class="card">
-			<div class="card-header">
-				<p class="card-title">{{ 'requests_status_desc' | t }}</p>
-<!--				<select>-->
-<!--					<option value="day">{{ 'today' | t }}</option>-->
-<!--					<option value="week">{{ 'this_week' | t }}</option>-->
-<!--					<option value="month">{{ 'this_month' | t }}</option>-->
-<!--					<option value="year">{{ 'this_Year' | t }}</option>-->
-<!--				</select>-->
-			</div>
-			<div class="card-body flex-between">
-				<div class="chart">
-					<div class="donut">
-						<div class="slice slice-1" style="--percentage: 25;"></div>
-						<div class="slice slice-2" style="--percentage: 75;"></div>
-						<div class="center-circle">
-							<p class="b2">{{ 'total_requests' | t }}</p>
-							<p class="h2">{{ results.conversationsCount }}</p>
-						</div>
-					</div>
-				</div>
-				<div class="legend">
-					<div class="legend-item">
-						<div class="d-flex align-items-center mb-2">
-							<div class="color-box slice-1 ms-2"></div>
-							<span class="b2 text-2 bold">{{ 'requests_answered' | t }}</span>
-						</div>
-						<div class="flex-between">
-							<span class="h2 bold ms-5">{{ results.answeredCount }} {{ 'requests' | t }}</span>
-							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
-								<span>5%</span>
-								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-							</div>
-						</div>
-					</div>
-					<div class="legend-item">
-						<div class="d-flex align-items-center mb-2">
-							<div class="color-box slice-2 ms-2"></div>
-							<span class="b2 text-2 bold">{{ 'open_requests' | t }}</span>
-						</div>
-						<div class="flex-between">
-							<span class="h2 bold ms-5">{{ results.openCount }} {{ 'requests' | t }}</span>
-							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
-								<span>5%</span>
-								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<app-donut-chart
+			[labels]="{ main: 'requests_status', firstStat: 'requests_answered', secondStat: 'open_requests' }"
+			[totalStat]="results.conversationsCount"
+			[firstStat]="results.answeredCount"
+			[secondStat]="results.unansweredCount">
+		</app-donut-chart>
 	</div>
 	<div class="col-12 col-lg-6">
-		<p class="h3">{{ 'redirected_requests' | t }}</p>
-		<div class="card">
-			<div class="card-header">
-				<p class="card-title">{{ 'redirected_requests_desc' | t }}</p>
-<!--				<select [(ngModel)]="reportCriteriaInterval">-->
-<!--					<option value="day">{{ 'today' | t }}</option>-->
-<!--					<option value="week">{{ 'this_week' | t }}</option>-->
-<!--					<option value="month">{{ 'this_month' | t }}</option>-->
-<!--					<option value="year">{{ 'this_Year' | t }}</option>-->
-<!--				</select>-->
-			</div>
-			<div class="card-body flex-between">
-				<div class="chart">
-					<div class="donut">
-						<div class="slice slice-1" style="--percentage: 25;"></div>
-						<div class="slice slice-2" style="--percentage: 75;"></div>
-						<div class="center-circle">
-							<p class="b2">{{ 'total_requests' | t }}</p>
-							<p class="h2">{{ results.conversationsCount }}</p>
-						</div>
-					</div>
-				</div>
-				<div class="legend">
-					<div class="legend-item">
-						<div class="d-flex align-items-center mb-2">
-							<div class="color-box slice-1 ms-2"></div>
-							<span class="b2 text-2 bold">{{ 'forwarded_requests' | t }}</span>
-						</div>
-						<div class="flex-between">
-							<span class="h2 bold ms-5">{{ results.forwardedCount }} {{ 'requests' | t }}</span>
-							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
-								<span>5%</span>
-								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-							</div>
-						</div>
-					</div>
-					<div class="legend-item">
-						<div class="d-flex align-items-center mb-2">
-							<div class="color-box slice-2 ms-2"></div>
-							<span class="b2 text-2 bold">{{ 'requests_not_forwarded' | t }}</span>
-						</div>
-						<div class="flex-between">
-							<span class="h2 bold ms-5">{{ results.conversationsCount - results.forwardedCount }} {{ 'requests' | t }}</span>
-							<div class="card-trend" [ngClass]="{ 'card-trend-positive': 5 >= 0, 'card-trend-negative': 5 < 0 }">
-								<span>5%</span>
-								<mat-icon class="align-middle">{{ 5 >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<app-donut-chart
+			[labels]="{ main: 'forwarded_requests', firstStat: 'forwarded_requests', secondStat: 'requests_not_forwarded' }"
+			[totalStat]="results.conversationsCount"
+			[firstStat]="results.forwardedCount"
+			[secondStat]="results.notForwardedCount">
+		</app-donut-chart>
 	</div>
 </div>

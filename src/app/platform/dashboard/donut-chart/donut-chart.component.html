@@ -1,0 +1,44 @@
+<p class="h3">{{ labels.main | t }}</p>
+<div class="card">
+	<div class="card-header">
+		<p class="card-title">{{ (labels.main + '_desc') | t }}</p>
+	</div>
+	<div class="card-body flex-between">
+		<div class="chart">
+			<div class="donut" [style]="{ background: getChartColors() }">
+				<div class="center-circle">
+					<p class="b2">{{ 'total_requests' | t }}</p>
+					<p class="h2">{{ totalStat.value }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="legend">
+			<div class="legend-item">
+				<div class="d-flex align-items-center mb-2">
+					<div class="color-box slice-1 ms-2"></div>
+					<span class="b2 text-2 bold">{{ labels.firstStat | t }}</span>
+				</div>
+				<div class="flex-between">
+					<span class="h2 bold ms-5">{{ firstStat.value }} {{ 'requests' | t }}</span>
+					<div class="card-trend" [ngClass]="{ 'card-trend-positive': firstStat.trend >= 0, 'card-trend-negative': 5 < 0 }">
+						<span>{{ firstStat.trend }}%</span>
+						<mat-icon class="align-middle" *ngIf="firstStat.trend !== 0">{{ firstStat.trend >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+					</div>
+				</div>
+			</div>
+			<div class="legend-item">
+				<div class="d-flex align-items-center mb-2">
+					<div class="color-box slice-2 ms-2"></div>
+					<span class="b2 text-2 bold">{{ labels.secondStat | t }}</span>
+				</div>
+				<div class="flex-between">
+					<span class="h2 bold ms-5">{{ secondStat.value }} {{ 'requests' | t }}</span>
+					<div class="card-trend" [ngClass]="{ 'card-trend-positive': secondStat.trend >= 0, 'card-trend-negative': 5 < 0 }">
+						<span>{{ secondStat.trend }}%</span>
+						<mat-icon class="align-middle" *ngIf="secondStat.trend !== 0">{{ secondStat.trend >= 0 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
