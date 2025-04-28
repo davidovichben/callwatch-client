@@ -11,25 +11,20 @@ import { AuditTrailEntryChangeModel } from 'src/app/_shared/models/audit-trail-e
 @Injectable()
 export class AuditTrailService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/auditTrail';
+  readonly endPoint = `${this.apiUrl}/auditTrail`;
 
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   getLogs(criteria: DataTableCriteria): Promise<DataTableResponse> {
     const params = this.getDataTableParams(criteria);
-
-    return this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as DataTableResponse)
-      .catch(() => null);
+    return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+      body: params
+    });
   }
 
   getChanges(entryId: number): Promise<AuditTrailEntryChangeModel[]> {
-    return this.http.get(this.endPoint + '/' + entryId + '/changes', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as AuditTrailEntryChangeModel[])
-      .catch(() => null);
+    return this.get<AuditTrailEntryChangeModel[]>(`${this.endPoint}/${entryId}/changes`);
   }
 }

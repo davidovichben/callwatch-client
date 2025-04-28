@@ -137,18 +137,13 @@ export class FormComponent implements OnInit, OnDestroy {
     }));
   }
 
-  checkUsernameUnique(control: UntypedFormControl): Promise<{ exists: boolean }> {
+  async checkUsernameUnique(control: UntypedFormControl): Promise<{ exists: boolean }> {
     if (this.user && this.user.username === control.value) {
       return Promise.resolve(null);
     }
-
-    return this.userService.checkExists(control.value).then(response => {
-      if (response) {
-        return response.exists ? { exists: true } : null;
-      }
-
-      return null;
-    });
+    
+    const response = await this.userService.checkExists(control.value);
+    return response ? { exists: true } : null;
   }
 
   submit(): void {

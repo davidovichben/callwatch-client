@@ -9,10 +9,10 @@ import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 @Injectable()
 export class TagService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/tag';
+  readonly endPoint = `${this.apiUrl}/tag`;
 
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   getTags(type: string, existingTags: number[], keyword?: string): Promise<SelectItemModel[]> {
@@ -21,16 +21,16 @@ export class TagService extends BaseHttpService {
       Object.assign(values, { keyword });
     }
 
-    return this.http.get(this.endPoint, this.getTokenRequest(values, true))
-      .toPromise()
-      .then(response => response as SelectItemModel[])
-      .catch(() => []);
+    return this.get<SelectItemModel[]>(this.endPoint, {
+      params: values,
+      noLoader: true,
+      fallback: []
+    });
   }
-
+  
   newTag(type: string, name: string): Promise<SelectItemModel> {
-    return this.http.post(this.endPoint, { type, name }, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as SelectItemModel)
-      .catch(() => null);
+    return this.post<SelectItemModel>(this.endPoint, {
+      body: { type, name }
+    });
   }
 }

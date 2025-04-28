@@ -9,38 +9,32 @@ import { ReportCriteriaModel } from 'src/app/_shared/models/report-criteria.mode
 @Injectable()
 export class ReportCriteriaService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/reportCriteria';
+  readonly endPoint = `${this.apiUrl}/reportCriteria`;
 
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   getReportCriteria(moduleId: number, name: string, userId: string): Promise<ReportCriteriaModel> {
-    return this.http.get(this.endPoint, this.getTokenRequest({ moduleId, name, userId }))
-      .toPromise()
-      .then(response => response as ReportCriteriaModel)
-      .catch(() => null);
+    return this.get<ReportCriteriaModel>(this.endPoint, {
+      params: { moduleId, name, userId }
+    });
   }
 
   newReportCriteria(values: object, userId: string, name: string, module: number): Promise<boolean> {
-    Object.assign(values, { userId, name, module })
-    return this.http.post(this.endPoint, values, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    const body = { ...values, userId, name, module };
+    return this.post<boolean>(this.endPoint, {
+      body
+    });
   }
 
   updateReportCriteria(reportCriteriaId: number, values: object): Promise<boolean> {
-    return this.http.put(this.endPoint + '/' + reportCriteriaId, values, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.put<boolean>(`${this.endPoint}/${reportCriteriaId}`, {
+      body: values
+    });
   }
 
   deleteReportCriteria(reportCriteriaId: number): Promise<boolean> {
-    return this.http.delete(this.endPoint + '/' + reportCriteriaId, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.delete<boolean>(`${this.endPoint}/${reportCriteriaId}`);
   }
 }

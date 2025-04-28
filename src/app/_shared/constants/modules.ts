@@ -16,6 +16,8 @@ export const PlatformModules = [
     name: 'settings',
     icon: 'settings',
     subModules: [
+      { name: 'general' },
+      { name: 'keywords' },
       { name: 'permissions' },
       { name: 'mailServers', label: 'mail_servers', permission: 'mailServers' },
       { name: 'mailboxes', permission: 'mailServers' }

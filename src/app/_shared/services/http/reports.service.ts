@@ -14,10 +14,10 @@ import { ReportResultsModel } from '../../models/report-results.model';
 @Injectable()
 export class ReportsService extends BaseHttpService {
 	
-	readonly endPoint = this.apiUrl + '/reports';
+	readonly endPoint = `${this.apiUrl}/reports`;
 	
-	constructor(private http: HttpClient, userSession: UserSessionService) {
-		super(userSession);
+	constructor(http: HttpClient, userSession: UserSessionService) {
+		super(userSession, http);
 	}
 	
 	async getRealtimeResults(interval?: RealtimeReportInterval): Promise<any> {
@@ -26,10 +26,11 @@ export class ReportsService extends BaseHttpService {
 		}
 		
 		try {
-			const results = await this.http.post(this.endPoint + '/realtime', { interval }, this.getTokenRequest())
-				.toPromise();
+			const results = await this.post<any>(`${this.endPoint}/realtime`, {
+				body: { interval }
+			});
 			
-			if (!Object.keys(results).length) {
+			if (!results || !Object.keys(results).length) {
 				return new ReportRealtimeResultsModel();
 			}
 
@@ -41,7 +42,11 @@ export class ReportsService extends BaseHttpService {
 	
 	async getHistoricalResults(criteria: ReportCriteriaModel): Promise<ReportResultsModel> {
 		try {
-			return await this.http.post(this.endPoint + '/historical', criteria, this.getTokenRequest()).toPromise() as ReportResultsModel;
+			const result = await this.post<ReportResultsModel>(`${this.endPoint}/historical`, {
+				body: criteria,
+				fallback: new ReportResultsModel()
+			});
+			return result || new ReportResultsModel();
 		} catch {
 			return new ReportResultsModel();
 		}
@@ -49,7 +54,7 @@ export class ReportsService extends BaseHttpService {
 	
 	async exportReport(criteria: ReportCriteriaModel): Promise<any> {
 		try {
-			return await this.http.post(this.endPoint + '/export', criteria, this.getBlobRequest()).toPromise();
+			return await this.getBlob(`${this.endPoint}/export`, criteria);
 		} catch {
 			return null;
 		}
@@ -57,7 +62,9 @@ export class ReportsService extends BaseHttpService {
 	
 	async getColumns(): Promise<any> {
 		try {
-			return await this.http.get(this.endPoint + '/columns', this.getTokenRequest()).toPromise();
+			return await this.get<any>(`${this.endPoint}/columns`, {
+				fallback: []
+			});
 		} catch {
 			return [];
 		}

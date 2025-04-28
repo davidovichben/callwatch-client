@@ -13,90 +13,57 @@ import { SelectItemModel } from '../../models/select-item.model';
 @Injectable()
 export class PermissionService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/permission';
+  readonly endPoint = `${this.apiUrl}/permission`;
 
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   async getPermissions(criteria: DataTableCriteria): Promise<DataTableResponse> {
     const params = this.getDataTableParams(criteria);
-    
-    try {
-      const response = await this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
-        .toPromise();
-      return response as DataTableResponse;
-    } catch {
-      return null;
-    }
+    return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+      body: params
+    });
   }
 
   async getPermission(permissionId: string): Promise<PermissionModel> {
-    try {
-      const response = await this.http.get(this.endPoint + '/' + permissionId, this.getTokenRequest())
-        .toPromise();
-      return response as PermissionModel;
-    } catch {
-      return null;
-    }
+    return this.get<PermissionModel>(`${this.endPoint}/${permissionId}`);
   }
 
   async newPermission(values: object): Promise<boolean> {
-    try {
-      await this.http.post(this.endPoint, values, this.getTokenRequest())
-        .toPromise();
-      return true;
-    } catch {
-      return false;
-    }
+    return this.post<boolean>(this.endPoint, {
+      body: values
+    });
   }
 
   async updatePermission(permissionId: string, values: object): Promise<boolean> {
-    try {
-      await this.http.put(this.endPoint + '/' + permissionId, values, this.getTokenRequest())
-        .toPromise();
-      return true;
-    } catch {
-      return false;
-    }
+    return this.put<boolean>(`${this.endPoint}/${permissionId}`, {
+      body: values
+    });
   }
 
   async deletePermission(permissionId: string, newPermissionId?: string): Promise<boolean> {
-    const params = {};
-    if (newPermissionId) {
-      Object.assign(params, { newPermissionId });
-    }
-    
-    try {
-      await this.http.delete(this.endPoint + '/' + permissionId, this.getTokenRequest(params)).toPromise();
-      return true;
-    } catch {
-      return false;
-    }
+    const params = newPermissionId ? { newPermissionId } : undefined;
+    return this.delete<boolean>(`${this.endPoint}/${permissionId}`, {
+      params
+    });
   }
   
   async selectPermissions(): Promise<SelectItemModel[]> {
-    try {
-      const response = await this.http.get(this.endPoint + '/select', this.getTokenRequest())
-        .toPromise();
-      return response as SelectItemModel[];
-    } catch {
-      return [];
-    }
+    return this.get<SelectItemModel[]>(`${this.endPoint}/select`, {
+      fallback: []
+    });
   }
   
   async permissionExists(name: string, idToIgnore?: string): Promise<{ exists: boolean }> {
-    try {
-      const params = { name };
-      if (idToIgnore) {
-        Object.assign(params, { idToIgnore });
-      }
-      
-      const response = await this.http.get(this.endPoint + '/exists', this.getTokenRequest(params))
-        .toPromise();
-      return response as { exists: boolean };
-    } catch {
-      return { exists: true }
+    const params = { name };
+    if (idToIgnore) {
+      Object.assign(params, { idToIgnore });
     }
+    
+    return this.get<{ exists: boolean }>(`${this.endPoint}/exists`, {
+      params,
+      fallback: { exists: true }
+    });
   }
 }

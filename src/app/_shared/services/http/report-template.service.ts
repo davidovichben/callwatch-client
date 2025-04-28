@@ -10,77 +10,69 @@ import { ReportTemplateModel } from 'src/app/_shared/models/report-template.mode
 
 @Injectable()
 export class ReportTemplateService extends BaseHttpService {
-
-  readonly endPoint = this.apiUrl + '/reportTemplate';
-
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
-  }
-
-  getReports(criteria: DataTableCriteria): Promise<DataTableResponse> {
-    const params = this.getDataTableParams(criteria);
-
-    return this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as DataTableResponse)
-      .catch(() => null);
-  }
-
-  getReport(reportId: number): Promise<ReportTemplateModel> {
-    return this.http.get(this.endPoint + '/' + reportId, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as ReportTemplateModel)
-      .catch(() => null);
-  }
-
-  newReport(values: object): Promise<boolean> {
-    return this.http.post(this.endPoint, values, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
-  }
-
-  updateReport(reportId: number, values: object): Promise<boolean> {
-    return this.http.put(this.endPoint + '/' + reportId, values, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
-  }
-
-  deleteReport(reportId: number): Promise<boolean> {
-    return this.http.delete(this.endPoint + '/' + reportId, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
-  }
-
-  selectReports(): Promise<ReportTemplateModel[]> {
-    return this.http.get(this.endPoint + '/select', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as ReportTemplateModel[])
-      .catch(() => []);
-  }
-
-  getReportTemplatesByModule(module: string): Promise<ReportTemplateModel[]> {
-    return this.http.get(this.endPoint + '/byModule', this.getTokenRequest({ module }))
-      .toPromise()
-      .then(response => response as ReportTemplateModel[])
-      .catch(() => []);
-  }
-
-  produceReport(reportTemplateId: number, criteria: object, page?: number): Promise<any> {
-    const params = { page: page ?? 1 };
-
-    return this.http.post(this.endPoint + '/' + reportTemplateId + '/produce', criteria, this.getTokenRequest(params))
-      .toPromise()
-      .then(response => (response as any).results)
-      .catch(() => null);
-  }
-
-  exportReport(reportTemplateId: number, criteria: object, format: string): Promise<any> {
-    return this.http.post(this.endPoint + '/' + reportTemplateId + '/export', criteria, this.getBlobRequest({ format }))
-      .toPromise()
-      .then(response => response)
-      .catch(() => null);
-  }
+	
+	readonly endPoint = `${this.apiUrl}/reportTemplate`;
+	
+	constructor(http: HttpClient, userSession: UserSessionService) {
+		super(userSession, http);
+	}
+	
+	getReports(criteria: DataTableCriteria): Promise<DataTableResponse> {
+		const params = this.getDataTableParams(criteria);
+		return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+			body: params
+		});
+	}
+	
+	getReport(reportId: number): Promise<ReportTemplateModel> {
+		return this.get<ReportTemplateModel>(`${this.endPoint}/${reportId}`);
+	}
+	
+	newReport(values: object): Promise<boolean> {
+		return this.post<boolean>(this.endPoint, {
+			body: values,
+			fallback: false
+		});
+	}
+	
+	updateReport(reportId: number, values: object): Promise<boolean> {
+		return this.put<boolean>(`${this.endPoint}/${reportId}`, {
+			body: values,
+			fallback: false
+		});
+	}
+	
+	deleteReport(reportId: number): Promise<boolean> {
+		return this.delete<boolean>(`${this.endPoint}/${reportId}`, {
+			fallback: false
+		});
+	}
+	
+	selectReports(): Promise<ReportTemplateModel[]> {
+		return this.get<ReportTemplateModel[]>(`${this.endPoint}/select`, {
+			fallback: []
+		});
+	}
+	
+	getReportTemplatesByModule(module: string): Promise<ReportTemplateModel[]> {
+		return this.get<ReportTemplateModel[]>(`${this.endPoint}/byModule`, {
+			params: { module },
+			fallback: []
+		});
+	}
+	
+	produceReport(reportTemplateId: number, criteria: object, page?: number): Promise<any> {
+		const params = { page: page ?? 1 };
+		
+		return this.post<any>(`${this.endPoint}/${reportTemplateId}/produce`, {
+			body: criteria,
+			params
+		});
+	}
+	
+	exportReport(reportTemplateId: number, criteria: object, format: string): Promise<any> {
+		return this.getBlob(`${this.endPoint}/${reportTemplateId}/export`, {
+			format
+		});
+	}
 }

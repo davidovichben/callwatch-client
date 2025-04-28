@@ -9,28 +9,27 @@ export class UnitUserService extends BaseHttpService {
 
   readonly endPoint = this.apiUrl + '/unit';
 
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   getUsers(unitId: string): Promise<any> {
-    return this.http.get(this.endPoint + '/' + unitId + '/user', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as any)
-      .catch(() => null);
+    return this.get<any>(`${this.endPoint}/${unitId}/user`, {
+      fallback: null
+    });
   }
 
   newUser(unitId: string, user: string): Promise<any> {
-    return this.http.post(this.endPoint + '/' + unitId + '/user', { user }, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(response => response);
+    return this.post<any>(`${this.endPoint}/${unitId}/user`, {
+      body: { user },
+      fallback: false
+    });
   }
-
+  
   deleteUser(unitId: string, user: string): Promise<boolean> {
-    return this.http.delete(this.endPoint + '/' + unitId + '/user', this.getTokenRequest({ user }))
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.delete<boolean>(`${this.endPoint}/${unitId}/user`, {
+      params: { user },
+      fallback: false
+    });
   }
 }

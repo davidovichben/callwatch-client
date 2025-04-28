@@ -8,9 +8,6 @@ export class PermissionModel {
   modules: ModuleModel[];
 }
 
-export const PermissionModules = [
-  'reports', 'timed_reports', 'users', 'switchboards',
-  'routers', 'schedules', 'units', 'calls'
-];
+export const PermissionModules = ['users', 'units', 'mailServers', 'mailBoxes', 'keywords'];
 
 export const PermissionActions = ['read', 'create', 'update', 'delete'];

@@ -14,51 +14,41 @@ export class MailServerService extends BaseHttpService {
 
 	readonly endPoint = this.apiUrl + '/mailServers';
 
-	constructor(private http: HttpClient, userSession: UserSessionService) {
-		super(userSession);
+	constructor(http: HttpClient, userSession: UserSessionService) {
+		super(userSession, http);
 	}
 
 	getMailServers(criteria: DataTableCriteria): Promise<DataTableResponse> {
 		const params = this.getDataTableParams(criteria);
-
-		return this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
-			.toPromise()
-			.then(response => response as DataTableResponse)
-			.catch(() => null);
+		return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+			body: params,
+			fallback: null
+		});
 	}
 
 	getMailServer(mailServerId: string): Promise<MailServerModel> {
-		return this.http.get(this.endPoint + '/' + mailServerId, this.getTokenRequest())
-			.toPromise()
-			.then(response => response as MailServerModel)
-			.catch(() => null);
+		return this.get<MailServerModel>(`${this.endPoint}/${mailServerId}`);
 	}
 
-	createMailServer(values: string): Promise<any> {
-		return this.http.post(this.endPoint, values, this.getTokenRequest())
-			.toPromise()
-			.then(() => true)
-			.catch(() => false);
+	createMailServer(values: string): Promise<boolean> {
+		return this.post<boolean>(this.endPoint, {
+			body: values
+		});
 	}
-
+	
 	updateMailServer(mailServerId: string, values: object): Promise<boolean> {
-		return this.http.put(this.endPoint + '/' + mailServerId, values, this.getTokenRequest())
-			.toPromise()
-			.then(() => true)
-			.catch(() => false);
+		return this.put<boolean>(`${this.endPoint}/${mailServerId}`, {
+			body: values
+		});
 	}
-
+	
 	deleteMailServer(mailServerId: string): Promise<boolean> {
-		return this.http.delete(this.endPoint + '/' + mailServerId, this.getTokenRequest())
-			.toPromise()
-			.then(() => true)
-			.catch(() => false);
+		return this.delete<boolean>(`${this.endPoint}/${mailServerId}`);
 	}
 	
 	selectMailServers(): Promise<SelectItemModel[]> {
-		return this.http.get(this.endPoint + '/select', this.getTokenRequest())
-			.toPromise()
-			.then(response => response as SelectItemModel[])
-			.catch(() => []);
+		return this.get<SelectItemModel[]>(`${this.endPoint}/select`, {
+			fallback: []
+		});
 	}
 }

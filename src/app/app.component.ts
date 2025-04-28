@@ -4,7 +4,7 @@ import { DateAdapter } from '@angular/material/core';
 
 import { Fade } from 'src/app/_shared/constants/animations';
 
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { MiscService } from 'src/app/_shared/services/http/misc.service';
 import { LocaleService } from 'src/app/_shared/services/state/locale.service';
 import { AppStateService } from 'src/app/_shared/services/state/app-state.service';
 
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   isLoading = false;
 
   constructor(private router: Router, private renderer: Renderer2,
-              private genericService: GenericService, private appState: AppStateService,
+              private miscService: MiscService, private appState: AppStateService,
               public localeService: LocaleService, private dateAdapter: DateAdapter<Date>) {}
   
   ngOnInit() {
@@ -40,23 +40,22 @@ export class AppComponent implements OnInit {
 
       const translations = this.localeService.getTranslations();
       if (!translations || Object.keys(translations).length === 0) {
-        const response = await this.genericService.getTranslations(this.locale);
+        const response = await this.miscService.getTranslations(this.locale);
         this.localeService.setTranslations(response);
       }
     } else {
       this.localeService.setLocale();
     }
   }
-
+  
   private setSubscriptions(): void {
-    this.localeService.localeChanged.subscribe(locale => {
+    this.localeService.localeChanged.subscribe(async (locale) => {
       this.locale = locale;
 
       this.setDirection();
-
-      this.genericService.getTranslations(this.locale).then(response => {
-        this.localeService.setTranslations(response);
-      })
+      
+      const response = await this.miscService.getTranslations(this.locale);
+      this.localeService.setTranslations(response);
     })
 
     this.appState.pageSpinnerShown.subscribe(showSpinner => this.isLoading = showSpinner);

@@ -12,46 +12,50 @@ import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes
 @Injectable()
 export class OrganizationService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/organization';
+  readonly endPoint = `${this.apiUrl}/organizations`;
 
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   getOrganizations(criteria: DataTableCriteria): Promise<DataTableResponse> {
     const params = this.getDataTableParams(criteria);
-
-    return this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as DataTableResponse)
-      .catch(() => null);
+    return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+      body: params
+    });
   }
 
   getOrganization(organizationId: string): Promise<OrganizationModel> {
-    return this.http.get(this.endPoint + '/' + organizationId, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as OrganizationModel)
-      .catch(() => null);
+    return this.get<OrganizationModel>(`${this.endPoint}/${organizationId}`);
   }
 
   newOrganization(values: object): Promise<boolean> {
-    return this.http.post(this.endPoint, values, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.post<boolean>(this.endPoint, {
+      body: values
+    });
   }
 
   updateOrganization(organizationId: string, values: object): Promise<boolean> {
-    return this.http.put(this.endPoint + '/' + organizationId, values, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.put<boolean>(`${this.endPoint}/${organizationId}`, {
+      body: values
+    });
   }
 
   enterOrganization(organizationId: string): Promise<boolean> {
-    return this.http.put(this.endPoint + '/' + organizationId + '/enter', {}, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.put<boolean>(`${this.endPoint}/${organizationId}/enter`, {
+      body: {}
+    });
+  }
+  
+  getSettings(): Promise<any> {
+    return this.get<any>(`${this.endPoint}/settings`, {
+      fallback: {}
+    });
+  }
+  
+  updateSettings(settings: object): Promise<boolean> {
+    return this.put<boolean>(`${this.endPoint}/settings`, {
+      body: settings
+    });
   }
 }

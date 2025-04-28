@@ -11,64 +11,42 @@ import { DataTableResponse } from 'src/app/_shared/components/data-table/classes
 @Injectable()
 export class MailboxService extends BaseHttpService {
 
-	readonly endPoint = this.apiUrl + '/mailboxes';
+	readonly endPoint = `${this.apiUrl}/mailboxes`;
 
-	constructor(private http: HttpClient, userSession: UserSessionService) {
-		super(userSession);
+	constructor(http: HttpClient, userSession: UserSessionService) {
+		super(userSession, http);
 	}
 
 	getMailboxes(criteria: DataTableCriteria): Promise<DataTableResponse> {
 		const params = this.getDataTableParams(criteria);
-
-		return this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
-			.toPromise()
-			.then(response => response as DataTableResponse)
-			.catch(() => null);
+		return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+			body: params
+		});
 	}
-
+	
 	getMailbox(mailBoxId: string): Promise<MailboxModel> {
-		return this.http.get(this.endPoint + '/' + mailBoxId, this.getTokenRequest())
-			.toPromise()
-			.then(response => response as MailboxModel)
-			.catch(() => null);
+		return this.get<MailboxModel>(`${this.endPoint}/${mailBoxId}`);
 	}
-
-	createMailbox(values: object): Promise<any> {
-		return this.http.post(this.endPoint, values, this.getTokenRequest())
-			.toPromise()
-			.then(() => true)
-			.catch(() => false);
+	
+	createMailbox(values: object): Promise<boolean> {
+		return this.post<boolean>(this.endPoint, {
+			body: values
+		});
 	}
-
-	async updateMailbox(mailBoxId: string, values: object): Promise<boolean> {
-		try {
-			await this.http.put(this.endPoint + '/' + mailBoxId, values, this.getTokenRequest())
-				.toPromise();
-			return true;
-		} catch {
-			return false;
-		}
+	
+	updateMailbox(mailBoxId: string, values: object): Promise<boolean> {
+		return this.put<boolean>(`${this.endPoint}/${mailBoxId}`, {
+			body: values
+		});
 	}
-
-  multipleUpdate(checkedItems: any[], values: object): Promise<boolean> {
-    return this.http.put(this.endPoint + '/multi', { checkedItems, ...values }, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
-  }
-
+	
+	multipleUpdate(checkedItems: any[], values: object): Promise<boolean> {
+		return this.put<boolean>(`${this.endPoint}/multi`, {
+			body: { checkedItems, ...values }
+		});
+	}
+	
 	deleteMailbox(mailBoxId: string): Promise<boolean> {
-		return this.http.delete(this.endPoint + '/' + mailBoxId, this.getTokenRequest())
-			.toPromise()
-			.then(() => true)
-			.catch(() => false);
+		return this.delete<boolean>(`${this.endPoint}/${mailBoxId}`);
 	}
-	//
-  // checkDialNumbersUnique(from: number, to: number, switchboard: number): Promise<any> {
-  //   const values = { from, to, switchboard };
-  //   return this.http.get(this.endPoint + '/dialNumbersExist', this.getTokenRequest(values, true))
-  //     .toPromise()
-  //     .then(response => response as { exists: boolean })
-  //     .catch(() => false);
-  // }
 }

@@ -25,17 +25,16 @@ export class UnitFormComponent {
               private unitService: UnitService,
               public userSession: UserSessionService) {}
 
-  submit(form: NgForm): void {
+  async submit(form: NgForm): Promise<void> {
     if (form.valid && !this.isSubmitting) {
       this.isSubmitting = true;
-
-      this.unitService.newUnit(form.value).then(response => {
-        if (response) {
-          this.dialogRef.close(response.resource.id);
-        }
-
-        this.isSubmitting = false;
-      })
+      
+      const response = await this.unitService.newUnit(form.value);
+      if (response) {
+        this.dialogRef.close(response._id);
+      }
+      
+      this.isSubmitting = false;
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
-import { GenericService } from 'src/app/_shared/services/http/generic.service';
+import { GenericService } from 'src/app/_shared/services/http/misc.service';
 import { RouterService } from 'src/app/_shared/services/http/router.service';
 
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';

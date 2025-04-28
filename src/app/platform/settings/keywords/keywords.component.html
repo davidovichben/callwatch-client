@@ -1,0 +1,29 @@
+<div class="mb-3 flex-between">
+	<p class="h3">{{ 'keywords' | t }}</p>
+	<div>
+		<button class="btn primary-btn" routerLink="./form" *ngIf="userSession.hasPermission('keywords', 'create')">
+			<i class="la la-plus ms-1"></i>
+			<span>{{ 'add_keyword' | t }}</span>
+		</button>
+	</div>
+</div>
+<app-data-table tableUrl="keywords" [columns]="columns" [hasActionsHeader]="userSession.canModify('keywords')" [hasCheckColumn]="false" (fetchItems)="fetchItems()">
+	<tr *ngFor="let item of dataTable.items">
+		<td>
+			<a [routerLink]="['./', 'form', item._id]" *ngIf="userSession.hasPermission('keywords', 'update')">{{ item.name }}</a>
+		</td>
+		<td class="row-icons" *ngIf="userSession.canModify('keywords')">
+			<mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item class="row-action" [routerLink]="['./', 'form', item._id]" *ngIf="userSession.hasPermission('keywords', 'update')">
+					<mat-icon>edit</mat-icon>
+					<span>{{ 'edit' | t }}</span>
+				</button>
+				<button mat-menu-item class="row-action" (click)="deleteItem(item._id)" *ngIf="userSession.hasPermission('keywords', 'delete')">
+					<mat-icon>delete</mat-icon>
+					<span>{{ 'delete' | t }}</span>
+				</button>
+			</mat-menu>
+		</td>
+	</tr>
+</app-data-table>

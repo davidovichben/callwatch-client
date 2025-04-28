@@ -17,9 +17,9 @@
       <mat-icon class="side-chevron" *ngIf="!last">chevron_left</mat-icon>
     </ng-container>
   </div>
-  <div class="tabs">
-    <a class="tab" [routerLink]="['/platform', 'units', activeUnit._id, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>
-  </div>
+<!--  <div class="tabs">-->
+<!--    <a class="tab" [routerLink]="['/platform', 'units', activeUnit._id, module.name]" routerLinkActive="active" *ngFor="let module of modules">{{ module.label | t }}</a>-->
+<!--  </div>-->
   <div>
     <router-outlet></router-outlet>
   </div>

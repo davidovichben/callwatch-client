@@ -41,8 +41,12 @@ const routes: Routes = [
         loadComponent: () => import('./platform/audit-trail/audit-trail.component').then(m => m.AuditTrailComponent)
       },
       {
+        path: 'notifications',
+        loadComponent: () => import('./platform/notifications/notifications.component').then(m => m.NotificationsComponent)
+      },
+      {
         path: '**',
-        redirectTo: ''
+        redirectTo: '/platform'
       }
     ]
     

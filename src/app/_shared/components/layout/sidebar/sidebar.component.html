@@ -1,7 +1,7 @@
 <div class="logo flex-center">
   <span>{{ toggleState === 'opened' ? 'MailWatch' : 'MW' }}</span>
 </div>
-<div class="d-flex justify-content-start px-3">
+<div class="d-flex px-3 toggle-sidebar">
 	<div class="rounded-circle pointer">
 		<i class="la la-angle-right f-18" *ngIf="(pageDirection === 'rtl' && toggleState === 'opened') || (pageDirection === 'ltr' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
 		<i class="la la-angle-left f-18" *ngIf="(pageDirection === 'ltr' && toggleState === 'opened') || (pageDirection === 'rtl' && toggleState === 'closed')" (click)="toggleSidebar()"></i>
@@ -18,13 +18,13 @@
 <div id="menu">
   <div id="modules">
     <div class="module-container" *ngFor="let module of modules">
-      <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule.name }" *ngIf="!module.subModules">
+      <a [routerLink]="['/', menuType, module.name]" class="sidebar-item" [ngClass]="{ active: module.name === activeModule?.name }" *ngIf="!module.subModules">
         <figure>
           <mat-icon inline>{{ module.icon }}</mat-icon>
         </figure>
         <span>{{ module.label ? (module.label | t) : (module.name | t) }}</span>
       </a>
-      <div class="sidebar-item" (click)="toggleSubModules(module)" [ngClass]="{ active: module.name === activeModule.name }" *ngIf="module.subModules">
+      <div class="sidebar-item" (click)="toggleSubModules(module)" [ngClass]="{ active: module.name === activeModule?.name }" *ngIf="module.subModules">
         <figure>
           <mat-icon inline>{{ module.icon }}</mat-icon>
         </figure>
@@ -48,10 +48,16 @@
 	  </div>
   </div>
 </div>
-<div class="d-flex align-items-center">
+<div>
+	<div class="notifications" [routerLink]="['/platform', 'notifications']">
+		<mat-icon>inbox</mat-icon>
+		<span>0</span>
+	</div>
+</div>
+<div class="d-flex align-items-center user-info">
 	<mat-icon class="user-default-avatar" *ngIf="!user.avatar">account_circle</mat-icon>
 	<img class="user-avatar" [src]="user.avatar" *ngIf="user.avatar" alt="user">
-	<span id="username">{{ user.firstName + ' ' + user.lastName }}</span>
+	<span class="username">{{ user.firstName + ' ' + user.lastName }}</span>
 <!--	<div *ngIf="user.extension">-->
 <!--		<span class="ms-2 bold">{{ 'extension' | t }}:</span>-->
 <!--		<span>{{ user.extension }}</span>-->

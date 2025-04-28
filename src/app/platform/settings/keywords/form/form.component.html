@@ -1,0 +1,21 @@
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
+  <div class="form-header">
+    <p class="h1">{{ keywordId ? ('edit_keyword' | t) : ('add_keyword' | t) }}</p>
+    <div>
+      <button type="button" class="ms-2 btn neutral-btn" [routerLink]="['/platform', 'settings', 'keywords']">{{ 'cancel' | t }}</button>
+      <button type="submit" class="btn primary-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div class="form-body">
+    <div class="row">
+      <div class="col-12 col-lg-4 mb-3">
+        <mat-form-field>
+          <mat-label>{{ 'name' | t }}</mat-label>
+          <mat-icon matSuffix class="input-tooltip" [matTooltip]="'name' | t ">help</mat-icon>
+          <input matInput type="text" formControlName="name" required>
+          <mat-error>{{ errorMessages.required | t }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</form>

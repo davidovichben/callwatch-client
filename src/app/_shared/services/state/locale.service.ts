@@ -40,26 +40,31 @@ export class LocaleService {
 
   getTranslations(): TranslationModel[] {
     const translations = localStorage.getItem('translations');
-    if (translations) {
-      const translationsByUser = JSON.parse(translations)[this.userId];
-
-      if (translationsByUser) {
-        return translationsByUser
-      }
-    }
-
-    return [];
+    // if (translations) {
+      // const translationsByUser = JSON.parse(translations)[this.userId];
+      //
+      // if (translationsByUser) {
+      //   return translationsByUser;
+      // }
+    // }
+    
+    //return [];
+    
+    return translations ? JSON.parse(translations) : [];
   }
 
   setTranslations(translations: TranslationModel[]): void {
     const keyed = {};
-    const keyedByUser = {};
+    // const keyedByUser = {};
     
     translations.forEach(row => keyed[row.keyName] = row.value);
 
-    keyedByUser[this.userId] = keyed;
+    // keyedByUser[this.userId] = keyed;
 
-    localStorage.setItem('translations', JSON.stringify(keyedByUser));
+    // localStorage.setItem('translations', JSON.stringify(keyedByUser));
+    
+    localStorage.setItem('translations', JSON.stringify(keyed));
+    
     this.translationLoaded.next(true);
   }
 }

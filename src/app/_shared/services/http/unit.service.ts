@@ -1,78 +1,53 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { from, Observable, of } from 'rxjs';
 
-import { BaseHttpService } from './base-http.service';
 import { UserSessionService } from '../state/user-session.service';
 
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { ResponseData } from 'src/app/_shared/constants/objects';
+import { HttpGenericService } from './http-generic.service';
 
 @Injectable()
-export class UnitService extends BaseHttpService {
+export class UnitService extends HttpGenericService<UnitModel> {
 
-  readonly endPoint = this.apiUrl + '/unit';
-
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  endpoint = 'unit';
+  
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(http, userSession);
   }
 
   getUnits(unitId?: string): Promise<UnitModel[]> {
-    const params = {};
-    if (unitId) {
-      Object.assign(params, { unitId });
-    }
-
-    return this.http.get(this.endPoint, this.getTokenRequest(params, true))
-      .toPromise()
-      .then(response => response as UnitModel[])
-      .catch(() => []);
+    const params = unitId ? { unitId } : null;
+    return this.getAll(params, true);
   }
 
   getUnit(unitId: string | 'root'): Promise<UnitModel> {
-    return this.http.get(this.endPoint + '/' + unitId, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as UnitModel)
-      .catch(() => null);
+    return this.getOne(unitId);
   }
 
   newUnit(values: object): Promise<any> {
-    return this.http.post(this.endPoint, values, this.getTokenRequest())
-      .toPromise()
-      .then(response => response)
-      .catch(() => false);
+    return this.create(values);
   }
 
   updateUnit(unitId: string, values: object): Promise<ResponseData> {
-    return this.http.put(this.endPoint + '/' + unitId, values, this.getTokenRequest(null, true))
-      .toPromise()
-      .then(response => response as ResponseData)
-      .catch(() => null);
+    return this.update(unitId, values);
   }
 
   deleteUnit(unitId: string, assignedUnitId?: string): Promise<boolean> {
-    const params = {};
-    if (assignedUnitId) {
-      Object.assign(params, { assignedUnitId });
-    }
-
-    return this.http.delete(this.endPoint + '/' + unitId, this.getTokenRequest(params))
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    const params = assignedUnitId ? { assignedUnitId } : null;
+    return this.remove(unitId, params);
   }
 
   transferUnit(unit: string, parent: string): Promise<any> {
-    return this.http.put(this.endPoint + '/' + unit + '/transfer', { parent }, this.getTokenRequest())
-      .toPromise()
-      .then(response => response)
-      .catch(response => response);
+    return this.put<any>(`${this.apiUrl}/unit/${unit}/transfer`, {
+      body: { parent },
+      fallback: null
+    });
   }
 
   getUnitLevels(): Promise<number[]> {
-    return this.http.get(this.endPoint + '/levels', this.getTokenRequest())
-      .toPromise()
-      .then(response => response as number[])
-      .catch(() => []);
+    return this.get<number[]>(`${this.apiUrl}/unit/levels`, {
+      fallback: []
+    });
   }
 }

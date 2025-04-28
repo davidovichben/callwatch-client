@@ -11,67 +11,54 @@ import { UserModel } from 'src/app/_shared/models/user.model';
 @Injectable()
 export class UserService extends BaseHttpService {
 
-  readonly endPoint = this.apiUrl + '/user';
-
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  readonly endPoint = `${this.apiUrl}/user`;
+  
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   getUsers(criteria: DataTableCriteria): Promise<DataTableResponse> {
     const params = this.getDataTableParams(criteria);
-
-    return this.http.post(this.endPoint + '/search', params, this.getTokenRequest(null, true))
-      .toPromise()
-      .then(response => response as DataTableResponse)
-      .catch(() => null);
+    return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+      body: params,
+      noLoader: true
+    });
   }
 
   getUser(userId: string): Promise<UserModel> {
-    return this.http.get(this.endPoint + '/' + userId, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as UserModel)
-      .catch(() => null);
+    return this.get<UserModel>(`${this.endPoint}/${userId}`);
   }
-
+  
   newUser(values: object): Promise<boolean> {
-    return this.http.post(this.endPoint, values, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.post<boolean>(this.endPoint, {
+      body: values
+    });
   }
 
   updateUser(userId: string, values: object): Promise<any> {
-    return this.http.put(this.endPoint + '/' + userId, values, this.getTokenRequest())
-      .toPromise()
-      .then(response => response)
-      .catch(() => false);
+    return this.put<any>(`${this.endPoint}/${userId}`, {
+      body: values
+    });
   }
 
   multipleUpdate(checkedItems: any[], values: object): Promise<boolean> {
-    return this.http.put(this.endPoint + '/multipleUpdate', { checkedItems, ...values }, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.put<boolean>(`${this.endPoint}/multipleUpdate`, {
+      body: { checkedItems, ...values }
+    });
   }
 
   deleteUser(userId: string): Promise<boolean> {
-    return this.http.delete(this.endPoint + '/' + userId, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.delete<boolean>(`${this.endPoint}/${userId}`);
   }
 
   getPermissions(): Promise<any> {
-    return this.http.get(this.endPoint + '/permission', this.getTokenRequest())
-      .toPromise()
-      .then(response => response)
-      .catch(() => null);
+    return this.get<any>(`${this.endPoint}/permission`);
   }
 
-  checkExists(username: string): Promise<any> {
-    return this.http.get(this.endPoint + '/exists', this.getTokenRequest({ username }, true))
-      .toPromise()
-      .then(response => response)
-      .catch(() => false);
+  checkExists(username: string): Promise<boolean> {
+    return this.get<boolean>(`${this.endPoint}/exists`, {
+      params: { username },
+      noLoader: true
+    });
   }
 }

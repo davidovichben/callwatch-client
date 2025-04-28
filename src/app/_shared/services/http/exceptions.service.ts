@@ -12,23 +12,18 @@ export class ExceptionsService extends BaseHttpService {
 
   readonly endPoint = this.apiUrl + '/exception';
 
-  constructor(private http: HttpClient, userSession: UserSessionService) {
-    super(userSession);
+  constructor(http: HttpClient, userSession: UserSessionService) {
+    super(userSession, http);
   }
 
   getExceptions(criteria: DataTableCriteria): Promise<DataTableResponse> {
     const params = this.getDataTableParams(criteria);
-
-    return this.http.post(this.endPoint + '/search', params, this.getTokenRequest())
-      .toPromise()
-      .then(response => response as DataTableResponse)
-      .catch(() => null);
+    return this.post<DataTableResponse>(`${this.endPoint}/search`, {
+      body: params
+    });
   }
 
   deleteException(exceptionId: number): Promise<boolean> {
-    return this.http.delete(this.endPoint + '/' + exceptionId, this.getTokenRequest())
-      .toPromise()
-      .then(() => true)
-      .catch(() => false);
+    return this.delete<boolean>(`${this.endPoint}/${exceptionId}`);
   }
 }
