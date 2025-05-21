@@ -14,11 +14,13 @@
 
 <ng-template #recursiveListTmpl let-list="list">
   <li *ngFor="let unit of list" (drop)="drop($event, unit)">
-    <!-- Expand/collapse icon -->
-    <i class="ms-2 la"
-       [ngClass]="{ 'la-plus': !unit.toggled, 'la-minus': unit.toggled }"
-       (click)="toggleUnit(unit)"
-       *ngIf="unit.units?.length > 0"></i>
+    <!-- Expand/collapse icon with loading indicator -->
+    <ng-container *ngIf="unit.units?.length > 0 || unit.loading">
+      <i class="ms-2 la" *ngIf="!unit.loading"
+         [ngClass]="{ 'la-plus': !unit.isToggled, 'la-minus': unit.isToggled }"
+         (click)="toggleUnit(unit)"></i>
+      <mat-spinner diameter="16" *ngIf="unit.loading" class="ms-2"></mat-spinner>
+    </ng-container>
 
     <!-- Unit name -->
     <span [draggable]="!unit.disabled"
@@ -29,7 +31,7 @@
     </span>
 
     <!-- Recursive child units -->
-    <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.toggled }">
+    <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.isToggled }">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
     </ul>
   </li>

@@ -48,11 +48,11 @@ export class UnitsComponent implements OnInit, OnDestroy {
   
   initializeUnitState() {
     // Initialize the root unit in the UnitStateService
-    const rootUnit = {
+    const rootUnit = new UnitModel({
       _id: AppConstants.ROOT_UNIT_ID,
       name: this.userSession.getUser().organization,
       units: this.route.snapshot.data.units
-    };
+    });
     
     this.unitStateService.initializeRootUnit(rootUnit, this.activeUnit);
   }

@@ -25,20 +25,25 @@
   box-sizing: content-box
   z-index: 99
 
-#selectLabel:hover
-  border-color: transparent
-
-#selectLabel.opened
-  border-color: transparent
-
-#selectLabel.selected #placeholder
-  position: absolute
-  background: #fff
-  font-size: 1rem
-
-#selectLabel.opened #placeholder
-  color: #3f51b5
-
+  &:hover
+    border-color: transparent
+  
+  &.opened
+    border-color: transparent
+  
+  &.selected
+    #placeholder
+      position: absolute
+      background: #fff
+      font-size: 1rem
+  
+  &.opened
+    #placeholder
+      color: #3f51b5
+      
+  &.disabled
+    opacity: 0.5
+    
 #selectLabelBorder
   position: absolute
   top: -1px

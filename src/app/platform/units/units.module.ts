@@ -13,6 +13,7 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { UnitResolve } from 'src/app/_shared/resolves/unit.resolve';
 import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 // Child routes for unit details
 const childRoutes = [
@@ -52,13 +53,14 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [UnitsComponent, UnitTreeComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatIconModule,
-    TranslateModule,
-    UnitFormModule
-  ],
+	imports: [
+		CommonModule,
+		RouterModule.forChild(routes),
+		MatIconModule,
+		TranslateModule,
+		UnitFormModule,
+		MatProgressSpinner
+	],
   exports: [UnitTreeComponent],
   providers: [
     UnitService,

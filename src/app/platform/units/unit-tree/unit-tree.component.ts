@@ -1,10 +1,12 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
 import { UnitStateService } from 'src/app/_shared/services/state/unit-state.service';
+import { UnitTreeService } from 'src/app/_shared/services/unit/unit-tree.service';
+import { UnitFilterService } from 'src/app/_shared/services/unit/unit-filter.service';
 
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { AppConstants } from 'src/app/_shared/constants/app.constants';
@@ -22,7 +24,7 @@ interface TransferredUnit {
   templateUrl: './unit-tree.component.html',
   styleUrls: ['./unit-tree.component.sass']
 })
-export class UnitTreeComponent implements OnInit, OnDestroy {
+export class UnitTreeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('dragPlaceholder') dragPlaceholder: ElementRef;
   
   activeUnit: UnitModel;
@@ -31,18 +33,206 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
   readonly AppConstants = AppConstants;
   readonly sub = new Subscription();
   
+  // Map to store toggle states of units by ID
+  private toggleStateMap = new Map<string, boolean>();
+  private initialized = false;
+  
+  /**
+   * Export the current toggle states for persistence or sharing
+   * @returns Object with unit ID to toggle state mapping
+   */
+  exportToggleStates(): Record<string, boolean> {
+    const exported: Record<string, boolean> = {};
+    this.toggleStateMap.forEach((value, key) => {
+      exported[key] = value;
+    });
+    return exported;
+  }
+  
+  /**
+   * Import toggle states from a saved state
+   * @param states Object with unit ID to toggle state mapping
+   * @param apply Whether to immediately apply the imported states
+   */
+  importToggleStates(states: Record<string, boolean>, apply = true): void {
+    this.toggleStateMap.clear();
+    
+    Object.entries(states).forEach(([id, value]) => {
+      this.toggleStateMap.set(id, value);
+    });
+    
+    if (apply && this.rootUnit?.units) {
+      this.applyToggleStates(this.rootUnit.units);
+    }
+  }
+  
   constructor(
     private router: Router,
     private notifications: NotificationService,
     private unitService: UnitService,
     private unitStateService: UnitStateService,
+    private unitTreeService: UnitTreeService,
+    private unitFilterService: UnitFilterService,
     private t: TranslatePipe
   ) {}
 
   ngOnInit(): void {
+    // Initialize component data and subscriptions
     this.initializeComponentData();
     this.setupSubscriptions();
-    this.setActiveBranch();
+    
+    // Initialize toggle states for all units
+    this.initializeToggleStates();
+    
+    // Expand the active unit branch with a more robust approach
+    this.expandActiveUnitPath();
+  }
+  
+  /**
+   * After view initialization, ensure active unit is expanded
+   */
+  ngAfterViewInit(): void {
+    // Ensure active unit is expanded after view is initialized
+    setTimeout(() => {
+      if (!this.initialized) {
+        // Force re-expansion if needed
+        this.expandActiveUnitPath(true);
+      }
+    }, 100); // Slightly longer timeout to ensure DOM is ready
+  }
+  
+  /**
+   * A more robust approach to expand the active unit's path
+   * This method will force the expansion of all ancestors of the active unit
+   * @param force If true, will expand even if already initialized
+   */
+  private async expandActiveUnitPath(force: boolean = false): Promise<void> {
+    // Skip if already initialized and not forcing
+    if (this.initialized && !force) {
+      return;
+    }
+    
+    // Skip if no active unit or it's the root unit
+    if (!this.activeUnit?._id ||
+        this.activeUnit._id === AppConstants.ROOT_UNIT_ID ||
+        !this.rootUnit?.units?.length) {
+      this.initialized = true;
+      return;
+    }
+    
+    try {
+      // Mark as initializing to prevent duplicate initialization
+      this.initialized = true;
+      
+      // Set the active unit's ID and its ancestors in the toggle state map
+      this.toggleStateMap.set(this.activeUnit._id, true);
+      
+      if (this.activeUnit.ancestors?.length) {
+        // Process ancestors in order (parents first)
+        for (const ancestor of this.activeUnit.ancestors) {
+          if (ancestor?._id) {
+            // Mark this ancestor as expanded in the toggle map
+            this.toggleStateMap.set(ancestor._id, true);
+            
+            // Load and expand this ancestor unit if needed
+            await this.ensureUnitExpanded(ancestor._id);
+          }
+        }
+        
+        // After expanding all ancestors, force a final check
+        this.ensureActiveUnitToggled();
+      } else {
+        // If no ancestors, try direct approach
+        this.findAndExpandUnitInTree(this.activeUnit._id, this.rootUnit.units);
+      }
+    } catch (error) {
+      console.error('Error expanding active unit path:', error);
+    }
+  }
+  
+  /**
+   * Ensure a specific unit is expanded, loading its children if necessary
+   * @param unitId The ID of the unit to expand
+   * @returns Promise that resolves when the unit is expanded
+   */
+  private async ensureUnitExpanded(unitId: string): Promise<boolean> {
+    // First look for the unit in the root units
+    const unit = this.unitTreeService.findUnitById(unitId, this.rootUnit.units);
+    
+    if (!unit) {
+      // Unit not found at root level, it might be nested deeper
+      return false;
+    }
+    
+    // Mark as expanded in the toggle map
+    this.toggleStateMap.set(unitId, true);
+    
+    // If the unit already has its children loaded, just expand it
+    if (unit.units) {
+      unit.isToggled = true;
+      return true;
+    }
+    
+    // Need to load the children
+    try {
+      unit.loading = true;
+      
+      // Load children
+      unit.units = await this.unitService.getUnits(unitId);
+      
+      // Mark as expanded
+      unit.isToggled = true;
+      
+      // Apply toggle states to the newly loaded children
+      if (unit.units?.length) {
+        this.applyToggleStates(unit.units);
+      }
+      
+      return true;
+    } catch (error) {
+      console.error(`Failed to load children for unit ${unitId}:`, error);
+      return false;
+    } finally {
+      unit.loading = false;
+    }
+  }
+  
+  /**
+   * Expand the active unit branch and ensure it's visible
+   */
+  private expandActiveBranch(): void {
+    if (this.isTreeDataReady()) {
+      // Expand the active unit branch
+      this.setActiveBranch();
+      
+      // Double-check that active unit is properly toggled
+      this.ensureActiveUnitToggled();
+    }
+  }
+  
+  /**
+   * Checks if tree data is ready for expansion
+   */
+  private isTreeDataReady(): boolean {
+    return !!this.activeUnit?._id &&
+           !!this.rootUnit?.units?.length &&
+           this.activeUnit._id !== AppConstants.ROOT_UNIT_ID;
+  }
+  
+  /**
+   * Initialize toggle states for all units
+   */
+  private initializeToggleStates(): void {
+    if (!this.rootUnit?.units?.length) {
+      return;
+    }
+    
+    this.unitTreeService.traverseUnitTree(this.rootUnit.units, (unit) => {
+      if (unit && unit.isToggled === undefined) {
+        unit.isToggled = false;
+      }
+      return null;
+    });
   }
 
   ngOnDestroy(): void {
@@ -68,27 +258,55 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       this.updateUnitNameInTree(changedUnit);
     }));
     
-    // Handle unit transfer events
-    this.sub.add(this.unitStateService.unitTransferred.subscribe(async () => {
+    // Listen to the refreshTree event to update the tree
+    this.sub.add(this.unitStateService.refreshTree.subscribe(async () => {
       await this.refreshUnits();
     }));
     
-    // Listen to the refreshTree event to update the tree
-    this.sub.add(this.unitStateService.refreshTree.subscribe(async () => {
+    this.sub.add(this.unitStateService.unitTransferred.subscribe(async () => {
       await this.refreshUnits();
     }));
   }
   
   /**
-   * Refresh all units
+   * Refresh all units while preserving toggle states
    */
   async refreshUnits(): Promise<void> {
     try {
       this.loadingUnits = true;
+      
+      // Save toggle states from current tree before refreshing
+      if (this.rootUnit?.units) {
+        this.saveToggleStates(this.rootUnit.units);
+      }
+      
+      // Fetch new units from the server
       const units = await this.unitService.getUnits();
       if (units) {
+        // Make sure active unit and its ancestors are marked as expanded
+        if (this.activeUnit?._id && this.activeUnit._id !== AppConstants.ROOT_UNIT_ID) {
+          this.toggleStateMap.set(this.activeUnit._id, true);
+          
+          if (this.activeUnit.ancestors?.length) {
+            this.activeUnit.ancestors.forEach(ancestor => {
+              if (ancestor?._id) {
+                this.toggleStateMap.set(ancestor._id, true);
+              }
+            });
+          }
+        }
+        
+        // Apply saved toggle states to the new units
+        this.applyToggleStates(units);
+        
+        // Update the tree with new units
         this.rootUnit.units = units;
-        this.ensureActiveUnitExpanded();
+        
+        // Ensure active unit's branch is expanded
+        this.ensureActiveUnitToggled();
+        
+        // Mark as initialized
+        this.initialized = true;
       }
     } catch (error) {
       this.notifications.error('Failed to refresh units');
@@ -98,60 +316,51 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
   }
   
   /**
-   * Ensure that after a tree refresh, the active unit's branch remains expanded
-   */
-  private ensureActiveUnitExpanded(): void {
-    if (!this.activeUnit || !this.rootUnit?.units) {
-      return;
-    }
-
-    if (this.activeUnit._id === AppConstants.ROOT_UNIT_ID) {
-      // If root is active, no need to expand anything
-      return;
-    }
-
-    // Use the ancestors to navigate through the tree
-    if (this.activeUnit.ancestors && this.activeUnit.ancestors.length > 0) {
-      this.setActiveBranch();
-    } else {
-      // If no ancestors, try to find the unit directly in the tree
-      this.findAndExpandUnitInTree(this.activeUnit._id, this.rootUnit.units);
-    }
-  }
-
-  /**
    * Recursively find a unit in the tree and expand its path
+   * This is a more direct and efficient implementation
    * @returns true if the unit was found
    */
   private findAndExpandUnitInTree(unitId: string, unitList: UnitModel[], parentUnit?: UnitModel): boolean {
-    if (!unitList) {
+    if (!unitList?.length || !unitId) {
       return false;
     }
-
-    // Check if the unit is in this level
+    
+    // First, try to find the unit directly at this level
     for (const unit of unitList) {
+      // If we found the unit we're looking for
       if (unit._id === unitId) {
-        // Unit found, ensure parent is toggled
+        // Ensure this unit is expanded in the toggle map
+        this.toggleStateMap.set(unit._id, true);
+        
+        // If there's a parent unit, expand it too
         if (parentUnit) {
-          parentUnit.toggled = true;
+          parentUnit.isToggled = true;
+          this.toggleStateMap.set(parentUnit._id, true);
         }
+        
         return true;
       }
-
-      // Look in children if any
-      if (unit.units && unit.units.length > 0) {
-        const found = this.findAndExpandUnitInTree(unitId, unit.units, unit);
-        if (found) {
-          // If found in children, ensure this level is toggled
-          unit.toggled = true;
+      
+      // Check if the unit we're looking for is in the children
+      if (unit.units?.length) {
+        const foundInChildren = this.findAndExpandUnitInTree(unitId, unit.units, unit);
+        
+        // If found in children, mark this unit as expanded
+        if (foundInChildren) {
+          unit.isToggled = true;
+          this.toggleStateMap.set(unit._id, true);
+          
+          // Also expand parent if it exists
           if (parentUnit) {
-            parentUnit.toggled = true;
+            parentUnit.isToggled = true;
+            this.toggleStateMap.set(parentUnit._id, true);
           }
+          
           return true;
         }
       }
     }
-
+    
     return false;
   }
 
@@ -163,50 +372,14 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // If unit has ancestors, use them to locate the unit
-    if (changedUnit.ancestors && changedUnit.ancestors.length > 0) {
-      let units = this.rootUnit.units;
-      
-      changedUnit.ancestors.forEach(ancestor => {
-        if (!units) {
-          return;
-        }
-
-        const unit = units.find(unit => unit._id === ancestor._id);
-        if (unit) {
-          units = unit.units;
-
-          if (unit._id === changedUnit._id) {
-            unit.name = changedUnit.name;
-          }
-        }
-      });
-    } else {
-      // If no ancestors, search the entire tree
-      this.updateUnitNameRecursively(changedUnit, this.rootUnit.units);
-    }
-  }
-
-  /**
-   * Recursively search for a unit to update its name
-   */
-  private updateUnitNameRecursively(changedUnit: UnitModel, unitList: UnitModel[]): boolean {
-    if (!unitList) {
-      return false;
-    }
-
-    for (const unit of unitList) {
+    // Use the tree service to find and update the unit
+    this.unitTreeService.traverseUnitTree(this.rootUnit.units, (unit) => {
       if (unit._id === changedUnit._id) {
         unit.name = changedUnit.name;
         return true;
       }
-
-      if (unit.units && this.updateUnitNameRecursively(changedUnit, unit.units)) {
-        return true;
-      }
-    }
-
-    return false;
+      return null;
+    });
   }
 
   /**
@@ -218,46 +391,163 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     }
 
     this.activeUnit = unit;
-    this.setActiveBranch();
+    
+    // Only try to expand if we have the necessary data
+    if (this.isTreeDataReady()) {
+      // Mark as initialized to prevent duplicate expansion
+      this.initialized = true;
+      this.setActiveBranch();
+    }
   }
 
   /**
    * Expand the branches that lead to the active unit
    */
   private setActiveBranch(): void {
-    if (!this.activeUnit || !this.rootUnit.units) {
+    if (!this.activeUnit?._id || !this.rootUnit?.units?.length) {
       return;
     }
-
+  
     // Skip for root unit
     if (this.activeUnit._id === AppConstants.ROOT_UNIT_ID) {
       return;
     }
-
+  
+    // Mark the active unit as expanded in the toggle state map
+    this.toggleStateMap.set(this.activeUnit._id, true);
+    
     // Use ancestors if available
-    if (this.activeUnit.ancestors && this.activeUnit.ancestors.length > 0) {
-      let parentUnit = null;
+    if (this.activeUnit.ancestors?.length) {
+      // Create a list of all ancestor IDs for quick lookup
+      const ancestorIds = new Set<string>();
       this.activeUnit.ancestors.forEach(ancestor => {
-        parentUnit = this.expandBranchToUnit(ancestor._id, parentUnit);
+        if (ancestor?._id) {
+          ancestorIds.add(ancestor._id);
+          // Mark as expanded in toggle state map
+          this.toggleStateMap.set(ancestor._id, true);
+        }
       });
+      
+      // Now expand all ancestors by recursively traversing the tree
+      this.recursivelyExpandAncestors(this.rootUnit.units, ancestorIds);
+      
+      // Finally, directly find and expand the active unit itself
+      this.findAndExpandUnitInTree(this.activeUnit._id, this.rootUnit.units);
     } else {
       // If no ancestors, find the unit in the tree
       this.findAndExpandUnitInTree(this.activeUnit._id, this.rootUnit.units);
     }
   }
+  
+  /**
+   * Recursively search for and expand all ancestor units
+   * @param units The list of units to search in
+   * @param ancestorIds The set of ancestor IDs to look for
+   */
+  private recursivelyExpandAncestors(units: UnitModel[], ancestorIds: Set<string>): void {
+    if (!units?.length || !ancestorIds.size) {
+      return;
+    }
+    
+    // Iterate through all units at this level
+    for (const unit of units) {
+      if (!unit?._id) continue;
+      
+      // If this unit is an ancestor, expand it
+      if (ancestorIds.has(unit._id)) {
+        // Mark as expanded
+        unit.isToggled = true;
+        this.toggleStateMap.set(unit._id, true);
+        
+        // If this unit has children, continue searching there
+        if (unit.units?.length) {
+          this.recursivelyExpandAncestors(unit.units, ancestorIds);
+        }
+      }
+      
+      // Even if not an ancestor, check its children - ancestors might be nested deeper
+      if (unit.units?.length) {
+        this.recursivelyExpandAncestors(unit.units, ancestorIds);
+      }
+    }
+  }
+      
+      /**
+       * Ensure the active unit is toggled after refreshes or data changes
+       * This is a fallback mechanism to guarantee the active unit's branch is expanded
+       */
+      private ensureActiveUnitToggled(): void {
+    if (!this.activeUnit?._id || !this.rootUnit?.units?.length) {
+      return;
+    }
+    
+    // Skip for root unit
+    if (this.activeUnit._id === AppConstants.ROOT_UNIT_ID) {
+      return;
+    }
+    
+    // Get all ancestors of the active unit
+    const ancestorIds = new Set<string>();
+    
+    if (this.activeUnit.ancestors?.length) {
+      // Add all ancestor IDs to the set
+      this.activeUnit.ancestors.forEach(ancestor => {
+        if (ancestor?._id) {
+          ancestorIds.add(ancestor._id);
+          
+          // Ensure ancestor is toggled in the state map
+          this.toggleStateMap.set(ancestor._id, true);
+        }
+      });
+    }
+    
+    // Make sure each ancestor in the tree is actually toggled
+    if (ancestorIds.size > 0) {
+      this.unitTreeService.traverseUnitTree(this.rootUnit.units, (unit) => {
+        if (unit?._id && ancestorIds.has(unit._id)) {
+          // This is an ancestor - make sure it's toggled
+          unit.isToggled = true;
+              
+              // If this is the parent of our target unit, check if target is in its children
+              if (this.activeUnit.parent === unit._id && unit.units?.length) {
+                // Find the active unit in this parent's children
+                const activeUnitInParent = unit.units.find(child =>
+                  child._id === this.activeUnit._id
+                );
+                
+                // If found, make sure it's visible
+                if (activeUnitInParent) {
+                  activeUnitInParent.isToggled = true;
+                  this.toggleStateMap.set(activeUnitInParent._id, true);
+                }
+              }
+            }
+            return null;
+          });
+        }
+        
+        // Also try direct path finding as a backup approach
+        this.findAndExpandUnitInTree(this.activeUnit._id, this.rootUnit.units);
+        
+        // As a final measure, force the active unit ID to be expanded in the toggle map
+        this.toggleStateMap.set(this.activeUnit._id, true);
+      }
 
   /**
    * Expand a specific branch to show a unit
    */
   private expandBranchToUnit(unitId: string, parentUnit?: UnitModel): UnitModel {
-    const units = parentUnit ? parentUnit.units : this.rootUnit.units;
-    if (!units) {
+    const units = parentUnit?.units || this.rootUnit?.units;
+    if (!units?.length) {
       return null;
     }
     
-    const unit = units.find(unit => unit._id === unitId);
-    if (unit) {
-      unit.toggled = true;
+    // Use UnitTreeService to find the unit
+    const unit = this.unitTreeService.findUnitById(unitId, units);
+    if (unit?._id) {
+      // Mark as expanded in UI and toggle state map
+      unit.isToggled = true;
+      this.toggleStateMap.set(unit._id, true);
       return unit;
     }
 
@@ -270,18 +560,70 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
    * Loads child units if they haven't been loaded yet.
    */
   async toggleUnit(unit: UnitModel): Promise<void> {
+    if (!unit || !unit._id) {
+      return;
+    }
+    
     // If units are already loaded or it was already toggled once, just toggle visibility
-    if (unit.units || unit.toggled) {
-      unit.toggled = !unit.toggled;
+    if (unit.units || unit.isToggled !== undefined) {
+      unit.isToggled = !unit.isToggled;
+      
+      // Always update the toggle state in the map
+      this.toggleStateMap.set(unit._id, unit.isToggled);
+      
+      // If collapsing, check if we need to remember child states
+      if (!unit.isToggled && unit.units?.length) {
+        // Save toggle states of children before collapsing
+        this.saveToggleStates(unit.units);
+      }
+      
+      // If expanding and this is an ancestor of the active unit, expand the path
+      if (unit.isToggled &&
+          this.activeUnit?._id &&
+          this.activeUnit._id !== AppConstants.ROOT_UNIT_ID &&
+          this.activeUnit.ancestors?.some(a => a?._id === unit._id)) {
+        
+        // This is an ancestor of the active unit, ensure the path is expanded
+        setTimeout(() => this.ensureActiveUnitToggled(), 0);
+      }
+      
       return;
     }
     
     try {
-      // Otherwise, load the child units
+      // Set loading state
+      unit.loading = true;
+      
+      // Load the child units
       unit.units = await this.unitService.getUnits(unit._id);
-      unit.toggled = true;
+      
+      // Mark as expanded
+      unit.isToggled = true;
+      this.toggleStateMap.set(unit._id, true);
+      
+      // Apply saved toggle states to child units if they exist
+      if (unit.units?.length) {
+        this.applyToggleStates(unit.units);
+        
+        // If this is an ancestor of the active unit, expand the path
+        if (this.activeUnit?._id &&
+            this.activeUnit._id !== AppConstants.ROOT_UNIT_ID &&
+            this.activeUnit.ancestors?.some(a => a?._id === unit._id)) {
+          
+          // After applying toggle states, ensure active unit path is expanded
+          setTimeout(() => {
+            // Try to find the active unit in the children
+            this.findAndExpandUnitInTree(this.activeUnit._id, unit.units, unit);
+            
+            // Also ensure all ancestors are expanded
+            this.ensureActiveUnitToggled();
+          }, 0);
+        }
+      }
     } catch (error) {
       this.notifications.error('Failed to load unit children');
+    } finally {
+      unit.loading = false;
     }
   }
   
@@ -295,6 +637,79 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     
     this.router.navigate(['/platform', 'units', unit._id]);
   }
+      
+      /**
+       * Manage toggle states for the unit tree
+       * @param units The units to process
+       * @param operation 'save' to save states, 'apply' to apply saved states
+       */
+      private manageToggleStates(units: UnitModel[], operation: 'save' | 'apply'): void {
+        if (!units?.length) {
+          return;
+        }
+        
+        // For saving states, track current unit IDs for cleanup
+        const currentUnitIds = operation === 'save' ? new Set<string>() : null;
+        
+        // For applying states, collect active unit ancestor IDs if needed
+        const activeUnitAncestorIds = new Set<string>();
+        if (operation === 'apply' && this.activeUnit?._id && this.activeUnit?.ancestors?.length) {
+          // Add all ancestors to ensure the path to active unit is expanded
+          this.activeUnit.ancestors.forEach(ancestor => {
+            if (ancestor?._id) {
+              activeUnitAncestorIds.add(ancestor._id);
+              this.toggleStateMap.set(ancestor._id, true);
+            }
+          });
+          
+          // Add active unit ID
+          activeUnitAncestorIds.add(this.activeUnit._id);
+          this.toggleStateMap.set(this.activeUnit._id, true);
+        }
+        
+        // Process all units
+        this.unitTreeService.traverseUnitTree(units, (unit) => {
+          if (!unit?._id) return null;
+          
+          if (operation === 'save') {
+            // Save toggle state
+            currentUnitIds.add(unit._id);
+            this.toggleStateMap.set(unit._id, !!unit.isToggled);
+          } else {
+            // Apply toggle state
+            if (this.toggleStateMap.has(unit._id)) {
+              unit.isToggled = this.toggleStateMap.get(unit._id);
+            } else if (activeUnitAncestorIds.has(unit._id)) {
+              unit.isToggled = true;
+              this.toggleStateMap.set(unit._id, true);
+            } else {
+              unit.isToggled = false;
+            }
+          }
+          return null;
+        });
+        
+        // Cleanup for save operation
+        if (operation === 'save' && currentUnitIds) {
+          Array.from(this.toggleStateMap.keys())
+            .filter(id => !currentUnitIds.has(id))
+            .forEach(id => this.toggleStateMap.delete(id));
+        }
+      }
+      
+      /**
+       * Save toggle states - alias for manageToggleStates
+       */
+      private saveToggleStates(units: UnitModel[]): void {
+        this.manageToggleStates(units, 'save');
+      }
+      
+      /**
+       * Apply toggle states - alias for manageToggleStates
+       */
+      private applyToggleStates(units: UnitModel[]): void {
+        this.manageToggleStates(units, 'apply');
+      }
   
   /**
    * Initialize drag operation for a unit
@@ -368,32 +783,47 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     if (transferredUnit._id === destinationUnit._id) {
       return false;
     }
-
-    // Check if unit is already in destination (should return false if it is)
-    const existingUnit = destinationUnit.units?.find(unit => unit._id === transferredUnit._id);
-    return !existingUnit;
+    
+    // Find the source unit in the tree
+    const sourceUnit = this.unitTreeService.findUnitById(transferredUnit._id, this.rootUnit.units);
+    
+    // Can always transfer to the root unless it's already there
+    console.log(destinationUnit._id)
+    if (destinationUnit._id === AppConstants.ROOT_UNIT_ID) {
+      console.log(sourceUnit.parent)
+      return sourceUnit.parent !== null;
+    }
+    
+    // Check if unit is already in destination
+    const existingUnit = this.unitTreeService.findUnitById(transferredUnit._id, destinationUnit.units || []);
+    if (existingUnit) {
+      return false;
+    }
+    
+    // Check if destination is a descendant of the source (would create circular dependency)
+    return !(sourceUnit && this.unitTreeService.isDescendantOf(sourceUnit, destinationUnit));
   }
 
   /**
    * Ask for confirmation and perform the transfer operation
    */
   private async confirmAndTransferUnit(transferredUnit: TransferredUnit, destinationUnit: UnitModel): Promise<void> {
-    const msg = `${this.t.transform('transfer_v')} ${transferredUnit.name} ${this.t.transform('to')} ${destinationUnit.name}?`;
-
-    const confirmation = await this.notifications.warning(msg);
-    if (!confirmation.value) {
-      return;
-    }
-
     try {
+      // Build confirmation message
+      const msg = `${this.t.transform('transfer_v')} ${transferredUnit.name} ${this.t.transform('to')} ${destinationUnit.name}?`;
+  
+      const confirmation = await this.notifications.warning(msg);
+      if (!confirmation.value) {
+        return;
+      }
+  
       const response = await this.unitService.transferUnit(transferredUnit._id, destinationUnit._id);
       if (!response) {
         return;
       }
-
+  
       if (response.error?.errorCode === 1) {
-        const errorMsg = this.t.transform('unit_transfer_child_error');
-        this.notifications.error(errorMsg);
+        this.notifications.error(this.t.transform('unit_transfer_child_error'));
         return;
       }
       

@@ -1,6 +1,7 @@
 import {
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   forwardRef,
   HostListener,
   Input,
@@ -12,9 +13,12 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-
 import { Placeholder, SlideToggle } from 'src/app/_shared/constants/animations';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
+import { UnitTreeService } from '../../services/unit/unit-tree.service';
+import { UnitFilterService } from '../../services/unit/unit-filter.service';
+import { UnitSelectionService } from '../../services/unit/unit-selection.service';
+import { UnitSelectUIService } from '../../services/unit/unit-select-ui.service';
 
 @Component({
   selector: 'app-unit-select',
@@ -26,7 +30,8 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: forwardRef(() => UnitSelectComponent),
-    }
+    },
+    UnitSelectUIService
   ]
 })
 export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAccessor {
@@ -34,8 +39,9 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   @ViewChild('dropdownEle') dropdownEle: ElementRef;
   @ViewChild('widthElement') widthElement: ElementRef;
 
-  @Input() units: any[] = [];
-  @Input() placeholder: any;
+  // Inputs
+  @Input() units: UnitModel[] = [];
+  @Input() placeholder: string;
   @Input() ignoredUnit: UnitModel;
   @Input() multiple = false;
   @Input() toggleUp = false;
@@ -43,328 +49,365 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
 
   @Output() touched: EventEmitter<any> = new EventEmitter();
 
+  // UI state
   title: string;
-
   isOpened = false;
-
   filterValue: string;
   filteredUnits: UnitModel[] = [];
-
   selected: any;
-
   currentCheckStatus = false;
-
+  
+  // Positioning
   top: number;
   bottom: number;
   width: number;
+  
+  // Constants
+  readonly unitHeight = 50;
+  
+  // Change propagation function from ControlValueAccessor
+  private propagateChange: (value: any) => void = () => {};
 
-  unitHeight = 50;
-
-  constructor(private elementRef: ElementRef, private t: TranslatePipe) {}
+  constructor(
+    private elementRef: ElementRef,
+    private t: TranslatePipe,
+    private unitTreeService: UnitTreeService,
+    private unitFilterService: UnitFilterService,
+    private unitSelectionService: UnitSelectionService,
+    private uiService: UnitSelectUIService
+  ) {}
 
   ngOnInit() {
+    this.initializeComponent();
+  }
+
+  /**
+   * Initialize component state
+   */
+  private initializeComponent(): void {
+    // Set placeholder text
     if (!this.placeholder) {
       const keyword = this.multiple ? 'select_units' : 'select_unit';
       this.placeholder = this.t.transform(keyword);
     }
-
-    this.loadUnits();
     
+    // Initialize selection state
     if (this.multiple) {
       this.selected = [];
     }
-
+    
     this.title = this.placeholder;
+    
+    // Load and process units
+    this.loadUnits();
   }
 
+  /**
+   * Load and process units
+   */
   loadUnits(): void {
-    let start = 0;
-    const interval = setInterval(() => {
-      this.filteredUnits = this.filteredUnits.concat(this.units.slice(start, start + 100));
-
-      if (this.ignoredUnit) {
-        this.ignoreUnit(this.filteredUnits);
-      }
-
-      if (start >= this.units.length) {
-        clearInterval(interval);
-      }
-
-      start += 100;
-    }, 200);
+    // Load units with possible ignore rules applied
+    this.filteredUnits = this.unitFilterService.loadUnits(this.units, this.ignoredUnit);
   }
-
+  
   ngOnChanges(): void {
     if (this.ignoredUnit) {
-      this.ignoreUnit(this.filteredUnits);
+      // Reset and reapply ignore rules when ignoredUnit changes
+      this.unitFilterService.refreshIgnoreRules(this.units, this.filteredUnits, this.ignoredUnit);
     }
   }
-
-  ignoreUnit(units: UnitModel[]): void {
-    units.forEach(unit => {
-      const unitToIgnore = units.find(unit => unit._id === this.ignoredUnit._id);
-      if (unitToIgnore) {
-        (unitToIgnore as any).ignore = true;
-        return;
-      }
-
-      if (unit.units) {
-        this.ignoreUnit(unit.units)
-      }
+  
+  /**
+   * Toggle the dropdown visibility
+   */
+  toggleDropdown(): void {
+    if (!this.hasUnits) {
+      return;
+    }
+    
+    this.touched.emit();
+    this.isOpened = !this.isOpened;
+    
+    if (this.isOpened) {
+      this.updateDropdownPosition();
+    }
+  }
+  
+  /**
+   * Update dropdown position when window is scrolled or resized
+   */
+  @HostListener('window:scroll')
+  @HostListener('window:resize')
+  updateDropdownPosition(): void {
+    if (!this.isOpened) {
+      return;
+    }
+    
+    // Use requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+      const position = this.uiService.calculateDropdownPosition(
+        this.elementRef,
+        this.dropdownEle,
+        this.widthElement,
+        this.toggleUp
+      );
+      
+      this.top = position.top;
+      this.bottom = position.bottom;
+      this.width = position.width;
     });
   }
 
-  toggleDropdown(): void {
-    this.touched.emit();
-    this.isOpened = !this.isOpened;
-    this.setCoords();
-  }
-
-  @HostListener('window:scroll')
-  @HostListener('window:resize')
-  setCoords(): void {
-    setTimeout(() => {
-      const parentEle = this.elementRef.nativeElement.getBoundingClientRect();
-      const offsetTop = this.dropdownEle.nativeElement.getBoundingClientRect().height;
-
-      if ((window.innerHeight <= parentEle.bottom + offsetTop) || this.toggleUp) {
-        this.bottom = window.innerHeight - parentEle.top - 8;
-        this.top = null;
-      } else {
-        this.top = parentEle.bottom - 5;
-        this.bottom = null;
-      }
-
-      this.width = this.widthElement.nativeElement.clientWidth;
-    }, 0)
-  }
-
+  /**
+   * Handle unit click event
+   */
   unitClicked(unit: UnitModel): void {
+    if (unit.ignore) {
+      return;
+    }
+    
     if (this.multiple) {
-      this.toggleUnit(unit);
+      // Toggle selection for multiple mode
+      this.toggleUnitSelection(unit);
     } else {
+      // Single selection mode
       this.selectUnit(unit);
     }
   }
-
-  toggleUnit(unit: any, event?: Event): void {
-    this.setUnitHeight(unit, !unit.isToggled, this.unitHeight);
+  
+  /**
+   * Toggle a unit's expanded/collapsed state
+   */
+  toggleUnit(unit: UnitModel, event?: Event): void {
     if (event) {
       event.stopPropagation();
     }
-
+    
+    // Toggle the expanded state
     unit.isToggled = !unit.isToggled;
-    this.setCoords();
+    
+    // Update dropdown position after toggling
+    this.updateDropdownPosition();
   }
-
-  setUnitHeight(unit: any, toggle: boolean, height: any): void {
-    unit.height = toggle ? height + (unit.units.length - 1) * this.unitHeight : height - (unit.units.length - 1) * this.unitHeight;
-
-    let units = this.units;
-    if (!unit.ancestors) {
-      return;
-    }
-
-    unit.ancestors.forEach(ancestor => {
-      const ancestorUnit = units.find(u => u.id === ancestor);
-      ancestorUnit.height = toggle ? ancestorUnit.height + unit.units.length * this.unitHeight : ancestorUnit.height - unit.units.length * this.unitHeight;
-
-      units = ancestorUnit.units
-    });
-  }
-
-  selectUnit(unit: UnitModel, checked?: boolean): void {
-    if (!checked && this.currentCheckStatus) {
+  
+  /**
+   * Toggle selection state of a unit in multiple selection mode
+   */
+  toggleUnitSelection(unit: UnitModel): void {
+    // Use service to handle unit selection
+    const result = this.unitSelectionService.handleUnitSelection(unit, this.units, true);
+    if (!result) return;
+    
+    // Update selected units
+    this.selected = result.selected;
+    
+    // Update title for multiple selection
+    this.updateSelectionTitle();
+    
+    // Emit changes
+    this.propagateChange(result.selectedIds);
+    
+    // Update check status if needed
+    if (result.updateCheckStatus) {
       this.currentCheckStatus = false;
     }
-
-    let output;
-
-    if (this.multiple) {
-      this.checkUnit(checked, unit);
-      this.selected = [];
-      this.units.forEach(unit => this.setMultipleSelected(unit));
-
-      if (!checked && unit.ancestors) {
-        this.uncheckAncestors(unit);
-      }
-
-      output = this.selected.map(unit => unit.id);
-    } else {
-      this.selected = unit;
-      this.isOpened = false;
-      this.resetFilter();
-
-      this.title = unit.name;
-
-      output = unit._id;
-    }
-
-    this.propagateChange(output);
   }
-
-  selectAll(isChecked: boolean) {
-    this.units.forEach(unit => {
-      this.selectUnit(unit, isChecked)
-    })
-
-    this.currentCheckStatus = isChecked;
+  
+  /**
+   * Update the list of selected units and notify changes
+   */
+  private updateSelectedUnits(): void {
+    const result = this.unitSelectionService.getSelectedUnits(this.units);
+    
+    this.selected = result.selectedUnits;
+    
+    // Update title for multiple selection
+    this.updateSelectionTitle();
+    
+    // Emit changes
+    this.propagateChange(result.selectedIds);
   }
-
-  checkUnit(checked: boolean, unit: UnitModel): void {
-    unit.checked = checked;
-    if (unit.units) {
-      unit.units.forEach(unit => this.checkUnit(checked, unit));
-    }
-  }
-
-  hasMoreUnits(unit: UnitModel): boolean {
-    const hasOnlyIgnoredUnit = unit.units.length === 1 && unit.units[0].ignore;
-    return unit.units.length > 0 && !hasOnlyIgnoredUnit;
-  }
-
-  selectUnitById(unitId: string, units: UnitModel[]): void {
-    units.forEach(unit => {
-      if (unit._id == unitId) {
-        this.selected = unit;
-        this.title = unit.name;
-        return;
-      }
-
-      if (unit.units) {
-        this.selectUnitById(unitId, unit.units)
-      }
-    })
-  }
-
-  uncheckAncestors(unit: UnitModel): void {
-    let units = this.units;
-    unit.ancestors.forEach(ancestor => {
-      const ancestorUnit = units.find(u => u.id === ancestor);
-      const ancestorUnitIndex = this.selected.indexOf(ancestorUnit);
-
-      if (ancestorUnitIndex !== -1) {
-        this.selected.splice(ancestorUnitIndex, 1)
-      }
-
-      ancestorUnit.checked = false
-      units = ancestorUnit.units
-    });
-  }
-
-  private setMultipleSelected(unit: UnitModel): void {
-    if (unit.checked) {
-      this.selected.push(unit);
-    }
-
-    if (unit.units) {
-      unit.units.forEach(unit => this.setMultipleSelected(unit));
-    }
-  }
-
-  checkAll(isChecked: boolean): void {
-    this.units.forEach(unit => this.checkUnit(isChecked, unit));
-    this.selected = [];
-    this.units.forEach(unit => this.setMultipleSelected(unit));
-
-    this.currentCheckStatus = isChecked;
-  }
-
-  initFilter(value: string): void {
-    this.filterValue = value;
-    this.filteredUnits = [];
-
-    if (!value) {
-      this.resetFilter()
+  
+  /**
+   * Update the selection title for multiple selection
+   */
+  private updateSelectionTitle(): void {
+    if (!this.multiple) {
       return;
     }
-
-    this.filterUnits(this.units);
+    
+    this.title = this.uiService.formatSelectionTitle(this.selected, this.placeholder);
   }
-
-  resetFilter(): void {
-    this.filterValue = '';
-    this.filteredUnits = this.units;
-  }
-
-  private filterUnits(units: UnitModel[]): void {
-    units.forEach(unit => {
-      if (unit.name.indexOf(this.filterValue) !== -1) {
-        this.filteredUnits.push(unit);
+  
+  /**
+   * Select a specific unit
+   */
+  selectUnit(unit: UnitModel, checked?: boolean): void {
+    // Use service to handle unit selection
+    const result = this.unitSelectionService.handleUnitSelection(
+      unit, this.units, this.multiple, checked
+    );
+    if (!result) return;
+    
+    if (this.multiple) {
+      // For multiple selection
+      this.selected = result.selected;
+      
+      // Update title for multiple selection
+      this.updateSelectionTitle();
+      
+      // Emit changes
+      this.propagateChange(result.selectedIds);
+      
+      // Update check status if needed
+      if (result.updateCheckStatus) {
+        this.currentCheckStatus = false;
       }
-
-      if (unit.units) {
-        this.filterUnits(unit.units);
+    } else {
+      // For single selection
+      this.selected = result.selected;
+      this.title = unit.name;
+      
+      if (result.closeDropdown) {
+        this.isOpened = false;
+        this.resetFilter();
       }
-
-      return true;
-    })
+      
+      // Emit the ID of the selected unit
+      this.propagateChange(result.selectedId);
+    }
   }
-
+  
+  /**
+   * Select or deselect all units
+   */
+  selectAll(isChecked: boolean): void {
+    // Apply selection to all non-ignored units
+    this.unitSelectionService.selectAll(this.units, isChecked);
+    
+    // Update the current check status
+    this.currentCheckStatus = isChecked;
+    
+    // Update the list of selected units
+    this.updateSelectedUnits();
+  }
+  
+  /**
+   * Check if there are any non-ignored units available
+   */
+  get hasUnits(): boolean {
+    return this.unitFilterService.hasVisibleUnits(this.units);
+  }
+  
+  /**
+   * Check if a unit has visible child units
+   */
+  hasMoreUnits(unit: UnitModel): boolean {
+    return this.unitFilterService.hasVisibleChildren(unit);
+  }
+  
+  /**
+   * Reset selection
+   */
   reset(event?: Event): void {
     if (event) {
       event.stopPropagation();
     }
-
-    this.selected = null;
-    if (this.multiple) {
-      this.checkAll(false);
-      this.selected = [];
-    }
-
+  
+    // Use service to reset selection
+    const result = this.unitSelectionService.resetSelection(this.units, this.multiple);
+    this.selected = result.selected;
+  
+    // Reset title and notify change
     this.title = this.placeholder;
-    this.propagateChange(this.selected);
+    this.propagateChange(this.multiple ? [] : null);
   }
-
-  private matchValues(unit: UnitModel, values: string[]): void {
-    if (values.indexOf(unit._id) !== -1) {
-      this.checkUnit(true, unit);
-    }
-
-    if (unit.units) {
-      unit.units.forEach(unit => this.matchValues(unit, values));
-    }
-  }
-
+  
+  /**
+   * Check if the component has a selected value
+   */
   hasValue(): boolean {
-    return this.selected && (!this.multiple || this.selected.length > 0);
+    if (this.multiple) {
+      return this.selected && this.selected.length > 0;
+    }
+    return !!this.selected;
   }
-
-  private propagateChange = (_: any) => {};
-
+  
+  /**
+   * Apply filter to units
+   */
+  initFilter(value: string): void {
+    this.filterValue = value;
+    this.filteredUnits = this.unitFilterService.applyFilter(this.units, value);
+  }
+  
+  /**
+   * Reset the filter and show all units
+   */
+  resetFilter(): void {
+    this.filterValue = '';
+    this.filteredUnits = this.unitFilterService.resetFilter(this.units);
+  }
+  
+  /**
+   * Handle incoming values from form control
+   */
   writeValue(value: any): void {
-    if (!value || value.length === 0) {
+    console.log(value)
+    if (!value) {
+      this.reset();
       return;
     }
-
-    if (this.multiple) {
-      // TODO: make a combined filter for search and value writing
-
-      this.units.forEach(unit => this.matchValues(unit, value));
-      this.selected = [];
-      this.units.forEach(unit => this.setMultipleSelected(unit));
-    } else {
-      this.selectUnitById(value, this.units)
+  
+    if (this.multiple && Array.isArray(value)) {
+      // For multiple selection, match all values against units
+      this.unitSelectionService.selectUnitsByIds(this.units, value);
+      
+      // Update selected value
+      const result = this.unitSelectionService.getSelectedUnits(this.units);
+      this.selected = result.selectedUnits;
+      
+      // Update title for multiple selection
+      this.updateSelectionTitle();
+    }
+    
+    if (!this.multiple) {
+      // For single selection, find the unit by ID
+      const unit = this.unitTreeService.findUnitById(value, this.units);
+      if (unit) {
+        this.selected = unit;
+        this.title = unit.name;
+      }
     }
   }
-
-  registerOnChange(fn: any) {
+  
+  /**
+   * Register change handler
+   */
+  registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
-
+  
+  /**
+   * Register touched handler
+   */
   registerOnTouched(fn: any): void {
-
+    // Not implemented for this component
   }
-
+  
+  /**
+   * Handle document clicks to close dropdown
+   */
   @HostListener('document:click', ['$event'])
   documentClicked(e: PointerEvent): void {
     if (!this.isOpened) {
       return;
     }
-
+  
+    // Close dropdown if clicked outside
     if (!this.elementRef.nativeElement.contains(e.target)) {
       this.isOpened = false;
-      setTimeout(() => this.resetFilter(), 500);
+      this.resetFilter();
     }
   }
 }

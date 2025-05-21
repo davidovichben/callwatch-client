@@ -7,12 +7,23 @@ export class UnitModel {
   externalID?: string;
   disabled?: boolean;
   checked?: boolean;
-  toggled?: boolean;
+  isToggled?: boolean;
+  loading?: boolean;
   units?: UnitModel[];
   users?: UserModel[];
-  parent?: UnitModel;
+  parent?: UnitModel | string;
   ancestors?: UnitModel[];
   hasUnits?: boolean;
   ignore?: boolean;
-  playCallback?: boolean;
+  
+  constructor(values: Partial<UnitModel> = {}) {
+    this._id = values._id || '';
+    this.name = values.name || '';
+    this.admin = values.admin || '';
+    this.units = values.units || [];
+  }
+  
+  static getParentId?(parent: string | UnitModel): string {
+    return typeof parent === 'string' ? parent : parent?._id;
+  }
 }

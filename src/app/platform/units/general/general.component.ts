@@ -78,9 +78,14 @@ export class GeneralComponent implements OnInit, OnDestroy {
    */
   setupSubscriptions(): void {
     this.subscription.add(this.unitStateService.activeUnitChanged.subscribe(unit => {
-      this.form.reset();
-      
       this.initializeActiveUnit(unit);
+    }));
+    
+    // Add subscription for unit transfer events
+    this.subscription.add(this.unitStateService.unitTransferred.subscribe(transferredUnit => {
+      if (transferredUnit._id === this.unit._id) {
+        this.initializeActiveUnit(transferredUnit);
+      }
     }));
   }
   
