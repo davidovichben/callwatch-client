@@ -24,23 +24,28 @@ const childRoutes = [
 // Common configuration for both routes
 const commonRouteConfig = {
   component: UnitsComponent,
-  resolve: {
-    unit: UnitResolve,
-    units: UnitsResolve
-  }
+  children: childRoutes
 };
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
+    component: UnitsComponent,
+    resolve: {
+      units: UnitsResolve
+    },
     ...commonRouteConfig
   },
   {
     path: ':id',
     pathMatch: 'full',
+    component: UnitsComponent,
     data: { noPadding: true },
-    children: childRoutes,
+    resolve: {
+      unit: UnitResolve,
+      units: UnitsResolve
+    },
     ...commonRouteConfig
   },
 ];

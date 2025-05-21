@@ -37,7 +37,6 @@ export class UnitsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initializeComponentData();
     this.initializeUnitState();
     this.setupSubscriptions();
   }
@@ -45,10 +44,6 @@ export class UnitsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-  
-  initializeComponentData(): void {
-    this.activeUnit = this.route.snapshot.data.unit;
   }
   
   initializeUnitState() {
@@ -113,11 +108,10 @@ export class UnitsComponent implements OnInit, OnDestroy {
   }
   
   private updateActiveUnit(): void {
-    this.activeUnit = this.route.snapshot.data.unit;
+    const isRootUnit = !this.route.snapshot.params.id || this.route.snapshot.params.id === AppConstants.ROOT_UNIT_ID;
     
-    this.modules = this.activeUnit._id === AppConstants.ROOT_UNIT_ID
-      ? UnitModules.slice(0, 2)
-      : UnitModules;
+    this.activeUnit = isRootUnit ? this.unitStateService.rootUnit : this.route.snapshot.data.unit;
+    this.modules = isRootUnit ? UnitModules.slice(0, 2) : UnitModules;
     
     this.unitStateService.setActiveUnit(this.activeUnit);
   }

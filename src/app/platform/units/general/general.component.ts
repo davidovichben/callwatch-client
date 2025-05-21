@@ -70,7 +70,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
    */
   private initializeComponentData(): void {
     this.units = this.route.parent.parent.snapshot.data.units;
-    this.unit = this.unitStateService.activeUnit;
+    this.initializeActiveUnit(this.unitStateService.activeUnit);
   }
   
   /**
@@ -79,9 +79,18 @@ export class GeneralComponent implements OnInit, OnDestroy {
   setupSubscriptions(): void {
     this.subscription.add(this.unitStateService.activeUnitChanged.subscribe(unit => {
       this.form.reset();
-      this.unit = unit;
-      this.isRootUnit = unit._id === AppConstants.ROOT_UNIT_ID;
+      
+      this.initializeActiveUnit(unit);
     }));
+  }
+  
+  /**
+   * Initialize active unit specific data
+   */
+  
+  private initializeActiveUnit(unit: UnitModel): void {
+    this.unit = unit;
+    this.isRootUnit = this.unit._id === AppConstants.ROOT_UNIT_ID;
   }
   
   /**
@@ -189,7 +198,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
    * Navigate to the root unit page
    */
   private navigateToRoot(): Promise<boolean> {
-    return this.router.navigate(['/platform', 'units', AppConstants.ROOT_UNIT_ID]);
+    return this.router.navigate(['/platform', 'units']);
   }
 
   /**
@@ -206,7 +215,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     if (this.unit.parent !== this.form.value.parent) {
       this.unit = response;
       // Emit unit transferred event - the units component will handle refreshing
-      this.unitStateService.refreshTree.next(true);
+      this.unitStateService.notifyUnitTransferred(this.unit);
     }
 
     this.form.form.markAsPristine();

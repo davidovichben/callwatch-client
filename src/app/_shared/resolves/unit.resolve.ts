@@ -13,7 +13,10 @@ export class UnitResolve  {
   constructor(private unitService: UnitService) {}
 
   async resolve(snapshot: ActivatedRouteSnapshot) {
-    const unitId = snapshot.params.id ?? AppConstants.ROOT_UNIT_ID;
+    const unitId = snapshot.params.id;
+    if (unitId === AppConstants.ROOT_UNIT_ID) {
+      return null;
+    }
     
     return this.unitService.getUnit(unitId).then(response => response as UnitModel);
   }

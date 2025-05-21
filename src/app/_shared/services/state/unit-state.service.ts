@@ -8,6 +8,7 @@ export class UnitStateService {
   // Observable sources
   refreshTree = new Subject<boolean>();
   unitNameChanged = new Subject<UnitModel>();
+  unitTransferred = new Subject<UnitModel>();
   activeUnitChanged = new Subject<UnitModel>();
 
   // Root unit data for the entire application
@@ -25,7 +26,7 @@ export class UnitStateService {
    * Set the active unit and notify subscribers
    */
   setActiveUnit(unit: UnitModel): void {
-    if (unit._id === this.activeUnit._id) {
+    if (unit._id === this.activeUnit?._id) {
       return; // No change in active unit
     }
     
@@ -45,5 +46,12 @@ export class UnitStateService {
    */
   notifyUnitNameChanged(unit: UnitModel): void {
     this.unitNameChanged.next(unit);
+  }
+  
+  /**
+   * Notify when a unit has been transferred
+   */
+  notifyUnitTransferred(unit: UnitModel): void {
+    this.unitTransferred.next(unit);
   }
 }

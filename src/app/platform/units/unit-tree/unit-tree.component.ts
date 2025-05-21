@@ -13,7 +13,7 @@ import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 // Interface for unit transfer operations
 interface TransferredUnit {
-  id: string;
+  _id: string;
   name: string;
 }
 
@@ -68,6 +68,11 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       this.updateUnitNameInTree(changedUnit);
     }));
     
+    // Handle unit transfer events
+    this.sub.add(this.unitStateService.unitTransferred.subscribe(async () => {
+      await this.refreshUnits();
+    }));
+    
     // Listen to the refreshTree event to update the tree
     this.sub.add(this.unitStateService.refreshTree.subscribe(async () => {
       await this.refreshUnits();
@@ -81,7 +86,6 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     try {
       this.loadingUnits = true;
       const units = await this.unitService.getUnits();
-      console.log(units, 'units')
       if (units) {
         this.rootUnit.units = units;
         this.ensureActiveUnitExpanded();
@@ -303,7 +307,7 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     // Set drag data
     event.dataTransfer.setDragImage(dragElement, 100, 25);
     event.dataTransfer.setData('transferredUnit', JSON.stringify({
-      id: unit._id,
+      _id: unit._id,
       name: unit.name
     } as TransferredUnit));
   }
@@ -361,12 +365,12 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
    */
   private isValidTransfer(transferredUnit: TransferredUnit, destinationUnit: UnitModel): boolean {
     // Can't transfer to itself
-    if (transferredUnit.id === destinationUnit._id) {
+    if (transferredUnit._id === destinationUnit._id) {
       return false;
     }
 
     // Check if unit is already in destination (should return false if it is)
-    const existingUnit = destinationUnit.units?.find(unit => unit._id === transferredUnit.id);
+    const existingUnit = destinationUnit.units?.find(unit => unit._id === transferredUnit._id);
     return !existingUnit;
   }
 
@@ -382,7 +386,7 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
     }
 
     try {
-      const response = await this.unitService.transferUnit(transferredUnit.id, destinationUnit._id);
+      const response = await this.unitService.transferUnit(transferredUnit._id, destinationUnit._id);
       if (!response) {
         return;
       }
@@ -390,7 +394,10 @@ export class UnitTreeComponent implements OnInit, OnDestroy {
       if (response.error?.errorCode === 1) {
         const errorMsg = this.t.transform('unit_transfer_child_error');
         this.notifications.error(errorMsg);
+        return;
       }
+      
+      this.unitStateService.notifyUnitTransferred(response);
     } catch (error) {
       this.notifications.error('Failed to transfer unit');
     }
