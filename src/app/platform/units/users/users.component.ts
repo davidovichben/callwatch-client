@@ -1,20 +1,43 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { FormComponent } from 'src/app/platform/units/users/form/form.component';
-
-import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
 import { UserSessionService } from 'src/app/_shared/services/state/user-session.service';
 import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
-
+import { UnitUserService } from 'src/app/_shared/services/http/unit-user.service';
+import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { FormComponent } from './form/form.component';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 import { UserModel } from 'src/app/_shared/models/user.model';
+import { FormModule } from './form/form.module';
+import { UserService } from '../../../_shared/services/http/user.service';
+import { SelectService } from '../../../_shared/services/http/select.service';
+import { PermissionService } from '../../../_shared/services/http/permission.service';
+import { TranslatePipe } from '../../../_shared/pipes/translate/translate.pipe';
+import { UnitService } from '../../../_shared/services/http/unit.service';
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.component.html'
+  templateUrl: './users.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatIconModule,
+    TranslateModule,
+    FormModule
+  ],
+  providers: [
+    UserService,
+    SelectService,
+    PermissionService,
+    TranslatePipe,
+    UnitService
+  ]
 })
 export class UsersComponent implements OnInit, OnDestroy {
 

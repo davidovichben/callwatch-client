@@ -15,12 +15,14 @@ import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Fade } from 'src/app/_shared/constants/animations';
 
 import { TranslateModule } from '../../_shared/pipes/translate/translate.module';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   animations: [Fade],
-  imports: [CommonModule, RouterModule, FormsModule, TranslateModule, PinInputModule, SetPasswordModule],
+	imports: [CommonModule, RouterModule, FormsModule, TranslateModule, PinInputModule, SetPasswordModule, MatError, MatFormField, MatInput, MatLabel],
   providers: [AppHttpService],
   standalone: true
 })

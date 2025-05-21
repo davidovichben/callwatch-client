@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { DataTableModule } from '../../_shared/components/data-table/data-table.module';
+import { MultipleEditModule } from './multiple-edit/multiple-edit.module';
+import { TranslateModule } from '../../_shared/pipes/translate/translate.module';
+import { BdSelectModule } from '../../_shared/components/bd-select/bd-select.module';
+
 import { DataTableComponent } from 'src/app/_shared/components/data-table/data-table.component';
 import { MultipleEditComponent } from './multiple-edit/multiple-edit.component';
 
@@ -14,7 +19,10 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.component.html'
+  standalone: true,
+  templateUrl: './users.component.html',
+  imports: [DataTableModule, MultipleEditModule, TranslateModule, BdSelectModule],
+  providers: [UserService]
 })
 export class UsersComponent implements OnInit {
 

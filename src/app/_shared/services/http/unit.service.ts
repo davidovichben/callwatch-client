@@ -29,7 +29,7 @@ export class UnitService extends HttpGenericService<UnitModel> {
     return this.create(values);
   }
 
-  updateUnit(unitId: string, values: object): Promise<ResponseData> {
+  updateUnit(unitId: string, values: object): Promise<UnitModel> {
     return this.update(unitId, values);
   }
 

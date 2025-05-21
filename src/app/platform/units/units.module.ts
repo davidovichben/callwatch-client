@@ -3,42 +3,46 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
-import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
-import { UnitFormModule } from 'src/app/platform/units/unit-form/unit-form.module';
-
 import { UnitsComponent } from './units.component';
 import { UnitTreeComponent } from './unit-tree/unit-tree.component';
+import { UnitFormModule } from './unit-form/unit-form.module';
+
+import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
 
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
-
-import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
 import { UnitResolve } from 'src/app/_shared/resolves/unit.resolve';
+import { UnitsResolve } from 'src/app/_shared/resolves/units.resolve';
 
-import { TranslatePipe } from 'src/app/_shared/pipes/translate/translate.pipe';
-import { DeactivateGuard } from 'src/app/_shared/guards/deactivate.guard';
+// Child routes for unit details
+const childRoutes = [
+  { path: '', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
+  { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
+  { path: 'users', loadComponent: () => import('./users/users.component').then(m => m.UsersComponent) },
+];
+
+// Common configuration for both routes
+const commonRouteConfig = {
+  component: UnitsComponent,
+  resolve: {
+    unit: UnitResolve,
+    units: UnitsResolve
+  }
+};
 
 const routes: Routes = [
   {
-    path: ':id',
-    pathMatch: 'full',
-    component: UnitsComponent,
-    data: { noPadding: true },
-    children: [
-      { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
-      { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
-      { path: '', pathMatch: 'full', redirectTo: 'general' }
-    ],
-    runGuardsAndResolvers: 'always',
-    resolve: {
-      unit: UnitResolve,
-      units: UnitsResolve
-    },
-  },
-  {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'root'
-  }
+    ...commonRouteConfig
+  },
+  {
+    path: ':id',
+    pathMatch: 'full',
+    data: { noPadding: true },
+    children: childRoutes,
+    ...commonRouteConfig
+  },
 ];
 
 @NgModule({
@@ -55,7 +59,6 @@ const routes: Routes = [
     UnitService,
     UnitResolve,
     UnitsResolve,
-    DeactivateGuard,
     TranslatePipe
   ]
 })

@@ -24,11 +24,16 @@ export class NotificationsComponent {
   
   readonly columns = [
     { label: 'mailbox', name: 'mailbox' },
-    { label: 'keyword', name: 'keyword' },
+    { label: 'type', name: 'type' },
+    { label: 'details', name: 'keyword' },
     { label: 'date', name: 'createdAt' },
   ];
   
   constructor(private notificationService: NotificationService) {}
+  
+  async ngOnInit(): Promise<void> {
+    await this.notificationService.markAllRead();
+  }
   
   async fetchItems(): Promise<void> {
     const response = await this.notificationService.getNotifications(this.dataTable.criteria);

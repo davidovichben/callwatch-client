@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import { UnitFormComponent } from 'src/app/platform/units/unit-form/unit-form.component';
@@ -13,6 +13,7 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 
 import { UnitModules } from 'src/app/_shared/constants/modules';
+import { AppConstants } from 'src/app/_shared/constants/app.constants';
 
 @Component({
   selector: 'app-units',
@@ -20,84 +21,119 @@ import { UnitModules } from 'src/app/_shared/constants/modules';
   styleUrls: ['./units.component.sass']
 })
 export class UnitsComponent implements OnInit, OnDestroy {
-
-  readonly rootUnit = {
-    _id: 'root',
-    name: '',
-    units: []
-  }
-
-  readonly sub = new Subscription();
-
+  private readonly destroy$ = new Subject<void>();
+  
   modules = UnitModules;
+  activeUnit!: UnitModel;
 
-  activeUnit: UnitModel;
-
-  loadingUnits: boolean;
-
-  constructor(private route: ActivatedRoute, private router: Router,
-              private dialog: MatDialog, public userSession: UserSessionService,
-              private unitService: UnitService, private notifications: NotificationService,
-              private unitStateService: UnitStateService) {}
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly dialog: MatDialog,
+    public readonly userSession: UserSessionService,
+    private readonly unitService: UnitService,
+    private readonly notifications: NotificationService,
+    private readonly unitStateService: UnitStateService
+  ) {}
 
   ngOnInit(): void {
-    this.rootUnit.name = this.userSession.getUser().organization;
-    this.rootUnit.units = this.route.snapshot.data.units;
-    this.activeUnit = this.route.snapshot.data.unit ?? this.rootUnit;
-    
-    this.sub.add(this.route.params.subscribe(() => {
-      this.activeUnit = this.route.snapshot.data.unit ?? this.rootUnit;
-      this.modules = this.activeUnit._id === 'root' ? UnitModules.slice(0, 2) : UnitModules;
-      this.unitStateService.unitLoaded.next(this.activeUnit);
-    }));
-
-    this.sub.add(this.unitStateService.refreshTree.subscribe(async () => {
-      const units = await this.unitService.getUnits();
-      if (units) {
-        this.rootUnit.units = units;
-      }
-    }));
-
-    this.sub.add(this.unitStateService.unitTransferred.subscribe(unit => this.activeUnit = unit));
-
-    this.sub.add(this.unitStateService.unitNameChanged.subscribe(unit => {
-      const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor._id === unit._id);
-      if (activeUnit) {
-        activeUnit.name = unit.name;
-      }
-    }));
+    this.initializeComponentData();
+    this.initializeUnitState();
+    this.setupSubscriptions();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
+  initializeComponentData(): void {
+    this.activeUnit = this.route.snapshot.data.unit;
+  }
+  
+  initializeUnitState() {
+    // Initialize the root unit in the UnitStateService
+    const rootUnit = {
+      _id: AppConstants.ROOT_UNIT_ID,
+      name: this.userSession.getUser().organization,
+      units: this.route.snapshot.data.units
+    };
+    
+    this.unitStateService.initializeRootUnit(rootUnit, this.activeUnit);
+  }
+  
+  private setupSubscriptions(): void {
+    // Handle route parameter changes
+    this.route.params
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.updateActiveUnit();
+      });
+    
+    // Handle unit name change events
+    this.unitStateService.unitNameChanged
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(unit => {
+        this.updateUnitName(unit);
+      });
+  }
+  
   breadcrumbClicked(ancestor: UnitModel): void {
     if (ancestor.disabled) {
       return;
     }
 
-    this.router.navigate(['/platform', 'units', ancestor._id]);
+    this.navigateToUnit(ancestor._id);
   }
 
-  openFormDialog(): void {
-    this.unitService.getUnits().then(units => {
-      const dialog = this.dialog.open(UnitFormComponent, {
+  async openFormDialog(): Promise<void> {
+    try {
+      const units = await this.unitService.getUnits();
+  
+      const dialogRef = this.dialog.open(UnitFormComponent, {
         width: '600px',
         data: units
       });
-
-      this.sub.add(dialog.afterClosed().subscribe(async (unitId) => {
-        if (unitId) {
-          const response = await this.unitService.getUnits();
-          if (response) {
+  
+      dialogRef.afterClosed()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(async (unitId: string) => {
+          if (unitId) {
+            // Notify tree to refresh
+            this.unitStateService.triggerTreeRefresh();
+            // Navigate to the new unit
+            await this.navigateToUnit(unitId);
+            // Show success message
             this.notifications.success();
-            this.rootUnit.units = response;
           }
-          
-          await this.router.navigate(['/platform', 'units', unitId]);
-        }
-      }))
-    })
+        });
+    } catch (error) {
+      this.notifications.error('Failed to load units');
+    }
+  }
+  
+  private updateActiveUnit(): void {
+    this.activeUnit = this.route.snapshot.data.unit;
+    
+    this.modules = this.activeUnit._id === AppConstants.ROOT_UNIT_ID
+      ? UnitModules.slice(0, 2)
+      : UnitModules;
+    
+    this.unitStateService.setActiveUnit(this.activeUnit);
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  private updateUnitName(unit: UnitModel): void {
+    if (!this.activeUnit.ancestors) {
+      return;
+    }
+    
+    const activeUnit = this.activeUnit.ancestors.find(ancestor => ancestor._id === unit._id);
+    if (activeUnit) {
+      activeUnit.name = unit.name;
+    }
+  }
+
+  private navigateToUnit(unitId: string): Promise<boolean> {
+    return this.router.navigate(['/platform', 'units', unitId]);
   }
 }

@@ -8,7 +8,9 @@ import { NotificationModel } from 'src/app/_shared/models/notification.model';
 import { DataTableCriteria } from 'src/app/_shared/components/data-table/classes/data-table-criteria';
 import { DataTableResponse } from 'src/app/_shared/components/data-table/classes/data-table-response';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NotificationService extends BaseHttpService {
 
 	readonly endPoint = `${this.apiUrl}/notifications`;
@@ -26,5 +28,16 @@ export class NotificationService extends BaseHttpService {
 	
 	getNotification(notificationId: string): Promise<NotificationModel> {
 		return this.get<NotificationModel>(`${this.endPoint}/${notificationId}`);
+	}
+	
+	async getUnreadCount(): Promise<number> {
+		const response = await this.get<{ count: number }>(`${this.endPoint}/count/unread`);
+		return response ? response.count : 0;
+	}
+	
+	markAllRead(): Promise<boolean> {
+		return this.put<boolean>(`${this.endPoint}/markAllRead`, {
+			body: {}
+		});
 	}
 }

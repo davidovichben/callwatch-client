@@ -1,2 +1,5 @@
-<app-sidebar (toggled)="sidebarToggleState = $event"></app-sidebar>
+<app-sidebar
+  (toggled)="sidebarToggleState = $event"
+  [unreadNotificationsCount]="unreadNotificationsCount">
+</app-sidebar>
 <app-content [sidebarToggleState]="sidebarToggleState"></app-content>

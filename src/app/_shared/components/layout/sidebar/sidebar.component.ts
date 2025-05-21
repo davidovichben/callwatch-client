@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, OnDestroy, HostBinding } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy, HostBinding, Input } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -37,6 +37,7 @@ import { AdminModules, PlatformModules } from 'src/app/_shared/constants/modules
 export class SidebarComponent implements OnInit, OnDestroy {
   @HostBinding('class') toggleState = 'opened';
 
+  @Input() unreadNotificationsCount = 0;
   @Output() toggled = new EventEmitter();
 
   readonly sub = new Subscription();
@@ -85,7 +86,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     
     this.autoLogoutTimer();
   }
-
+  
   private setMenu(): void {
     this.menuType = this.router.url.substr(1, 5) === 'admin' ? 'admin' : 'platform';
     const modules = this.menuType === 'admin' ? [...AdminModules] : [...PlatformModules];
@@ -178,24 +179,24 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   
   autoLogoutTimer(): void {
-    const mouseMove = fromEvent<MouseEvent>(document, 'mousemove');
-    const keyPress = fromEvent<KeyboardEvent>(document, 'keyup');
-    const movementEvents = merge(keyPress, mouseMove);
-    const interval = timer(600000);
-    
-    const timerSub = movementEvents.pipe(
-      startWith('initial'),
-      switchMap(() => {
-        return interval;
-      })
-    ).subscribe(() => {
-      const isDashBoardView = this.router.url.split('/')[2] === 'dashboard';
-      if (!isDashBoardView) {
-        this.logout();
-      }
-    });
-    
-    this.sub.add(timerSub);
+    // const mouseMove = fromEvent<MouseEvent>(document, 'mousemove');
+    // const keyPress = fromEvent<KeyboardEvent>(document, 'keyup');
+    // const movementEvents = merge(keyPress, mouseMove);
+    // const interval = timer(600000);
+    //
+    // const timerSub = movementEvents.pipe(
+    //   startWith('initial'),
+    //   switchMap(() => {
+    //     return interval;
+    //   })
+    // ).subscribe(() => {
+    //   const isDashBoardView = this.router.url.split('/')[2] === 'dashboard';
+    //   if (!isDashBoardView) {
+    //     this.logout();
+    //   }
+    // });
+    //
+    // this.sub.add(timerSub);
   }
   
   logout(): void {

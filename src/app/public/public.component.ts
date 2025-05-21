@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
-import { LocaleService } from 'src/app/_shared/services/state/locale.service';
+import { LocaleService } from '../_shared/services/state/locale.service';
 
 @Component({
   selector: 'app-public',
   templateUrl: './public.component.html',
   styleUrls: ['./public.component.sass'],
-  imports: [CommonModule, RouterModule],
-  standalone: true
+  standalone: true,
+  imports: [RouterModule, CommonModule]
 })
-export class PublicComponent {
-
+export class PublicComponent implements OnInit {
+  currentYear: number = new Date().getFullYear();
   activeLocale: string;
 
   constructor(public localeService: LocaleService) {}

@@ -1,29 +1,70 @@
 <form (ngSubmit)="submit()" #form="ngForm">
+  <!-- Form Fields Section -->
   <div class="row">
+    <!-- Unit Name -->
     <div class="col-12 col-lg-6 mb-3">
       <mat-form-field class="w-100">
         <mat-label>{{ 'unit_name' | t }}</mat-label>
-        <input matInput type="text" name="name" [ngModel]="unit.name" [disabled]="isRootUnit || !hasPermission('units', 'update')">
+        <input matInput 
+               type="text" 
+               name="name" 
+               [ngModel]="unit.name" 
+               [disabled]="isRootUnit || !hasPermission('units', 'update')">
       </mat-form-field>
     </div>
+    
+    <!-- Parent Unit Selector - Only for non-root units -->
     <div class="col-12 col-lg-6 mb-3" *ngIf="!isRootUnit">
-      <app-unit-select name="parent" [ngModel]="unit.parent" [units]="units" [ignoredUnit]="unit" [placeholder]="'select_parent_unit' | t"></app-unit-select>
+      <app-unit-select 
+        name="parent" 
+        [ngModel]="unit.parent" 
+        [units]="units" 
+        [ignoredUnit]="unit" 
+        [placeholder]="'select_parent_unit' | t"
+        [disabled]="!hasPermission('units', 'update')">
+      </app-unit-select>
     </div>
+    
+    <!-- Unit Administrator - Only for non-root units -->
     <div class="col-12 col-lg-6 mb-3" *ngIf="!isRootUnit">
       <mat-form-field class="w-100">
         <mat-label>{{ 'unit_administrator' | t }}</mat-label>
-        <input matInput name="admin" [ngModel]="unit.admin" [disabled]="isRootUnit || !hasPermission('units', 'update')">
+        <input matInput 
+               name="admin" 
+               [ngModel]="unit.admin" 
+               [disabled]="!hasPermission('units', 'update')">
       </mat-form-field>
     </div>
+    
+    <!-- External ID - Only for non-root units -->
     <div class="col-12 col-lg-6 mb-3" *ngIf="!isRootUnit">
       <mat-form-field class="w-100">
         <mat-label>{{ 'external_identification' | t }}</mat-label>
-        <input matInput name="externalID" [ngModel]="unit.externalID" [disabled]="!hasPermission('units', 'update')">
+        <input matInput 
+               name="externalID" 
+               [ngModel]="unit.externalID" 
+               [disabled]="!hasPermission('units', 'update')">
       </mat-form-field>
     </div>
   </div>
+  
+  <!-- Action Buttons -->
   <div>
-    <button class="btn primary-btn ms-3" type="submit" *ngIf="!isRootUnit && hasPermission('units', 'update')">{{ 'save' | t }}</button>
-    <button class="btn warning-btn" type="button" (click)="reassignUnit()" *ngIf="!isRootUnit && hasPermission('units', 'delete')">{{ 'delete' | t }}</button>
+    <!-- Save Button - Only visible if not root unit and has update permission -->
+    <button class="btn primary-btn ms-3" 
+            type="submit"
+            [disabled]="isSubmitting || form.pristine"
+            *ngIf="!isRootUnit && hasPermission('units', 'update')">
+      {{ 'save' | t }}
+    </button>
+    
+    <!-- Delete Button - Only visible if not root unit and has delete permission -->
+    <button class="btn warning-btn" 
+            type="button" 
+            (click)="reassignUnit()"
+            [disabled]="isSubmitting"
+            *ngIf="!isRootUnit && hasPermission('units', 'delete')">
+      {{ 'delete' | t }}
+    </button>
   </div>
 </form>

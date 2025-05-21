@@ -3,12 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 import loggedInGuard from 'src/app/_shared/guards/logged-in.guard';
 import guestGuard from 'src/app/_shared/guards/guest.guard';
+import { UnreadNotificationsResolver } from './_shared/resolvers/unread-notifications.resolver';
 
 const routes: Routes = [
   {
     path: 'platform',
     loadComponent: () => import('./platform/platform.component').then(m => m.PlatformComponent),
     canMatch: [loggedInGuard],
+    resolve: {
+      unreadNotificationsCount: UnreadNotificationsResolver
+    },
     children: [
       {
         path: '',
@@ -30,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        loadChildren: () => import('./platform/users/users.module').then(m => m.UsersModule),
+        loadComponent: () => import('./platform/users/users.component').then(m => m.UsersComponent),
       },
       {
         path: 'settings',

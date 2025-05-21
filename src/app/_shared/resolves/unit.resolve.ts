@@ -5,16 +5,15 @@ import { UnitService } from 'src/app/_shared/services/http/unit.service';
 
 import { UnitModel } from 'src/app/_shared/models/unit.model';
 
+import { AppConstants } from '../constants/app.constants';
+
 @Injectable()
 export class UnitResolve  {
 
   constructor(private unitService: UnitService) {}
 
   async resolve(snapshot: ActivatedRouteSnapshot) {
-    const unitId = snapshot.params.id;
-    
-    const unit = await this.unitService.getUnit(unitId).then(response => response as UnitModel);
-    console.log(unit)
+    const unitId = snapshot.params.id ?? AppConstants.ROOT_UNIT_ID;
     
     return this.unitService.getUnit(unitId).then(response => response as UnitModel);
   }

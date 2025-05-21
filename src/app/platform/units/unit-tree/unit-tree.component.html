@@ -1,23 +1,39 @@
 <div class="loader" *ngIf="loadingUnits"></div>
 <ul id="tree" *ngIf="!loadingUnits" (dragover)="allowDrop($event)">
   <li (drop)="drop($event, rootUnit)">
-    <span (dragover)="allowDrop($event)" [ngClass]="{ 'active': activeUnit?.id === 'root' }" [routerLink]="['/platform', 'units', 'root']">{{ rootUnit.name }}</span>
+    <span (dragover)="allowDrop($event)"
+          [ngClass]="{ 'active': !activeUnit || activeUnit?._id === AppConstants.ROOT_UNIT_ID }"
+          [routerLink]="['/platform', 'units', AppConstants.ROOT_UNIT_ID]">
+      {{ rootUnit.name }}
+    </span>
   </li>
   <ul id="mainBranch">
     <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: rootUnit.units }"></ng-container>
   </ul>
 </ul>
+
 <ng-template #recursiveListTmpl let-list="list">
   <li *ngFor="let unit of list" (drop)="drop($event, unit)">
-    <i class="ms-2 la la-plus" [ngClass]="{ 'la-plus': !unit.toggled, 'la-minus': unit.toggled }" (click)="toggleUnit(unit)" *ngIf="unit.units.length > 0"></i>
+    <!-- Expand/collapse icon -->
+    <i class="ms-2 la"
+       [ngClass]="{ 'la-plus': !unit.toggled, 'la-minus': unit.toggled }"
+       (click)="toggleUnit(unit)"
+       *ngIf="unit.units?.length > 0"></i>
 
-    <span [draggable]="!unit.disabled" [ngClass]="{ 'disabled': unit.disabled, 'active': activeUnit.id == unit.id }"
-          (dragstart)="dragStart($event, unit)" (click)="unitClicked(unit)">{{ unit.name }}</span>
+    <!-- Unit name -->
+    <span [draggable]="!unit.disabled"
+          [ngClass]="{ 'disabled': unit.disabled, 'active': activeUnit._id === unit._id }"
+          (dragstart)="dragStart($event, unit)"
+          (click)="unitClicked(unit)">
+      {{ unit.name }}
+    </span>
 
+    <!-- Recursive child units -->
     <ul *ngIf="unit.units" [ngClass]="{ 'toggled': unit.toggled }">
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: unit.units }"></ng-container>
     </ul>
-
   </li>
 </ng-template>
+
+<!-- Hidden element used as drag image template -->
 <div id="dragPlaceholder" #dragPlaceholder></div>
