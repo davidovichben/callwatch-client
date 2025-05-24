@@ -16,12 +16,12 @@ import { BdSelectModule } from 'src/app/_shared/components/bd-select/bd-select.m
 import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 import { SetPasswordModule } from 'src/app/_shared/components/set-password/set-password.module';
 
-import { FormComponent } from 'src/app/platform/users/form/form.component';
-import { PasswordComponent } from 'src/app/platform/users/form/password/password.component';
+import { FormComponent } from './form.component';
 
 import { UserService } from 'src/app/_shared/services/http/user.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
 import { UnitService } from 'src/app/_shared/services/http/unit.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { PermissionSelectResolve } from 'src/app/_shared/resolves/permission-select.resolve';
 import { UnitsSelectResolve } from 'src/app/_shared/resolves/units-select.resolve';
@@ -57,7 +57,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [FormComponent, PasswordComponent],
+  declarations: [FormComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -83,8 +83,9 @@ const routes: Routes = [
     UnitsSelectResolve,
     UserResolve,
     LanguageSelectResolve,
-    TranslatePipe,
-    DeactivateGuard
+    DeactivateGuard,
+    NotificationService,
+    TranslatePipe
   ]
 })
 export class FormModule {}

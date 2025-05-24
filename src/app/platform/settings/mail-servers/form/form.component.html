@@ -3,7 +3,7 @@
     <p class="h1">{{ mailServerId ? ('edit_mail_server' | t) : ('add_mail_server' | t) }}</p>
     <div>
       <button type="button" class="ms-2 btn neutral-btn" [routerLink]="['/platform', 'settings', 'mailServers']">{{ 'cancel' | t }}</button>
-      <button type="submit" class="btn primary-btn">{{ 'save' | t }}</button>
+      <button type="submit" class="btn primary-btn" [disabled]="isSubmitting">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">
@@ -43,23 +43,3 @@
     </div>
   </div>
 </form>
-
-
-<!--        <div class="col-12 col-lg-3 mb-3">-->
-<!--          <mat-form-field>-->
-<!--            <mat-label>{{ 'PBX_NAME' | t }}</mat-label>-->
-<!--            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'PBX_NAME_TIP' | t ">help</mat-icon>-->
-<!--            <input matInput type="text" formControlName="name" required>-->
-<!--            <mat-error>{{ errorMessages.required | t }}</mat-error>-->
-<!--          </mat-form-field>-->
-<!--        </div>-->
-<!--        <div class="col-12 col-lg-3 mb-3">-->
-<!--          <mat-form-field>-->
-<!--            <mat-label>{{ 'PBX_SWITCH_TYPE' | t }}</mat-label>-->
-<!--            <mat-icon matSuffix class="input-tooltip" [matTooltip]="'PBX_SWITCH_TYPE_TIP' | t ">help</mat-icon>-->
-<!--            <mat-select formControlName="type" (valueChange)="toggleAxi($event)" required>-->
-<!--              <mat-option *ngFor="let type of types" [value]="type.id">{{ type.name }}</mat-option>-->
-<!--            </mat-select>-->
-<!--            <mat-error>{{ errorMessages.required | t }}</mat-error>-->
-<!--          </mat-form-field>-->
-<!--        </div>-->

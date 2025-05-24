@@ -1,0 +1,17 @@
+// Host element styles
+:host
+  min-height: 40px
+  padding: 8px 4px
+  cursor: pointer
+
+  // Hover and selected states
+  &:hover, &.selected
+    background: rgba(0, 0, 0, 0.04) !important
+
+  // Selected state
+  &.selected
+    color: #5681a5
+
+  // Default selected state
+  &.default.selected
+    background-color: #fff !important

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { DataTableModule } from '../../_shared/components/data-table/data-table.module';
 import { MultipleEditModule } from './multiple-edit/multiple-edit.module';
@@ -21,7 +21,7 @@ import { UnitModel } from 'src/app/_shared/models/unit.model';
   selector: 'app-users',
   standalone: true,
   templateUrl: './users.component.html',
-  imports: [DataTableModule, MultipleEditModule, TranslateModule, BdSelectModule],
+  imports: [DataTableModule, MultipleEditModule, TranslateModule, BdSelectModule, RouterLink],
   providers: [UserService]
 })
 export class UsersComponent implements OnInit {

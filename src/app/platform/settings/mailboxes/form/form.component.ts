@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { MailboxService } from 'src/app/_shared/services/http/mailbox.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { ErrorMessages } from 'src/app/_shared/constants/error-messages';
 import { Fade } from 'src/app/_shared/constants/animations';
@@ -30,8 +31,11 @@ export class FormComponent implements OnInit, OnDestroy {
   
   isSubmitting = false;
 
-  constructor(private router: Router, private route: ActivatedRoute,
-              private fb: UntypedFormBuilder, private mailboxService: MailboxService) {}
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private fb: UntypedFormBuilder,
+              private mailboxService: MailboxService,
+              private notifications: NotificationService) {}
 
   ngOnInit(): void {
     this.makeForm();
@@ -73,12 +77,15 @@ export class FormComponent implements OnInit, OnDestroy {
   
   private handleServerResponse(response: boolean): void {
     if (response) {
+      this.notifications.success();
       this.router.navigate(['/platform', 'settings', 'mailboxes']);
+    } else {
+      this.notifications.error();
     }
     
     this.isSubmitting = false;
   }
-
+  
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

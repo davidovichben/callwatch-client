@@ -17,6 +17,13 @@ export class MailServerService extends BaseHttpService {
 	constructor(http: HttpClient, userSession: UserSessionService) {
 		super(userSession, http);
 	}
+	
+	/**
+	 * Delete a mailbox by ID
+	 */
+	deleteMailbox(id: string): Promise<boolean> {
+	  return this.delete<boolean>(`${this.apiUrl}/mailboxes/${id}`);
+	}
 
 	getMailServers(criteria: DataTableCriteria): Promise<DataTableResponse> {
 		const params = this.getDataTableParams(criteria);

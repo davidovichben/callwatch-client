@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        loadComponent: () => import('./platform/users/users.component').then(m => m.UsersComponent),
+        loadChildren: () => import('./platform/users/users-routing.module').then(m => m.UsersRoutingModule),
       },
       {
         path: 'settings',

@@ -16,7 +16,7 @@ export class MailboxService extends BaseHttpService {
 	constructor(http: HttpClient, userSession: UserSessionService) {
 		super(userSession, http);
 	}
-
+	
 	getMailboxes(criteria: DataTableCriteria): Promise<DataTableResponse> {
 		const params = this.getDataTableParams(criteria);
 		return this.post<DataTableResponse>(`${this.endPoint}/search`, {

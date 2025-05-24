@@ -200,19 +200,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   
   logout(): void {
-    let logout = true;
+    // let logout = true;
+    this.userSession.unsetUser();
     this.router.navigate(['/']);
     
-    const navigationEnd = this.navigation.subscribe(() => {
-      if (logout) {
-        this.router.navigate(['/']);
-        
-        this.appHttp.logout();
-        this.userSession.unsetUser();
-      }
-    })
-    
-    this.sub.add(navigationEnd)
+    // const navigationEnd = this.navigation.subscribe(() => {
+    //   if (logout) {
+    //     this.router.navigate(['/']);
+    //
+    //     this.appHttp.logout();
+    //     this.userSession.unsetUser();
+    //   }
+    // })
+    //
+    // this.sub.add(navigationEnd);
   }
   
   ngOnDestroy() {

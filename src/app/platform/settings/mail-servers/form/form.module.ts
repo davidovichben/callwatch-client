@@ -10,11 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { TranslateModule } from 'src/app/_shared/pipes/translate/translate.module';
+import { UnitSelectModule } from 'src/app/_shared/components/unit-select/unit-select.module';
 
 import { FormComponent } from 'src/app/platform/settings/mail-servers/form/form.component';
 
 import { MailServerService } from 'src/app/_shared/services/http/mail-server.service';
 import { SelectService } from 'src/app/_shared/services/http/select.service';
+import { NotificationService } from 'src/app/_shared/services/generic/notification.service';
 
 import { MailServerResolve } from 'src/app/_shared/resolves/mail-server.resolve';
 
@@ -48,11 +50,13 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    TranslateModule
+    TranslateModule,
+    UnitSelectModule
   ],
 	providers: [
     MailServerService,
     SelectService,
+    NotificationService,
 		MailServerResolve,
     DeactivateGuard
   ]

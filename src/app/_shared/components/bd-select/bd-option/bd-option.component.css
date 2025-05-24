@@ -1,17 +1,1 @@
-:host {
-  min-height: 40px;
-  padding: 8px 4px;
-  cursor: pointer;
-}
-
-:host:hover, :host.selected {
-  background: rgba(0, 0, 0, 0.04) !important;
-}
-
-:host.selected {
-  color: #5681a5;
-}
-
-:host.default.selected {
-  background-color: #fff !important;
-}
+/* This file has been replaced by bd-option.component.sass */

@@ -2,7 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef,
+  forwardRef, HostBinding,
   HostListener,
   Input,
   OnChanges,
@@ -40,6 +40,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   @ViewChild('widthElement') widthElement: ElementRef;
 
   // Inputs
+  @Input() @HostBinding('style.width') width = '100%';
   @Input() units: UnitModel[] = [];
   @Input() placeholder: string;
   @Input() ignoredUnit: UnitModel;
@@ -60,10 +61,6 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
   // Positioning
   top: number;
   bottom: number;
-  width: number;
-  
-  // Constants
-  readonly unitHeight = 50;
   
   // Change propagation function from ControlValueAccessor
   private propagateChange: (value: any) => void = () => {};
@@ -154,7 +151,12 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
       
       this.top = position.top;
       this.bottom = position.bottom;
-      this.width = position.width;
+      
+      // Set dropdown width using CSS variable
+      document.documentElement.style.setProperty('--dropdown-width', position.width);
+      
+      // Keep original width for the component
+      this.width = this.elementRef.nativeElement.style.width;
     });
   }
 
@@ -166,13 +168,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
       return;
     }
     
-    if (this.multiple) {
-      // Toggle selection for multiple mode
-      this.toggleUnitSelection(unit);
-    } else {
-      // Single selection mode
-      this.selectUnit(unit);
-    }
+    this.selectUnit(unit);
   }
   
   /**
@@ -188,29 +184,6 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
     
     // Update dropdown position after toggling
     this.updateDropdownPosition();
-  }
-  
-  /**
-   * Toggle selection state of a unit in multiple selection mode
-   */
-  toggleUnitSelection(unit: UnitModel): void {
-    // Use service to handle unit selection
-    const result = this.unitSelectionService.handleUnitSelection(unit, this.units, true);
-    if (!result) return;
-    
-    // Update selected units
-    this.selected = result.selected;
-    
-    // Update title for multiple selection
-    this.updateSelectionTitle();
-    
-    // Emit changes
-    this.propagateChange(result.selectedIds);
-    
-    // Update check status if needed
-    if (result.updateCheckStatus) {
-      this.currentCheckStatus = false;
-    }
   }
   
   /**
@@ -243,10 +216,13 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
    * Select a specific unit
    */
   selectUnit(unit: UnitModel, checked?: boolean): void {
+    console.log(checked)
+    
     // Use service to handle unit selection
     const result = this.unitSelectionService.handleUnitSelection(
       unit, this.units, this.multiple, checked
     );
+    
     if (!result) return;
     
     if (this.multiple) {
@@ -260,9 +236,7 @@ export class UnitSelectComponent implements OnInit, OnChanges, ControlValueAcces
       this.propagateChange(result.selectedIds);
       
       // Update check status if needed
-      if (result.updateCheckStatus) {
-        this.currentCheckStatus = false;
-      }
+      this.currentCheckStatus = this.selected.length === this.units.length;
     } else {
       // For single selection
       this.selected = result.selected;

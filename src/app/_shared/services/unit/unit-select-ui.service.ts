@@ -3,7 +3,7 @@ import { ElementRef, Injectable } from '@angular/core';
 interface DropdownPosition {
   top: number | null;
   bottom: number | null;
-  width: number;
+  width: string;
 }
 
 @Injectable()
@@ -13,8 +13,8 @@ export class UnitSelectUIService {
    * Calculate dropdown position
    */
   calculateDropdownPosition(
-    elementRef: ElementRef, 
-    dropdownEle: ElementRef, 
+    elementRef: ElementRef,
+    dropdownEle: ElementRef,
     widthElement: ElementRef,
     toggleUp: boolean
   ): DropdownPosition {
@@ -35,7 +35,7 @@ export class UnitSelectUIService {
     }
     
     // Set width to match the width element
-    const width = widthElement.nativeElement.clientWidth;
+    const width = parentRect.width + 'px';
     
     return { top, bottom, width };
   }

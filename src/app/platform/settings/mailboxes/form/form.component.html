@@ -3,7 +3,7 @@
     <p class="h1">{{ mailbox ? ('edit_mailbox' | t) : ('add_mailbox' | t) }}</p>
     <div>
       <button type="button" class="ms-2 btn neutral-btn" [routerLink]="['/platform', 'settings', 'mailboxes']">{{ 'cancel' | t }}</button>
-      <button type="submit" class="btn primary-btn">{{ 'save' | t }}</button>
+      <button type="submit" class="btn primary-btn" [disabled]="isSubmitting">{{ 'save' | t }}</button>
     </div>
   </div>
   <div class="form-body">

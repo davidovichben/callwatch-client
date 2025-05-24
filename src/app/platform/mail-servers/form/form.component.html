@@ -1,0 +1,46 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <div class="form-header">
+    <p class="h3">{{ mailServer ? ('edit_mail_server' | t) : ('new_mail_server' | t) }}</p>
+    <div>
+      <button mat-button type="button" class="btn warning-btn" (click)="deleteMailServer()" *ngIf="mailServer">{{ 'delete' | t }}</button>
+      <button mat-button type="button" class="btn warning-btn mx-2" [routerLink]="['/platform', 'mail-servers']">{{ 'cancel' | t }}</button>
+      <button mat-button type="submit" class="btn primary-btn">{{ 'save' | t }}</button>
+    </div>
+  </div>
+  <div>
+    <p class="f-20">{{ 'general_info' | t }}</p>
+    <section>
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'mail_server_name' | t }}</mat-label>
+            <input matInput type="text" formControlName="name" required>
+            <mat-error>{{ 'field_required' | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-6 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'mail_server_host' | t }}</mat-label>
+            <input matInput type="text" formControlName="host" required>
+            <mat-error>{{ 'field_required' | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-6 mb-3">
+          <mat-form-field>
+            <mat-label>{{ 'mail_server_port' | t }}</mat-label>
+            <input matInput type="text" formControlName="port" required>
+            <mat-error *ngIf="formGroup.get('port').errors?.required">{{ 'field_required' | t }}</mat-error>
+            <mat-error *ngIf="formGroup.get('port').errors?.pattern">{{ 'numbers_only' | t }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-6 mb-3">
+          <label class="mb-2 d-block">{{ 'organization_unit' | t }}</label>
+          <app-unit-select formControlName="unit" [units]="units"></app-unit-select>
+          <small class="text-muted">{{ 'optional_field' | t }}</small>
+        </div>
+        <div class="col-12 col-lg-6 mb-3 d-flex align-items-center mt-2">
+          <mat-checkbox formControlName="isSecure">{{ 'is_secure' | t }}</mat-checkbox>
+          <mat-checkbox formControlName="isActive" class="mx-3">{{ 'is_active' | t }}</mat-checkbox>
+        </div>
+      </div>
+    </section>

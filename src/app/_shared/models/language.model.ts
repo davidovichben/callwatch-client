@@ -1,5 +1,5 @@
 export class LanguageModel {
-  id: number;
+  _id: string;
   name: string;
   code: string;
 }

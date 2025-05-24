@@ -76,11 +76,11 @@ export class NotificationService {
     return swal.fire(options);
   }
 
-  public deactivateWarning(): Promise<boolean> {
+  async deactivateWarning(): Promise<boolean> {
     const text = this.t.transform('form_data_lost_error');
-    return this.warning(this.t.transform('warning'), text).then(confirmation => {
-      return confirmation.value;
-    });
+    const confirmation = await this.warning(this.t.transform('warning'), text);
+    
+    return confirmation.isConfirmed;
   }
 
   public authorizationError(): void {

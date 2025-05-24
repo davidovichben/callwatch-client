@@ -11,7 +11,7 @@
     </div>
   </div>
 </div>
-<mat-chip-list *ngIf="multiple">
+<mat-chip-list class="d-block mt-3" *ngIf="multiple">
   <span class="label-chip" *ngFor="let unit of selected">
     <span class="mx-2">{{ unit.name }}</span>
     <i class="la la-times pointer" (click)="selectUnit(unit, false)"></i>
@@ -26,7 +26,7 @@
   </div>
   <div id="optionsWrapper">
     <div id="options">
-      <div *ngIf="multiple" (click)="selectAll(!currentCheckStatus)" id="selectAll" class="text-center unit w-100" [ngClass]="currentCheckStatus ? 'active': null">
+      <div *ngIf="multiple" (click)="selectAll(!currentCheckStatus)" id="selectAll" class="text-center unit w-100" [ngClass]="{ active: currentCheckStatus }">
         {{ 'select_all' | t }}
       </div>
       <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: filteredUnits, height: 7 * 50 }"></ng-container>
