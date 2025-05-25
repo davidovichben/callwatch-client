@@ -39,7 +39,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.results = this.route.snapshot.data.results;
-    console.log(this.results)
     
     this.setResultsInterval();
   }
@@ -51,8 +50,6 @@ export class DashboardComponent implements OnInit {
   }
   
   async changeInterval(interval: RealtimeReportInterval) {
-    console.log(interval)
-    
     this.reportCriteriaInterval = interval;
     this.results = await this.reportsService.getRealtimeResults(this.reportCriteriaInterval);
   }

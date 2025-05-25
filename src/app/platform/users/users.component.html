@@ -20,7 +20,7 @@
     </td>
     <td>{{ item.username }}</td>
     <td>{{ item.permission ?? 'primary' | t }}</td>
-    <td>{{ item.unit ? item.unit : 'user_not_assigned_to_unit' | t }}{{ item.unitCount > 1 ? '...' : '' }}</td>
+    <td>{{ item.units?.length ? (item.units | arrayToString | truncate: 40) : 'user_not_assigned_to_unit' | t }}</td>
     <td>{{ item.phone }}</td>
     <td>{{ item.email }}</td>
     <td class="row-icons" *ngIf="userSession.canModify('users')">

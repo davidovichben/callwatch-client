@@ -1,6 +1,30 @@
 .simple-table
   background-color: #fff
 
+.form-header
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+  padding-bottom: 1rem
+  margin-bottom: 1.5rem
+
+.permission-table
+  .module-name
+    font-weight: 500
+    min-width: 150px
+
+  th, td
+    vertical-align: middle
+  
+  // Add hover effect for better UX
+  tbody tr:hover
+    background-color: rgba(0, 0, 0, 0.03)
+
+// Mobile optimizations
+@media (max-width: 768px)
+  .permission-table
+    min-width: 650px // Prevent table from becoming too small on mobile
+  
+  .table-responsive
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1)
+    border-radius: 4px
   th
     background-color: #fff
-

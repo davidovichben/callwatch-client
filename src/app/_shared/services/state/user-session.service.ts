@@ -77,7 +77,7 @@ export class UserSessionService {
 
   canModify(module: string): boolean {
     const user = this.getUser();
-
+    
     const permissions = user.permissions;
     if (permissions === 'root') {
       return true;

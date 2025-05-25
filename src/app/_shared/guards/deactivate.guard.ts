@@ -44,6 +44,9 @@ export class DeactivateGuard implements CanDeactivate<any> {
       (component.form && component.form.submitted) ||
       (component.isSubmitting === true);
     
+    console.log(component.isSubmitting);
+    console.log(formSubmitted)
+    
     // Check if form was modified
     const formModified =
       (component.formGroup && component.formGroup.touched) ||

@@ -58,7 +58,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   
   constructor(private router: Router, private helpers: HelpersService,
               private appState: AppStateService, private userSession: UserSessionService,
-              public locale: LocaleService, private appHttp: AppHttpService) {
+              public locale: LocaleService) {
     this.navigation = this.router.events.pipe(filter(e => e instanceof NavigationEnd))
   }
   
@@ -101,6 +101,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     const user = this.userSession.getUser();
 
     const permissions = user.permissions;
+    console.log(permissions)
     if (permissions === 'root') {
       return;
     }

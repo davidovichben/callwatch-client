@@ -16,12 +16,14 @@ import { NotificationService } from 'src/app/_shared/services/generic/notificati
 import { UserModel } from 'src/app/_shared/models/user.model';
 import { SelectItemModel } from 'src/app/_shared/models/select-item.model';
 import { UnitModel } from 'src/app/_shared/models/unit.model';
+import { TruncateModule } from '../../_shared/pipes/truncate/truncate.module';
+import { ArrayToStringModule } from '../../_shared/pipes/array-to-string/array-to-string.module';
 
 @Component({
   selector: 'app-users',
   standalone: true,
   templateUrl: './users.component.html',
-  imports: [DataTableModule, MultipleEditModule, TranslateModule, BdSelectModule, RouterLink],
+  imports: [DataTableModule, MultipleEditModule, TranslateModule, BdSelectModule, RouterLink, TruncateModule, ArrayToStringModule],
   providers: [UserService]
 })
 export class UsersComponent implements OnInit {
@@ -32,7 +34,7 @@ export class UsersComponent implements OnInit {
     { label: 'full_name', name: 'name' },
     { label: 'username', name: 'username' },
     { label: 'permission', name: 'permission' },
-    { label: 'unit', name: 'unit' },
+    { label: 'units', name: 'units' },
     { label: 'phone', name: 'phone' },
     { label: 'email', name: 'email' }
   ];
